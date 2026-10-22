@@ -247,12 +247,19 @@ dd.pos{font-family:var(--f-mono);color:var(--sea);font-weight:500}
   .hero .inner{padding-block:52px 48px}
   .grid{grid-template-columns:1fr}
   .card{padding:18px}
-  .grid.tiles{grid-template-columns:1fr 1fr;gap:10px}
-  .card.tile{min-height:130px;padding:14px 14px 12px 18px}
-  .tile h3{font-size:17px}
-  .tile .sum{font-size:14px}
+  /* スマホ: タイルは1列。長い文は行末まで詰めて折り返し、見出しだけ文節で改行 */
+  .grid.tiles{grid-template-columns:1fr;gap:10px}
+  .card.tile{min-height:0;padding:14px 16px 12px 20px;gap:4px}
+  .tile h3{font-size:18px}
+  .tile .sum{font-size:15px}
+  .tile .go{margin-top:4px}
+  p,dd,li,.sum,.timeline span,.log div,.feed span,.more > div{word-break:normal;text-wrap:wrap}
+  .sheet-body{padding-top:20px}
+  .sheet-content dl.kv{grid-template-columns:1fr;gap:2px}
+  .sheet-content dl.kv dd{margin-bottom:12px}
+  .sheet-content ul.items{max-width:none}
+  .sec-head p{font-size:15px}
 }
-@media (max-width:380px){.grid.tiles{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
@@ -632,7 +639,7 @@ function tilefy(el, label, color){
   el.setAttribute("tabindex", "0"); el.setAttribute("role", "button");
   el.dataset.label = label; if (wide) el.dataset.wide = "1";
   el.innerHTML = `<div class="tophead"><span class="ctag">${esc(label)}</span>${ok ? `<span class="st">${ok}</span>` : ""}</div>
-    <h3>${esc(name)}</h3>${sumEl ? `<p class="sum">${esc(el.dataset.sum || sumEl.textContent.trim())}</p>` : ""}<span class="go">詳しく</span><div class="full">${full}</div>`;
+    <h3>${esc(name)}</h3>${sumEl ? `<p class="sum">${esc(el.dataset.sum || sumEl.textContent.trim()).replace(/\(-?\d+, -?\d+\)/g, m => `<span class="nb">${m}</span>`)}</p>` : ""}<span class="go">詳しく</span><div class="full">${full}</div>`;
 }
 document.querySelectorAll("#list-zones .card").forEach((el, i) => tilefy(el, DATA.zones[i].tag || "エリア", PAL[i % PAL.length]));
 document.querySelectorAll("#list-materials .card").forEach(el => tilefy(el, "素材", "#3a9a50"));
