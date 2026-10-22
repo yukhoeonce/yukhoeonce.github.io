@@ -873,19 +873,30 @@ document.querySelectorAll("[data-count-to]").forEach(el => {
   const cv = $("#sea"), ctx = cv.getContext("2d");
   let w, h, dpr, t = 0, mx = .6;
   const bubbles = [];
+  // スマホではスクロールでアドレスバーが出入りしたり、フォント読み込みで高さが変わる。
+  // 幅が変わったときだけ泡を作り直し、高さだけの変化では泡の位置を引き伸ばして保つ（泡が楕円になる・飛ぶのを防ぐ）
   const size = () => {
-    dpr = Math.min(devicePixelRatio || 1, 2); w = cv.clientWidth; h = cv.clientHeight;
-    cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    bubbles.length = 0;
-    const n = Math.round(w / 22);
-    for (let i = 0; i < n; i++) bubbles.push(newBubble(true));
+    const nw = cv.clientWidth, nh = cv.clientHeight;
+    if (!nw || !nh || (nw === w && nh === h)) return;
+    const widthChanged = nw !== w, oldH = h;
+    dpr = Math.min(devicePixelRatio || 1, 2); w = nw; h = nh;
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (widthChanged || !oldH) {
+      bubbles.length = 0;
+      const n = Math.round(w / 22);
+      for (let i = 0; i < n; i++) bubbles.push(newBubble(true));
+    } else bubbles.forEach(b => { b.y *= h / oldH; });
   };
   function newBubble(any){
     return { x: Math.random() * w, y: any ? Math.random() * h : h + 10, r: .8 + Math.random() * Math.random() * 4.5,
              v: .25 + Math.random() * .7, ph: Math.random() * 6.28, a: .25 + Math.random() * .45 };
   }
-  size(); addEventListener("resize", size);
+  size();
+  if (window.ResizeObserver) new ResizeObserver(size).observe(cv); else addEventListener("resize", size);
+  let last = performance.now();
+  let k0 = 1;
   function frame(){
+    k0 = Math.min(3, (performance.now() - last) / 16.7) || 1;
     ctx.clearRect(0, 0, w, h);
     // 水面のきらめき
     const sg = ctx.createLinearGradient(0, 0, 0, h * .35);
@@ -916,14 +927,17 @@ document.querySelectorAll("[data-count-to]").forEach(el => {
     ctx.restore();
     // 泡
     for (const b of bubbles) {
-      b.y -= b.v; b.x += Math.sin(t * 1.4 + b.ph) * .25;
+      b.y -= b.v * k0; b.x += Math.sin(t * 1.4 + b.ph) * .25 * k0;
+      if (b.x < -10 || b.x > w + 10) b.x = Math.random() * w;
       if (b.y < -10) Object.assign(b, newBubble(false));
-      const fade = Math.min(1, b.y / (h * .25));
+      const fade = Math.max(0, Math.min(1, b.y / (h * .25)));
       ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, 6.283);
       ctx.strokeStyle = `rgba(215,248,255,${b.a * fade})`; ctx.lineWidth = .9; ctx.stroke();
       if (b.r > 2) { ctx.beginPath(); ctx.arc(b.x - b.r * .35, b.y - b.r * .35, b.r * .25, 0, 6.283); ctx.fillStyle = `rgba(255,255,255,${b.a * fade * .8})`; ctx.fill(); }
     }
-    t += .016;
+    // 画面の更新頻度（60Hz/120Hz）に関係なく同じ速さで動かす
+    const now = performance.now(), k = Math.min(3, (now - last) / 16.7); last = now;
+    t += .016 * k;
     if (!reduce) requestAnimationFrame(frame);
   }
   frame();
