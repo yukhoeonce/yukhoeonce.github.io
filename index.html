@@ -324,8 +324,9 @@ dd.pos{font-family:var(--f-mono);color:var(--sea);font-weight:500}
     </section>
 
     <section class="panel" id="materials">
-      <div class="sec-head"><span class="idx">Materials</span><h2>新素材</h2><p>どこで手に入り、何に使うか。</p></div>
-      <div class="grid" id="list-materials"></div>
+      <div class="sec-head"><span class="idx">Materials</span><h2>新素材</h2><p>どこで手に入り、何に使うか。種類ごとに色分けしています。</p></div>
+      <div class="filters" id="mat-jump" role="group" aria-label="種類へ移動"></div>
+      <div id="list-materials"></div>
     </section>
 
     <section class="panel" id="facilities">
@@ -406,33 +407,33 @@ const DATA = {
     { name: "炎の岩場", tag: "天火石", desc: "活火山と溶岩。隕石が周囲にダメージを与え温度を上げる。大型の隕石には守護デビアントがいる", fix: "冷却シート（熱中症を解除）／暖か冷たし（寒暑耐性）", out: "天火石・希少鉱物" }
   ],
   materials: [
-    { name: "ブラックタイドの塊", where: "ブラックタイドでブラックウォーターを採集して獲得（霧深い沼の胞子嚢付近。採集で理性を消費し、理性が高いほど多く採れる）", use: "潜水アイテム、水循環関連施設", ok: true, only: true },
-    { name: "ブラックタイド燃料", where: "特殊資源の自動採掘", use: "発電機、燃料プロペラ（予告では「フューエルプロペラ」）" },
-    { name: "ミストコア草", where: "影の入江", use: "採集すると呪いのミストの灯芯になる" },
-    { name: "呪いのミストの灯芯", where: "ミストコア草から", use: "船砲の砲弾、電力施設" },
-    { name: "瓶詰めの雨粒", where: "タイムレインで敵を倒し、作物を採集して獲得", use: "水上生産施設、栽培や養殖に関連する施設", ok: true, only: true },
-    { name: "天火石", where: "炎の岩場で天火石の隕石を採掘して獲得", use: "合金製の船体構造、自動採集施設", ok: true, only: true },
-    { name: "希少鉱物", where: "天火石の隕石", use: "合金製の船体、自動採集施設" },
-    { name: "深海石油", where: "掘削井戸で採取", use: "" },
-    { name: "オーシャン・ハート", where: "宝箱・宝の地図・迷い船など", use: "シナリオ専用の上級資源。チャレンジ報酬やシナリオ追加モッドの解放" },
-    { name: "海洋ゴミ", where: "海", use: "溶錬してプラスチック" },
-    { name: "硫黄水", where: "温泉の水を採集", use: "硫黄を精錬" },
-    { name: "生物の化石", where: "骸骨を採集", use: "酸液を抽出" },
-    { name: "イリエワニの皮", where: "イリエワニを狩猟", use: "装備の製作" },
-    { name: "潮見のゴム", where: "第3制御不能エリア（霧深い沼）の巨樹の幹の上で採集", use: "ファーネスでゴムを作る材料。電気ファーネスでは 潮見のゴム×2 ＋ もう1種類の素材×1 → ゴム×2（30秒）", tip: "霧深い沼の巨樹 (-6845, -5131) の幹の上に生えている。おすすめスポットにも掲載", ok: true, only: true },
-    { name: "潮見の果実", where: "巨樹の樹冠", use: "料理" },
-    { name: "フジツボ・カニ・ロブスター", where: "潮干狩り・海", use: "海鮮料理" },
-    { name: "カキ", where: "潮干狩り・海", use: "殻・巻貝・貝肉・海草・真珠が採れる" },
-    { name: "スターフィッシュ", where: "砂浜での採集や、砂浜で潮の精霊を捕まえたときに一定確率で獲得", use: "料理の製作、研究作業台で抗菌薬の製作。生で食べると満腹度+10・理性値-300で胃腸不良になる", ok: true, only: true },
-    { name: "ウニ", where: "潮干狩り・海（刺傷に注意）", use: "料理、抗菌薬" },
-    { name: "アワビ", where: "潮干狩り・海", use: "料理、接着剤" },
-    { name: "貝殻", where: "海辺で貝殻や岩石を採集、砂浜で潮の精霊を捕獲して一定確率で獲得", use: "船の施設の建造", ok: true },
-    { name: "巻貝", where: "銅のプラスキアックスや電動ドリルで貝殻や岩石を採集する、または砂浜で潮の精霊を捕まえると一定確率で獲得", use: "船や各種施設の製造", ok: true, only: true },
-    { name: "精密ギアセット", where: "制御不能エリア（〜第5）のアイランド拠点にある各種箱から確率で獲得", use: "上級の船の施設・船砲", tip: "マップ内に置いてある船砲（精密ギアセットを使うもの）を回収ツールで回収し、分解作業台で分解すると精密ギアセットが手に入る", ok: true },
-    { name: "サンゴ鉱石", where: "電動ドリルで海底のサンゴ鉱石を採掘して獲得", use: "一部の施設や家具の製作", ok: true, only: true },
-    { name: "漂流瓶", where: "砂浜で探索し、潮の精霊を捕まえると一定確率で獲得", use: "使うと中のアイテムを獲得できる（予告では宝の地図・図書・船の設計図が出るとされる）", ok: true, only: true },
-    { name: "パール", where: "拠点の箱から一定確率で獲得、ほか（ゲーム内の説明は一部しか確認できていない）", use: "領地シールド・自動修理装置・ヘルプステーション", ok: true },
-    { name: "海賊コイン・龍涎香", where: "潮干狩り", use: "潮干狩りショップでの取引" }
+    { name: "ブラックタイドの塊", cat: "特殊資源", where: "ブラックタイドでブラックウォーターを採集して獲得（霧深い沼の胞子嚢付近。採集で理性を消費し、理性が高いほど多く採れる）", use: "潜水アイテム、水循環関連施設", ok: true, only: true },
+    { name: "ブラックタイド燃料", cat: "特殊資源", where: "特殊資源の自動採掘", use: "発電機、燃料プロペラ（予告では「フューエルプロペラ」）" },
+    { name: "ミストコア草", cat: "特殊資源", where: "影の入江", use: "採集すると呪いのミストの灯芯になる" },
+    { name: "呪いのミストの灯芯", cat: "特殊資源", where: "ミストコア草から", use: "船砲の砲弾、電力施設" },
+    { name: "瓶詰めの雨粒", cat: "特殊資源", where: "タイムレインで敵を倒し、作物を採集して獲得", use: "水上生産施設、栽培や養殖に関連する施設", ok: true, only: true },
+    { name: "天火石", cat: "鉱石・鉱物", where: "炎の岩場で天火石の隕石を採掘して獲得", use: "合金製の船体構造、自動採集施設", ok: true, only: true },
+    { name: "希少鉱物", cat: "鉱石・鉱物", where: "天火石の隕石", use: "合金製の船体、自動採集施設" },
+    { name: "深海石油", cat: "特殊資源", where: "掘削井戸で採取", use: "" },
+    { name: "オーシャン・ハート", cat: "アイテム・通貨", where: "宝箱・宝の地図・迷い船など", use: "シナリオ専用の上級資源。チャレンジ報酬やシナリオ追加モッドの解放" },
+    { name: "海洋ゴミ", cat: "海の素材", where: "海", use: "溶錬してプラスチック" },
+    { name: "硫黄水", cat: "特殊資源", where: "温泉の水を採集", use: "硫黄を精錬" },
+    { name: "生物の化石", cat: "特殊資源", where: "骸骨を採集", use: "酸液を抽出" },
+    { name: "イリエワニの皮", cat: "植物・生物", where: "イリエワニを狩猟", use: "装備の製作" },
+    { name: "潮見のゴム", cat: "植物・生物", where: "第3制御不能エリア（霧深い沼）の巨樹の幹の上で採集", use: "ファーネスでゴムを作る材料。電気ファーネスでは 潮見のゴム×2 ＋ もう1種類の素材×1 → ゴム×2（30秒）", tip: "霧深い沼の巨樹 (-6845, -5131) の幹の上に生えている。おすすめスポットにも掲載", ok: true, only: true },
+    { name: "潮見の果実", cat: "海産物・食材", where: "巨樹の樹冠", use: "料理" },
+    { name: "フジツボ・カニ・ロブスター", cat: "海産物・食材", where: "潮干狩り・海", use: "海鮮料理" },
+    { name: "カキ", cat: "海産物・食材", where: "潮干狩り・海", use: "殻・巻貝・貝肉・海草・真珠が採れる" },
+    { name: "スターフィッシュ", cat: "海産物・食材", where: "砂浜での採集や、砂浜で潮の精霊を捕まえたときに一定確率で獲得", use: "料理の製作、研究作業台で抗菌薬の製作。生で食べると満腹度+10・理性値-300で胃腸不良になる", ok: true, only: true },
+    { name: "ウニ", cat: "海産物・食材", where: "潮干狩り・海（刺傷に注意）", use: "料理、抗菌薬" },
+    { name: "アワビ", cat: "海産物・食材", where: "潮干狩り・海", use: "料理、接着剤" },
+    { name: "貝殻", cat: "海の素材", where: "海辺で貝殻や岩石を採集、砂浜で潮の精霊を捕獲して一定確率で獲得", use: "船の施設の建造", ok: true },
+    { name: "巻貝", cat: "海の素材", where: "銅のプラスキアックスや電動ドリルで貝殻や岩石を採集する、または砂浜で潮の精霊を捕まえると一定確率で獲得", use: "船や各種施設の製造", ok: true, only: true },
+    { name: "精密ギアセット", cat: "アイテム・通貨", where: "制御不能エリア（〜第5）のアイランド拠点にある各種箱から確率で獲得", use: "上級の船の施設・船砲", tip: "マップ内に置いてある船砲（精密ギアセットを使うもの）を回収ツールで回収し、分解作業台で分解すると精密ギアセットが手に入る", ok: true },
+    { name: "サンゴ鉱石", cat: "鉱石・鉱物", where: "電動ドリルで海底のサンゴ鉱石を採掘して獲得", use: "一部の施設や家具の製作", ok: true, only: true },
+    { name: "漂流瓶", cat: "アイテム・通貨", where: "砂浜で探索し、潮の精霊を捕まえると一定確率で獲得", use: "使うと中のアイテムを獲得できる（予告では宝の地図・図書・船の設計図が出るとされる）", ok: true, only: true },
+    { name: "パール", cat: "海の素材", where: "拠点の箱から一定確率で獲得、ほか（ゲーム内の説明は一部しか確認できていない）", use: "領地シールド・自動修理装置・ヘルプステーション", ok: true },
+    { name: "海賊コイン・龍涎香", cat: "アイテム・通貨", where: "潮干狩り", use: "潮干狩りショップでの取引" }
   ],
   facilities: [
     {"name": "アンカー", "cat": "基本施設", "desc": "アンカーを下ろすと、水上で船を安定させることができる", "build": [{"item": "砂利", "qty": 30}, {"item": "貝殻", "qty": 5}], "ok": true},
@@ -582,9 +583,12 @@ function render(){
   [...DATA.facilities, ...DATA.guns].forEach(f => (f.build || []).forEach(b => {
     (usedBy[b.item] = usedBy[b.item] || []).push((f.lv || "") + f.name + (b.qty ? ` ×${b.qty}` : ""));
   }));
-  put("list-materials", DATA.materials.map(m => card(`
+  // 素材は種類ごとに見出し＋色分け
+  const MAT_GROUPS = ["特殊資源","鉱石・鉱物","海の素材","海産物・食材","植物・生物","アイテム・通貨"];
+  put("list-materials", [...MAT_GROUPS, "その他"].map(g => [g, DATA.materials.filter(m => (MAT_GROUPS.includes(m.cat) ? m.cat : "その他") === g)]).filter(([, l]) => l.length)
+    .map(([g, l]) => `<div class="fgroup"><h3 class="ghead">${esc(g)}<small>${l.length}</small></h3><div class="grid">${l.map(m => card(`
       <div class="tagrow">${src(m)}</div><h3>${esc(m.name)}</h3>
-      ${m.only ? '<p style="font-size:12.5px;color:var(--accent-ink)">シナリオ専用。終了後は持ち出せない</p>' : ""}<dl class="kv"><dt>入手</dt><dd>${val(m.where)}</dd><dt>用途</dt><dd>${val(m.use)}</dd>${m.tip ? `<dt>おすすめ</dt><dd>${esc(m.tip)}</dd>` : ""}</dl>${usedBy[m.name] ? `<details class="more"><summary>この素材を使う施設・船砲（${usedBy[m.name].length}）</summary><div>${usedBy[m.name].map(u => `<span class="nb">${esc(u)}</span>`).join("、")}</div></details>` : ""}`)).join(""));
+      ${m.only ? '<p style="font-size:12.5px;color:var(--accent-ink)">シナリオ専用。終了後は持ち出せない</p>' : ""}<dl class="kv"><dt>入手</dt><dd>${val(m.where)}</dd><dt>用途</dt><dd>${val(m.use)}</dd>${m.tip ? `<dt>おすすめ</dt><dd>${esc(m.tip)}</dd>` : ""}</dl>${usedBy[m.name] ? `<details class="more"><summary>この素材を使う施設・船砲（${usedBy[m.name].length}）</summary><div>${usedBy[m.name].map(u => `<span class="nb">${esc(u)}</span>`).join("、")}</div></details>` : ""}`)).join("")}</div></div>`).join(""));
 
   // 施設は分類ごとに見出しを付けて並べる。生産施設は横長カードにする
   const GROUPS = ["基本施設","動力施設","生産施設","特殊施設"];
@@ -658,6 +662,7 @@ function phrasify(root){
 /* ---------- カードをタイルにする（カテゴリー色＋要約）。押すと全画面で詳細 ---------- */
 const PAL = ["#e0603f","#2f6fd1","#3a9a50","#7b5bd6","#d08a1c","#1595a3","#c43d5a"];
 const CAT_COLOR = { "基本施設":"#1595a3","動力施設":"#2f6fd1","生産施設":"#3a9a50","特殊施設":"#7b5bd6","予告のみ（未確認）":"#7d8f99",
+  "特殊資源":"#7b5bd6","鉱石・鉱物":"#a0703a","海の素材":"#2f6fd1","海産物・食材":"#e0603f","植物・生物":"#3a9a50","アイテム・通貨":"#d08a1c","その他":"#7d8f99",
   "モード":"#2f6fd1","報酬":"#d08a1c","料理":"#e0603f","生物":"#3a9a50","装備":"#7b5bd6","モンスター":"#c43d5a","RaidZone":"#1595a3" };
 function tilefy(el, label, color){
   const name = el.querySelector("h3")?.textContent || "";
@@ -672,23 +677,29 @@ function tilefy(el, label, color){
     <h3>${esc(name)}</h3>${sumEl ? `<p class="sum">${esc(el.dataset.sum || sumEl.textContent.trim()).replace(/\(-?\d+, -?\d+\)/g, m => `<span class="nb">${m}</span>`).replace("　", "<br>")}</p>` : ""}<span class="go">詳しく</span><div class="full">${full}</div>`;
 }
 document.querySelectorAll("#list-zones .card").forEach((el, i) => tilefy(el, DATA.zones[i].tag || "エリア", PAL[i % PAL.length]));
-document.querySelectorAll("#list-materials .card").forEach(el => tilefy(el, "素材", "#3a9a50"));
-document.querySelectorAll("#list-spots .card").forEach((el, i) => {
-  const zi = DATA.zones.findIndex(z => z.name === DATA.spots[i].zone);
-  tilefy(el, DATA.spots[i].zone || "スポット", zi >= 0 ? PAL[zi % PAL.length] : "#1595a3");
-  if (DATA.spots[i].lv) el.querySelector(".st") ? el.querySelector(".st").textContent = DATA.spots[i].lv : el.querySelector(".tophead").insertAdjacentHTML("beforeend", `<span class="st lv">${esc(DATA.spots[i].lv)}</span>`);
-});
-document.querySelectorAll("#list-facilities .fgroup").forEach(g => {
+document.querySelectorAll("#list-materials .fgroup, #list-facilities .fgroup").forEach(g => {
   const cat = g.querySelector(".ghead").firstChild.textContent;
   g.querySelector(".grid").classList.add("tiles");
   g.querySelector(".ghead").style.setProperty("color", CAT_COLOR[cat] || "");
   g.querySelectorAll(".card").forEach(el => tilefy(el, cat, CAT_COLOR[cat] || "#2f6fd1"));
 });
+document.querySelectorAll("#list-spots .card").forEach((el, i) => {
+  const zi = DATA.zones.findIndex(z => z.name === DATA.spots[i].zone);
+  tilefy(el, DATA.spots[i].zone || "スポット", zi >= 0 ? PAL[zi % PAL.length] : "#1595a3");
+  if (DATA.spots[i].lv) el.querySelector(".st") ? el.querySelector(".st").textContent = DATA.spots[i].lv : el.querySelector(".tophead").insertAdjacentHTML("beforeend", `<span class="st lv">${esc(DATA.spots[i].lv)}</span>`);
+});
 document.querySelectorAll("#list-vehicles .card").forEach(el => tilefy(el, "船・乗り物", "#1595a3"));
 document.querySelectorAll("#list-guns .card").forEach((el, i) => tilefy(el, DATA.guns[i].lv || "衝角", DATA.guns[i].lv ? "#c43d5a" : "#d08a1c"));
 document.querySelectorAll("#list-features .card").forEach((el, i) => tilefy(el, DATA.features[i].cat, CAT_COLOR[DATA.features[i].cat] || "#2f6fd1"));
+// 新素材: 種類へ移動するボタン
+put("mat-jump", [...document.querySelectorAll("#list-materials .ghead")].map((h, i) => `<button type="button" data-i="${i}" style="--c:${CAT_COLOR[h.firstChild.textContent] || "#7d8f99"};--c-fg:#fff">${esc(h.firstChild.textContent)}</button>`).join(""));
+$("#mat-jump").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  const h = document.querySelectorAll("#list-materials .fgroup")[+b.dataset.i];
+  scrollTo({ top: h.getBoundingClientRect().top + scrollY - $(".bar").offsetHeight - 16, behavior: "smooth" });
+});
 document.querySelectorAll("#feat-filters button").forEach(b => { const c = CAT_COLOR[b.dataset.c]; if (c) { b.style.setProperty("--c", c); b.style.setProperty("--c-fg", "#fff"); } });
-["list-zones","list-spots","list-materials","list-vehicles","list-guns","list-features"].forEach(id => document.getElementById(id).classList.add("tiles"));
+["list-zones","list-spots","list-vehicles","list-guns","list-features"].forEach(id => document.getElementById(id).classList.add("tiles"));
 document.querySelectorAll("main .tile").forEach(phrasify);
 phrasify(document.querySelector(".hero")); phrasify(document.querySelector("footer"));
 document.querySelectorAll("main .sec-head, #info, #log-sec").forEach(phrasify);
