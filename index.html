@@ -38,6 +38,8 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 p,dd,dt,li,h2,h3,span{text-wrap:pretty}
+/* 文節の切れ目に<wbr>を入れ（phrasify）、そこ以外では改行しない。Safariは auto-phrase 非対応のため */
+.ph{word-break:keep-all;overflow-wrap:anywhere}
 .nb{display:inline-block}
 body{word-break:auto-phrase;line-break:strict;margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-jp);font-size:17px;line-height:1.8;-webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:#0f6f9c}
@@ -247,13 +249,10 @@ dd.pos{font-family:var(--f-mono);color:var(--sea);font-weight:500}
   .hero .inner{padding-block:52px 48px}
   .grid{grid-template-columns:1fr}
   .card{padding:18px}
-  /* スマホ: タイルは1列。長い文は行末まで詰めて折り返し、見出しだけ文節で改行 */
-  .grid.tiles{grid-template-columns:1fr;gap:10px}
-  .card.tile{min-height:0;padding:14px 16px 12px 20px;gap:4px}
-  .tile h3{font-size:18px}
-  .tile .sum{font-size:15px}
-  .tile .go{margin-top:4px}
-  p,dd,li,.sum,.timeline span,.log div,.feed span,.more > div{word-break:normal;text-wrap:wrap}
+  .grid.tiles{grid-template-columns:1fr 1fr;gap:10px}
+  .card.tile{min-height:130px;padding:14px 14px 12px 18px}
+  .tile h3{font-size:17px}
+  .tile .sum{font-size:14px}
   .sheet-body{padding-top:20px}
   .sheet-content dl.kv{grid-template-columns:1fr;gap:2px}
   .sheet-content dl.kv dd{margin-bottom:12px}
@@ -526,6 +525,7 @@ const DATA = {
     { cat: "RaidZone", name: "入り方", desc: "サインイン画面左上で【RaidZone】に切り替え→【禁断の島：RaidZone】サーバーを選ぶ" }
   ],
   log: [
+    { d: "2026-10-22", t: "スマホ（Safari）で言葉の途中で改行されないよう、文節の切れ目だけで折り返すように" },
     { d: "2026-10-22", t: "おすすめスポットに霧深い沼（ブラックタイドと鉱石の採集地）を追加" },
     { d: "2026-10-22", t: "おすすめスポットに3か所追加（金鉱石の採掘地、針山遺跡、昇天局ジュロン観測所）" },
     { d: "2026-10-22", t: "「おすすめスポット」タブを追加（座標とゲットできるもの）" },
@@ -625,6 +625,34 @@ function render(){
 }
 render();
 
+/* ---------- 日本語の改行位置: 文節（単語＋助詞など）の切れ目でだけ折り返す ---------- */
+const SEG = typeof Intl !== "undefined" && Intl.Segmenter ? new Intl.Segmenter("ja", { granularity: "word" }) : null;
+const KANJI = /[一-鿿々]/, KATA = /[ァ-ヺー]/, HIRA = /^[ぁ-ゟー]+$/, OPEN = /[「『（(【〔［\[]$/, ATTACH = /^[、。，．・）)」』】〕］\]！？!?:：/／〜~ー…%％×]/, DIGIT = /[0-9０-９.]$/;
+function phraseHTML(text){
+  const parts = [...SEG.segment(text)].map(x => x.segment);
+  let out = "", prev = "";
+  for (const w of parts) {
+    const glue = !prev || /\s$/.test(prev) || /^\s/.test(w) || OPEN.test(prev) || ATTACH.test(w)
+      || (HIRA.test(w) && !/[、。]$/.test(prev)) || (DIGIT.test(prev) && !/^[0-9０-９]/.test(w) && w.length <= 2)
+      || (KANJI.test(prev.slice(-1)) && KANJI.test(w[0])) || (KATA.test(prev.slice(-1)) && KATA.test(w[0]));
+    out += (glue ? "" : "<wbr>") + esc(w);
+    prev = w;
+  }
+  return out;
+}
+function phrasify(root){
+  if (!SEG) return;
+  root.querySelectorAll("p, dd, dt, h2, h3, li > span, .nb, .feed span, .more > div, .timeline span, .log div, .lead, footer div, .sheet-content div:not(:has(*))").forEach(el => {
+    if (el.dataset.ph) return;
+    el.dataset.ph = 1; el.classList.add("ph");
+    [...el.childNodes].forEach(n => {
+      if (n.nodeType === 3 && /[぀-ヿ一-鿿]/.test(n.textContent)) {
+        const span = document.createElement("span"); span.innerHTML = phraseHTML(n.textContent); n.replaceWith(...span.childNodes);
+      }
+    });
+  });
+}
+
 /* ---------- カードをタイルにする（カテゴリー色＋要約）。押すと全画面で詳細 ---------- */
 const PAL = ["#e0603f","#2f6fd1","#3a9a50","#7b5bd6","#d08a1c","#1595a3","#c43d5a"];
 const CAT_COLOR = { "基本施設":"#1595a3","動力施設":"#2f6fd1","生産施設":"#3a9a50","特殊施設":"#7b5bd6","予告のみ（未確認）":"#7d8f99",
@@ -639,7 +667,7 @@ function tilefy(el, label, color){
   el.setAttribute("tabindex", "0"); el.setAttribute("role", "button");
   el.dataset.label = label; if (wide) el.dataset.wide = "1";
   el.innerHTML = `<div class="tophead"><span class="ctag">${esc(label)}</span>${ok ? `<span class="st">${ok}</span>` : ""}</div>
-    <h3>${esc(name)}</h3>${sumEl ? `<p class="sum">${esc(el.dataset.sum || sumEl.textContent.trim()).replace(/\(-?\d+, -?\d+\)/g, m => `<span class="nb">${m}</span>`)}</p>` : ""}<span class="go">詳しく</span><div class="full">${full}</div>`;
+    <h3>${esc(name)}</h3>${sumEl ? `<p class="sum">${esc(el.dataset.sum || sumEl.textContent.trim()).replace(/\(-?\d+, -?\d+\)/g, m => `<span class="nb">${m}</span>`).replace("　", "<br>")}</p>` : ""}<span class="go">詳しく</span><div class="full">${full}</div>`;
 }
 document.querySelectorAll("#list-zones .card").forEach((el, i) => tilefy(el, DATA.zones[i].tag || "エリア", PAL[i % PAL.length]));
 document.querySelectorAll("#list-materials .card").forEach(el => tilefy(el, "素材", "#3a9a50"));
@@ -659,6 +687,9 @@ document.querySelectorAll("#list-guns .card").forEach((el, i) => tilefy(el, DATA
 document.querySelectorAll("#list-features .card").forEach((el, i) => tilefy(el, DATA.features[i].cat, CAT_COLOR[DATA.features[i].cat] || "#2f6fd1"));
 document.querySelectorAll("#feat-filters button").forEach(b => { const c = CAT_COLOR[b.dataset.c]; if (c) { b.style.setProperty("--c", c); b.style.setProperty("--c-fg", "#fff"); } });
 ["list-zones","list-spots","list-materials","list-vehicles","list-guns","list-features"].forEach(id => document.getElementById(id).classList.add("tiles"));
+document.querySelectorAll("main .tile").forEach(phrasify);
+phrasify(document.querySelector(".hero")); phrasify(document.querySelector("footer"));
+document.querySelectorAll("main .sec-head, #info, #log-sec").forEach(phrasify);
 
 const sheet = $("#sheet");
 // 名前 → タイル（素材は建造素材から、施設・船砲は「使う施設」から飛べるようにする）
@@ -686,6 +717,8 @@ function showSheet(el){
   $("#sheet-cat").textContent = el.dataset.label;
   $("#sheet-title").textContent = el.querySelector(":scope > h3").textContent;
   $("#sheet-content").innerHTML = box.innerHTML;
+  phrasify($("#sheet-content"));
+  if (SEG) { $("#sheet-title").classList.add("ph"); $("#sheet-title").innerHTML = phraseHTML($("#sheet-title").textContent); }
   const prev = stack[stack.length - 2];
   $("#sheet-back").hidden = !prev;
   if (prev) $("#sheet-back").textContent = `← ${prev.querySelector(":scope > h3").textContent}に戻る`;
