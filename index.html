@@ -1,0 +1,865 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Once Human 新シナリオ「禁断の島」の新素材・新施設・船砲・おすすめスポットを検索できる非公式ガイド">
+<meta property="og:title" content="禁断の島 ガイド">
+<meta property="og:description" content="Once Human 新シナリオ「禁断の島」の非公式まとめ。新素材・新施設の建造素材、船砲、おすすめスポット">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yukhoeonce.github.io/">
+<meta name="twitter:card" content="summary">
+<title>禁断の島 ガイド</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: 海中のヒーロー（光の筋・泡・波打ち際）→ ガラスのタブバー → 余白の大きいカード群。
+   色は海霧の白と深海の藍、灯台のランプ色をアクセントに一点だけ */
+:root{
+  --bg:#eaf4f6; --surface:#ffffff; --surface-2:#f2f9fa; --ink:#0a2233; --ink-2:#27434f; --muted:#4f6c79;
+  --line:#d3e5ea; --accent:#e3a33b; --accent-ink:#7a4e05; --sea:#0a73a3; --sea-soft:#d7eef5; --aqua:#2bb3c0;
+  --glass:rgba(234,244,246,.8);
+  --f-display:"Instrument Serif","Times New Roman",serif;
+  --f-jp:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --ease:cubic-bezier(.2,.7,.1,1);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#05172a; --surface:#0a2238; --surface-2:#0d2a44; --ink:#e6f3f7; --ink-2:#a9c6d2; --muted:#7d9fae;
+  --line:#173a55; --accent:#f0b552; --accent-ink:#f0b552; --sea:#5cc8e6; --sea-soft:#0f3550; --aqua:#3fd0dc; --glass:rgba(5,23,42,.8); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#05172a; --surface:#0a2238; --surface-2:#0d2a44; --ink:#e6f3f7; --ink-2:#a9c6d2; --muted:#7d9fae;
+  --line:#173a55; --accent:#f0b552; --accent-ink:#f0b552; --sea:#5cc8e6; --sea-soft:#0f3550; --aqua:#3fd0dc; --glass:rgba(5,23,42,.8); color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+p,dd,dt,li,h2,h3,span{text-wrap:pretty}
+.nb{display:inline-block}
+body{word-break:auto-phrase;line-break:strict;margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-jp);font-size:17px;line-height:1.8;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:#0f6f9c}
+a{color:inherit}
+.gut{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.inner{max-width:1120px;margin:0 auto}
+
+/* ---------- Hero: 海中（意図的に単一テーマ）。上から光が差し、泡がのぼり、下端は波打ち際 ---------- */
+.hero{position:relative;overflow:hidden;background:linear-gradient(180deg,#0f6f9c 0%,#0a4d78 32%,#062f52 68%,#041b33 100%);color:#eef8fb}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.waves{position:absolute;left:0;right:0;bottom:-1px;height:110px;z-index:1;pointer-events:none}
+.waves svg{position:absolute;bottom:0;left:0;width:200%;height:100%}
+.waves .w1{animation:drift 16s linear infinite}
+.waves .w2{animation:drift 11s linear infinite reverse}
+.waves .w3{animation:drift 22s linear infinite;filter:drop-shadow(0 -2px 0 rgba(255,255,255,.75))}
+.waves .w1 path{fill:#1b86ad;opacity:.5}
+.waves .w2 path{fill:#4cc0d8;opacity:.45}
+.waves .w3 path{fill:var(--bg)}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.hero .inner{position:relative;z-index:2;padding-block:52px 104px;display:flex;flex-direction:column;gap:18px}
+.kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#a6dbe8;display:flex;gap:12px;align-items:center}
+.kicker .dot{width:7px;height:7px;border-radius:50%;background:#f0b552;box-shadow:0 0 0 0 rgba(240,181,82,.6);animation:beacon 2.4s infinite}
+@keyframes beacon{0%{box-shadow:0 0 0 0 rgba(240,181,82,.55)}70%{box-shadow:0 0 0 12px rgba(240,181,82,0)}100%{box-shadow:0 0 0 0 rgba(240,181,82,0)}}
+.hero h1{margin:0;font-weight:400;line-height:.95;letter-spacing:-.01em}
+.hero h1 .en{display:block;font-family:var(--f-display);font-style:italic;font-size:clamp(52px,9vw,108px);color:#f5f1e6}
+.hero h1 .jp{display:block;font-family:var(--f-jp);font-weight:900;font-size:clamp(22px,3.4vw,34px);letter-spacing:.18em;margin-top:14px;color:#eef4f2}
+.hero p.lead{margin:0;max-width:34em;color:#c4e3ec;font-size:clamp(15px,1.6vw,17px)}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:6px;font-size:14.5px;color:#a6dbe8}
+.hero-meta b{display:block;font-family:var(--f-display);font-size:34px;font-weight:400;color:#f5f1e6;line-height:1.1;font-variant-numeric:tabular-nums}
+.hero-meta a{color:#f0b552;text-underline-offset:3px}
+.rise{animation:rise .9s var(--ease) both}
+.rise.d1{animation-delay:.08s}.rise.d2{animation-delay:.16s}.rise.d3{animation-delay:.24s}.rise.d4{animation-delay:.32s}
+@keyframes rise{from{transform:translateY(14px);opacity:.25}to{transform:none;opacity:1}}
+
+/* ---------- Sticky bar ---------- */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--glass);backdrop-filter:saturate(1.6) blur(16px);-webkit-backdrop-filter:saturate(1.6) blur(16px);border-bottom:1px solid var(--line)}
+.bar .inner{display:flex;gap:14px;align-items:center;padding-block:10px;flex-wrap:wrap}
+.tabs{position:relative;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1 1 520px;min-width:0}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{position:relative;z-index:1;font:inherit;font-size:16px;font-weight:700;color:var(--ink-2);background:none;border:0;padding:9px 16px;border-radius:999px;cursor:pointer;white-space:nowrap;flex:none;transition:color .3s}
+.tabs button[aria-selected="true"]{color:var(--bg)}
+.tabs button:focus-visible{outline:2px solid var(--sea);outline-offset:2px}
+.tabs .pill{position:absolute;z-index:0;top:0;height:100%;border-radius:999px;background:var(--ink);transition:transform .45s var(--ease),width .45s var(--ease);will-change:transform}
+.tabs .n{font-family:var(--f-mono);font-size:12.5px;opacity:.6;margin-left:4px}
+.search{flex:1 1 260px;position:relative;display:flex}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:2}
+.search input{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:11px 16px 11px 42px;transition:border-color .2s,box-shadow .2s}
+.search input:focus{outline:none;border-color:var(--sea);box-shadow:0 0 0 4px var(--sea-soft)}
+
+/* ---------- Content ---------- */
+main{background:radial-gradient(1200px 500px at 85% 0%,var(--sea-soft),transparent 70%)}
+main .inner{min-height:100vh;padding-block:40px 40px;display:flex;flex-direction:column;gap:72px}
+.sec-head{display:flex;flex-direction:column;gap:6px;margin-bottom:28px}
+.sec-head .idx{font-family:var(--f-mono);font-size:12px;letter-spacing:.2em;color:var(--sea);text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.sec-head .idx::before{content:"";width:34px;height:8px;background:var(--aqua);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 8'%3E%3Cpath d='M0 4 Q4.25 0 8.5 4 T17 4 T25.5 4 T34 4' fill='none' stroke='black' stroke-width='1.6'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 8'%3E%3Cpath d='M0 4 Q4.25 0 8.5 4 T17 4 T25.5 4 T34 4' fill='none' stroke='black' stroke-width='1.6'/%3E%3C/svg%3E") center/contain no-repeat}
+.sec-head h2{margin:0;font-weight:900;font-size:clamp(26px,3.6vw,40px);letter-spacing:.02em;line-height:1.25;text-wrap:balance}
+.sec-head p{margin:0;color:var(--muted);max-width:40em;font-size:16px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(340px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px 26px 22px;display:flex;flex-direction:column;gap:12px;min-width:0;
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .3s}
+.card{position:relative;overflow:hidden}
+.card::after{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--aqua),var(--sea));transform:scaleX(0);transform-origin:left;transition:transform .6s var(--ease)}
+.card:hover::after{transform:scaleX(1)}
+.card:hover{transform:translateY(-4px);box-shadow:0 22px 44px -26px rgba(10,80,120,.45);border-color:transparent}
+.card h3{margin:0;font-size:20px;font-weight:700;line-height:1.45}
+.card p{margin:0;color:var(--ink-2);font-size:16px}
+.tagrow{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:12.5px;font-weight:500;padding:2px 11px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.tag.s2{background:var(--accent);border-color:var(--accent);color:#2a1a00}
+.tag.ok{background:var(--sea);border-color:var(--sea);color:#fff}
+.tag.pre{background:transparent;color:var(--muted)}
+.pending{display:inline-block;align-self:flex-start;width:fit-content;font-size:13.5px;font-weight:500;color:var(--accent-ink);border:1px dashed var(--accent);border-radius:6px;padding:0 8px}
+dl.kv{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:16px}
+dl.kv dt{color:var(--muted);font-size:13.5px;letter-spacing:.04em;padding-top:2px;white-space:nowrap}
+dl.kv dd{margin:0;color:var(--ink-2);min-width:0}
+
+/* 概要 */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:28px}
+.stat{background:var(--surface);padding:22px}
+.stat b{display:block;font-family:var(--f-display);font-weight:400;font-size:52px;line-height:1;font-variant-numeric:tabular-nums;color:var(--sea)}
+.stat b small{font-size:.42em;font-family:var(--f-jp);font-weight:700;margin-left:4px}
+.stat span{font-size:13px;color:var(--muted)}
+.timeline{list-style:none;margin:0 0 28px;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;position:relative}
+.timeline li{position:relative;padding:26px 4px 0;border-top:2px solid var(--line)}
+.timeline li::before{content:"";position:absolute;top:-7px;left:0;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--sea)}
+.timeline li:last-child::before{background:var(--accent);border-color:var(--accent)}
+.timeline b{display:block;font-size:13px;font-family:var(--f-mono);color:var(--sea);letter-spacing:.06em}
+.timeline span{font-size:14px;color:var(--ink-2)}
+.facts{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:0 28px}
+.facts div{padding:14px 0;border-bottom:1px solid var(--line);min-width:0}
+.facts dt{font-size:12px;color:var(--muted);letter-spacing:.06em}
+.facts dd{margin:2px 0 0;font-size:15px}
+
+/* エリア */
+.zone{position:relative;overflow:hidden}
+.zone .hz{font-family:var(--f-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--sea)}
+.zone h3{font-size:22px;font-weight:900}
+.zone::before{display:none;content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,var(--sea),transparent);transform:scaleX(.25);transform-origin:left;transition:transform .6s var(--ease)}
+.zone:hover::before{transform:scaleX(1)}
+
+/* 施設 */
+.fac-block{display:flex;flex-direction:column;gap:4px;padding-top:12px;border-top:1px solid var(--line)}
+.fac-block .lbl{font-size:13.5px;font-weight:700;letter-spacing:.08em;color:var(--muted)}
+.fgroup{display:flex;flex-direction:column;gap:14px}
+.fgroup+.fgroup{margin-top:40px}
+.ghead{margin:0;display:flex;align-items:baseline;gap:10px;font-size:18px;font-weight:700;letter-spacing:.08em;color:var(--ink)}
+.ghead small{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-weight:400}
+.ghead::after{content:"";flex:1;height:1px;background:var(--line);align-self:center}
+.card.wide{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,1.3fr);gap:10px 32px;align-items:start}
+.card.wide .col{display:flex;flex-direction:column;gap:10px;min-width:0}
+.card.wide .fac-block{border-top:0;padding-top:0}
+.card.wide .col+.col{border-left:1px solid var(--line);padding-left:32px}
+.prod-line{font-size:16px;color:var(--ink-2)}
+.prod-line b{color:var(--sea);font-weight:700}
+.limits{display:flex;flex-wrap:wrap;gap:8px}
+.limits span{font-size:15px;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:4px 10px}
+.limits b{font-family:var(--f-mono);color:var(--sea);font-weight:500;margin-left:6px}
+.feed{display:flex;flex-direction:column;gap:6px;font-size:15px}
+.feed div{display:grid;grid-template-columns:3.4em 1fr;gap:8px;align-items:baseline}
+.feed b{font-family:var(--f-mono);font-weight:500;color:var(--sea);text-align:right}
+.feed p{margin:0;font-size:14px;color:var(--muted)}
+.more{border-top:1px solid var(--line);padding-top:10px}
+.more summary{cursor:pointer;list-style:none;font-size:15px;font-weight:700;color:var(--sea);display:flex;align-items:center;gap:8px}
+.more summary::-webkit-details-marker{display:none}
+.more summary::before{content:"";width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg);transition:transform .25s}
+.more[open] summary::before{transform:rotate(45deg)}
+.more > div{padding-top:8px;font-size:15px;color:var(--ink-2)}
+.recipes div{font-size:16px;padding:1px 0}
+@media (max-width:900px){
+  .card.wide{grid-template-columns:1fr}
+  .card.wide .col+.col{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:12px}
+}
+ul.items{list-style:none;margin:0;padding:0;font-size:16px}
+ul.items li{display:flex;justify-content:space-between;gap:10px;padding:1px 0}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--sea)}
+.arrow{color:var(--accent);padding:0 6px}
+
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin:-8px 0 22px}
+.filters button{font:inherit;font-size:15px;color:var(--ink-2);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 14px;cursor:pointer;transition:all .25s}
+.filters button:hover{border-color:var(--ink-2)}
+.filters button[aria-pressed="true"]{background:var(--c,var(--ink));color:var(--c-fg,var(--bg));border-color:var(--c,var(--ink))}
+.filters button[style]::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:7px;vertical-align:1px}
+.filters button[style][aria-pressed="true"]::before{background:#fff}
+.filters button:focus-visible{outline:2px solid var(--sea);outline-offset:2px}
+
+.panel.enter .card,.panel.enter .stat,.panel.enter .timeline li{animation:rise .7s var(--ease) both;animation-delay:calc(var(--i,0) * 35ms)}
+.nohit{text-align:center;color:var(--muted);padding:40px 0}
+.hide{display:none!important}
+
+.log{display:flex;flex-direction:column;gap:6px;font-size:13.5px;color:var(--ink-2)}
+.log span{font-family:var(--f-mono);color:var(--muted);margin-right:14px;font-variant-numeric:tabular-nums}
+footer .inner{padding-block:28px 48px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px}
+footer b{color:var(--ink)}
+/* ---------- タイル（カテゴリー色）と全画面の詳細シート ---------- */
+.grid.tiles{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.card.tile{--c:var(--sea);cursor:pointer;padding:18px 20px 16px 24px;gap:6px;min-height:150px}
+.card.tile::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--c)}
+.card.tile::after{background:var(--c)}
+.card.tile:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+.tile .ctag{align-self:flex-start;font-size:13px;font-weight:700;padding:2px 12px;border-radius:999px;color:color-mix(in srgb,var(--c) 72%,var(--ink));background:color-mix(in srgb,var(--c) 14%,transparent)}
+.tile .st{font-size:12px;color:var(--muted);margin-left:auto}
+.tile .tophead{display:flex;align-items:center;gap:8px}
+.tile h3{font-size:19px}
+.tile .sum{font-size:15px;color:var(--ink-2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tile .go{margin-top:auto;font-size:13.5px;font-weight:700;color:color-mix(in srgb,var(--c) 72%,var(--ink));display:flex;align-items:center;gap:6px}
+.tile .go::after{content:"→";transition:transform .3s var(--ease)}
+.tile:hover .go::after{transform:translateX(4px)}
+.tile .full{display:none}
+.sheet{position:fixed;inset:0;z-index:50;background:var(--bg);overflow-y:auto;overscroll-behavior:contain;--c:var(--sea)}
+.sheet[hidden]{display:none}
+.sheet.open{animation:sheetIn .45s var(--ease) both}
+@keyframes sheetIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+.sheet-head{position:sticky;top:0;z-index:2;background:var(--c);color:#fff;padding:calc(env(safe-area-inset-top,0px) + 14px) max(20px,env(safe-area-inset-right,0px)) 14px max(20px,env(safe-area-inset-left,0px))}
+.sheet-head .inner{display:flex;align-items:center;gap:12px;max-width:880px}
+.sheet-cat{font-size:14px;font-weight:700;letter-spacing:.08em;opacity:.95}
+.sheet-x{margin-left:auto;font:inherit;font-size:15px;font-weight:700;color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:6px 16px;cursor:pointer}
+.sheet-x:hover{background:rgba(255,255,255,.3)}
+.sheet-body{max-width:880px;margin:0 auto;padding:28px max(20px,env(safe-area-inset-right,0px)) 80px max(20px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:18px}
+.sheet-body h2{margin:0;font-size:clamp(28px,4vw,40px);font-weight:900;line-height:1.3}
+.sheet-content{display:flex;flex-direction:column;gap:18px;font-size:17px}
+.sheet-content p{margin:0;font-size:17px;color:var(--ink-2)}
+.sheet-content .fac-block{gap:6px;padding-top:16px}
+.sheet-content ul.items{font-size:17px;max-width:520px}
+.sheet-content ul.items li{padding:5px 0;border-bottom:1px dashed var(--line)}
+.sheet-content dl.kv{font-size:17px;gap:12px 20px}
+.sheet-content dl.kv dt{font-size:14.5px}
+.sheet-content .col{display:flex;flex-direction:column;gap:16px}
+.sheet-content .col+.col{border-top:1px solid var(--line);padding-top:16px}
+.sheet-content .col .fac-block{border-top:0;padding-top:0}
+.sheet-content .feed{font-size:16px}
+.sheet-content .more summary{font-size:16px}
+body.lock{overflow:hidden}
+.sheet-back{font:inherit;font-size:15px;font-weight:700;color:var(--c);background:#fff;border:0;border-radius:999px;padding:6px 16px;cursor:pointer;max-width:60vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sheet-back[hidden]{display:none}
+.sheet-back:not([hidden]) + .sheet-cat{display:none}
+.xref{font:inherit;color:color-mix(in srgb,var(--sea) 85%,var(--ink));background:none;border:0;padding:0;cursor:pointer;text-align:left;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:4px;text-decoration-thickness:1.5px}
+.xref::after{content:"›";margin-left:5px;font-weight:700;text-decoration:none;display:inline-block}
+.xref:hover{text-decoration-style:solid}
+.tile .st.lv{color:var(--accent-ink);font-weight:700}
+.empty{color:var(--muted);text-align:center;padding:32px 0;margin:0}
+dd.pos{font-family:var(--f-mono);color:var(--sea);font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips .nb{font-size:15px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 14px}
+.chips .xref{text-decoration:none}
+
+@media (max-width:640px){
+  .hero .inner{padding-block:52px 48px}
+  .grid{grid-template-columns:1fr}
+  .card{padding:18px}
+  .grid.tiles{grid-template-columns:1fr 1fr;gap:10px}
+  .card.tile{min-height:130px;padding:14px 14px 12px 18px}
+  .tile h3{font-size:17px}
+  .tile .sum{font-size:14px}
+}
+@media (max-width:380px){.grid.tiles{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<header class="hero" lang="ja">
+  <canvas id="sea" aria-hidden="true"></canvas>
+  <div class="waves" aria-hidden="true">
+    <svg class="w1" viewBox="0 0 2880 90" preserveAspectRatio="none"><path d="M0 30 C120 10 240 10 360 30 S600 50 720 30 S960 10 1080 30 S1320 50 1440 30 S1680 10 1800 30 S2040 50 2160 30 S2400 10 2520 30 S2760 50 2880 30 V90 H0Z"/></svg>
+    <svg class="w2" viewBox="0 0 2880 90" preserveAspectRatio="none"><path d="M0 55 C180 30 360 75 720 52 S1260 30 1440 55 S1980 75 2160 52 S2700 30 2880 55 V90 H0Z"/></svg>
+    <svg class="w3" viewBox="0 0 2880 90" preserveAspectRatio="none"><path d="M0 68 C300 52 540 84 720 70 S1140 54 1440 68 S1980 84 2160 70 S2580 54 2880 68 V90 H0Z"/></svg>
+  </div>
+  <div class="inner gut">
+    <div class="kicker rise"><span class="dot"></span><span id="status">Once Human · New Scenario</span></div>
+    <h1 class="rise d1"><span class="en">Forbidden Island</span><span class="jp">禁断の島 ガイド</span></h1>
+    <p class="lead rise d2"><span class="nb">新しい素材、施設、船、モードを</span><span class="nb">一か所に。</span><br><span class="nb">名前を入れるだけで、</span><span class="nb">全部から探せます。</span></p>
+    <div class="hero-meta rise d3">
+      <div><b data-count-to="21">0</b>日間のコア体験</div>
+      <div><b data-count-to="2">0</b>ステージ制</div>
+      <div><b id="cd">10/22</b><span id="cd-label">配信開始</span></div>
+      <div style="align-self:flex-end">出典 <a href="https://www.oncehuman.game/jp/news/devBlog/20261016/40793_1316820.html" target="_blank" rel="noopener">公式ブルーポスト（10/16）</a><br>施設・船砲の建造素材はゲーム内で確認済み</div>
+    </div>
+  </div>
+</header>
+
+<div class="bar gut">
+  <div class="inner">
+    <div class="tabs" role="tablist" id="tabs">
+      <span class="pill" id="pill"></span>
+      <button type="button" role="tab" data-tab="info">概要</button>
+      <button type="button" role="tab" data-tab="zones">エリア<span class="n" data-count="zones"></span></button>
+      <button type="button" role="tab" data-tab="spots">おすすめスポット<span class="n" data-count="spots"></span></button>
+      <button type="button" role="tab" data-tab="materials">新素材<span class="n" data-count="materials"></span></button>
+      <button type="button" role="tab" data-tab="facilities">新施設<span class="n" data-count="facilities"></span></button>
+      <button type="button" role="tab" data-tab="vehicles">船・乗り物<span class="n" data-count="vehicles"></span></button>
+      <button type="button" role="tab" data-tab="guns">船砲<span class="n" data-count="guns"></span></button>
+      <button type="button" role="tab" data-tab="features">新要素<span class="n" data-count="features"></span></button>
+    </div>
+    <label class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input id="q" type="search" placeholder="ブラックタイド、天火石、ワニ…" aria-label="全部から検索"></label>
+  </div>
+</div>
+
+<main class="gut" lang="ja">
+  <div class="inner">
+    <section class="panel" id="info">
+      <div class="sec-head"><span class="idx">Overview</span><h2>概要</h2><p>配信日、期間、ステージの流れ。</p></div>
+      <div class="stats" id="stats"></div>
+      <ol class="timeline" id="timeline"></ol>
+      <dl class="facts" id="facts"></dl>
+    </section>
+
+    <section class="panel" id="zones">
+      <div class="sec-head"><span class="idx">Hazard Zones</span><h2>制御不能エリア</h2><p>5つの島それぞれの環境と、その対策、そこで採れるもの。</p></div>
+      <div class="grid" id="list-zones"></div>
+    </section>
+
+    <section class="panel" id="spots">
+      <div class="sec-head"><span class="idx">Spots</span><h2>おすすめスポット</h2><p>座標と、そこでゲットできるもの。</p></div>
+      <div class="grid" id="list-spots"></div>
+      <p class="empty" id="spots-empty">まだ登録されていません。準備ができしだい追加します。</p>
+    </section>
+
+    <section class="panel" id="materials">
+      <div class="sec-head"><span class="idx">Materials</span><h2>新素材</h2><p>どこで手に入り、何に使うか。</p></div>
+      <div class="grid" id="list-materials"></div>
+    </section>
+
+    <section class="panel" id="facilities">
+      <div class="sec-head"><span class="idx">Facilities</span><h2>新施設</h2><p>船に置く施設の建造素材。船体構造メニューの分類ごとに並べています。</p></div>
+      <div id="list-facilities"></div>
+    </section>
+
+    <section class="panel" id="vehicles">
+      <div class="sec-head"><span class="idx">Vessels</span><h2>船・乗り物</h2><p>移動できる水上の領地と、騎乗できる生き物。</p></div>
+      <div class="grid" id="list-vehicles"></div>
+    </section>
+
+    <section class="panel" id="guns">
+      <div class="sec-head"><span class="idx">Armament</span><h2>船砲・武装</h2><p>建造素材はゲーム内で確認済み。黄色のタグは公式予告で第2ステージ追加とされているもの。</p></div>
+      <div class="grid" id="list-guns"></div>
+    </section>
+
+    <section class="panel" id="features">
+      <div class="sec-head"><span class="idx">What's New</span><h2>新要素</h2><p>モード、装備、料理、生き物、報酬、RaidZone。</p></div>
+      <div class="filters" id="feat-filters" role="group" aria-label="分類で絞り込み"></div>
+      <div class="grid" id="list-features"></div>
+    </section>
+
+    <div class="nohit hide" id="nohit"></div>
+
+    <section id="log-sec">
+      <div class="sec-head"><span class="idx">Changelog</span><h2 style="font-size:22px">更新履歴</h2></div>
+      <div class="log" id="log"></div>
+    </section>
+  </div>
+</main>
+
+<footer class="gut">
+  <div class="inner">
+    <div><b>非公式</b>のファン製作ページです。開発・運営元とは関係ありません。広告・収益化はしていません。</div>
+    <div>Once Human © NetEase / Starry Studio。権利者から要請があれば速やかに修正・削除します。</div>
+    <div>運営・ご連絡: ユッケ（X <a href="https://x.com/Yukhoeonce" target="_blank" rel="noopener">@Yukhoeonce</a>）</div>
+  </div>
+</footer>
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+  <div class="sheet-head"><div class="inner"><button type="button" class="sheet-back" id="sheet-back" hidden></button><span class="sheet-cat" id="sheet-cat"></span><button type="button" class="sheet-x" id="sheet-x">閉じる ✕</button></div></div>
+  <div class="sheet-body"><h2 id="sheet-title"></h2><div class="sheet-content" id="sheet-content"></div></div>
+</div>
+
+<script>
+// 追記ルール: ok:true はゲーム内で確認済み。数値が不明な欄は空のままにすると「確認待ち」と表示される。
+const DATA = {
+  start: "2026-10-22",
+  updated: "2026-10-22",
+  info: [
+    { k: "配信日", v: "10/22 メンテナンス後" },
+    { k: "対応", v: "PC・コンソール・モバイル" },
+    { k: "タイプ", v: "PvE（別途 PvP の RaidZone あり）" },
+    { k: "期間", v: "コア体験は約21日。2ステージ制" },
+    { k: "第1ステージ", v: "約5〜10日。サーバー全体の浄化が進むと短くなる" },
+    { k: "第2ステージ", v: "11日。迷い船の艦隊・災厄の塔・深淵・海上災厄エリア・漂う温室が登場" },
+    { k: "浄化100%", v: "海墟の王の入口が浮上し、最終チャレンジへ" },
+    { k: "永続サーバー", v: "11/13 開放予定" },
+    { k: "ワールド数", v: "各サーバー12" },
+    { k: "キャラクター", v: "最大レベルから開始。クレイドルなし" },
+    { k: "異常現象", v: "配信時はなし。S5開放後に追加" },
+    { k: "成長の軸", v: "探索・採集・チャレンジでテックを進め、装備品質や施設を解放する" },
+    { k: "設計図・モッド", v: "持ち込み可。ただし製作品質とモッド枠はテックの進み具合で制限される" }
+  ],
+  // おすすめスポット: { name, zone（エリア名）, pos（座標）, get: ["素材名", ...], has: ["施設名", ...], lv, note }
+  spots: [
+    { name: "金鉱石の採掘地", zone: "炎の岩場", pos: "(-1553, -4904)", get: ["金鉱石"], lv: "高レベル帯", note: "金鉱石がたくさんあるエリア" },
+    { name: "針山遺跡", zone: "泉湧く谷", pos: "(-1723, -6607)", has: ["スターダスト融合調理台"], lv: "高レベル帯", note: "スターダスト融合調理台がある" },
+    { name: "昇天局ジュロン観測所", zone: "炎の岩場", pos: "(-1401, -4552)", has: ["スターダスト電気ファーネス", "ハイブリットファーネス"], lv: "高レベル帯", note: "スターダスト電気ファーネス、ハイブリットファーネスなど、レアな施設が多くある" }
+  ],
+  zones: [
+    { name: "薫風の岬", tag: "スタート地点", desc: "花の海・ヤシ林・岩礁の浅瀬。廃墟と座礁船がある", fix: "", out: "廃船で素材集めと航海の準備" },
+    { name: "影の入江", tag: "呪いのミスト", desc: "寒冷ツンドラ。温度が下がり、視界が狭くなる（HPが低いほど狭い）", fix: "ミストコアの開眼スープ（視界＋寒冷耐性）／燃焼コアランタン（温度上昇・耐久消費）", out: "ミストコア草 → 呪いのミストの灯芯" },
+    { name: "霧深い沼", tag: "ブラックタイド", desc: "密林と毒沼。胞子嚢の近くで塊を採ると理性を消費する", fix: "ブラックタイド防護ガスマスク（理性減少を緩和・耐久消費）", out: "ブラックタイドの塊（理性が高いほど多く採れる）" },
+    { name: "泉湧く谷", tag: "タイムレイン", desc: "湿熱の海岸。巨大ワニが出る。満腹・水分の消耗が速く、耐久も減る。作物と動物は成長が速くなる", fix: "リバースタイムクッキー／リバースタイム・レインコート（移動速度やや低下）", out: "瓶詰めの雨粒" },
+    { name: "炎の岩場", tag: "天火石", desc: "活火山と溶岩。隕石が周囲にダメージを与え温度を上げる。大型の隕石には守護デビアントがいる", fix: "冷却シート（熱中症を解除）／暖か冷たし（寒暑耐性）", out: "天火石・希少鉱物" }
+  ],
+  materials: [
+    { name: "ブラックタイドの塊", where: "ブラックタイドでブラックウォーターを採集して獲得（霧深い沼の胞子嚢付近。採集で理性を消費し、理性が高いほど多く採れる）", use: "潜水アイテム、水循環関連施設", ok: true, only: true },
+    { name: "ブラックタイド燃料", where: "特殊資源の自動採掘", use: "発電機、燃料プロペラ（予告では「フューエルプロペラ」）" },
+    { name: "ミストコア草", where: "影の入江", use: "採集すると呪いのミストの灯芯になる" },
+    { name: "呪いのミストの灯芯", where: "ミストコア草から", use: "船砲の砲弾、電力施設" },
+    { name: "瓶詰めの雨粒", where: "タイムレインで敵を倒し、作物を採集して獲得", use: "水上生産施設、栽培や養殖に関連する施設", ok: true, only: true },
+    { name: "天火石", where: "炎の岩場で天火石の隕石を採掘して獲得", use: "合金製の船体構造、自動採集施設", ok: true, only: true },
+    { name: "希少鉱物", where: "天火石の隕石", use: "合金製の船体、自動採集施設" },
+    { name: "深海石油", where: "掘削井戸で採取", use: "" },
+    { name: "オーシャン・ハート", where: "宝箱・宝の地図・迷い船など", use: "シナリオ専用の上級資源。チャレンジ報酬やシナリオ追加モッドの解放" },
+    { name: "海洋ゴミ", where: "海", use: "溶錬してプラスチック" },
+    { name: "硫黄水", where: "温泉の水を採集", use: "硫黄を精錬" },
+    { name: "生物の化石", where: "骸骨を採集", use: "酸液を抽出" },
+    { name: "イリエワニの皮", where: "イリエワニを狩猟", use: "装備の製作" },
+    { name: "潮見のゴム", where: "巨樹の幹", use: "ゴム加工" },
+    { name: "潮見の果実", where: "巨樹の樹冠", use: "料理" },
+    { name: "フジツボ・カニ・ロブスター", where: "潮干狩り・海", use: "海鮮料理" },
+    { name: "カキ", where: "潮干狩り・海", use: "殻・巻貝・貝肉・海草・真珠が採れる" },
+    { name: "スターフィッシュ", where: "砂浜での採集や、砂浜で潮の精霊を捕まえたときに一定確率で獲得", use: "料理の製作、研究作業台で抗菌薬の製作。生で食べると満腹度+10・理性値-300で胃腸不良になる", ok: true, only: true },
+    { name: "ウニ", where: "潮干狩り・海（刺傷に注意）", use: "料理、抗菌薬" },
+    { name: "アワビ", where: "潮干狩り・海", use: "料理、接着剤" },
+    { name: "貝殻", where: "海辺で貝殻や岩石を採集、砂浜で潮の精霊を捕獲して一定確率で獲得", use: "船の施設の建造", ok: true },
+    { name: "巻貝", where: "銅のプラスキアックスや電動ドリルで貝殻や岩石を採集する、または砂浜で潮の精霊を捕まえると一定確率で獲得", use: "船や各種施設の製造", ok: true, only: true },
+    { name: "精密ギアセット", where: "制御不能エリア（〜第5）のアイランド拠点にある各種箱から確率で獲得", use: "上級の船の施設・船砲", tip: "マップ内に置いてある船砲（精密ギアセットを使うもの）を回収ツールで回収し、分解作業台で分解すると精密ギアセットが手に入る", ok: true },
+    { name: "サンゴ鉱石", where: "電動ドリルで海底のサンゴ鉱石を採掘して獲得", use: "一部の施設や家具の製作", ok: true, only: true },
+    { name: "漂流瓶", where: "砂浜で探索し、潮の精霊を捕まえると一定確率で獲得", use: "使うと中のアイテムを獲得できる（予告では宝の地図・図書・船の設計図が出るとされる）", ok: true, only: true },
+    { name: "パール", where: "拠点の箱から一定確率で獲得、ほか（ゲーム内の説明は一部しか確認できていない）", use: "領地シールド・自動修理装置・ヘルプステーション", ok: true },
+    { name: "海賊コイン・龍涎香", where: "潮干狩り", use: "潮干狩りショップでの取引" }
+  ],
+  facilities: [
+    {"name": "アンカー", "cat": "基本施設", "desc": "アンカーを下ろすと、水上で船を安定させることができる", "build": [{"item": "砂利", "qty": 30}, {"item": "貝殻", "qty": 5}], "ok": true},
+    {"name": "舵輪", "cat": "基本施設", "desc": "乗り物を運転・操作できる", "build": [{"item": "銅鉱石", "qty": 20}, {"item": "原木", "qty": 20}, {"item": "貝殻", "qty": 10}], "ok": true},
+    {"name": "風向計", "cat": "基本施設", "desc": "風向きを示す", "build": [{"item": "金属廃物", "qty": 1}, {"item": "原木", "qty": 5}, {"item": "貝殻", "qty": 2}], "ok": true},
+    {"name": "櫓（ろ）", "cat": "動力施設", "desc": "人力駆動で、水上では推力が増加する", "build": [{"item": "原木", "qty": 35}, {"item": "貝殻", "qty": 3}], "ok": true},
+    {"name": "小型セイル", "cat": "動力施設", "desc": "風力駆動。風向きの変化に応じて、前後方向の推力が変化する", "build": [{"item": "織物", "qty": 5}, {"item": "原木", "qty": 15}], "ok": true},
+    {"name": "大型セイル", "cat": "動力施設", "desc": "風力駆動。風向きの変化に応じて、前後方向の推力が変化する", "build": [{"item": "織物", "qty": 10}, {"item": "鉄のインゴット", "qty": 10}, {"item": "貝殻", "qty": 20}], "ok": true},
+    {"name": "燃料プロペラ", "cat": "動力施設", "desc": "燃料で動く。水上での推進力が上昇する", "alias": "フューエルプロペラ", "build": [{"item": "銅鉱石", "qty": 15}, {"item": "金属廃物", "qty": 5}], "ok": true},
+    {"name": "上級燃料プロペラ", "cat": "動力施設", "desc": "燃料で動く。水上での推進力が上昇する", "build": [{"item": "タングステンインゴット", "qty": 35}, {"item": "金属廃物", "qty": 30}, {"item": "ゴム", "qty": 10}, {"item": "精密ギアセット", "qty": 5}, {"item": "サンゴ鉱石", "qty": 20}], "ok": true},
+    {"name": "電動プロペラ", "cat": "動力施設", "desc": "電力駆動で、水上で推力が増加する。強化効果「プロペラ：強」", "build": [{"item": "スチールインゴット", "qty": 20}, {"item": "金属廃物", "qty": 15}, {"item": "電子部品", "qty": 5}, {"item": "精密ギアセット", "qty": 2}, {"item": "巻貝", "qty": 3}], "ok": true},
+    {"name": "上級電動プロペラ", "cat": "動力施設", "desc": "電力駆動で、水上で推力が増加する。強化効果「プロペラ：強」", "build": [{"item": "タングステンインゴット", "qty": 25}, {"item": "プラスチック", "qty": 30}, {"item": "電子部品", "qty": 15}, {"item": "精密ギアセット", "qty": 5}, {"item": "サンゴ鉱石", "qty": 25}], "ok": true},
+    {"name": "サイドスラスター", "cat": "動力施設", "desc": "電力駆動で、水上で方向転換速度が増加する", "build": [{"item": "スチールインゴット", "qty": 20}, {"item": "プラスチック", "qty": 15}, {"item": "接着剤", "qty": 5}, {"item": "精密ギアセット", "qty": 2}, {"item": "巻貝", "qty": 5}], "ok": true},
+    {"name": "ブースター", "cat": "動力施設", "desc": "電力で動く。使用すると水上でスプリントでき、一時的に速度が上昇する", "build": [{"item": "合金製スチールインゴット", "qty": 15}, {"item": "プラスチック", "qty": 15}, {"item": "接着剤", "qty": 8}, {"item": "精密ギアセット", "qty": 3}, {"item": "巻貝", "qty": 10}], "ok": true},
+    {"name": "トロール網", "cat": "生産施設", "desc": "水面の航行に伴い、一定確率で水面の物資を獲得できる", "build": [{"item": "織物", "qty": 5}, {"item": "プラスチック", "qty": 5}, {"item": "貝殻", "qty": 3}], "ok": true, "prod": true, "recipes": [], "rate": ""},
+    {"name": "上級トロールネット", "cat": "生産施設", "desc": "水面の航行に伴い、一定確率で水面の物資を獲得できる。予告では通常より収穫が多いとされる", "build": [{"item": "織物", "qty": 20}, {"item": "プラスチック", "qty": 20}, {"item": "接着剤", "qty": 8}, {"item": "巻貝", "qty": 3}, {"item": "瓶詰めの雨粒", "qty": 30}], "ok": true, "prod": true, "recipes": [], "rate": ""},
+    {"name": "生け簀", "cat": "生産施設", "desc": "水中で魚群を養殖するための装置", "alias": "水中の生け簀", "build": [{"item": "鉄のインゴット", "qty": 10}, {"item": "ゴム", "qty": 5}, {"item": "プラスチック", "qty": 5}, {"item": "貝殻", "qty": 5}], "ok": true, "prod": true, "recipes": [], "rate": "8時間ごとに1回繁殖。毎回4種類で、レア魚類が生まれることもある", "extra": [{"l": "上限", "t": "居住性 1000／食料 5000"}, {"l": "エサ（食料Pt）", "t": "生肉・ステーキ肉・貝の身 100／変異ステーキ肉 160／キャベツ・コムギ・テン菜・ジャガイモ・トウモロコシ・カボチャ 50／海草・ブルーベリー・オレンジ・キノコ・レッドベリー 30／キバナハス・エキナセア・セージ・ヒメヒオウギ・キキョウ・サフラン 20（ほかにアロエベラ・サボテンなども入れられる）"}]},
+    {"name": "上級生け簀", "cat": "生産施設", "desc": "水中で魚群を養殖するための装置。居住性の上限が通常の2倍", "build": [{"item": "スチールインゴット", "qty": 15}, {"item": "ゴム", "qty": 10}, {"item": "プラスチック", "qty": 10}, {"item": "巻貝", "qty": 3}, {"item": "瓶詰めの雨粒", "qty": 40}], "ok": true, "prod": true, "recipes": [], "rate": "8時間ごとに1回繁殖。毎回4種類で、レア魚類が生まれることもある", "extra": [{"l": "上限", "t": "居住性 2000／食料 5000"}, {"l": "エサ（食料Pt）", "t": "生肉・ステーキ肉・貝の身 100／変異ステーキ肉 160／キャベツ・コムギ・テン菜・ジャガイモ・トウモロコシ・カボチャ 50／海草・ブルーベリー・オレンジ・キノコ・レッドベリー 30／キバナハス・エキナセア・セージ・ヒメヒオウギ・キキョウ・サフラン 20（ほかにアロエベラ・サボテンなども入れられる）"}]},
+    {"name": "掘削井戸", "cat": "生産施設", "desc": "海上で深海石油を獲得する装置", "build": [{"item": "合金製スチールインゴット", "qty": 20}, {"item": "電子部品", "qty": 10}, {"item": "接着剤", "qty": 10}, {"item": "蓄電池", "qty": 2}, {"item": "瓶詰めの雨粒", "qty": 50}], "ok": true, "prod": true, "recipes": [{"in": [], "out": [{"item": "海水（海洋エリア）"}]}, {"in": [], "out": [{"item": "汚水（全エリア）"}]}, {"in": [], "out": [{"item": "汚染水（汚染エリア）"}]}, {"in": [], "out": [{"item": "タンク入り原油（油田エリア）"}]}], "rate": "海水 4.8個/分（ゲーム内で確認）。ほかの産出物は未確認", "extra": [{"l": "メモ", "t": "産出する資源を選んで使う。電力が必要。保管上限 4000。公式予告にある「深海石油」は、確認した画面の一覧には出ていなかった"}]},
+    {"name": "領地シールド", "cat": "特殊施設", "desc": "特殊な防衛施設。起動すると、あらゆる攻撃から領地を一定時間守れる", "alias": "領地防護", "build": [{"item": "タングステンインゴット", "qty": 50}, {"item": "電子部品", "qty": 25}, {"item": "パール", "qty": 1}, {"item": "スターダストエーテル", "qty": 120}, {"item": "瓶詰めの雨粒", "qty": 50}], "ok": true},
+    {"name": "自動修理装置", "cat": "特殊施設", "desc": "起動すると、破損した全板材を継続的に修理する特殊な装置", "alias": "領地修復施設", "build": [{"item": "タングステンインゴット", "qty": 60}, {"item": "接着剤", "qty": 40}, {"item": "パール", "qty": 1}, {"item": "スターダストエーテル", "qty": 100}, {"item": "瓶詰めの雨粒", "qty": 50}], "ok": true},
+    {"name": "ヘルプステーション", "cat": "特殊施設", "desc": "特殊な施設。瀕死状態でこの施設の近くまで這っていくと自動的に救助される", "build": [{"item": "タングステンインゴット", "qty": 55}, {"item": "ゴム", "qty": 30}, {"item": "パール", "qty": 1}, {"item": "スターダストエーテル", "qty": 120}, {"item": "瓶詰めの雨粒", "qty": 50}], "ok": true},
+    {"name": "発電機（ブラックタイド燃料）", "cat": "電力", "desc": "ブラックタイド燃料で電力上限を上げる", "build": [], "prod": true, "recipes": [{"in": [{"item": "ブラックタイド燃料"}], "out": [{"item": "電力"}]}], "rate": ""},
+    {"name": "水循環施設", "cat": "", "desc": "ブラックタイドの塊などを使う", "build": [{"item": "ブラックタイドの塊"}]},
+    {"name": "自動採集施設", "cat": "採集", "desc": "天火石や希少鉱物を使って製作する", "build": [{"item": "天火石"}, {"item": "希少鉱物"}]}
+  ],
+  vehicles: [
+    { name: "船", desc: "移動できる水上の領地。船底・船舷・船首・デッキ・手すりを、四角・三角・斜面・曲線で自由に組み合わせる。コアデッキにつながった構造と施設を設計図として保存できる", note: "材質: 木製／鉄製／スチール製／合金製（合金は天火石・希少鉱物）", build: [] },
+    { name: "船の動力", desc: "手動・帆走・燃料・電力の4種類。ブースターとサイドスラスターで機動性と旋回性を上げる。各施設の建造素材は「新施設」タブの動力施設を参照", note: "ルートを登録して自動巡航、水中テレポート、ワールドをまたぐ船の帰還、船上リスポーンあり", build: [] },
+    { name: "イリエワニ", desc: "麻酔吹き矢で捕獲し、領地で飼育・繁殖できる。水面に呼び出して騎乗でき、騎乗中はダメージ軽減・反射", note: "泉湧く谷に出現", build: [] }
+  ],
+  guns: [
+    {"name": "衝角", "lv": "", "desc": "木製の衝角。現在の速度に応じて敵に衝突DMGを与える", "build": [{"item": "銅鉱石", "qty": 50}, {"item": "原木", "qty": 20}], "ok": true},
+    {"name": "エリート衝角", "lv": "", "desc": "金属の衝角。通常の衝角よりも殺傷力が高い", "build": [{"item": "合金製スチールインゴット", "qty": 50}, {"item": "金属廃物", "qty": 20}, {"item": "ゴム", "qty": 5}], "ok": true},
+    {"name": "簡素ハープーンキャノン", "lv": "Lv.1", "desc": "ハープーンを発射できる砲台。海洋生物用に設計された兵器だが、敵への攻撃にも使える", "build": [{"item": "銅鉱石", "qty": 20}, {"item": "原木", "qty": 20}], "ok": true},
+    {"name": "簡素ロングキャノン", "lv": "Lv.1", "desc": "古びた艦載大砲。弱い船や生物くらいしか攻撃できない", "build": [{"item": "銅鉱石", "qty": 35}, {"item": "原木", "qty": 25}], "ok": true},
+    {"name": "速射砲", "lv": "Lv.2", "desc": "射撃速度が速く、砲弾の飛行速度も速いライト大砲", "build": [{"item": "鉄のインゴット", "qty": 25}, {"item": "原木", "qty": 30}, {"item": "パーツ", "qty": 10}], "ok": true},
+    {"name": "フロスト砲", "lv": "Lv.2", "desc": "命中した対象の温度を低下させ、スピードダウンさせることができる艦載大砲", "alias": "氷結砲", "build": [{"item": "鉄のインゴット", "qty": 20}, {"item": "原木", "qty": 30}, {"item": "接着剤", "qty": 6}], "ok": true},
+    {"name": "散弾砲", "lv": "Lv.3", "desc": "一度に3発の砲弾を同時に発射できる大砲。発射された砲弾は扇状に散る", "build": [{"item": "スチールインゴット", "qty": 25}, {"item": "金属廃物", "qty": 25}, {"item": "パーツ", "qty": 20}, {"item": "精密ギアセット", "qty": 2}], "ok": true},
+    {"name": "機雷ランチャー", "lv": "Lv.3", "desc": "機雷を発射できる装置。発射された機雷はトラップを形成し、接触した敵に大量のダメージを与える", "build": [{"item": "スチールインゴット", "qty": 20}, {"item": "ゴム", "qty": 5}, {"item": "電子部品", "qty": 10}, {"item": "精密ギアセット", "qty": 2}], "ok": true},
+    {"name": "エリートハープーンキャノン", "lv": "Lv.4", "desc": "極めて優れたハープーンキャノン。より高ダメージを与えられる", "build": [{"item": "合金製スチールインゴット", "qty": 30}, {"item": "金属廃物", "qty": 20}, {"item": "接着剤", "qty": 20}, {"item": "精密ギアセット", "qty": 3}], "ok": true},
+    {"name": "連発ロングキャノン", "lv": "Lv.4", "desc": "砲弾を3発連射できる大砲", "build": [{"item": "合金製スチールインゴット", "qty": 35}, {"item": "電子部品", "qty": 15}, {"item": "パーツ", "qty": 20}, {"item": "精密ギアセット", "qty": 3}], "ok": true},
+    {"name": "エリートロングキャノン", "lv": "Lv.5", "desc": "非常に優れた艦載大砲。甲板などの構造に大ダメージを与え、生物に対しても殺傷力がある", "build": [{"item": "タングステンインゴット", "qty": 25}, {"item": "接着剤", "qty": 20}, {"item": "プラスチック", "qty": 20}, {"item": "精密ギアセット", "qty": 5}], "ok": true},
+    {"name": "エリート速射砲", "lv": "Lv.5", "desc": "レベルアップした速射砲は、通常の速射砲の火力不足という弱点を補っている", "build": [{"item": "タングステンインゴット", "qty": 25}, {"item": "電子部品", "qty": 12}, {"item": "プラスチック", "qty": 20}, {"item": "精密ギアセット", "qty": 5}], "ok": true},
+    {"name": "エリート散弾砲", "lv": "Lv.5", "desc": "一度に5発の砲弾を同時に発射できる大砲。発射された砲弾は扇状に散る", "build": [{"item": "タングステンインゴット", "qty": 25}, {"item": "ゴム", "qty": 12}, {"item": "パーツ", "qty": 20}, {"item": "精密ギアセット", "qty": 5}], "ok": true},
+    {"name": "腐食砲", "lv": "Lv.5", "desc": "異常エネルギーが付着した大砲は、命中した対象が受けるダメージを増加させる", "build": [{"item": "タングステンインゴット", "qty": 25}, {"item": "金属廃物", "qty": 30}, {"item": "パーツ", "qty": 20}, {"item": "精密ギアセット", "qty": 5}], "ok": true},
+    {"name": "ロケットランチャー", "lv": "Lv.6", "desc": "複数の砲弾を連射できる大砲。1回の操作で膨大な量の弾薬を消費する", "build": [{"item": "タングステンインゴット", "qty": 60}, {"item": "金属廃物", "qty": 50}, {"item": "精密ギアセット", "qty": 5}, {"item": "天火石", "qty": 50}], "ok": true, "s2": true},
+    {"name": "連発散弾砲", "lv": "Lv.6", "desc": "多斉射が可能な不思議な施設。近距離の大型ユニットに対しては極めて高い殺傷力を発揮する", "build": [{"item": "タングステンインゴット", "qty": 50}, {"item": "接着剤", "qty": 30}, {"item": "精密ギアセット", "qty": 5}, {"item": "天火石", "qty": 50}], "ok": true, "s2": true},
+    {"name": "ジャベリンキャノン", "lv": "Lv.6", "desc": "追跡機能付きの砲弾を発射する高射砲台。マークした単一の対象に大ダメージを与える", "build": [{"item": "タングステンインゴット", "qty": 60}, {"item": "ゴム", "qty": 20}, {"item": "精密ギアセット", "qty": 5}, {"item": "天火石", "qty": 50}], "ok": true},
+    {"name": "爆発ドラム缶ランチャー", "lv": "Lv.6", "desc": "爆発ドラム缶の発射装置。対象に命中すると大爆発を起こし、範囲内に点火する", "alias": "爆発ドラム缶の発射装置", "build": [{"item": "タングステンインゴット", "qty": 50}, {"item": "モバイル混合燃料", "qty": 20}, {"item": "精密ギアセット", "qty": 5}, {"item": "天火石", "qty": 50}], "ok": true, "s2": true},
+    {"name": "凍結砲", "lv": "Lv.6", "desc": "氷結弾を発射するロングキャノン。命中した敵はフローズン状態になる", "build": [{"item": "タングステンインゴット", "qty": 60}, {"item": "スターダストエーテル", "qty": 100}, {"item": "精密ギアセット", "qty": 5}, {"item": "天火石", "qty": 50}], "ok": true, "s2": true}
+  ],
+  features: [
+    { cat: "モード", name: "潮干狩り", desc: "砂の穴・泡立つ穴・光る割れ目を調べて採集。漂流瓶から宝の地図・図書・船の設計図が出る。一部は商人でバッテリーと交換" },
+    { cat: "モード", name: "水中探索・宝探し", desc: "浮遊コンテナや光る浮遊藻が沈没船・水中ラボの目印。浅瀬から深海へ段階的に進む。酸素と帰り道の計画が大事" },
+    { cat: "モード", name: "深海釣り", desc: "深海の竿でシャーク・マグロなどの大物を狙う" },
+    { cat: "モード", name: "迷い船", desc: "船同士で交戦し、重要施設を壊してから乗り込んで財宝を得る。ステージが進むと強くなる", tags: ["第1"] },
+    { cat: "モード", name: "迷い船の艦隊", desc: "巨大な迷い船が複数の迷い風艇を率いて巡回する。奇襲に注意", tags: ["第2"] },
+    { cat: "モード", name: "災厄の塔", desc: "触手と弱点が中心。支援目標を先に処理して火力を集中。メインクエスト達成で装備製作が解放", tags: ["第1"] },
+    { cat: "モード", name: "災厄の塔・深淵", desc: "触手が強化・重複し、コアも攻撃してくる。高波・濃霧・氷山・水の竜巻", tags: ["第2"] },
+    { cat: "モード", name: "災厄の巣", desc: "陸上ボス「災厄の梟」。復讐ギミックで味方を守りつつ隙を作る。羽で打ち上げられ空中戦も", tags: ["第1"] },
+    { cat: "モード", name: "海上災厄エリア", desc: "灯台幼体の周りに榴弾砲と機雷。機雷を起爆→支持構造を破壊→シールドコアを破壊→幼体を撃破", tags: ["第2"] },
+    { cat: "モード", name: "漂う温室", desc: "島に近づくと毒の池を呼び出して飛び立つ。倒すと報酬と変異植物が出る", tags: ["第2"] },
+    { cat: "モード", name: "海墟の王", desc: "浄化100%で入口が浮上。灯台幼体で門を開き、チームで内部へ。変形するコア、触手、残骸の叩きつけ、広がるマグマ", tags: ["浄化100%"] },
+    { cat: "装備", name: "潜水装備", desc: "ベーシックダイビングスーツ→シャークダイビングスーツ（防護強化＋潜水速度）。魚脂膏で温度耐性と一時的な水質汚染の遮断。酸素ボンベは自動使用、空気入れ浮き袋で緊急浮上、エアパッドで足場、水中銃" },
+    { cat: "装備", name: "リバースタイム溶接ガン", desc: "建築物と施設の耐久度を回復する" },
+    { cat: "装備", name: "豊漁のお守り", desc: "海上生産の装備" },
+    { cat: "料理", name: "鮮魚料理", desc: "満腹度+50。効果「エコスイム」1800秒: 水泳中、満腹度と水分の減少速度が低下する。初級調理台・上級調理台で製作。24時間で腐る", ok: true },
+    { cat: "料理", name: "リバースタイムクッキー", desc: "満腹度+20。900秒間、タイムレインによる影響を無効化する。キャンプサイト・初級調理台・上級調理台で製作", ok: true },
+    { cat: "料理", name: "イカの隠れ身なます", desc: "水中モンスターに狙われる範囲を縮める" },
+    { cat: "料理", name: "魚の脂たっぷりスープ", desc: "水泳時の消耗軽減" },
+    { cat: "料理", name: "オールドキャプテン・ラム酒", desc: "水分・理性回復、被ダメージ軽減。ただし視界が揺れる" },
+    { cat: "料理", name: "酩酊疾走", desc: "水分・理性回復、被弾時にスプリント速度アップ" },
+    { cat: "料理", name: "具材たっぷりほっこりスープ", desc: "海鮮が多いほど理性回復と汚染耐性が上がる" },
+    { cat: "生物", name: "巨大なイカ", desc: "触手で船に張り付いて動けなくする。触手を集中攻撃して切ると逃げる" },
+    { cat: "生物", name: "シャーク", desc: "しつこく追ってくる。迎え撃つか逃げるかをすぐ決める" },
+    { cat: "生物", name: "マグロ", desc: "水面近くを泳いで跳ねる。跳んだ瞬間が狩りの好機" },
+    { cat: "生物", name: "クラゲ", desc: "断続的に放電する。距離を取る" },
+    { cat: "生物", name: "アンコウ", desc: "近くにいると海水汚染を無効にする加護" },
+    { cat: "生物", name: "バブルフィッシュ", desc: "泡を吸うと酸素を補給できる" },
+    { cat: "モンスター", name: "ロゼッタ：アビス・ディフェンダー", desc: "蒸気フィールドで味方にシールドを張る。先に倒す" },
+    { cat: "モンスター", name: "ハゲワシ：溺光の使徒", desc: "ランプの色が変わると与ダメ・被ダメが増える。敵意を引いて素早く倒す" },
+    { cat: "モンスター", name: "デビアント：深海の眷属", desc: "倒すとフジツボが爆発して周りを回復する。引き離して1体ずつ倒す" },
+    { cat: "報酬", name: "デュエット（新デビエーション）", desc: "海墟の王で入手のチャンス。領地内の天気をリアルタイムで変え、領地内のプレイヤーと施設に影響する" },
+    { cat: "報酬", name: "色違いデビエーション（8種）", desc: "ブロークンガール（災厄の塔）／狐主任（漂う温室）／ヘクセンハウス（災厄の塔）／クジラワン（迷い船）／スペースキューブ（海上災厄エリア）／スノードーム（災厄）／NO.37（迷い船）／混沌・蝶の夢（カオス灯台）" },
+    { cat: "報酬", name: "精密装填（ボトムス用モッド）", desc: "遠距離で弱点に当たるとリロードする" },
+    { cat: "報酬", name: "榴弾砲強化（グローブ用モッド）", desc: "使用する施設のダメージが上がる" },
+    { cat: "報酬", name: "シナリオ追加モッド", desc: "海墟の王、または災厄の塔・海墟の王の報酬フェーズでオーシャン・ハートを使って入手" },
+    { cat: "RaidZone", name: "海上コア対抗", desc: "ワールド分けなしで全員が同じ海域。資源は少なく、遭遇は多い" },
+    { cat: "RaidZone", name: "船のHP", desc: "攻撃で総HPが減り、0で沈没。積荷は戻らない。設計図を保存していればそれで再召喚、なければ初期の船" },
+    { cat: "RaidZone", name: "入り方", desc: "サインイン画面左上で【RaidZone】に切り替え→【禁断の島：RaidZone】サーバーを選ぶ" }
+  ],
+  log: [
+    { d: "2026-10-22", t: "おすすめスポットに3か所追加（金鉱石の採掘地、針山遺跡、昇天局ジュロン観測所）" },
+    { d: "2026-10-22", t: "「おすすめスポット」タブを追加（座標とゲットできるもの）" },
+    { d: "2026-10-22", t: "詳細の建造素材から素材の説明へ移動できるように（戻るボタン付き）" },
+    { d: "2026-10-22", t: "カテゴリーごとに色分けしたタイル表示に変更。押すと詳細が全画面で開く。文字を大きく" },
+    { d: "2026-10-22", t: "精密ギアセットのおすすめの集め方（マップの船砲を回収して分解）を追加" },
+    { d: "2026-10-22", t: "新施設タブを分類ごとの見出し付きにし、生産施設を横長カードにして見やすく整理" },
+    { d: "2026-10-22", t: "生け簀の繁殖・エサ、掘削井戸の産出と生産効率、素材と料理の詳細をゲーム内で確認して追加" },
+    { d: "2026-10-22", t: "船の施設20種と船砲・衝角19種の建造素材をゲーム内で確認して追加。素材に「使う施設」を表示" },
+    { d: "2026-10-21", t: "デザインを一新（タブ切り替え・全体検索）" },
+    { d: "2026-10-21", t: "公式開発者ブルーポスト（10/16）の予告内容を追加。数値は確認待ち" },
+    { d: "2026-10-21", t: "ページを用意" }
+  ]
+};
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const P = '<span class="pending">確認待ち</span>';
+const val = s => s ? esc(s) : P;
+const src = x => x.ok ? '<span class="tag ok">確認済</span>' : '<span class="tag pre">予告</span>';
+const qty = x => x.qty ? `<span class="num">×${esc(x.qty)}</span>` : '<span class="pending">数量?</span>';
+const items = arr => arr && arr.length ? '<ul class="items">' + arr.map(x => `<li><span>${esc(x.item)}</span>${qty(x)}</li>`).join("") + "</ul>" : P;
+const side = arr => arr.map(x => esc(x.item) + (x.qty ? ` <span class="num">${esc(x.qty)}</span>` : "")).join(" + ");
+const stage = t => (t || []).map(s => `<span class="tag ${s === "第2" ? "s2" : ""}">${esc(s === "第1" || s === "第2" ? s + "ステージ" : s)}</span>`).join("");
+const put = (id, html) => { document.getElementById(id).innerHTML = html; };
+const alias = x => x.alias ? `<p style="font-size:12.5px;color:var(--muted)">公式予告での呼び名：${esc(x.alias)}</p>` : "";
+const card = (inner, extra = "", cls = "") => `<article class="card ${cls}" ${extra}>${inner}</article>`;
+
+function render(){
+  for (const k of ["zones","spots","materials","facilities","vehicles","guns","features"])
+    document.querySelector(`[data-count="${k}"]`).textContent = DATA[k].length;
+
+  const get = k => (DATA.info.find(x => x.k === k) || {}).v || "";
+  put("stats", [["21","日","コア体験の期間"],["2","段階","ステージ制"],["12","","各サーバーのワールド数"],["11/13","","永続サーバー開放"]]
+    .map(([n,u,l]) => `<div class="stat"><b>${n}<small>${u}</small></b><span>${l}</span></div>`).join(""));
+  put("timeline", [["10/22","正式リリース（メンテ後）"],["第1ステージ",get("第1ステージ")],["第2ステージ",get("第2ステージ")],["浄化100%",get("浄化100%")],["11/13","永続サーバー開放予定"]]
+    .map(([d,t]) => `<li><b>${esc(d)}</b><span>${esc(t)}</span></li>`).join(""));
+  const skip = new Set(["第1ステージ","第2ステージ","浄化100%","永続サーバー","配信日","期間","ワールド数"]);
+  put("facts", DATA.info.filter(x => !skip.has(x.k)).map(x => `<div><dt>${esc(x.k)}</dt><dd>${esc(x.v)}</dd></div>`).join(""));
+
+  put("list-spots", DATA.spots.map(x => card(`
+      ${x.lv ? `<div class="tagrow"><span class="tag s2">${esc(x.lv)}</span></div>` : ""}<h3>${esc(x.name)}</h3>
+      <dl class="kv"><dt>座標</dt><dd class="pos">${val(x.pos)}</dd>${x.zone ? `<dt>エリア</dt><dd>${esc(x.zone)}</dd>` : ""}${x.get ? `<dt>ゲット</dt><dd>${x.get.map(g => `<span class="nb getm">${esc(g)}</span>`).join("、")}</dd>` : ""}${x.has ? `<dt>施設</dt><dd>${x.has.map(g => `<span class="nb">${esc(g)}</span>`).join("、")}</dd>` : ""}${x.note ? `<dt>メモ</dt><dd>${esc(x.note)}</dd>` : ""}</dl>`,
+      `data-sum="${esc([x.pos ? "座標 " + x.pos : "", [...(x.get || []), ...(x.has || [])].join("・")].filter(Boolean).join("　"))}"`)).join(""));
+  $("#spots-empty").classList.toggle("hide", DATA.spots.length > 0);
+  put("list-zones", DATA.zones.map(z => card(`
+      <span class="hz">${esc(z.tag)}</span><h3>${esc(z.name)}</h3>
+      <dl class="kv"><dt>特徴</dt><dd>${esc(z.desc)}</dd>${z.fix ? `<dt>対策</dt><dd>${esc(z.fix)}</dd>` : ""}<dt>産出</dt><dd>${esc(z.out)}</dd></dl>`, "", "zone")).join(""));
+
+  // 素材 → それを建造に使う施設・船砲（建造素材のデータから自動で集める）
+  const usedBy = {};
+  [...DATA.facilities, ...DATA.guns].forEach(f => (f.build || []).forEach(b => {
+    (usedBy[b.item] = usedBy[b.item] || []).push((f.lv || "") + f.name + (b.qty ? ` ×${b.qty}` : ""));
+  }));
+  put("list-materials", DATA.materials.map(m => card(`
+      <div class="tagrow">${src(m)}</div><h3>${esc(m.name)}</h3>
+      ${m.only ? '<p style="font-size:12.5px;color:var(--accent-ink)">シナリオ専用。終了後は持ち出せない</p>' : ""}<dl class="kv"><dt>入手</dt><dd>${val(m.where)}</dd><dt>用途</dt><dd>${val(m.use)}</dd>${m.tip ? `<dt>おすすめ</dt><dd>${esc(m.tip)}</dd>` : ""}</dl>${usedBy[m.name] ? `<details class="more"><summary>この素材を使う施設・船砲（${usedBy[m.name].length}）</summary><div>${usedBy[m.name].map(u => `<span class="nb">${esc(u)}</span>`).join("、")}</div></details>` : ""}`)).join(""));
+
+  // 施設は分類ごとに見出しを付けて並べる。生産施設は横長カードにする
+  const GROUPS = ["基本施設","動力施設","生産施設","特殊施設"];
+  const feed = t => {
+    const [main, note] = t.split("（ほかに");
+    return '<div class="feed">' + main.split("／").sort((a, b) => (+(b.match(/\d+$/) || [0])[0]) - (+(a.match(/\d+$/) || [0])[0])).map(r => {
+      const m = r.trim().match(/^(.*)\s(\d+)$/);
+      return m ? `<div><b>${m[2]}</b><span>${esc(m[1])}</span></div>` : `<div><b></b><span>${esc(r)}</span></div>`;
+    }).join("") + (note ? `<p>ほかに${esc(note.replace(/）$/, ""))}</p>` : "") + "</div>";
+  };
+  const limits = t => '<div class="limits">' + t.split("／").map(x => { const m = x.trim().match(/^(\S+)\s(.+)$/); return m ? `<span>${esc(m[1])}<b>${esc(m[2])}</b></span>` : `<span>${esc(x)}</span>`; }).join("") + "</div>";
+  const extra = x => x.l !== "上限" ? `<details class="more"><summary>${esc(x.l.startsWith("エサ") ? "エサ（食料Pt）一覧" : x.l)}</summary><div>${x.l.startsWith("エサ") ? feed(x.t) : esc(x.t)}</div></details>` : `<div class="fac-block"><span class="lbl">${esc(x.l)}</span>${x.l.startsWith("エサ") ? feed(x.t) : x.l === "上限" ? limits(x.t) : `<div style="font-size:13.5px;color:var(--ink-2)">${esc(x.t)}</div>`}</div>`;
+  const head = f => `<div class="tagrow">${src(f)}${f.cat ? `<span class="hide">${esc(f.cat)}</span>` : ""}</div><h3>${esc(f.name)}</h3>${f.desc ? `<p>${esc(f.desc)}</p>` : ""}${alias(f)}`;
+  const facCard = f => {
+    if (!f.prod || !f.ok) return card(`${head(f)}<div class="fac-block"><span class="lbl">建造素材</span>${items(f.build)}</div>`);
+    const rec = f.recipes && f.recipes.length ? `<div class="fac-block"><span class="lbl">産出（選んで使う）</span><div class="recipes">${f.recipes.map(r => `<div>${r.in.length ? side(r.in) + '<span class="arrow">→</span>' : ""}${side(r.out)}</div>`).join("")}</div></div>` : "";
+    const rate = `<div class="fac-block"><span class="lbl">生産効率</span>${f.rate ? `<div class="prod-line">${esc(f.rate)}</div>` : '<span class="pending">中身と生産量は確認待ち</span>'}</div>`;
+    return card(`<div class="col">${head(f)}</div>
+      <div class="col"><div class="fac-block"><span class="lbl">建造素材</span>${items(f.build)}</div></div>
+      <div class="col">${rate}${rec}${(f.extra || []).map(extra).join("")}</div>`, "", "wide");
+  };
+  const groups = [...GROUPS.map(g => [g, DATA.facilities.filter(f => f.cat === g)]), ["予告のみ（未確認）", DATA.facilities.filter(f => !GROUPS.includes(f.cat))]].filter(([, l]) => l.length);
+  put("list-facilities", groups.map(([g, l]) => `<div class="fgroup"><h3 class="ghead">${esc(g)}<small>${l.length}</small></h3><div class="grid">${l.map(facCard).join("")}</div></div>`).join(""));
+
+  put("list-vehicles", DATA.vehicles.map(v => card(`
+      <div class="tagrow">${src(v)}</div><h3>${esc(v.name)}</h3><p>${esc(v.desc)}</p>
+      ${v.note ? `<p style="font-size:13.5px;color:var(--muted)">${esc(v.note)}</p>` : ""}
+      <div class="fac-block"><span class="lbl">製作素材</span>${items(v.build)}</div>`)).join(""));
+
+  put("list-guns", DATA.guns.map(g => card(`
+      <div class="tagrow">${g.lv ? `<span class="tag">${esc(g.lv)}</span>` : '<span class="tag">衝角</span>'}${g.s2 ? '<span class="tag s2">予告: 第2ステージ</span>' : ""}${src(g)}</div><h3>${esc(g.name)}</h3><p>${val(g.desc)}</p>${alias(g)}
+      <div class="fac-block"><span class="lbl">建造素材</span>${items(g.build)}</div>`)).join(""));
+
+  put("list-features", DATA.features.map(x => card(`
+      <div class="tagrow"><span class="tag">${esc(x.cat)}</span>${stage(x.tags)}${src(x)}</div><h3>${esc(x.name)}</h3><p>${val(x.desc)}</p>`, `data-cat="${esc(x.cat)}"`)).join(""));
+
+  const cats = ["すべて", ...new Set(DATA.features.map(x => x.cat))];
+  put("feat-filters", cats.map((c, i) => `<button type="button" data-c="${esc(c)}" aria-pressed="${i === 0}">${esc(c)}</button>`).join(""));
+  put("log", DATA.log.map(l => `<div><span>${esc(l.d)}</span>${esc(l.t)}</div>`).join(""));
+}
+render();
+
+/* ---------- カードをタイルにする（カテゴリー色＋要約）。押すと全画面で詳細 ---------- */
+const PAL = ["#e0603f","#2f6fd1","#3a9a50","#7b5bd6","#d08a1c","#1595a3","#c43d5a"];
+const CAT_COLOR = { "基本施設":"#1595a3","動力施設":"#2f6fd1","生産施設":"#3a9a50","特殊施設":"#7b5bd6","予告のみ（未確認）":"#7d8f99",
+  "モード":"#2f6fd1","報酬":"#d08a1c","料理":"#e0603f","生物":"#3a9a50","装備":"#7b5bd6","モンスター":"#c43d5a","RaidZone":"#1595a3" };
+function tilefy(el, label, color){
+  const name = el.querySelector("h3")?.textContent || "";
+  const ok = el.querySelector(".tag.ok") ? "確認済" : el.querySelector(".tag.pre") ? "予告" : "";
+  const sumEl = [...el.querySelectorAll("p, dd")].find(x => !x.getAttribute("style") && x.textContent.trim());
+  const full = el.innerHTML, wide = el.classList.contains("wide");
+  el.classList.remove("wide"); el.classList.add("tile");
+  el.style.setProperty("--c", color);
+  el.setAttribute("tabindex", "0"); el.setAttribute("role", "button");
+  el.dataset.label = label; if (wide) el.dataset.wide = "1";
+  el.innerHTML = `<div class="tophead"><span class="ctag">${esc(label)}</span>${ok ? `<span class="st">${ok}</span>` : ""}</div>
+    <h3>${esc(name)}</h3>${sumEl ? `<p class="sum">${esc(el.dataset.sum || sumEl.textContent.trim())}</p>` : ""}<span class="go">詳しく</span><div class="full">${full}</div>`;
+}
+document.querySelectorAll("#list-zones .card").forEach((el, i) => tilefy(el, DATA.zones[i].tag || "エリア", PAL[i % PAL.length]));
+document.querySelectorAll("#list-materials .card").forEach(el => tilefy(el, "素材", "#3a9a50"));
+document.querySelectorAll("#list-spots .card").forEach((el, i) => {
+  const zi = DATA.zones.findIndex(z => z.name === DATA.spots[i].zone);
+  tilefy(el, DATA.spots[i].zone || "スポット", zi >= 0 ? PAL[zi % PAL.length] : "#1595a3");
+  if (DATA.spots[i].lv) el.querySelector(".st") ? el.querySelector(".st").textContent = DATA.spots[i].lv : el.querySelector(".tophead").insertAdjacentHTML("beforeend", `<span class="st lv">${esc(DATA.spots[i].lv)}</span>`);
+});
+document.querySelectorAll("#list-facilities .fgroup").forEach(g => {
+  const cat = g.querySelector(".ghead").firstChild.textContent;
+  g.querySelector(".grid").classList.add("tiles");
+  g.querySelector(".ghead").style.setProperty("color", CAT_COLOR[cat] || "");
+  g.querySelectorAll(".card").forEach(el => tilefy(el, cat, CAT_COLOR[cat] || "#2f6fd1"));
+});
+document.querySelectorAll("#list-vehicles .card").forEach(el => tilefy(el, "船・乗り物", "#1595a3"));
+document.querySelectorAll("#list-guns .card").forEach((el, i) => tilefy(el, DATA.guns[i].lv || "衝角", DATA.guns[i].lv ? "#c43d5a" : "#d08a1c"));
+document.querySelectorAll("#list-features .card").forEach((el, i) => tilefy(el, DATA.features[i].cat, CAT_COLOR[DATA.features[i].cat] || "#2f6fd1"));
+document.querySelectorAll("#feat-filters button").forEach(b => { const c = CAT_COLOR[b.dataset.c]; if (c) { b.style.setProperty("--c", c); b.style.setProperty("--c-fg", "#fff"); } });
+["list-zones","list-spots","list-materials","list-vehicles","list-guns","list-features"].forEach(id => document.getElementById(id).classList.add("tiles"));
+
+const sheet = $("#sheet");
+// 名前 → タイル（素材は建造素材から、施設・船砲は「使う施設」から飛べるようにする）
+const matTile = new Map(), facTile = new Map();
+document.querySelectorAll("#list-materials .tile").forEach(t => matTile.set(t.querySelector(":scope > h3").textContent, t));
+document.querySelectorAll("#list-facilities .tile, #list-guns .tile").forEach(t => facTile.set(t.querySelector(":scope > h3").textContent, t));
+let stack = [];   // 開いている詳細の履歴（最後が今の表示）
+function showSheet(el){
+  const box = document.createElement("div"); box.innerHTML = el.querySelector(".full").innerHTML;
+  box.querySelectorAll("h3").forEach(h => h.remove());
+  box.querySelectorAll("details").forEach(d => d.open = true);
+  box.querySelectorAll(".tagrow").forEach(t => { if (!t.textContent.trim()) t.remove(); });
+  box.querySelectorAll("ul.items li > span:first-child").forEach(sp => {
+    if (matTile.has(sp.textContent)) sp.innerHTML = `<button type="button" class="xref" data-mat="${esc(sp.textContent)}">${esc(sp.textContent)}</button>`;
+  });
+  box.querySelectorAll(".getm").forEach(sp => {
+    if (matTile.has(sp.textContent)) sp.innerHTML = `<button type="button" class="xref" data-mat="${esc(sp.textContent)}">${esc(sp.textContent)}</button>`;
+  });
+  box.querySelectorAll(".more .nb").forEach(sp => {
+    const name = sp.textContent.replace(/\s×\d+$/, "").replace(/^Lv\.\d+/, "");
+    if (facTile.has(name)) sp.innerHTML = `<button type="button" class="xref" data-fac="${esc(name)}">${esc(sp.textContent)}</button>`;
+  });
+  box.querySelectorAll(".more > div").forEach(d => { const nb = d.querySelectorAll(".nb"); if (nb.length) { d.classList.add("chips"); d.innerHTML = [...nb].map(n => n.outerHTML).join(""); } });
+  sheet.style.setProperty("--c", el.style.getPropertyValue("--c"));
+  $("#sheet-cat").textContent = el.dataset.label;
+  $("#sheet-title").textContent = el.querySelector(":scope > h3").textContent;
+  $("#sheet-content").innerHTML = box.innerHTML;
+  const prev = stack[stack.length - 2];
+  $("#sheet-back").hidden = !prev;
+  if (prev) $("#sheet-back").textContent = `← ${prev.querySelector(":scope > h3").textContent}に戻る`;
+  sheet.hidden = false; sheet.scrollTop = 0;
+  sheet.classList.remove("open"); void sheet.offsetWidth; sheet.classList.add("open");
+  document.body.classList.add("lock");
+}
+function openSheet(el, deeper){
+  if (!deeper) { if (!sheet.hidden) return; stack = []; }
+  stack.push(el); showSheet(el);
+  history.pushState({ sheet: stack.length }, "");
+  if (!deeper) $("#sheet-x").focus({ preventScroll: true });
+}
+function hideSheet(){
+  sheet.hidden = true; document.body.classList.remove("lock");
+  const first = stack[0]; stack = [];
+  first && first.focus({ preventScroll: true });
+}
+function closeSheet(){
+  if (sheet.hidden) return;
+  const n = stack.length; hideSheet();
+  if (history.state && history.state.sheet) history.go(-n);
+}
+document.addEventListener("click", e => {
+  const x = e.target.closest(".xref");
+  if (x) { const t = x.dataset.mat ? matTile.get(x.dataset.mat) : facTile.get(x.dataset.fac); if (t) openSheet(t, true); return; }
+  const t = e.target.closest(".card.tile"); if (t) openSheet(t);
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeSheet();
+  const t = e.target.closest && e.target.closest(".card.tile");
+  if (t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openSheet(t); }
+});
+$("#sheet-x").addEventListener("click", closeSheet);
+$("#sheet-back").addEventListener("click", () => history.back());
+// ブラウザ・iPadの「戻る」でも1つ前の詳細へ戻る
+addEventListener("popstate", () => {
+  const d = (history.state && history.state.sheet) || 0;
+  if (!d) { if (!sheet.hidden) hideSheet(); return; }
+  if (!stack.length) return;
+  stack.length = Math.min(d, stack.length); showSheet(stack[stack.length - 1]);
+});
+
+/* ---------- タブ・検索 ---------- */
+// ひらがな・カタカナ・全角半角を同じ扱いにする。漢字の名前は読みでも引けるよう READ に読みを持たせる
+const READ = {"天火石":"てんかせき","希少鉱物":"きしょうこうぶつ","深海石油":"しんかいせきゆ","瓶詰め":"びんづめ","雨粒":"あまつぶ","呪い":"のろい","灯芯":"とうしん","海洋ゴミ":"かいようごみ","硫黄":"いおう","化石":"かせき","潮見":"しおみ","果実":"かじつ","貝殻":"かいがら","巻貝":"まきがい","海賊":"かいぞく","龍涎香":"りゅうぜんこう","生け簀":"いけす","掘削井戸":"くっさくいど","発電機":"はつでんき","水循環":"みずじゅんかん","自動採集":"じどうさいしゅう","施設":"しせつ","領地":"りょうち","修復":"しゅうふく","防護":"ぼうご","船":"ふね","砲":"ほう","速射":"そくしゃ","散弾":"さんだん","氷結":"ひょうけつ","腐食":"ふしょく","凍結":"とうけつ","衝角":"しょうかく","機雷":"きらい","連発":"れんぱつ","爆発":"ばくはつ","潮干狩り":"しおひがり","水中":"すいちゅう","探索":"たんさく","宝探し":"たからさがし","宝の地図":"たからのちず","深海":"しんかい","釣り":"つり","迷い船":"まよいぶね","迷い風艇":"まよいふうてい","艦隊":"かんたい","災厄":"さいやく","塔":"とう","深淵":"しんえん","巣":"す","梟":"ふくろう","海上":"かいじょう","漂う温室":"ただようおんしつ","海墟の王":"かいきょのおう","灯台":"とうだい","幼体":"ようたい","潜水":"せんすい","溶接":"ようせつ","豊漁":"ほうりょう","お守り":"おまもり","鮮魚":"せんぎょ","料理":"りょうり","隠れ身":"かくれみ","魚":"さかな","脂":"あぶら","酒":"さけ","酩酊疾走":"めいていしっそう","具材":"ぐざい","巨大":"きょだい","溺光の使徒":"できこうのしと","眷属":"けんぞく","色違い":"いろちがい","精密装填":"せいみつそうてん","榴弾砲":"りゅうだんほう","強化":"きょうか","対抗":"たいこう","薫風の岬":"くんぷうのみさき","影の入江":"かげのいりえ","霧深い沼":"きりぶかいぬま","泉湧く谷":"いずみわくたに","炎の岩場":"ほのおのいわば","素材":"そざい","電力":"でんりょく","理性":"りせい","酸素":"さんそ","真珠":"しんじゅ","接着剤":"せっちゃくざい","抗菌薬":"こうきんやく","装備":"そうび","報酬":"ほうしゅう","燃料":"ねんりょう","隕石":"いんせき","温泉":"おんせん","骸骨":"がいこつ","巨樹":"きょじゅ","養殖":"ようしょく","捕獲":"ほかく","騎乗":"きじょう","飼育":"しいく","麻酔吹き矢":"ますいふきや","栽培":"さいばい","作物":"さくもつ","合金":"ごうきん","船体":"せんたい","帆":"ほ","設計図":"せっけいず","浄化":"じょうか","舵輪":"だりん","風向計":"ふうこうけい","櫓":"ろ","上級":"じょうきゅう","電動":"でんどう","修理":"しゅうり","装置":"そうち","精密":"せいみつ","鉱石":"こうせき","原木":"げんぼく","砂利":"じゃり","織物":"おりもの","金属廃物":"きんぞくはいぶつ","鉄":"てつ","銅":"どう","簡素":"かんそ","電子部品":"でんしぶひん","蓄電池":"ちくでんち","混合燃料":"こんごうねんりょう","生産":"せいさん","動力":"どうりょく","基本":"きほん","特殊":"とくしゅ","建造":"けんぞう","漂流瓶":"ひょうりゅうびん","海水":"かいすい","汚水":"おすい","汚染水":"おせんすい","原油":"げんゆ","繁殖":"はんしょく","餌":"えさ","食料":"しょくりょう","居住性":"きょじゅうせい","調理台":"ちょうりだい","金鉱石":"きんこうせき","針山遺跡":"はりやまいせき","昇天局":"しょうてんきょく","観測所":"かんそくじょ","融合":"ゆうごう","電気":"でんき","採掘地":"さいくつち","高":"こう","回収":"かいしゅう","分解":"ぶんかい","作業台":"さぎょうだい","集め方":"あつめかた"};
+const norm = s => String(s).normalize("NFKC").toLowerCase().replace(/[ァ-ヶ]/g, c => String.fromCharCode(c.charCodeAt(0) - 0x60)).replace(/\s+/g, "");
+function searchText(el){
+  if (el.dataset.s == null) {
+    const t = el.textContent;
+    el.dataset.s = norm(t + " " + Object.keys(READ).filter(k => t.includes(k)).map(k => READ[k]).join(" "));
+  }
+  return el.dataset.s;
+}
+const TABS = ["info","zones","spots","materials","facilities","vehicles","guns","features"];
+let tab = TABS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "info";
+let featCat = "すべて";
+
+function movePill(){
+  const b = document.querySelector(`#tabs button[aria-selected="true"]`), pill = $("#pill");
+  if (!b) { pill.style.width = "0px"; return; }
+  pill.style.width = b.offsetWidth + "px";
+  pill.style.transform = `translateX(${b.offsetLeft}px)`;
+}
+function stagger(panel){
+  panel.classList.remove("enter"); void panel.offsetWidth;
+  panel.querySelectorAll(".card:not(.hide),.stat,.timeline li").forEach((el, i) => el.style.setProperty("--i", Math.min(i, 14)));
+  panel.classList.add("enter");
+}
+function apply(animate){
+  const q = norm($("#q").value.trim());
+  document.querySelectorAll("#tabs button").forEach(b => b.setAttribute("aria-selected", !q && b.dataset.tab === tab));
+  movePill();
+  $("#log-sec").classList.toggle("hide", !!q);
+  let hits = 0;
+  document.querySelectorAll(".panel").forEach(sec => {
+    if (sec.id === "info") { sec.classList.toggle("hide", !!q || tab !== "info"); return; }
+    let shown = 0;
+    sec.querySelectorAll(".card").forEach(el => {
+      const ok = (!el.dataset.cat || featCat === "すべて" || el.dataset.cat === featCat) && (!q || searchText(el).includes(q));
+      el.classList.toggle("hide", !ok); if (ok) shown++;
+      if (q && ok) el.querySelectorAll("details.more").forEach(d => { d.open = norm(d.textContent).includes(q); });
+    });
+    sec.querySelectorAll(".fgroup").forEach(g => g.classList.toggle("hide", !g.querySelector(".card:not(.hide)")));
+    hits += shown;
+    sec.classList.toggle("hide", q ? shown === 0 : sec.id !== tab);
+    if (animate && !sec.classList.contains("hide")) stagger(sec);
+  });
+  if (animate && !q && tab === "info") stagger($("#info"));
+  $("#nohit").classList.toggle("hide", !q || hits > 0);
+  if (q && !hits) $("#nohit").textContent = `「${$("#q").value.trim()}」に一致する項目はまだありません。`;
+}
+$("#tabs").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  tab = b.dataset.tab; $("#q").value = ""; apply(true);
+  b.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+  const top = $(".bar").getBoundingClientRect().top + scrollY;
+  if (scrollY > top) scrollTo({ top, behavior: "smooth" });
+});
+// 日本語入力の変換中（「てｎ」など）は絞り込まず、確定してから反映する
+$("#q").addEventListener("input", e => { if (!e.isComposing) apply(false); });
+$("#q").addEventListener("compositionend", () => apply(false));
+$("#feat-filters").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  featCat = b.dataset.c;
+  document.querySelectorAll("#feat-filters button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  apply(true);
+});
+addEventListener("resize", movePill);
+document.fonts && document.fonts.ready.then(movePill);
+apply(true);
+
+/* ---------- ヒーローの数字・配信状態 ---------- */
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.querySelectorAll("[data-count-to]").forEach(el => {
+  const to = +el.dataset.countTo;
+  if (reduce) { el.textContent = to; return; }
+  const t0 = performance.now();
+  const step = t => { const k = Math.min(1, (t - t0) / 1400); el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+});
+(function(){
+  const left = new Date(DATA.start + "T00:00:00+09:00") - Date.now();
+  if (left > 0) { $("#cd").textContent = Math.ceil(left / 864e5); $("#cd-label").textContent = "日後に配信"; $("#status").textContent = "Coming Oct 22 · Once Human"; }
+  else { $("#cd").textContent = "配信中"; $("#cd-label").textContent = " 10/22 開始"; $("#status").textContent = "Now Live · Once Human"; }
+})();
+
+/* ---------- 海中（光の筋・泡・水面のゆらぎ） ---------- */
+(function(){
+  const cv = $("#sea"), ctx = cv.getContext("2d");
+  let w, h, dpr, t = 0, mx = .6;
+  const bubbles = [];
+  const size = () => {
+    dpr = Math.min(devicePixelRatio || 1, 2); w = cv.clientWidth; h = cv.clientHeight;
+    cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    bubbles.length = 0;
+    const n = Math.round(w / 22);
+    for (let i = 0; i < n; i++) bubbles.push(newBubble(true));
+  };
+  function newBubble(any){
+    return { x: Math.random() * w, y: any ? Math.random() * h : h + 10, r: .8 + Math.random() * Math.random() * 4.5,
+             v: .25 + Math.random() * .7, ph: Math.random() * 6.28, a: .25 + Math.random() * .45 };
+  }
+  size(); addEventListener("resize", size);
+  function frame(){
+    ctx.clearRect(0, 0, w, h);
+    // 水面のきらめき
+    const sg = ctx.createLinearGradient(0, 0, 0, h * .35);
+    sg.addColorStop(0, "rgba(190,240,255,.22)"); sg.addColorStop(1, "rgba(190,240,255,0)");
+    ctx.fillStyle = sg; ctx.fillRect(0, 0, w, h * .35);
+    ctx.save(); ctx.globalCompositeOperation = "lighter";
+    for (let row = 0; row < 3; row++) {
+      ctx.beginPath();
+      for (let x = 0; x <= w; x += 8) {
+        const y = 6 + row * 9 + Math.sin(x * .012 + t * 1.3 + row) * 3 + Math.sin(x * .031 - t * 1.7) * 1.5;
+        x ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+      }
+      ctx.strokeStyle = `rgba(220,250,255,${.16 - row * .045})`; ctx.lineWidth = 1.2; ctx.stroke();
+    }
+    // 光の筋
+    // 光の差し込む位置はゆっくり自動で揺れる
+    const src = w * (mx + Math.sin(t * .09) * .06);
+    for (let i = 0; i < 9; i++) {
+      const sway = Math.sin(t * .35 + i * 1.7) * 40;
+      const x0 = src + (i - 4) * w * .055 + sway * .3, spread = w * (.04 + (i % 3) * .02);
+      const xb = src + (i - 4) * w * .16 + sway;
+      const g = ctx.createLinearGradient(0, 0, 0, h);
+      const a = .03 + .035 * (.5 + .5 * Math.sin(t * .8 + i * 2.3));
+      g.addColorStop(0, `rgba(200,245,255,${a * 1.6})`); g.addColorStop(.7, `rgba(160,225,245,${a * .4})`); g.addColorStop(1, "rgba(160,225,245,0)");
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.moveTo(x0 - 6, 0); ctx.lineTo(x0 + 6, 0); ctx.lineTo(xb + spread, h); ctx.lineTo(xb - spread, h); ctx.closePath(); ctx.fill();
+    }
+    ctx.restore();
+    // 泡
+    for (const b of bubbles) {
+      b.y -= b.v; b.x += Math.sin(t * 1.4 + b.ph) * .25;
+      if (b.y < -10) Object.assign(b, newBubble(false));
+      const fade = Math.min(1, b.y / (h * .25));
+      ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, 6.283);
+      ctx.strokeStyle = `rgba(215,248,255,${b.a * fade})`; ctx.lineWidth = .9; ctx.stroke();
+      if (b.r > 2) { ctx.beginPath(); ctx.arc(b.x - b.r * .35, b.y - b.r * .35, b.r * .25, 0, 6.283); ctx.fillStyle = `rgba(255,255,255,${b.a * fade * .8})`; ctx.fill(); }
+    }
+    t += .016;
+    if (!reduce) requestAnimationFrame(frame);
+  }
+  frame();
+})();
+</script>
+
+</body>
+</html>
