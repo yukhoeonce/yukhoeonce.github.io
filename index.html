@@ -198,6 +198,11 @@ ul.items li{display:flex;justify-content:space-between;gap:10px;padding:1px 0}
 
 .log{display:flex;flex-direction:column;gap:6px;font-size:13.5px;color:var(--ink-2)}
 .log span{font-family:var(--f-mono);color:var(--muted);margin-right:14px;font-variant-numeric:tabular-nums}
+.log-old summary{cursor:pointer;font-weight:700;color:var(--sea);padding:6px 0;list-style:none}
+.log-old summary::-webkit-details-marker{display:none}
+.log-old summary::before{content:"＋ "}
+.log-old[open] summary::before{content:"－ "}
+.log-old .log{margin-top:6px}
 footer .inner{padding-block:28px 48px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px}
 footer b{color:var(--ink)}
 /* ---------- タイル（カテゴリー色）と全画面の詳細シート ---------- */
@@ -645,7 +650,8 @@ function render(){
 
   const cats = ["すべて", ...new Set(DATA.features.map(x => x.cat))];
   put("feat-filters", cats.map((c, i) => `<button type="button" data-c="${esc(c)}" aria-pressed="${i === 0}">${esc(c)}</button>`).join(""));
-  put("log", DATA.log.map(l => `<div><span>${esc(l.d)}</span>${esc(l.t)}</div>`).join(""));
+  { const row = l => `<div><span>${esc(l.d)}</span>${esc(l.t)}</div>`, NEW = 3, old = DATA.log.slice(NEW);
+    put("log", DATA.log.slice(0, NEW).map(row).join("") + (old.length ? `<details class="log-old"><summary>過去の更新（${old.length}件）</summary><div class="log">${old.map(row).join("")}</div></details>` : "")); }
 }
 render();
 
