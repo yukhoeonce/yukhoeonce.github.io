@@ -1001,7 +1001,8 @@ function ruinHolo(holo, R){
     .concat([{ v: new T.Vector3(0, .2, -7.4), html: "北 N" }]);
   L.forEach(o => { const el = document.createElement("div"); el.className = "lbl" + (o.gold ? " gold" : ""); el.innerHTML = o.html; lblBox.appendChild(el); o.el = el; });
   let yaw = -.6, pitch = .62, base = 15, zoom = 1, auto = !still, playing = true, ptrs = {}, pinch0 = 0, zoom0 = 1, last = null, raf = 0, prog = 0, T0 = 0, lastStep = 0;
-  const size = () => { const w = cv.clientWidth, h = cv.clientHeight; if (!w) return; rd.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); base = Math.max(14, 8.6 / (Math.tan(cam.fov * Math.PI / 360) * Math.min(cam.aspect, 1.25))); };
+  let sw0 = 0, sh0 = 0;   // 開いた直後は画面がまだ出ていないことがあるので、毎フレーム大きさを確かめる
+  const size = () => { const w = cv.clientWidth, h = cv.clientHeight; if (!w || (w === sw0 && h === sh0)) return; sw0 = w; sh0 = h; rd.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); base = Math.max(14, 8.6 / (Math.tan(cam.fov * Math.PI / 360) * Math.min(cam.aspect, 1.25))); };
   addEventListener("resize", size); size();
   const setZoom = z => { zoom = Math.max(.45, Math.min(1.6, z)); };
   const pd = () => { const k = Object.keys(ptrs); return k.length < 2 ? 0 : Math.hypot(ptrs[k[0]].x - ptrs[k[1]].x, ptrs[k[0]].y - ptrs[k[1]].y); };
@@ -1019,6 +1020,7 @@ function ruinHolo(holo, R){
   const posAt = d => { for (let i = 0; i < segL.length; i++) { if (d <= segL[i]) return [pts[i].clone().lerp(pts[i + 1], d / segL[i]), stepAt[i + 1]]; d -= segL[i]; } return [pts[pts.length - 1].clone(), stepAt[stepAt.length - 1]]; };
   const frame = t => {
     const dt = Math.min(.05, (t - T0) / 1000 || 0); T0 = t;
+    size();
     if (playing && !still) prog = (prog + dt * 1.9) % (tot + 3);
     let [p, st] = posAt(Math.min(prog, tot)); if (still) { p = pts[pts.length - 1]; st = stepAt[stepAt.length - 1]; }
     dot.position.copy(p); glow.position.copy(p); glow.scale.setScalar(1 + .25 * Math.sin(t / 180));
