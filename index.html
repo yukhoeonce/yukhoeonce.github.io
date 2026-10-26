@@ -277,6 +277,52 @@ dd.pos{font-family:var(--f-mono);color:var(--sea);font-weight:500}
   *,*::before,*::after{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
 }
+/* 海底遺跡の詳細（3Dはテーマに関係なく暗い配色） */
+:root{--ruin-red:#c4383a}
+.holo{--h-bg:#020b15;--h-cyan:#5ee7ff;--h-dim:#1f6f86;--h-amber:#ffb547;--h-text:#bdf4ff;position:relative;background:radial-gradient(120% 90% at 50% 40%,#06223a 0%,var(--h-bg) 70%);border:1px solid #0f3a52;border-radius:14px;overflow:hidden;color:var(--h-text);font-family:var(--f-mono)}
+.holo canvas{display:block;width:100%;height:clamp(380px,60vw,480px);touch-action:none;cursor:grab}
+.holo canvas:active{cursor:grabbing}
+.holo .scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(94,231,255,.05) 0 1px,transparent 1px 3px)}
+.holo .hud{position:absolute;left:14px;top:12px;right:14px;display:flex;justify-content:space-between;gap:10px;pointer-events:none;font-size:11px;letter-spacing:.12em;color:var(--h-cyan);text-shadow:0 0 8px rgba(94,231,255,.6)}
+.holo .hud b{font-weight:500;color:var(--h-text)}
+.holo .now{position:absolute;left:14px;bottom:48px;right:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;pointer-events:none}
+.holo .now .stp{font-size:11px;letter-spacing:.14em;color:var(--h-amber);border:1px solid var(--h-amber);border-radius:4px;padding:2px 8px;text-shadow:0 0 8px rgba(255,181,71,.6)}
+.holo .now .msg{font-family:var(--f-jp);font-size:clamp(12px,3.4vw,14px);line-height:1.4;font-weight:700;color:var(--h-text);text-shadow:0 0 10px rgba(94,231,255,.5)}
+.holo .lbl{position:absolute;transform:translate(-50%,-50%);pointer-events:none;font-family:var(--f-jp);font-size:12px;font-weight:700;color:var(--h-text);white-space:nowrap;text-shadow:0 0 6px #000,0 0 10px rgba(94,231,255,.7)}
+.holo .lbl i{font-style:normal;font-family:var(--f-mono);font-size:11px;color:var(--h-bg);background:var(--h-cyan);display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 4px;box-sizing:border-box;border-radius:9px;margin-right:4px;box-shadow:0 0 8px var(--h-cyan)}
+.holo .lbl.gold i{background:var(--h-amber);box-shadow:0 0 8px var(--h-amber)}
+.holo .ctrl{position:absolute;right:12px;bottom:10px;display:flex;gap:6px}
+.holo button{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;color:var(--h-cyan);background:rgba(2,11,21,.7);border:1px solid var(--h-dim);border-radius:6px;padding:6px 10px;cursor:pointer}
+.holo button:hover,.holo button:focus-visible{border-color:var(--h-cyan);outline:none;box-shadow:0 0 8px rgba(94,231,255,.5)}
+.holo .fallback{padding:40px 16px;text-align:center;font-family:var(--f-jp);color:var(--h-text);margin:0}
+.sheet-content p.ruin-note{font-size:13px;color:var(--muted)}
+.ruin-h{margin:10px 0 0;font-size:19px;font-weight:900}
+.ruin-map{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px}
+.ruin-map svg{display:block;width:100%;min-width:460px;height:auto}
+.ruin-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted)}
+.ruin-legend span{display:inline-flex;align-items:center;gap:6px}
+.ruin-legend i{width:14px;height:14px;border-radius:3px;display:inline-block}
+.rs-cor{stroke:var(--line);stroke-width:16;stroke-linecap:round;fill:none}
+.rs-shaft{fill:none;stroke:var(--sea);stroke-width:3;stroke-dasharray:4 5}
+.rs-room{fill:var(--surface-2);stroke:var(--ink-2);stroke-width:2}
+.rs-hub{fill:var(--sea-soft);stroke:var(--sea);stroke-width:2.5}
+.rs-up{fill:var(--surface-2);stroke:var(--sea);stroke-width:2;stroke-dasharray:6 4}
+.rs-goal{fill:color-mix(in srgb,var(--ruin-red) 14%,var(--surface));stroke:var(--ruin-red);stroke-width:2.5}
+.rs-door{fill:var(--ruin-red)}
+.rs-sw{fill:var(--accent)}
+.rs-swt{fill:#fff;font-family:var(--f-mono);font-size:11px;font-weight:500}
+.rs-txt{fill:var(--ink);font-family:var(--f-jp);font-size:13px;font-weight:700}
+.rs-sub{fill:var(--muted);font-family:var(--f-jp);font-size:11px}
+.rs-badge{fill:var(--sea)}
+.rs-bt{fill:var(--surface);font-family:var(--f-mono);font-size:12px;font-weight:500}
+.rs-n{fill:var(--ink-2)}
+ol.rsteps{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:s}
+ol.rsteps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+ol.rsteps li::before{content:counter(s);font-family:var(--f-mono);font-size:14px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--sea-soft);color:var(--sea)}
+ol.rsteps li.sw::before{background:var(--accent);color:#fff}
+ol.rsteps li.goal::before{background:var(--ruin-red);color:#fff}
+ol.rsteps b{font-size:16px}
+.sheet-content ol.rsteps p{font-size:15px;margin:2px 0 0}
 </style>
 </head>
 <body>
@@ -307,6 +353,7 @@ dd.pos{font-family:var(--f-mono);color:var(--sea);font-weight:500}
       <button type="button" role="tab" data-tab="info">概要</button>
       <button type="button" role="tab" data-tab="zones">エリア<span class="n" data-count="zones"></span></button>
       <button type="button" role="tab" data-tab="spots">おすすめスポット<span class="n" data-count="spots"></span></button>
+      <button type="button" role="tab" data-tab="ruins">海底遺跡<span class="n" data-count="ruins"></span></button>
       <button type="button" role="tab" data-tab="materials">新素材<span class="n" data-count="materials"></span></button>
       <button type="button" role="tab" data-tab="facilities">新施設<span class="n" data-count="facilities"></span></button>
       <button type="button" role="tab" data-tab="vehicles">船・乗り物<span class="n" data-count="vehicles"></span></button>
@@ -335,6 +382,11 @@ dd.pos{font-family:var(--f-mono);color:var(--sea);font-weight:500}
       <div class="sec-head"><span class="idx">Spots</span><h2>おすすめスポット</h2><p>座標と、そこでゲットできるもの。</p></div>
       <div class="grid" id="list-spots"></div>
       <p class="empty" id="spots-empty">まだ登録されていません。準備ができしだい追加します。</p>
+    </section>
+
+    <section class="panel" id="ruins">
+      <div class="sec-head"><span class="idx">Seabed Ruins</span><h2>海底遺跡</h2><p>迷路のような海底遺跡の攻略順路。カードを開くと、3D表示・フロア図・スイッチを押す順番が見られます。</p></div>
+      <div class="grid" id="list-ruins"></div>
     </section>
 
     <section class="panel" id="materials">
@@ -405,14 +457,43 @@ const DATA = {
     { k: "成長の軸", v: "探索・採集・チャレンジでテックを進め、装備品質や施設を解放する" },
     { k: "設計図・モッド", v: "持ち込み可。ただし製作品質とモッド枠はテックの進み具合で制限される" }
   ],
-  // おすすめスポット: { name, zone（エリア名）, pos（座標）, get: ["素材名", ...], has: ["施設名", ...], lv, note, link（攻略ページURL）, linkText }
+  // おすすめスポット: { name, zone（エリア名）, pos（座標）, get: ["素材名", ...], has: ["施設名", ...], lv, note, ruin（海底遺跡のid） }
   spots: [
     { name: "金鉱石の採掘地", zone: "炎の岩場", pos: "(-1553, -4904)", get: ["金鉱石"], lv: "難易度 高", note: "金鉱石がたくさんあるエリア" },
     { name: "針山遺跡", zone: "泉湧く谷", pos: "(-1723, -6607)", has: ["スターダスト融合調理台"], lv: "難易度 高", note: "スターダスト融合調理台がある" },
     { name: "昇天局ジュロン観測所", zone: "炎の岩場", pos: "(-1401, -4552)", has: ["スターダスト電気ファーネス", "ハイブリットファーネス"], lv: "難易度 高", note: "スターダスト電気ファーネス、ハイブリットファーネスなど、レアな施設が多くある" },
     { name: "ブラックタイドと鉱石の採集地", zone: "霧深い沼", pos: "(-6940, -5065)", get: ["ブラックタイドの塊", "スターダスト鉱石", "タングステン鉱石", "鉄鉱石"], lv: "難易度 中", note: "ブラックタイドを集められる場所。スターダスト鉱石・タングステン鉱石・鉄鉱石など鉱石が豊富" },
-    { name: "炎の岩場の海底遺跡", zone: "炎の岩場", pos: "(-1948, -5847)", get: ["宝箱"], note: "海の底にある迷路のような遺跡。スイッチ（ギミックドア切り替え）で扉の開き方を変えながら進み、最奥で宝箱を開ける。2階まであるが、ほとんど1階で完結する", link: "https://yukhoeonce.github.io/ruins/fire-rock.html", linkText: "フロア図・3Dで攻略順路を見る" },
+    { name: "炎の岩場の海底遺跡", zone: "炎の岩場", pos: "(-1948, -5847)", get: ["宝箱"], note: "海の底にある迷路のような遺跡。スイッチ（ギミックドア切り替え）で扉の開き方を変えながら進み、最奥で宝箱を開ける。2階まであるが、ほとんど1階で完結する", ruin: "fire-rock" },
     { name: "潮見のゴムの巨樹", zone: "霧深い沼", pos: "(-6845, -5131)", get: ["潮見のゴム"], note: "大きな木の幹の上に潮見のゴムが生えている。ゴムを作る材料になる" }
+  ],
+  // 海底遺跡: rooms の x=東, z=南（北は -z）, y=上の階の高さ。route は [部屋, 手順番号] の順。steps.k は sw（スイッチ）/goal
+  ruins: [
+    { id: "fire-rock", name: "炎の岩場の海底遺跡", zone: "炎の岩場", pos: "(-1948, -5847)",
+      lead: "海の底にある迷路のような遺跡。スイッチ（ギミックドア切り替え）で扉の開き方を変えながら進み、最奥で宝箱を開ける。2階まであるが、ほとんど1階で完結する",
+      rooms: {
+        ent: { t: "入口", n: "1", x: 0, z: -4.3, r: .85 },
+        hub: { t: "中央の部屋", n: "2", x: 0, z: 0, r: 2, h: 1.4, kind: "hub", lbl: [-2.3, -.6, -.4] },
+        up: { t: "スイッチ部屋", n: "3·6", x: 0, z: 0, y: 2.3, r: 1.25, h: 1, kind: "up", map: [-5.4, -2.4] },
+        a: { t: "部屋A", n: "4", x: 4.5, z: 2.9 },
+        b: { t: "部屋B", n: "5", x: 4.9, z: -2.5 },
+        c7: { t: "通路の部屋", n: "7", x: 0, z: 4.2, r: .95 },
+        tr: { t: "宝箱", n: "8", x: -4.5, z: 4.25, kind: "goal" }
+      },
+      links: [["hub","ent"],["hub","a"],["hub","b"],["a","b"],["hub","c7"],["c7","tr"]],
+      shafts: [["hub","up"]],
+      switches: [{ t: "S1", room: "up" }, { t: "S2", room: "a" }, { t: "S3", room: "b", toward: "hub" }],
+      doors: [["hub","a"],["b","hub"],["hub","c7"]],
+      route: [["ent",1],["hub",2],["up",3],["hub",4],["a",4],["b",5],["hub",6],["up",6],["hub",7],["c7",7],["tr",8]],
+      steps: [
+        { t: "北側の入口から入る", d: "外周にある、赤いライトと触手が付いた部屋が入口。扉の下の隙間にしゃがんで（しゃがむロック）潜り込む" },
+        { t: "赤い通路を抜けて中央の部屋へ", d: "中央の部屋には赤丸の付いた扉が並んでいて、最初はほとんど閉まっている" },
+        { t: "縦穴で2階のスイッチ部屋へ。スイッチ S1 を押す", d: "壁の黄色いパネルで「F：ギミックドア切り替え」", k: "sw" },
+        { t: "中央の部屋に戻り、開いた扉から部屋Aへ。スイッチ S2", d: "部屋A（南東）は暗い部屋。中のスイッチを押す", k: "sw" },
+        { t: "部屋Aから通路で部屋Bへ。スイッチ S3 で丸い扉を開ける", d: "部屋B（北東）の中央側にある丸い扉の横のスイッチを押すと、中央の部屋へ戻る扉が開く", k: "sw" },
+        { t: "2階へ上がり、もう一度 S1 を押す", d: "切り替え直すと、中央の部屋の南側（通路の部屋）への扉が開く", k: "sw" },
+        { t: "南の通路の部屋へ", d: "縦穴を下りて、開いた扉から赤い通路を進む" },
+        { t: "西の部屋で宝箱を開ける", d: "通路の部屋から西へ進んだ先の六角形の部屋に宝箱がある", k: "goal" }
+      ] }
   ],
   zones: [
     { name: "薫風の岬", tag: "スタート地点", desc: "花の海・ヤシ林・岩礁の浅瀬。廃墟と座礁船がある", fix: "", out: "廃船で素材集めと航海の準備" },
@@ -550,7 +631,7 @@ const DATA = {
     { cat: "RaidZone", name: "入り方", desc: "サインイン画面左上で【RaidZone】に切り替え→【禁断の島：RaidZone】サーバーを選ぶ" }
   ],
   log: [
-    { d: "2026-10-26", t: "おすすめスポットに炎の岩場の海底遺跡を追加。フロア図・3D表示つきの攻略順路ページあり" },
+    { d: "2026-10-26", t: "「海底遺跡」タブを追加。炎の岩場の海底遺跡の攻略順路を、3D表示・フロア図つきで掲載（おすすめスポットからも開けます）" },
     { d: "2026-10-24", t: "トロール網・上級トロールネットで獲れるもの（レア魚、普通の魚、貝殻、巻貝、デビエーションなど）を追加" },
     { d: "2026-10-23", t: "掘削井戸のタンク入り原油の生産効率（0.2個/分）を追加" },
     { d: "2026-10-23", t: "新素材を種類ごとに色分け。新要素の装備にダイビングマスク・防護ガスマスク・冷却シート・サメ皮ダイビングセット・雨よけ・エアパッド・氷ハープーン・船長の証を追加" },
@@ -585,7 +666,7 @@ const alias = x => x.alias ? `<p style="font-size:12.5px;color:var(--muted)">公
 const card = (inner, extra = "", cls = "") => `<article class="card ${cls}" ${extra}>${inner}</article>`;
 
 function render(){
-  for (const k of ["zones","spots","materials","facilities","vehicles","guns","features"])
+  for (const k of ["zones","spots","ruins","materials","facilities","vehicles","guns","features"])
     document.querySelector(`[data-count="${k}"]`).textContent = DATA[k].length;
 
   const get = k => (DATA.info.find(x => x.k === k) || {}).v || "";
@@ -598,9 +679,13 @@ function render(){
 
   put("list-spots", DATA.spots.map(x => card(`
       ${x.lv ? `<div class="tagrow"><span class="tag s2">${esc(x.lv)}</span></div>` : ""}<h3>${esc(x.name)}</h3>
-      <dl class="kv"><dt>座標</dt><dd class="pos">${val(x.pos)}</dd>${x.zone ? `<dt>エリア</dt><dd>${esc(x.zone)}</dd>` : ""}${x.get ? `<dt>ゲット</dt><dd>${x.get.map(g => `<span class="nb getm">${esc(g)}</span>`).join("、")}</dd>` : ""}${x.has ? `<dt>施設</dt><dd>${x.has.map(g => `<span class="nb">${esc(g)}</span>`).join("、")}</dd>` : ""}${x.note ? `<dt>メモ</dt><dd>${esc(x.note)}</dd>` : ""}${x.link ? `<dt>攻略</dt><dd><a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.linkText || "攻略ページを見る")}</a></dd>` : ""}</dl>`,
+      <dl class="kv"><dt>座標</dt><dd class="pos">${val(x.pos)}</dd>${x.zone ? `<dt>エリア</dt><dd>${esc(x.zone)}</dd>` : ""}${x.get ? `<dt>ゲット</dt><dd>${x.get.map(g => `<span class="nb getm">${esc(g)}</span>`).join("、")}</dd>` : ""}${x.has ? `<dt>施設</dt><dd>${x.has.map(g => `<span class="nb">${esc(g)}</span>`).join("、")}</dd>` : ""}${x.note ? `<dt>メモ</dt><dd>${esc(x.note)}</dd>` : ""}${x.ruin ? `<dt>攻略</dt><dd><button type="button" class="xref" data-ruin="${esc(x.ruin)}">フロア図・3Dで攻略順路を見る</button></dd>` : ""}</dl>`,
       `data-sum="${esc([x.pos ? "座標 " + x.pos : "", [...(x.get || []), ...(x.has || [])].join("・")].filter(Boolean).join("　"))}"`)).join(""));
   $("#spots-empty").classList.toggle("hide", DATA.spots.length > 0);
+  put("list-ruins", DATA.ruins.map(r => card(`
+      <h3>${esc(r.name)}</h3>
+      <dl class="kv"><dt>座標</dt><dd class="pos">${val(r.pos)}</dd><dt>エリア</dt><dd>${esc(r.zone)}</dd><dt>概要</dt><dd>${esc(r.lead)}</dd></dl>`,
+      `data-ruin="${esc(r.id)}" data-sum="${esc("座標 " + r.pos + "　3D表示・フロア図・攻略順路")}"`)).join(""));
   put("list-zones", DATA.zones.map(z => card(`
       <span class="hz">${esc(z.tag)}</span><h3>${esc(z.name)}</h3>
       <dl class="kv"><dt>特徴</dt><dd>${esc(z.desc)}</dd>${z.fix ? `<dt>対策</dt><dd>${esc(z.fix)}</dd>` : ""}<dt>産出</dt><dd>${esc(z.out)}</dd></dl>`, "", "zone")).join(""));
@@ -716,6 +801,7 @@ document.querySelectorAll("#list-spots .card").forEach((el, i) => {
   tilefy(el, DATA.spots[i].zone || "スポット", zi >= 0 ? PAL[zi % PAL.length] : "#1595a3");
   if (DATA.spots[i].lv) el.querySelector(".st") ? el.querySelector(".st").textContent = DATA.spots[i].lv : el.querySelector(".tophead").insertAdjacentHTML("beforeend", `<span class="st lv">${esc(DATA.spots[i].lv)}</span>`);
 });
+document.querySelectorAll("#list-ruins .card").forEach((el, i) => { const zi = DATA.zones.findIndex(z => z.name === DATA.ruins[i].zone); tilefy(el, DATA.ruins[i].zone, zi >= 0 ? PAL[zi % PAL.length] : "#1595a3"); });
 document.querySelectorAll("#list-vehicles .card").forEach(el => tilefy(el, "船・乗り物", "#1595a3"));
 document.querySelectorAll("#list-guns .card").forEach((el, i) => tilefy(el, DATA.guns[i].lv || "衝角", DATA.guns[i].lv ? "#c43d5a" : "#d08a1c"));
 document.querySelectorAll("#list-features .card").forEach((el, i) => tilefy(el, DATA.features[i].cat, CAT_COLOR[DATA.features[i].cat] || "#2f6fd1"));
@@ -727,7 +813,7 @@ $("#mat-jump").addEventListener("click", e => {
   scrollTo({ top: h.getBoundingClientRect().top + scrollY - $(".bar").offsetHeight - 16, behavior: "smooth" });
 });
 document.querySelectorAll("#feat-filters button").forEach(b => { const c = CAT_COLOR[b.dataset.c]; if (c) { b.style.setProperty("--c", c); b.style.setProperty("--c-fg", "#fff"); } });
-["list-zones","list-spots","list-vehicles","list-guns","list-features"].forEach(id => document.getElementById(id).classList.add("tiles"));
+["list-zones","list-spots","list-ruins","list-vehicles","list-guns","list-features"].forEach(id => document.getElementById(id).classList.add("tiles"));
 document.querySelectorAll("main .tile").forEach(phrasify);
 phrasify(document.querySelector(".hero")); phrasify(document.querySelector("footer"));
 document.querySelectorAll("main .sec-head, #info, #log-sec").forEach(phrasify);
@@ -739,6 +825,7 @@ document.querySelectorAll("#list-materials .tile").forEach(t => matTile.set(t.qu
 document.querySelectorAll("#list-facilities .tile, #list-guns .tile").forEach(t => facTile.set(t.querySelector(":scope > h3").textContent, t));
 let stack = [];   // 開いている詳細の履歴（最後が今の表示）
 function showSheet(el){
+  ruinStop();
   const box = document.createElement("div"); box.innerHTML = el.querySelector(".full").innerHTML;
   box.querySelectorAll("h3").forEach(h => h.remove());
   box.querySelectorAll("details").forEach(d => d.open = true);
@@ -758,6 +845,7 @@ function showSheet(el){
   $("#sheet-cat").textContent = el.dataset.label;
   $("#sheet-title").textContent = el.querySelector(":scope > h3").textContent;
   $("#sheet-content").innerHTML = box.innerHTML;
+  if (el.dataset.ruin) ruinMount($("#sheet-content"), el.dataset.ruin);
   phrasify($("#sheet-content"));
   if (SEG) { $("#sheet-title").classList.add("ph"); $("#sheet-title").innerHTML = phraseHTML($("#sheet-title").textContent); }
   const prev = stack[stack.length - 2];
@@ -774,7 +862,7 @@ function openSheet(el, deeper){
   if (!deeper) $("#sheet-x").focus({ preventScroll: true });
 }
 function hideSheet(){
-  sheet.hidden = true; document.body.classList.remove("lock");
+  ruinStop(); sheet.hidden = true; document.body.classList.remove("lock");
   const first = stack[0]; stack = [];
   first && first.focus({ preventScroll: true });
 }
@@ -785,7 +873,7 @@ function closeSheet(){
 }
 document.addEventListener("click", e => {
   const x = e.target.closest(".xref");
-  if (x) { const t = x.dataset.mat ? matTile.get(x.dataset.mat) : facTile.get(x.dataset.fac); if (t) openSheet(t, true); return; }
+  if (x) { const t = x.dataset.ruin ? ruinTile.get(x.dataset.ruin) : x.dataset.mat ? matTile.get(x.dataset.mat) : facTile.get(x.dataset.fac); if (t) openSheet(t, true); return; }
   const t = e.target.closest(".card.tile"); if (t) openSheet(t);
 });
 document.addEventListener("keydown", e => {
@@ -803,6 +891,153 @@ addEventListener("popstate", () => {
   stack.length = Math.min(d, stack.length); showSheet(stack[stack.length - 1]);
 });
 
+/* ---------- 海底遺跡: 全画面詳細の中に 3D・フロア図・手順を出す（3D部品は開いたときだけ読み込む） ---------- */
+const ruinTile = new Map();
+document.querySelectorAll("#list-ruins .tile").forEach(t => ruinTile.set(t.dataset.ruin, t));
+let ruinStopFn = null;
+function ruinStop(){ if (ruinStopFn) { ruinStopFn(); ruinStopFn = null; } }
+// 部屋の中心（3D）。上の階は y を持つ
+const ruinPt = (R, k, lift) => { const r = R.rooms[k]; return [r.x, (r.y || 0) + (lift == null ? .55 : lift), r.z]; };
+function ruinPath(R){
+  const pts = [], steps = [];
+  R.route.forEach(([k, s], i) => {
+    if (i) {
+      const [pk] = R.route[i - 1], p = R.rooms[pk], q = R.rooms[k];
+      if ((p.y || 0) !== (q.y || 0)) {   // 縦穴: 上の部屋の脇を上下する
+        const top = (p.y || 0) > (q.y || 0) ? p : q, sx = top.x + .6, sz = top.z + .6;
+        pts.push([sx, (p.y || 0) + .55, sz], [sx, (q.y || 0) + .55, sz]); steps.push(s, s);
+      }
+    }
+    pts.push(ruinPt(R, k)); steps.push(s);
+  });
+  return { pts, steps };
+}
+function ruinSVG(R){
+  const S = 38, pos = k => R.rooms[k].map || [R.rooms[k].x, R.rooms[k].z];
+  const all = Object.keys(R.rooms).map(pos), xs = all.map(p => p[0]), zs = all.map(p => p[1]);
+  const x0 = Math.min(...xs) - 2.2, z0 = Math.min(...zs) - 2, W = (Math.max(...xs) + 2.2 - x0) * S, H = (Math.max(...zs) + 2 - z0) * S;
+  const P = k => [(pos(k)[0] - x0) * S, (pos(k)[1] - z0) * S];
+  const oct = (cx, cy, r, cls) => { const k = r * .42; return `<polygon class="${cls}" points="${[[-k,-r],[k,-r],[r,-k],[r,k],[k,r],[-k,r],[-r,k],[-r,-k]].map(([a,b]) => `${(cx+a).toFixed(1)},${(cy+b).toFixed(1)}`).join(" ")}"/>`; };
+  const rad = k => Math.max(26, (R.rooms[k].r || 1) * S * .95);
+  let s = "";
+  R.links.forEach(([a, b]) => { const [x1,y1] = P(a), [x2,y2] = P(b); s += `<path class="rs-cor" d="M${x1} ${y1} L${x2} ${y2}"/>`; });
+  (R.shafts || []).forEach(([a, b]) => { const [x1,y1] = P(a), [x2,y2] = P(b); s += `<path class="rs-shaft" d="M${x1} ${y1} Q ${(x1+x2)/2} ${y1} ${x2} ${y2}"/><text class="rs-sub" x="${(x1+x2)/2}" y="${(y1+y2)/2 - 8}" text-anchor="middle">縦穴</text>`; });
+  Object.entries(R.rooms).forEach(([k, r]) => { const [x, y] = P(k); s += oct(x, y, rad(k), "rs-" + (r.kind || "room")); });
+  (R.doors || []).forEach(([a, b]) => { const [x1,y1] = P(a), [x2,y2] = P(b), L = Math.hypot(x2-x1, y2-y1), d = rad(a) + 4; s += `<circle class="rs-door" cx="${x1 + (x2-x1)*d/L}" cy="${y1 + (y2-y1)*d/L}" r="7"/>`; });
+  (R.switches || []).forEach(w => { const [x, y] = P(w.room); s += `<rect class="rs-sw" x="${x-15}" y="${y - rad(w.room) - 6}" width="30" height="20" rx="4"/><text class="rs-swt" x="${x}" y="${y - rad(w.room) + 8}" text-anchor="middle">${esc(w.t)}</text>`; });
+  Object.entries(R.rooms).forEach(([k, r]) => { const [x, y] = P(k); s += `<text class="rs-txt" x="${x}" y="${y + 5}" text-anchor="middle">${esc(r.t)}</text>${r.y ? `<text class="rs-sub" x="${x}" y="${y + 22}" text-anchor="middle">2階</text>` : ""}<circle class="rs-badge" cx="${x + rad(k) * .8}" cy="${y + rad(k) * .8}" r="12"/><text class="rs-bt" x="${x + rad(k) * .8}" y="${y + rad(k) * .8 + 4}" text-anchor="middle">${esc(r.n)}</text>`; });
+  s += `<g transform="translate(${W - 24},30)"><path class="rs-n" d="M0 -16 L7 7 L0 3 L-7 7 Z"/><text class="rs-txt" x="0" y="24" text-anchor="middle">北</text></g>`;
+  return `<svg viewBox="0 0 ${W.toFixed(0)} ${H.toFixed(0)}" role="img" aria-label="${esc(R.name)}のフロア図（上が北）">${s}</svg>`;
+}
+function ruinMount(box, id){
+  const R = DATA.ruins.find(r => r.id === id); if (!R) return;
+  box.insertAdjacentHTML("beforeend", `
+    <div class="holo"><canvas aria-label="遺跡の3D構造。ドラッグで回転できます"></canvas><div class="scan"></div><div class="lbls"></div>
+      <div class="hud"><span>SEABED RUIN · <b>${esc(R.zone)}</b></span><span>${esc(R.pos.replace(/[()]/g, ""))}</span></div>
+      <div class="now"><span class="stp">STEP 1</span><span class="msg"></span></div>
+      <div class="ctrl"><button type="button" data-z="out" aria-label="縮小">−</button><button type="button" data-z="in" aria-label="拡大">＋</button><button type="button" data-z="play">一時停止</button></div></div>
+    <p class="ruin-note">ドラッグで回転、2本指のピンチ・ホイール・＋−ボタンで拡大縮小。光の点が攻略順路をたどります。</p>
+    <h4 class="ruin-h">フロア図（模式図）</h4>
+    <div class="ruin-map">${ruinSVG(R)}</div>
+    <div class="ruin-legend"><span><i style="background:var(--accent)"></i>スイッチ（ギミックドア切り替え）</span><span><i style="background:var(--ruin-red)"></i>切り替えで開く扉</span><span><i style="border:2px dashed var(--sea)"></i>2階</span></div>
+    <p class="ruin-note">上が北。方角はおおよその向きで、距離は正確ではありません。</p>
+    <h4 class="ruin-h">攻略順路</h4>
+    <ol class="rsteps">${R.steps.map(s => `<li class="${s.k || ""}"><div><b>${esc(s.t)}</b><p>${esc(s.d)}</p></div></li>`).join("")}</ol>`);
+  const holo = box.querySelector(".holo");
+  const go = () => { if (box.isConnected) ruinStopFn = ruinHolo(holo, R); };
+  if (window.THREE) go();
+  else {
+    let sc = document.getElementById("three-js");
+    if (!sc) { sc = document.createElement("script"); sc.id = "three-js"; sc.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"; document.head.appendChild(sc); }
+    sc.addEventListener("load", go);
+    sc.addEventListener("error", () => { holo.innerHTML = '<p class="fallback">3D表示を読み込めませんでした。下のフロア図をご覧ください。</p>'; });
+  }
+}
+function ruinHolo(holo, R){
+  const T = THREE, cv = holo.querySelector("canvas"), lblBox = holo.querySelector(".lbls");
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const CY = 0x5ee7ff, AM = 0xffb547, RD = 0xff5468, DIM = 0x1f6f86;
+  const rd = new T.WebGLRenderer({ canvas: cv, antialias: true, alpha: true });
+  rd.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+  const scene = new T.Scene(); scene.fog = new T.Fog(0x020b15, 14, 30);
+  const cam = new T.PerspectiveCamera(42, 1, .1, 100), root = new T.Group(); scene.add(root);
+  const grid = new T.GridHelper(16, 32, DIM, 0x0c3347); grid.material.transparent = true; grid.material.opacity = .45; root.add(grid);
+  [6.5, 7.2].forEach((r, i) => { const m = new T.Mesh(new T.RingGeometry(r, r + .03, 96), new T.MeshBasicMaterial({ color: CY, transparent: true, opacity: i ? .25 : .5, side: T.DoubleSide })); m.rotation.x = -Math.PI / 2; m.position.y = .01; root.add(m); });
+  const line = (g, col, op) => new T.LineSegments(new T.EdgesGeometry(g), new T.LineBasicMaterial({ color: col, transparent: true, opacity: op }));
+  const ghost = (g, col, op) => new T.Mesh(g, new T.MeshBasicMaterial({ color: col, transparent: true, opacity: op, depthWrite: false }));
+  let goalEdge = null;
+  Object.values(R.rooms).forEach(r => {
+    const col = r.kind === "goal" ? RD : CY, h = r.h || 1.1, g = new T.CylinderGeometry(r.r || 1, r.r || 1, h, 8, 1); g.rotateY(Math.PI / 8);
+    const grp = new T.Group(), e = line(g, col, .95); grp.add(ghost(g, col, r.kind === "goal" ? .12 : .08)); grp.add(e);
+    grp.position.set(r.x, (r.y || 0) + h / 2, r.z); root.add(grp); if (r.kind === "goal") goalEdge = e;
+  });
+  R.links.forEach(([a, b]) => {
+    const p = R.rooms[a], q = R.rooms[b], dx = q.x - p.x, dz = q.z - p.z, L = Math.hypot(dx, dz), g = new T.BoxGeometry(L, .45, .55), grp = new T.Group();
+    grp.add(ghost(g, CY, .06)); grp.add(line(g, CY, .55)); grp.position.set((p.x + q.x) / 2, .25, (p.z + q.z) / 2); grp.rotation.y = -Math.atan2(dz, dx); root.add(grp);
+  });
+  (R.shafts || []).forEach(([a, b]) => {
+    const lo = R.rooms[a], hi = R.rooms[b], g = new T.CylinderGeometry(hi.r || 1, lo.r || 1, (hi.y || 0) - (lo.h || 1.1), 8, 1, true); g.rotateY(Math.PI / 8);
+    const fr = line(g, DIM, .6); fr.position.set(hi.x, ((hi.y || 0) + (lo.h || 1.1)) / 2, hi.z); root.add(fr);
+    const sg = new T.BufferGeometry().setFromPoints([new T.Vector3(hi.x + .6, .1, hi.z + .6), new T.Vector3(hi.x + .6, hi.y + .1, hi.z + .6)]);
+    const sl = new T.Line(sg, new T.LineDashedMaterial({ color: CY, dashSize: .12, gapSize: .08 })); sl.computeLineDistances(); root.add(sl);
+  });
+  const sws = (R.switches || []).map(w => {
+    const r = R.rooms[w.room], m = new T.Mesh(new T.BoxGeometry(.32, .32, .32), new T.MeshBasicMaterial({ color: AM }));
+    let x = r.x, z = r.z; if (w.toward) { const q = R.rooms[w.toward], L = Math.hypot(q.x - x, q.z - z); x += (q.x - x) / L * .9; z += (q.z - z) / L * .9; }
+    m.position.set(x, (r.y || 0) + (r.h || 1.1) + .35, z); root.add(m); return m;
+  });
+  const doors = (R.doors || []).map(([a, b]) => {
+    const p = R.rooms[a], q = R.rooms[b], L = Math.hypot(q.x - p.x, q.z - p.z), d = (p.r || 1) + .1;
+    const m = new T.Mesh(new T.TorusGeometry(.32, .05, 8, 24), new T.MeshBasicMaterial({ color: RD }));
+    m.position.set(p.x + (q.x - p.x) * d / L, .4, p.z + (q.z - p.z) * d / L); m.rotation.y = Math.atan2(q.x - p.x, q.z - p.z); root.add(m); return m;
+  });
+  const { pts: P0, steps: stepAt } = ruinPath(R), pts = P0.map(p => new T.Vector3(...p));
+  const segL = []; let tot = 0; for (let i = 1; i < pts.length; i++) { const d = pts[i].distanceTo(pts[i - 1]); segL.push(d); tot += d; }
+  root.add(new T.Line(new T.BufferGeometry().setFromPoints(pts), new T.LineBasicMaterial({ color: AM, transparent: true, opacity: .35 })));
+  const dot = new T.Mesh(new T.SphereGeometry(.16, 16, 12), new T.MeshBasicMaterial({ color: 0xffffff })); root.add(dot);
+  const glow = new T.Mesh(new T.SphereGeometry(.36, 16, 12), new T.MeshBasicMaterial({ color: AM, transparent: true, opacity: .35, depthWrite: false })); root.add(glow);
+  const swRooms = new Set((R.switches || []).map(w => w.room));
+  const L = Object.values(R.rooms).map(r => ({ v: new T.Vector3(r.x + (r.lbl ? r.lbl[0] : 0), (r.y || 0) + (r.h || 1.1) + .7 + (r.lbl ? r.lbl[1] : 0), r.z + (r.lbl ? r.lbl[2] : 0)), html: `<i>${esc(r.n)}</i>${esc(r.t)}`, gold: swRooms.has(Object.keys(R.rooms).find(k => R.rooms[k] === r)) }))
+    .concat([{ v: new T.Vector3(0, .2, -7.4), html: "北 N" }]);
+  L.forEach(o => { const el = document.createElement("div"); el.className = "lbl" + (o.gold ? " gold" : ""); el.innerHTML = o.html; lblBox.appendChild(el); o.el = el; });
+  let yaw = -.6, pitch = .62, base = 15, zoom = 1, auto = !still, playing = true, ptrs = {}, pinch0 = 0, zoom0 = 1, last = null, raf = 0, prog = 0, T0 = 0, lastStep = 0;
+  const size = () => { const w = cv.clientWidth, h = cv.clientHeight; if (!w) return; rd.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); base = Math.max(14, 8.6 / (Math.tan(cam.fov * Math.PI / 360) * Math.min(cam.aspect, 1.25))); };
+  addEventListener("resize", size); size();
+  const setZoom = z => { zoom = Math.max(.45, Math.min(1.6, z)); };
+  const pd = () => { const k = Object.keys(ptrs); return k.length < 2 ? 0 : Math.hypot(ptrs[k[0]].x - ptrs[k[1]].x, ptrs[k[0]].y - ptrs[k[1]].y); };
+  cv.addEventListener("pointerdown", e => { ptrs[e.pointerId] = { x: e.clientX, y: e.clientY }; auto = false; try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+    if (Object.keys(ptrs).length === 2) { pinch0 = pd(); zoom0 = zoom; last = null; } else last = { x: e.clientX, y: e.clientY }; });
+  cv.addEventListener("pointermove", e => { if (!ptrs[e.pointerId]) return; ptrs[e.pointerId] = { x: e.clientX, y: e.clientY };
+    if (Object.keys(ptrs).length >= 2) { const d = pd(); if (pinch0 > 0 && d > 0) setZoom(zoom0 * pinch0 / d); return; }
+    if (last) { yaw -= (e.clientX - last.x) * .008; pitch = Math.max(.15, Math.min(1.35, pitch + (e.clientY - last.y) * .006)); last = { x: e.clientX, y: e.clientY }; } });
+  const up = e => { delete ptrs[e.pointerId]; const k = Object.keys(ptrs); last = k.length === 1 ? { ...ptrs[k[0]] } : null; pinch0 = 0; };
+  cv.addEventListener("pointerup", up); cv.addEventListener("pointercancel", up);
+  cv.addEventListener("wheel", e => { e.preventDefault(); setZoom(zoom * (1 + e.deltaY * .001)); }, { passive: false });
+  holo.querySelector(".ctrl").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return;
+    if (b.dataset.z === "in") setZoom(zoom / 1.2); else if (b.dataset.z === "out") setZoom(zoom * 1.2); else { playing = !playing; b.textContent = playing ? "一時停止" : "再生"; } });
+  const tagEl = holo.querySelector(".now .stp"), msgEl = holo.querySelector(".now .msg"), v = new T.Vector3();
+  const posAt = d => { for (let i = 0; i < segL.length; i++) { if (d <= segL[i]) return [pts[i].clone().lerp(pts[i + 1], d / segL[i]), stepAt[i + 1]]; d -= segL[i]; } return [pts[pts.length - 1].clone(), stepAt[stepAt.length - 1]]; };
+  const frame = t => {
+    const dt = Math.min(.05, (t - T0) / 1000 || 0); T0 = t;
+    if (playing && !still) prog = (prog + dt * 1.9) % (tot + 3);
+    let [p, st] = posAt(Math.min(prog, tot)); if (still) { p = pts[pts.length - 1]; st = stepAt[stepAt.length - 1]; }
+    dot.position.copy(p); glow.position.copy(p); glow.scale.setScalar(1 + .25 * Math.sin(t / 180));
+    if (st !== lastStep) { lastStep = st; tagEl.textContent = "STEP " + st; msgEl.textContent = (R.steps[st - 1] || {}).t || ""; }
+    const pulse = .6 + .4 * Math.sin(t / 260);
+    sws.forEach(s => { s.rotation.y += dt * 1.5; s.rotation.x += dt; s.scale.setScalar(.85 + .25 * pulse); });
+    doors.forEach(d => d.scale.setScalar(.9 + .2 * pulse));
+    if (goalEdge) goalEdge.material.opacity = .6 + .4 * pulse;
+    if (auto) yaw += dt * .12;
+    const dist = base * zoom; cam.position.set(Math.sin(yaw) * Math.cos(pitch) * dist, Math.sin(pitch) * dist, Math.cos(yaw) * Math.cos(pitch) * dist); cam.lookAt(0, .9, 0);
+    rd.render(scene, cam);
+    const w = cv.clientWidth, h = cv.clientHeight;
+    L.forEach(o => { v.copy(o.v).project(cam); o.el.style.display = v.z < 1 ? "" : "none"; o.el.style.left = ((v.x + 1) / 2 * w) + "px"; o.el.style.top = ((1 - v.y) / 2 * h) + "px"; });
+    raf = requestAnimationFrame(frame);
+  };
+  raf = requestAnimationFrame(frame);
+  return () => { cancelAnimationFrame(raf); removeEventListener("resize", size); rd.dispose(); };
+}
+
 /* ---------- タブ・検索 ---------- */
 // ひらがな・カタカナ・全角半角を同じ扱いにする。漢字の名前は読みでも引けるよう READ に読みを持たせる
 const READ = {"天火石":"てんかせき","希少鉱物":"きしょうこうぶつ","深海石油":"しんかいせきゆ","瓶詰め":"びんづめ","雨粒":"あまつぶ","呪い":"のろい","灯芯":"とうしん","海洋ゴミ":"かいようごみ","硫黄":"いおう","化石":"かせき","潮見":"しおみ","果実":"かじつ","貝殻":"かいがら","巻貝":"まきがい","海賊":"かいぞく","龍涎香":"りゅうぜんこう","生け簀":"いけす","掘削井戸":"くっさくいど","発電機":"はつでんき","水循環":"みずじゅんかん","自動採集":"じどうさいしゅう","施設":"しせつ","領地":"りょうち","修復":"しゅうふく","防護":"ぼうご","船":"ふね","砲":"ほう","速射":"そくしゃ","散弾":"さんだん","氷結":"ひょうけつ","腐食":"ふしょく","凍結":"とうけつ","衝角":"しょうかく","機雷":"きらい","連発":"れんぱつ","爆発":"ばくはつ","潮干狩り":"しおひがり","水中":"すいちゅう","探索":"たんさく","宝探し":"たからさがし","宝の地図":"たからのちず","深海":"しんかい","釣り":"つり","迷い船":"まよいぶね","迷い風艇":"まよいふうてい","艦隊":"かんたい","災厄":"さいやく","塔":"とう","深淵":"しんえん","巣":"す","梟":"ふくろう","海上":"かいじょう","漂う温室":"ただようおんしつ","海墟の王":"かいきょのおう","灯台":"とうだい","幼体":"ようたい","潜水":"せんすい","溶接":"ようせつ","豊漁":"ほうりょう","お守り":"おまもり","鮮魚":"せんぎょ","料理":"りょうり","隠れ身":"かくれみ","魚":"さかな","脂":"あぶら","酒":"さけ","酩酊疾走":"めいていしっそう","具材":"ぐざい","巨大":"きょだい","溺光の使徒":"できこうのしと","眷属":"けんぞく","色違い":"いろちがい","精密装填":"せいみつそうてん","榴弾砲":"りゅうだんほう","強化":"きょうか","対抗":"たいこう","薫風の岬":"くんぷうのみさき","影の入江":"かげのいりえ","霧深い沼":"きりぶかいぬま","泉湧く谷":"いずみわくたに","炎の岩場":"ほのおのいわば","素材":"そざい","電力":"でんりょく","理性":"りせい","酸素":"さんそ","真珠":"しんじゅ","接着剤":"せっちゃくざい","抗菌薬":"こうきんやく","装備":"そうび","報酬":"ほうしゅう","燃料":"ねんりょう","隕石":"いんせき","温泉":"おんせん","骸骨":"がいこつ","巨樹":"きょじゅ","養殖":"ようしょく","捕獲":"ほかく","騎乗":"きじょう","飼育":"しいく","麻酔吹き矢":"ますいふきや","栽培":"さいばい","作物":"さくもつ","合金":"ごうきん","船体":"せんたい","帆":"ほ","設計図":"せっけいず","浄化":"じょうか","舵輪":"だりん","風向計":"ふうこうけい","櫓":"ろ","上級":"じょうきゅう","電動":"でんどう","修理":"しゅうり","装置":"そうち","精密":"せいみつ","鉱石":"こうせき","原木":"げんぼく","砂利":"じゃり","織物":"おりもの","金属廃物":"きんぞくはいぶつ","鉄":"てつ","銅":"どう","簡素":"かんそ","電子部品":"でんしぶひん","蓄電池":"ちくでんち","混合燃料":"こんごうねんりょう","生産":"せいさん","動力":"どうりょく","基本":"きほん","特殊":"とくしゅ","建造":"けんぞう","漂流瓶":"ひょうりゅうびん","海水":"かいすい","汚水":"おすい","汚染水":"おせんすい","原油":"げんゆ","繁殖":"はんしょく","餌":"えさ","食料":"しょくりょう","居住性":"きょじゅうせい","調理台":"ちょうりだい","金鉱石":"きんこうせき","防護":"ぼうご","冷却":"れいきゃく","鮫":"さめ","雨よけ":"あまよけ","氷":"こおり","船長":"せんちょう","証":"あかし","潮見":"しおみ","巨樹":"きょじゅ","鉄鉱石":"てっこうせき","難易度":"なんいど","中":"ちゅう","採集地":"さいしゅうち","針山遺跡":"はりやまいせき","昇天局":"しょうてんきょく","観測所":"かんそくじょ","融合":"ゆうごう","電気":"でんき","採掘地":"さいくつち","高":"こう","回収":"かいしゅう","分解":"ぶんかい","作業台":"さぎょうだい","集め方":"あつめかた","海底遺跡":"かいていいせき","遺跡":"いせき","宝箱":"たからばこ","迷路":"めいろ","攻略":"こうりゃく"};
@@ -814,7 +1049,7 @@ function searchText(el){
   }
   return el.dataset.s;
 }
-const TABS = ["info","zones","spots","materials","facilities","vehicles","guns","features"];
+const TABS = ["info","zones","spots","ruins","materials","facilities","vehicles","guns","features"];
 let tab = TABS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "info";
 let featCat = "すべて";
 
