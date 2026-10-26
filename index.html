@@ -352,8 +352,8 @@ ol.rsteps b{font-size:16px}
       <span class="pill" id="pill"></span>
       <button type="button" role="tab" data-tab="info">概要</button>
       <button type="button" role="tab" data-tab="zones">エリア<span class="n" data-count="zones"></span></button>
-      <button type="button" role="tab" data-tab="spots">おすすめスポット<span class="n" data-count="spots"></span></button>
       <button type="button" role="tab" data-tab="ruins">海底遺跡<span class="n" data-count="ruins"></span></button>
+      <button type="button" role="tab" data-tab="spots">おすすめスポット<span class="n" data-count="spots"></span></button>
       <button type="button" role="tab" data-tab="materials">新素材<span class="n" data-count="materials"></span></button>
       <button type="button" role="tab" data-tab="facilities">新施設<span class="n" data-count="facilities"></span></button>
       <button type="button" role="tab" data-tab="vehicles">船・乗り物<span class="n" data-count="vehicles"></span></button>
@@ -378,16 +378,17 @@ ol.rsteps b{font-size:16px}
       <div class="grid" id="list-zones"></div>
     </section>
 
+    <section class="panel" id="ruins">
+      <div class="sec-head"><span class="idx">Seabed Ruins</span><h2>海底遺跡</h2><p>迷路のような海底遺跡の攻略順路。カードを開くと、3D表示・フロア図・スイッチを押す順番が見られます。</p></div>
+      <div class="grid" id="list-ruins"></div>
+    </section>
+
     <section class="panel" id="spots">
       <div class="sec-head"><span class="idx">Spots</span><h2>おすすめスポット</h2><p>座標と、そこでゲットできるもの。</p></div>
       <div class="grid" id="list-spots"></div>
       <p class="empty" id="spots-empty">まだ登録されていません。準備ができしだい追加します。</p>
     </section>
 
-    <section class="panel" id="ruins">
-      <div class="sec-head"><span class="idx">Seabed Ruins</span><h2>海底遺跡</h2><p>迷路のような海底遺跡の攻略順路。カードを開くと、3D表示・フロア図・スイッチを押す順番が見られます。</p></div>
-      <div class="grid" id="list-ruins"></div>
-    </section>
 
     <section class="panel" id="materials">
       <div class="sec-head"><span class="idx">Materials</span><h2>新素材</h2><p>どこで手に入り、何に使うか。種類ごとに色分けしています。</p></div>
@@ -1049,7 +1050,7 @@ function searchText(el){
   }
   return el.dataset.s;
 }
-const TABS = ["info","zones","spots","ruins","materials","facilities","vehicles","guns","features"];
+const TABS = ["info","zones","ruins","spots","materials","facilities","vehicles","guns","features"];
 let tab = TABS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "info";
 let featCat = "すべて";
 
