@@ -1423,6 +1423,33 @@ tr.fresh{animation:fresh .6s var(--ease)}
 .titleblock div{border-bottom:0!important}
 .titleblock span{display:block;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.16em;color:var(--line-2)}
 .titleblock b{font-size:13.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.bigbtn{display:flex;align-items:center;justify-content:center;gap:10px;width:calc(100% - 24px);margin:10px 12px 2px;padding:13px 16px;border:1.5px solid var(--pencil);background:rgba(255,181,71,.12);color:var(--pencil);font-size:16px;font-weight:700;cursor:pointer;letter-spacing:.04em;touch-action:manipulation;transition:background .2s var(--ease);box-shadow:0 0 18px rgba(255,181,71,.18)}
+.bigbtn:hover{background:rgba(255,181,71,.22)}
+.bigbtn svg{width:20px;height:20px}
+/* 必要素材の大きな一覧 */
+.bigview{position:fixed;inset:0;z-index:75;background:rgba(2,7,15,.94);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 16px) 18px calc(env(safe-area-inset-bottom,0px) + 16px);animation:bvin .3s var(--ease)}
+.bigview[hidden]{display:none}
+@keyframes bvin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.bv-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line-2);padding-bottom:12px}
+.bv-head h3{margin:0;flex:1 1 200px;min-width:0;font-size:22px;line-height:1.3}
+.bv-head h3 small{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.2em;color:var(--line-2);font-weight:400}
+.bv-close{border:1.5px solid var(--cyan);background:transparent;color:var(--cyan);font-size:16px;font-weight:700;padding:11px 18px;cursor:pointer;touch-action:manipulation}
+.bv-sum{display:flex;gap:22px;flex-wrap:wrap;padding:10px 2px;font-size:14px;color:var(--line-2)}
+.bv-sum b{font-family:var(--f-display);font-weight:400;font-size:30px;color:var(--line);margin-right:4px}
+.bv-sum b.hl{color:var(--pencil)}
+.bv-list{flex:1;min-height:0;overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;align-content:start;padding:4px 2px 12px;scrollbar-width:thin;scrollbar-color:rgba(95,240,255,.55) rgba(95,240,255,.06)}
+.bv-item{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;text-align:left;border:1px solid var(--line-2);background:rgba(10,37,73,.6);padding:14px 16px;color:var(--line);cursor:pointer;touch-action:manipulation;font:inherit;transition:background .2s,border-color .2s}
+.bv-item .ck{width:26px;height:26px;border:1.5px solid var(--line-2);position:relative}
+.bv-item b{display:block;font-size:20px;line-height:1.3}
+.bv-item small{display:block;font-size:12.5px;color:var(--line-2);line-height:1.45;margin-top:3px}
+.bv-item .q{font-family:var(--f-mono);font-size:30px;color:var(--pencil);white-space:nowrap}
+.bv-item .q i{font-style:normal;font-size:14px;color:var(--line-2);margin-left:2px}
+.bv-item.done{background:rgba(10,37,73,.25);border-color:var(--line-soft)}
+.bv-item.done b,.bv-item.done .q{color:var(--line-2);text-decoration:line-through;text-decoration-color:var(--pencil)}
+.bv-item.done .ck{border-color:var(--pencil)}
+.bv-item.done .ck::after{content:"";position:absolute;left:8px;top:2px;width:7px;height:14px;border:solid var(--pencil);border-width:0 3px 3px 0;transform:rotate(45deg)}
+.bv-none{grid-column:1/-1;text-align:center;color:var(--line-2);font-size:17px;padding:60px 0}
+@media (max-width:560px){.bv-item b{font-size:18px}.bv-item .q{font-size:26px}}
 .tools{display:flex;gap:6px;flex-wrap:wrap;padding:8px 12px;border-top:1px solid var(--line-soft)}
 .tools .btn{padding:5px 10px;font-size:12px}
 
@@ -1541,6 +1568,7 @@ footer p{margin:2px 0}
       </div>
       <h2 id="h-bom"><span class="en">Bill of materials</span><span class="jp">部品表</span></h2>
       <div class="totals" id="totals"></div>
+      <button class="bigbtn" id="bigBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M4 10h16M4 15h10M4 20h7"/><circle cx="18" cy="18" r="3"/><path d="m20.2 20.2 2 2"/></svg>必要素材を大きく見る</button>
       <div class="tools">
         <button class="btn" id="copy" type="button">部品表をコピー</button>
         <button class="btn" id="uncheck" type="button">済の印をすべて外す</button>
@@ -1571,6 +1599,11 @@ footer p{margin:2px 0}
   </div>
 </nav>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="bigview" id="bigview" hidden role="dialog" aria-modal="true" aria-labelledby="bvTitle">
+  <div class="bv-head"><h3 id="bvTitle"></h3><button class="bv-close" id="bvClose" type="button">× 閉じる</button></div>
+  <div class="bv-sum" id="bvSum"></div>
+  <div class="bv-list" id="bvList"></div>
+</div>
 </div></template>
 <div id="sc-host" hidden></div>
 <script>
@@ -1824,6 +1857,19 @@ $("#selnote").addEventListener("click", e => { const b = e.target.closest("butto
 function toggleDone(tr){ const d = ship().done, m = tr.dataset.m; if (d[m]) delete d[m]; else d[m] = true; save(); tr.classList.toggle("done", !!d[m]); tr.setAttribute("aria-pressed", !!d[m]); tween($("#b3"), totals(ship().cells).filter(([x]) => !d[x]).length); }
 $("#bom").addEventListener("click", e => { const tr = e.target.closest("tr.row"); if (tr) toggleDone(tr); });
 $("#bom").addEventListener("keydown", e => { const tr = e.target.closest("tr.row"); if (tr && (e.key === "Enter" || e.key === " ")){ e.preventDefault(); toggleDone(tr); } });
+/* ---------- 必要素材を大きく見る ---------- */
+function renderBig(){
+  const t = totals(ship().cells), done = ship().done, left = t.filter(([m]) => !done[m]).length;
+  $("#bvTitle").innerHTML = `<small>REQUIRED MATERIALS · 必要素材</small>${esc(ship().name || "船")}`;
+  $("#bvSum").innerHTML = `<span><b>${t.length}</b>種類</span><span><b class="hl">${t.reduce((a, [, e]) => a + e.q, 0).toLocaleString()}</b>個</span><span><b>${left}</b>未完了</span><span>タップで「そろった」印</span>`;
+  $("#bvList").innerHTML = t.length ? t.map(([m, e]) => `<button type="button" class="bv-item${done[m] ? " done" : ""}" data-m="${esc(m)}" aria-pressed="${!!done[m]}"><span class="ck"></span><span><b>${esc(m)}</b><small>${[...e.by].map(([n, q]) => `${esc(n)} ${q}`).join("／")}</small></span><span class="q">${e.q.toLocaleString()}<i>個</i></span></button>`).join("") : `<div class="bv-none">まだ部品がありません</div>`;
+}
+function openBig(){ renderBig(); $("#bigview").hidden = false; $("#bvClose").focus(); }
+function closeBig(){ $("#bigview").hidden = true; renderTotals(); $("#bigBtn").focus(); }
+$("#bigBtn").addEventListener("click", openBig);
+$("#bvClose").addEventListener("click", closeBig);
+$("#bvList").addEventListener("click", e => { const b = e.target.closest(".bv-item"); if (!b) return; const d = ship().done, m = b.dataset.m; if (d[m]) delete d[m]; else d[m] = true; save(); renderBig(); });
+addEventListener("keydown", e => { if (e.key === "Escape" && !$("#bigview").hidden){ e.stopImmediatePropagation(); closeBig(); } }, true);
 $("#uncheck").addEventListener("click", () => { ship().done = {}; save(); prevQ = new Map(); renderTotals(); toast("印を外しました"); });
 let armT;
 $("#clear").addEventListener("click", e => {
