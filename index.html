@@ -1266,7 +1266,7 @@ document.querySelectorAll("[data-count-to]").forEach(el => {
 :host([hidden]){display:none!important}
 .sc{position:fixed;inset:0;z-index:1000;overflow-y:scroll;overflow-x:hidden;scrollbar-gutter:stable;-webkit-overflow-scrolling:touch;padding-top:env(safe-area-inset-top,0px);scrollbar-color:rgba(95,240,255,.45) #02070f;animation:scin .35s cubic-bezier(.2,.7,.1,1)}
 @keyframes scin{from{opacity:0;transform:scale(1.02)}to{opacity:1;transform:none}}
-.btn.back{border-color:var(--cyan);color:var(--cyan);position:relative;z-index:90;touch-action:manipulation;-webkit-tap-highlight-color:rgba(95,240,255,.25);padding:10px 16px}
+.btn.back{border-color:var(--cyan);color:var(--cyan);touch-action:manipulation;-webkit-tap-highlight-color:rgba(95,240,255,.25);padding:10px 16px}
 
 /* Layout: 近未来の設計図ターミナル。左が船の平面図（甲板のマス目）、右上に3Dホログラム、その下に部品表と表題欄、下に部品の引き出し。
    参考: Igloo Inc・basement.studio の暗いUI＋ワイヤーフレーム、Territory Studio の映画用HUD（括弧・座標・走査線）。
