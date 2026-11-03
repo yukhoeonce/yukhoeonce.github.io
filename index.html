@@ -1355,7 +1355,7 @@ h1 .jp{font-weight:700;font-size:clamp(14px,1.8vw,17px);letter-spacing:.32em;col
 .cell::after{right:-1px;bottom:-1px;border-width:0 1px 1px 0}
 .placing .cell{border-color:var(--line-2)}
 .cell.drop{background:rgba(255,214,107,.16);border:1px solid var(--pencil)}
-.part{position:absolute;inset:0;border:1px solid rgba(95,240,255,.7);background:rgba(8,28,52,.6);padding:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;color:var(--line)}
+.part{position:absolute;inset:0;border:1px solid rgba(95,240,255,.7);background:rgba(8,28,52,.6);padding:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:grab;touch-action:none;-webkit-touch-callout:none;-webkit-user-drag:none;user-select:none;-webkit-user-select:none;color:var(--line)}
 .part svg{width:62%;height:auto;flex:none;color:var(--line);filter:drop-shadow(0 0 3px var(--glow))}
 .part{box-shadow:inset 0 0 14px rgba(95,240,255,.12),0 0 10px rgba(95,240,255,.12)}
 .part:hover{border-color:var(--cyan);box-shadow:inset 0 0 18px rgba(95,240,255,.25),0 0 16px rgba(95,240,255,.3)}
@@ -1458,7 +1458,7 @@ tr.fresh{animation:fresh .6s var(--ease)}
 .trash.hot svg .lid{transform:rotate(-20deg);transform-origin:8px 10px}
 .trash svg .lid{transition:transform .2s var(--ease)}
 .items{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:6px 2px 2px;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
-.fi{touch-action:pan-x;user-select:none;-webkit-user-select:none;flex:0 0 112px;position:relative;height:92px;border:1px solid var(--line-soft);background:rgba(232,242,255,.03);padding:7px 8px;text-align:left;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;transition:border-color .2s,background .2s,transform .2s var(--ease)}
+.fi{touch-action:none;-webkit-touch-callout:none;-webkit-user-drag:none;user-select:none;-webkit-user-select:none;flex:0 0 112px;position:relative;height:92px;border:1px solid var(--line-soft);background:rgba(232,242,255,.03);padding:7px 8px;text-align:left;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;transition:border-color .2s,background .2s,transform .2s var(--ease)}
 .fi:hover{border-color:var(--line);background:rgba(232,242,255,.07);transform:translateY(-3px)}
 .fi:active{transform:scale(.96)}
 .fi svg{width:36px;height:36px;color:var(--line);filter:drop-shadow(0 0 3px var(--glow))}
@@ -1854,7 +1854,6 @@ addEventListener("pointermove", e => {
     if (Math.hypot(dx, dy) < 8) return;
     // 引き出し：横に動かすとスクロール、上に引き出すと甲板へドラッグ
     if (drag.kind === "belt" && !(dy < 0 && Math.abs(dy) > Math.abs(dx))){
-      if (drag.touch){ drag = null; return; }          // 指はブラウザのスクロールに任せる
       drag.scroll = true; drag.sl = itemsEl.scrollLeft; drag.sx = e.clientX; drag.px = e.clientX; drag.pt = performance.now(); drag.v = 0; drag.target = drag.sl;
       beltMoved = true; itemsEl.classList.add("grabbing"); return;
     }
@@ -1897,6 +1896,9 @@ function endDrag(e){
   renderDeck();
 }
 addEventListener("pointerup", endDrag); addEventListener("pointercancel", endDrag);
+// iPad/iPhone の Safari は touch-action だけでは画面スクロールを止めきれないので、つかんでいる間は指の動きを止める
+addEventListener("touchmove", e => { if (drag) e.preventDefault(); }, { passive: false });
+addEventListener("dragstart", e => { if (drag) e.preventDefault(); });
 
 /* ---------- 文字が組み上がる演出 ---------- */
 const GL = "01<>/#=+*ABCDEFXYZ";
