@@ -1263,9 +1263,10 @@ document.querySelectorAll("[data-count-to]").forEach(el => {
 <!--SHIPCALC-START: shipcalc/embed.py で生成。直接編集しない-->
 <template id="sc-tpl"><style>[hidden]{display:none!important}
 :host{all:initial}
+:host([hidden]){display:none!important}
 .sc{position:fixed;inset:0;z-index:1000;overflow-y:scroll;overflow-x:hidden;scrollbar-gutter:stable;-webkit-overflow-scrolling:touch;padding-top:env(safe-area-inset-top,0px);scrollbar-color:rgba(95,240,255,.45) #02070f;animation:scin .35s cubic-bezier(.2,.7,.1,1)}
 @keyframes scin{from{opacity:0;transform:scale(1.02)}to{opacity:1;transform:none}}
-.btn.back{border-color:var(--cyan);color:var(--cyan)}
+.btn.back{border-color:var(--cyan);color:var(--cyan);position:relative;z-index:90;touch-action:manipulation;-webkit-tap-highlight-color:rgba(95,240,255,.25);padding:10px 16px}
 
 /* Layout: 近未来の設計図ターミナル。左が船の平面図（甲板のマス目）、右上に3Dホログラム、その下に部品表と表題欄、下に部品の引き出し。
    参考: Igloo Inc・basement.studio の暗いUI＋ワイヤーフレーム、Territory Studio の映画用HUD（括弧・座標・走査線）。
@@ -1589,19 +1590,25 @@ function scLoadThree(){
 }
 async function scShow(){
   const host = document.getElementById("sc-host");
-  if (!host.shadowRoot) host.attachShadow({ mode: "open" }).appendChild(document.getElementById("sc-tpl").content.cloneNode(true));
+  if (!host.shadowRoot){
+    host.attachShadow({ mode: "open" }).appendChild(document.getElementById("sc-tpl").content.cloneNode(true));
+    // 戻るボタン: 3Dの読み込みを待たずに使えるようにし、iPadでは指を離した瞬間に閉じる（click が来ない場合の保険）
+    const c = host.shadowRoot.getElementById("scClose");
+    c.addEventListener("click", scHide);
+    c.addEventListener("touchend", e => { e.preventDefault(); scHide(); }, { passive: false });
+  }
   host.hidden = false; scOpen = true; document.documentElement.style.overflow = "hidden";
   if (!scReady){ scReady = true; await scLoadThree(); scMain(host.shadowRoot, host.shadowRoot.getElementById("scRoot")); }
   else dispatchEvent(new Event("resize"));
 }
 function scHide(){
+  if (!scOpen) return;
   document.getElementById("sc-host").hidden = true; scOpen = false; document.documentElement.style.overflow = "";
   document.getElementById("sc-open")?.focus();
 }
 document.getElementById("sc-open")?.addEventListener("click", scShow);
 addEventListener("keydown", e => { if (e.key === "Escape" && scOpen) scHide(); });
 function scMain(R, W){
-R.getElementById("scClose").addEventListener("click", scHide);
 const RAW = scData();
 const CATS = [
   { id: "all", name: "すべて", k: "var(--line)", tag: "" },
