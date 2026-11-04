@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>永い夢 ガイド</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: 夜空のヒーロー（星・浮かぶ夢の泡・オーロラ・三日月）→ 下端は流れる夢の霧 → ガラスのタブバー → 色分けの小カード。
+   色は薄紫の霧と深い夜の紫、アクセントは月の金色だけ */
+:root{
+  --bg:#f3effa; --surface:#ffffff; --surface-2:#f8f5fd; --ink:#1d1233; --ink-2:#3d2e5c; --muted:#665a80;
+  --line:#e2d9f1; --accent:#b8862b; --violet:#7c4ddb; --violet-soft:#ece4fb;
+  --glass:rgba(243,239,250,.82);
+  --f-display:"Instrument Serif","Times New Roman",serif;
+  --f-jp:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --ease:cubic-bezier(.2,.7,.1,1);
+  --mist:#f3effa;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#120b24; --surface:#1b1233; --surface-2:#22173f; --ink:#efe9fb; --ink-2:#c6b9e4; --muted:#9a8cbc;
+  --line:#2f2452; --accent:#e9c46a; --violet:#b69cff; --violet-soft:#2a1d4d; --glass:rgba(18,11,36,.8); --mist:#120b24; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#120b24; --surface:#1b1233; --surface-2:#22173f; --ink:#efe9fb; --ink-2:#c6b9e4; --muted:#9a8cbc;
+  --line:#2f2452; --accent:#e9c46a; --violet:#b69cff; --violet-soft:#2a1d4d; --glass:rgba(18,11,36,.8); --mist:#120b24; color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scrollbar-gutter:stable;overflow-y:scroll}
+.ph{word-break:keep-all;overflow-wrap:anywhere}
+body{word-break:auto-phrase;line-break:strict;margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-jp);font-size:17px;line-height:1.8;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:#1a0f3a}
+body.lock{overflow:hidden}
+a{color:inherit}
+button{font:inherit;color:inherit}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media (min-width:700px){.gut{padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}}
+.inner{max-width:1120px;margin:0 auto}
+
+/* ---------- Hero: 夜空（意図的に単一テーマ） ---------- */
+.hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 78% 0%,#4a2a8a 0%,rgba(74,42,138,0) 55%),radial-gradient(90% 80% at 0% 100%,#5b2470 0%,rgba(91,36,112,0) 60%),linear-gradient(180deg,#1a0f3a 0%,#24124d 45%,#2b1557 100%);color:#f1ebff}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.moon{position:absolute;right:max(7%,24px);top:46px;width:clamp(70px,11vw,128px);aspect-ratio:1;border-radius:50%;z-index:1;
+  box-shadow:inset -18px 8px 0 0 #f7e7b8;filter:drop-shadow(0 0 22px rgba(247,231,184,.55));animation:moonfloat 9s ease-in-out infinite;opacity:.95}
+@keyframes moonfloat{50%{transform:translateY(8px) rotate(-3deg)}}
+.mist{position:absolute;left:0;right:0;bottom:-1px;height:120px;z-index:1;pointer-events:none}
+.mist svg{position:absolute;bottom:0;left:0;width:200%;height:100%}
+.mist .m1{animation:drift 26s linear infinite}
+.mist .m2{animation:drift 17s linear infinite reverse}
+.mist .m3{animation:drift 34s linear infinite}
+.mist .m1 path{fill:#8f6fe0;opacity:.28}
+.mist .m2 path{fill:#d9a6f0;opacity:.3}
+.mist .m3 path{fill:var(--mist)}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.hero .inner{position:relative;z-index:2;padding-block:52px 118px;display:flex;flex-direction:column;gap:18px}
+.kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#c9b6ff;display:flex;gap:12px;align-items:center}
+.kicker .dot{width:7px;height:7px;border-radius:50%;background:#f7e7b8;animation:twinkle 2.6s infinite}
+@keyframes twinkle{0%,100%{box-shadow:0 0 0 0 rgba(247,231,184,.6)}70%{box-shadow:0 0 0 12px rgba(247,231,184,0)}}
+.hero h1{margin:0;font-weight:400;line-height:.95}
+.hero h1 .en{display:block;font-family:var(--f-display);font-style:italic;font-size:clamp(54px,9.5vw,116px);background:linear-gradient(100deg,#fff6e0 10%,#e9d6ff 45%,#f3b8e6 80%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:.08em}
+.hero h1 .jp{display:block;font-weight:900;font-size:clamp(22px,3.4vw,34px);letter-spacing:.2em;margin-top:12px;color:#f1ebff}
+.hero p.lead{margin:0;max-width:34em;color:#d7cbf5;font-size:clamp(15px,1.6vw,17px)}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:6px;font-size:14.5px;color:#c9b6ff}
+.hero-meta b{display:block;font-family:var(--f-display);font-size:34px;font-weight:400;color:#fff6e0;line-height:1.1;font-variant-numeric:tabular-nums}
+.rise{animation:rise .9s var(--ease) both}
+.rise.d1{animation-delay:.08s}.rise.d2{animation-delay:.16s}.rise.d3{animation-delay:.24s}.rise.d4{animation-delay:.32s}
+@keyframes rise{from{transform:translateY(14px);opacity:.25}to{transform:none;opacity:1}}
+
+/* ---------- Sticky bar ---------- */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--glass);backdrop-filter:saturate(1.5) blur(16px);-webkit-backdrop-filter:saturate(1.5) blur(16px);border-bottom:1px solid var(--line)}
+.bar .inner{display:flex;gap:12px;align-items:center;padding-block:10px;flex-wrap:wrap}
+.tabs{position:relative;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1 1 560px;min-width:0}
+.tabs::-webkit-scrollbar{display:none}
+.tabs{touch-action:pan-x pan-y;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+@media (hover:hover) and (pointer:fine){.tabs{cursor:grab}.tabs.dragging,.tabs.dragging button{cursor:grabbing;user-select:none}}
+.tabs button{position:relative;z-index:1;font-size:15.5px;font-weight:700;color:var(--ink-2);background:none;border:0;padding:9px 15px;border-radius:999px;cursor:pointer;white-space:nowrap;flex:none;transition:color .3s;display:flex;gap:7px;align-items:center}
+.tabs button i{width:8px;height:8px;border-radius:50%;background:var(--c);display:inline-block}
+.tabs button[aria-selected="true"]{color:#fff}
+.tabs button[aria-selected="true"] i{background:#fff}
+.tabs button:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.tabs .pill{position:absolute;z-index:0;top:0;height:100%;border-radius:999px;background:linear-gradient(120deg,#6d3fd1,#a34bc9);transition:transform .45s var(--ease),width .45s var(--ease);box-shadow:0 4px 18px -6px rgba(109,63,209,.7)}
+.search{flex:1 1 240px;display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 6px 4px 16px}
+.search:focus-within{border-color:var(--violet);box-shadow:0 0 0 3px color-mix(in srgb,var(--violet) 22%,transparent)}
+.search input{flex:1;min-width:0;border:0;background:none;font:inherit;font-size:16px;color:var(--ink);padding:7px 0;outline:none}
+.search input::placeholder{color:var(--muted)}
+.search button{border:0;background:var(--violet-soft);color:var(--ink-2);border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer}
+
+/* ---------- Main ---------- */
+main{padding-block:28px 40px;min-height:100vh}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:6px 0 16px}
+.sec-head h2{margin:0;font-size:clamp(22px,2.6vw,28px);font-weight:900;letter-spacing:.04em}
+.sec-head h2 small{font-family:var(--f-display);font-style:italic;font-weight:400;color:var(--violet);font-size:.85em;margin-left:10px;letter-spacing:0}
+.sec-head p{margin:0;color:var(--muted);font-size:14px}
+.group{margin-bottom:34px}
+.ghead{display:flex;align-items:center;gap:10px;margin:0 0 12px;font-size:15px;font-weight:900;color:var(--ink-2);letter-spacing:.06em}
+.ghead i{width:10px;height:10px;border-radius:3px;background:var(--c);transform:rotate(45deg)}
+.ghead span{font-weight:500;color:var(--muted);font-size:13px;letter-spacing:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.card{position:relative;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 16px 14px;cursor:pointer;overflow:hidden;
+  display:flex;flex-direction:column;gap:6px;min-height:132px;transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
+.card::before{content:"";position:absolute;inset:0 0 auto;height:4px;background:var(--c)}
+.card::after{content:"";position:absolute;right:-40px;top:-40px;width:120px;height:120px;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--c) 22%,transparent),transparent);pointer-events:none}
+@media (hover:hover){.card:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px color-mix(in srgb,var(--c) 70%,#000);border-color:color-mix(in srgb,var(--c) 45%,var(--line))}}
+.card:focus-visible{outline:2px solid var(--c);outline-offset:2px}
+.card .lbl{font-size:12px;font-weight:700;color:color-mix(in srgb,var(--c) 75%,var(--ink));letter-spacing:.06em}
+.card h3{margin:0;font-size:18px;line-height:1.4;font-weight:900}
+.card p{margin:0;font-size:14px;line-height:1.65;color:var(--ink-2);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card .src{margin-top:auto;padding-top:6px;display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:11.5px;font-weight:700;border-radius:999px;padding:1px 9px;border:1px solid var(--line);color:var(--muted);background:var(--surface-2);white-space:nowrap}
+.chip.off{color:#6d3fd1;border-color:#cdb8f7;background:#f1eafe}
+.chip.db{color:#0f766e;border-color:#a7dcd5;background:#e9f7f5}
+.chip.web{color:#a1561a;border-color:#efcfae;background:#fdf3e8}
+.chip.en{color:#9f2f5c;border-color:#f1b9cf;background:#fdeef4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .chip.off{color:#cbb6ff;border-color:#4b3790;background:#2a1d4d}
+  :root:not([data-theme="light"]) .chip.db{color:#7fe0d2;border-color:#1e5a55;background:#10302e}
+  :root:not([data-theme="light"]) .chip.web{color:#f3c08e;border-color:#6a4220;background:#33220f}
+  :root:not([data-theme="light"]) .chip.en{color:#f7a8c8;border-color:#6d2747;background:#341424}}
+:root[data-theme="dark"] .chip.off{color:#cbb6ff;border-color:#4b3790;background:#2a1d4d}
+:root[data-theme="dark"] .chip.db{color:#7fe0d2;border-color:#1e5a55;background:#10302e}
+:root[data-theme="dark"] .chip.web{color:#f3c08e;border-color:#6a4220;background:#33220f}
+:root[data-theme="dark"] .chip.en{color:#f7a8c8;border-color:#6d2747;background:#341424}
+.enter .card{animation:cardin .6s var(--ease) both;animation-delay:calc(var(--i,0) * 30ms)}
+@keyframes cardin{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
+.empty{padding:40px 0;text-align:center;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:13px;color:var(--muted);margin:-4px 0 20px}
+
+/* ステージの流れ（概要タブ上部） */
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 30px;padding:0;list-style:none}
+.flow li{background:linear-gradient(160deg,color-mix(in srgb,#7c4ddb 16%,var(--surface)),var(--surface));border:1px solid var(--line);border-radius:16px;padding:12px 14px;cursor:pointer;transition:transform .3s var(--ease)}
+@media (hover:hover){.flow li:hover{transform:translateY(-2px)}}
+.flow b{display:block;font-family:var(--f-display);font-style:italic;font-weight:400;font-size:30px;line-height:1;color:var(--violet)}
+.flow span{display:block;font-weight:900;font-size:15px;margin-top:6px}
+.flow small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+
+/* ---------- 全画面詳細 ---------- */
+.sheet{position:fixed;inset:0;z-index:50;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.sheet.open{animation:sheetin .45s var(--ease)}
+@keyframes sheetin{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.sheet-head{position:sticky;top:0;z-index:2;background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.sheet-head .inner{display:flex;align-items:center;gap:10px;padding-block:10px;max-width:860px}
+.sheet-back,.sheet-x{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
+.sheet-back{max-width:55%;overflow:hidden;text-overflow:ellipsis;color:var(--violet)}
+.sheet-x{margin-left:auto}
+.sheet-cat{font-size:13px;font-weight:700;color:color-mix(in srgb,var(--c) 75%,var(--ink));display:flex;align-items:center;gap:8px;min-width:0}
+.sheet-cat::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--c);transform:rotate(45deg);flex:none}
+.sheet-body{max-width:860px;margin:0 auto;padding:26px max(18px,env(safe-area-inset-left,0px)) 80px}
+.sheet-body h2{margin:0 0 4px;font-size:clamp(26px,4vw,36px);font-weight:900;line-height:1.3}
+.sheet-body .alias{color:var(--muted);font-size:14px;margin:0 0 14px}
+.sheet-body .sum{font-size:17.5px;color:var(--ink-2);margin:0 0 20px;padding:14px 16px;border-radius:14px;background:color-mix(in srgb,var(--c) 9%,var(--surface));border:1px solid color-mix(in srgb,var(--c) 22%,var(--line))}
+.kv{display:grid;grid-template-columns:minmax(96px,9em) 1fr;gap:0;margin:0 0 22px;border-top:1px solid var(--line)}
+.kv dt,.kv dd{margin:0;padding:11px 4px;border-bottom:1px solid var(--line)}
+.kv dt{font-weight:700;color:var(--muted);font-size:14.5px}
+.kv dd{font-size:16px}
+@media (max-width:520px){.kv{grid-template-columns:1fr}.kv dt{border-bottom:0;padding-bottom:0}.kv dd{padding-top:2px}}
+.sheet h4{margin:24px 0 10px;font-size:14px;letter-spacing:.12em;color:var(--violet);font-weight:900}
+.items{list-style:none;margin:0 0 8px;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.items li{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:9px 13px;font-size:15.5px}
+.items li b{font-family:var(--f-mono);font-weight:500;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.pts{margin:0 0 8px;padding-left:1.2em}
+.pts li{margin:4px 0}
+.xref{border:0;background:none;padding:0;color:var(--violet);font-weight:700;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;cursor:pointer;text-align:left}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips .xref{text-decoration:none;border:1px solid color-mix(in srgb,var(--violet) 35%,var(--line));background:var(--violet-soft);border-radius:999px;padding:5px 13px;font-size:14.5px}
+.note{font-size:13.5px;color:var(--muted);border-left:3px solid var(--line);padding:2px 0 2px 12px;margin:18px 0 0}
+.srcs{margin-top:22px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px;color:var(--muted)}
+table.st{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 10px}
+table.st th,table.st td{border-bottom:1px solid var(--line);padding:9px 6px;text-align:left;vertical-align:top}
+table.st th{font-size:13px;color:var(--muted);font-weight:700}
+
+/* ---------- 情報源・フッター ---------- */
+.sources{margin-top:10px;font-size:14px;color:var(--ink-2)}
+.sources ul{margin:8px 0 0;padding-left:1.2em}
+.sources li{margin:3px 0;overflow-wrap:anywhere}
+footer .inner{padding-block:28px 48px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px}
+footer b{color:var(--ink)}
+.hide{display:none!important}
+/* 画面の色の切り替え（右上） */
+.theme{position:absolute;z-index:40;top:calc(env(safe-area-inset-top,0px) + 10px);right:max(10px,env(safe-area-inset-right,0px));
+  display:flex;align-items:center;gap:6px;height:34px;padding:0 12px 0 10px;border-radius:999px;cursor:pointer;
+  border:1px solid rgba(255,255,255,.28);background:rgba(26,15,58,.55);color:#f1ebff;font-size:12.5px;font-weight:700;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 4px 16px -8px rgba(0,0,0,.5)}
+.theme svg{width:16px;height:16px}
+.theme:focus-visible{outline:2px solid #f7e7b8;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<button type="button" class="theme" id="theme" aria-label="ダークモードとライトモードを切り替える"></button>
+<header class="hero">
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="moon" aria-hidden="true"></div>
+  <div class="inner gut">
+    <div class="kicker rise"><span class="dot"></span>Once Human · Scenario Guide · 非公式</div>
+    <h1 class="rise d1"><span class="en">Endless Dream</span><span class="jp">永い夢 ガイド</span></h1>
+    <p class="lead rise d2">ナルコット大陸が夢の領域に侵食されたPvEシナリオ「永い夢」のまとめです。迷い値・目覚めの砂・スリーパーの仕組み、ステージ、素材とアイテムを名前で検索できます。</p>
+    <div class="hero-meta rise d3">
+      <div><b>6</b>ステージ</div>
+      <div><b>3</b>悪夢の法則</div>
+      <div><b id="cnt">0</b>項目</div>
+      <div><b>2025.7.3</b>正式リリース</div>
+    </div>
+  </div>
+  <div class="mist" aria-hidden="true">
+    <svg class="m1" viewBox="0 0 2400 120" preserveAspectRatio="none"><path d="M0 70 Q150.0 36 300 70 T600 70 T900 70 T1200 70 T1500 70 T1800 70 T2100 70 T2400 70 V120 H0Z"/></svg>
+    <svg class="m2" viewBox="0 0 2400 120" preserveAspectRatio="none"><path d="M0 84 Q200.0 60 400 84 T800 84 T1200 84 T1600 84 T2000 84 T2400 84 V120 H0Z"/></svg>
+    <svg class="m3" viewBox="0 0 2400 120" preserveAspectRatio="none"><path d="M0 98 Q120.0 84 240 98 T480 98 T720 98 T960 98 T1200 98 T1440 98 T1680 98 T1920 98 T2160 98 T2400 98 V120 H0Z"/></svg>
+  </div>
+</header>
+
+<div class="bar gut">
+  <div class="inner">
+    <div class="tabs" id="tabs" role="tablist"><span class="pill" id="pill"></span></div>
+    <label class="search"><input id="q" type="search" placeholder="名前で検索（例: 目覚めの砂、ディープ、残片）" autocomplete="off" enterkeyhint="search" aria-label="検索"><button type="button" id="qx" hidden>消す</button></label>
+  </div>
+</div>
+
+<main class="gut">
+  <div class="inner" id="main"></div>
+</main>
+
+<footer class="gut">
+  <div class="inner">
+    <div><b>非公式</b>のファン製作ページです。開発・運営元とは関係ありません。広告・収益化はしていません。</div>
+    <div>Once Human © NetEase / Starry Studio。権利者から要請があれば速やかに修正・削除します。</div>
+    <div>運営・ご連絡: ユッケ（X <a href="https://x.com/Yukhoeonce" target="_blank" rel="noopener">@Yukhoeonce</a>）</div>
+  </div>
+</footer>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+  <div class="sheet-head gut"><div class="inner"><button type="button" class="sheet-back" id="sheet-back" hidden></button><span class="sheet-cat" id="sheet-cat"></span><button type="button" class="sheet-x" id="sheet-x">閉じる ✕</button></div></div>
+  <div class="sheet-body"><h2 id="sheet-title"></h2><div id="sheet-content"></div></div>
+</div>
+
+<script>
+/* ================= データ =================
+   src: off=公式お知らせ, db=ゲームデータDB（oncehuman.th.gl/ja）, web=日本語の攻略記事, en=英語の攻略記事
+   rows: [見出し, 本文]  items: [素材名, 数]  pts: 箇条書き  links: 関連項目のid */
+const CATS = [
+  { id:"basic",  name:"基本",     en:"Basics",     c:"#8b5cf6" },
+  { id:"stage",  name:"ステージ", en:"Stages",     c:"#6366f1" },
+  { id:"law",    name:"悪夢の法則・状態", en:"Laws", c:"#c026d3" },
+  { id:"boss",   name:"スリーパー・ボス", en:"Sleepers", c:"#e11d48" },
+  { id:"mob",    name:"夢の敵",   en:"Nightmares", c:"#be4bdb" },
+  { id:"mat",    name:"素材",     en:"Materials",  c:"#0d9488" },
+  { id:"spot",   name:"採集・宝箱", en:"Gathering", c:"#0284c7" },
+  { id:"item",   name:"アイテム・施設", en:"Items",  c:"#ea7a12" },
+  { id:"reward", name:"報酬・商人", en:"Rewards",   c:"#c9971c" }
+];
+const SRC = { off:"公式", db:"ゲームDB", web:"攻略記事", en:"英語の記事" };
+
+const D = [
+/* ---------- 基本 ---------- */
+{ id:"about", cat:"basic", name:"永い夢とは", sum:"ナルコット大陸が多層の「夢の領域」に侵食されたPvEシナリオ。夢の領域を消していき、全サーバーのエターナルスリーパーの討伐結果で世界の結末が決まる。",
+  rows:[["配信","2025年5月22日アーリーアクセス開始、2025年7月3日のV2.0「奇夢の目覚め」で正式リリース"],
+        ["マップ","ステージ1から南部・北部の全マップ（ブロークンデルタ〜余燼の浜辺）が開放。マニブス側と白銀の荒野側が陸路でつながる"],
+        ["結末","全サーバーの眠れる眷属（エターナルスリーパー）の討伐結果でエンディングが決まる"],
+        ["新しい指標","迷い値（夢の領域に居られる時間）"],
+        ["難しさ","PvEシナリオの中では比較的難しめ。マニブスや白銀の荒野を一通り遊んでからがおすすめとされる"]],
+  pts:["テレポートタワーはマニブス側と白銀側で引き継がれないが、永い夢の中のサイロテレポートは引き継がれる（攻略記事）","エクスターミネーターや根源エリアはない（攻略記事）"],
+  links:["flow","maiv","zone-build","stage1"], src:["off","web"] },
+{ id:"flow", cat:"basic", name:"基本の進め方", sum:"目覚めの砂を集める → 悪夢の記録で起動 → シャロウ → ディープ → エターナルの順に倒し、夢の領域を消していく。",
+  pts:["夢の領域で敵を倒す・目覚める時計を掘るなどして目覚めの砂を集める","悪夢の記録に目覚めの砂を入れて起動する（チーム全員で少しずつ入れられる）","シャロウスリーパー（砂50）→ ディープスリーパー（砂100）→ エターナルスリーパー（砂1000〜2000）","倒すと夢の領域が消え、浄化貢献度や報酬がもらえる"],
+  note:"序盤は通常エリアで装備を整え、浅い夢の領域で目覚めの砂と現実の残片を集めるのがおすすめとされる。上位のスリーパーは周りの下位から強化を受けるので、周りから減らすと安全。",
+  links:["sand","record","shallow","deep","eternal"], src:["off","web"] },
+{ id:"maiv", cat:"basic", name:"迷い値", alias:"夢値", sum:"夢の領域にいると上がる特殊な指標。上限に達するとその場でライジング（倒れる）する。",
+  rows:[["上がる","夢の領域にいる間。夢魔と目が合うと速く上がる。極夜の法則のエリアでは急上昇"],
+        ["目安","約15分（攻略記事。20分とする記事もある）"],
+        ["下げる","夢の領域から出る／現実アンカー剤で減らす"],
+        ["見かた","HPゲージの上の赤いひし形アイコン（攻略記事）"]],
+  links:["anchor","nightmare","polar"], src:["off","web"] },
+{ id:"record", cat:"basic", name:"悪夢の記録", alias:"浅い眠り・深い眠り・永遠の眠り", sum:"テレビが集まったオブジェ。目覚めの砂を入れるとスリーパーが現れる召喚装置。3種類そろうと周りが夢の領域になる。",
+  rows:[["種類","浅い眠り（シャロウ）、深い眠り（ディープ）、永遠の眠り（エターナル）"]],
+  items:[["シャロウスリーパー",50],["ディープスリーパー",100],["エターナルスリーパー（初回）",1000],["エターナルスリーパー（残像）",2000]],
+  itemsTitle:"必要な目覚めの砂",
+  note:"エターナルスリーパーの詳細はマップ画面の「異常アーカイブ」で見られる（攻略記事）。",
+  links:["sand","shallow","deep","eternal"], src:["off","web"] },
+{ id:"zone-build", cat:"basic", name:"夢の領域での建設", sum:"夢の領域の中では領地ターミナルなしで建設できる。ただし領地ターミナルは置けない。",
+  pts:["建材の素材に目覚めの砂を使うものがある（例: 木の螺旋階段1、ソーラー発電機10、ショットガンタレットLv2 15、水ポンプ150）（攻略記事）","建てられる数に上限があり、敵に足場を壊されることもある（攻略記事）","解放した場所は時間がたつと夢の領域に戻る。その範囲に領地を置くと戻らなくなる（トラックの移動領地は不可）（攻略記事）"],
+  links:["base","sand"], src:["off","web"] },
+{ id:"base", cat:"basic", name:"拠点の選び方", sum:"生活の拠点は通常エリアに置き、夢の領域の中は攻略用の建築に使うのが扱いやすいとされる。",
+  pts:["夢との境目に近い","目覚める時計が見える場所","水源（水力発電用）","原油ポイント（乗り物移動が多いのでガソリン用）","テレポート施設へ行きやすい"],
+  note:"夢に覆われた場所でも、シャロウかディープを倒して一時的に現実に戻っている間に領地を置けば、そのまま現実として残るとされる（攻略記事）。",
+  links:["zone-build","clock"], src:["web"] },
+{ id:"safezone", cat:"basic", name:"安全な夢の領域", sum:"Lv.10〜20のエリアにある、危険な法則のない夢の領域。マップでは薄い赤色で表示。",
+  pts:["悪夢の法則・悪夢状態がない（雷・爆発もない）","この夢の領域は解放できない","迷い値の時間制限はある","ステージが進むとデビアントの種類・数が増える","暗影のマニブスが出る場所もある"],
+  links:["maiv","shadowmanibus"], src:["off","web"] },
+{ id:"invasion", cat:"basic", name:"夢の領域侵攻", alias:"侵攻モード", sum:"スリーパーを倒していくと夢の領域が反撃し、通常のエリアに攻めてくるモード。食い止めればそのエリアは元に戻り、防げなければ夢の領域になる。",
+  rows:[["始まる時期","シーズンの第2ステージ以降。ステージが進むほど難しくなる（公式）"],
+        ["発生のしかた","スリーパーの撃破数で決まる（公式）。シャロウ・ディープ・エターナルを倒すと侵攻値がたまり、最大になると始まる（攻略記事）"],
+        ["規模","小規模・中規模・大規模の3種類。大きいほど範囲が広い（公式）。目安は侵攻Ⅰ 狭い範囲・約30分／侵攻Ⅱ 広範囲・約1時間／侵攻Ⅲ 超広範囲・約2時間（攻略記事）"],
+        ["難易度","EASY・NORMAL・HARD（公式）"],
+        ["やること","モンスターを倒す、施設を壊すなどのイベントやチャレンジで侵攻を止める（公式）"],
+        ["結果","防げたエリアは通常エリアに戻り、防げなかったエリアは夢の領域になる（公式）"],
+        ["報酬","色違いデビエーション「光の異種・ささやくローンウルフ」がドロップ（公式）。V2.2.3で現実の残片が大幅に増え、モッドの確率も上がった。高難易度ではモッドボックスが2つ出ることもある（公式）"],
+        ["追加","2025年10月30日のV2.2.0で追加。新しいサーバーにも古いサーバーにも入っている（公式）"]],
+  pts:["まず侵攻専用の敵を倒してエリアの浄化を進める。必要な数を倒すとボスのシールドが外れる（攻略記事）","赤いまま時間切れになると、そこにディープスリーパーがわく（攻略記事）","爆発型の戦術アイテムが特に役立つ（公式）。投げナイフも便利とされる（攻略記事）","侵攻中も迷い値に注意。「侵攻の隙間」に逃げ込んで休める（攻略記事）","侵攻の場所はレーダーやマップを拡大すると分かる。ワールドチャットで共有されることも多い（攻略記事）"],
+  rows2:[["円形の敵","光る真ん中に2〜3発"],["ネスト","テレビの画面に1発"],["縦長の敵","光る画面の2か所"],["抗体","3か所"],["木のような敵","周りを回って顔のついた画面に当てる"],["ガードつきの敵","銃で倒したほうが早い"]],
+  rows2Title:"投げナイフの当てどころ（攻略記事）",
+  pts2Title:"侵攻に出てくる敵・場所（シナリオチャレンジの課題名より）",
+  pts2:["悪夢の使い","深夢のマニブス（課題: 侵攻に参加して合計7体討伐）","深夢・シークレットサーヴィター","悪夢の巣穴（課題: 合計3回クリア）","ミスティハンド（倒すとミストが晴れる）","悪夢ガード（課題: 戦術アイテムで撃破）"],
+  note:"敵ごとの詳しい動きや、侵攻値がどれくらいで最大になるかは見つからなかった。",
+  links:["deep","shallow","eternal","maiv","challenge"], src:["off","web"] },
+{ id:"persist", cat:"basic", name:"永続サーバー", sum:"シナリオ終了後に移る永続サーバーでは、レベル・物資・領地の建築物を残したまま、独立して変化し続ける夢の領域が残る。",
+  pts:["夢魔のマニブスが各サーバーの決まった位置に出る（公式）","夢の領域の解放状態は引き継がれない。元は夢の領域だった場所の領地は、また夢の領域になることがある（攻略記事）","ミス・メモリーはいなくなる（攻略記事）","日本などのシナリオサーバーは毎月1日と15日の8:00に開く計画（2026年8月26日から、攻略記事）","永い夢の永続サーバーは今後のバージョンで段階的に統合予定（2026年9月14日 開発ブルーポスト）"],
+  links:["manibus","memory"], src:["off","web"] },
+
+/* ---------- ステージ ---------- */
+{ id:"stage1", cat:"stage", name:"ステージ1「厄災の訪れ」", sum:"夢の領域が現れ、攻略が始まる。悪夢の記録が出現。", rows:[["期間","3日（最短2日）"],["短縮","眠れる眷属を3体倒すと最大1日短縮"],["解放","東部・北部エリア、悪夢の記録"],["個人クエスト","Lv.10で報酬を受け取れる"]], links:["stage2","record"], src:["off"] },
+{ id:"stage2", cat:"stage", name:"ステージ2「広がる異夢」", sum:"ダンジョン（HARD）が開く。チャプター「初めての次元界」。", rows:[["期間","5日（最短3日）"],["短縮","眠れる眷属7体で最大2日短縮"],["解放","ダンジョン（HARD）、チャプター「初めての次元界」、シナリオチャレンジ"],["個人クエスト","Lv.15"]], links:["stage1","stage3","challenge"], src:["off","web"] },
+{ id:"stage3", cat:"stage", name:"ステージ3「凶兆の侵食」", sum:"MASTER・EXTREMEのダンジョンと、ハイリスクパブリックイベントが開く。", rows:[["期間","7日（最短5日）"],["短縮","眠れる眷属13体で最大2日短縮"],["解放","ダンジョン（MASTER・EXTREME）、ハイリスクパブリックイベント、チャプター「荒野へ向かって」"]], links:["stage2","stage4"], src:["off"] },
+{ id:"stage4", cat:"stage", name:"ステージ4「交わる虚実」", sum:"一部の基礎物資の獲得率が上がる。", rows:[["期間","8日（最短6日）"],["短縮","眠れる眷属20体で最大2日短縮"],["解放","チャプター「虎穴に入る」、一部基礎物資の獲得率アップ"]], links:["stage3","stage5"], src:["off"] },
+{ id:"stage5", cat:"stage", name:"ステージ5「果てなき暗影」", sum:"討伐数でエンディングが決まる最後の勝負どころ。", rows:[["期間","8日（最短5日）"],["短縮","眠れる眷属28体で最大3日短縮"],["解放","チャプター「最も暗い刻」、一部基礎物資の獲得率アップ"],["結末","眠れる眷属の討伐数でエンディングが決まる"],["個人クエスト","Lv.20"]], note:"夢魔のマニブスは、ステージ5で最後に残ったエターナルスリーパーの場所に出るとされる（攻略記事）。", links:["stage4","stage6","manibus"], src:["off","web"] },
+{ id:"stage6", cat:"stage", name:"ステージ6「永い夢」", sum:"シナリオの終盤。夢魔のマニブスに挑めるようになる。", rows:[["期間","記載なし"]], pts:["ステージ1〜5は全部で最大10日短縮でき、最速21日で終わる（攻略記事）","ステージが進むたびにエターナルスリーパーのレベルが5ずつ上がるとされる（攻略記事）","ステージ6以降は浄化貢献度が加算されない（攻略記事）"], links:["stage5","manibus"], src:["off","web"] },
+
+/* ---------- 悪夢の法則・状態 ---------- */
+{ id:"explode", cat:"law", name:"爆発の法則", sum:"広い範囲でランダムに爆撃が起き、鉱石や木が壊れる。敵は爆発シールドを持つ。",
+  pts:["敵を倒すと爆発する。弱点を壊すと「不安定エネボール」ができる（攻略記事）","爆発シールドはエネボールで壊す","爆発で壊れた木や鉱石から取れる資源は増量済み（V2.0）"], links:["sadness"], src:["off","web"] },
+{ id:"thunder", cat:"law", name:"雷撃の法則", sum:"定期的に雷が落ちる。活発期は回数が多く危険。",
+  pts:["鉱石に落雷すると金属インゴットができることがある","活発期は警告の直後に落ちる（攻略記事）","避雷針を建てて身を守れる"], links:["rod","pain","raiin"], src:["off","web"] },
+{ id:"polar", cat:"law", name:"極夜の法則", sum:"暗闇の侵食で迷い値が上がり、視界が悪くなる。放っておくとHPが減り続ける。",
+  pts:["悪夢の光源の近くにいると暗闇の侵食がやわらぎ、視界も戻る","悪夢の光源は採集でき、ルーメンや悪夢の提灯の素材になる"], links:["darkness","light","lumen","lantern","fear"], src:["off"] },
+{ id:"darkness", cat:"law", name:"暗闇の侵食", sum:"極夜のエリアにいると時間でたまる。2スタックからHPが減っていく。",
+  pts:["エリアを出る、または悪夢の光源のそばにいると消える","悪夢の提灯でも回復・防御できる","ルーメンの光の中でも耐えられる"], links:["polar","lantern","lumen","light"], src:["web"] },
+{ id:"state", cat:"law", name:"悪夢状態", alias:"バブル化体質・バブル化エネルギー・力の寄生・生命の共生", sum:"夢の領域のボスにかかる強化。下位のスリーパーから上位へ受け継がれる。",
+  rows:[["バブル化体質","特定の対象だけ。バブルガードが出る"],["バブル化エネルギー","特定の対象だけ。バブルボールで攻撃してくる"],["力の寄生","エリア内の全部の敵。1スタックでダメージ20%アップ（攻略記事）"],["生命の共生","エリア内の全部の敵。1スタックでダメージ10%無効、最大90%（攻略記事）"]],
+  pts:["シャロウ → ディープ → エターナルの順に受け継がれる。ディープを倒せばエターナルへの継承は止まる（攻略記事）","緑の十字の「ダメージ軽減」は特に先に減らしたい。3〜5くらいまで減らすのが理想とされる（攻略記事）"],
+  links:["shallow","deep","eternal"], src:["off","web"] },
+
+/* ---------- スリーパー・ボス ---------- */
+{ id:"shallow", cat:"boss", name:"シャロウスリーパー", sum:"いちばん弱いスリーパー。浅い眠りの悪夢の記録に目覚めの砂50で呼び出す。",
+  rows:[["呼び出し","目覚めの砂50"],["報酬","現実の残片12など。高レベルでは防具モッドカスタムボックス・MASTERも（攻略記事）"],["倒すと","その夢の領域が解放される（時間で戻る）"]],
+  pts:["待機の1分弱の間にドリームボーイが出てHPを回復させることがある","上のディープスリーパーを強化している"], links:["deep","record","state"], src:["off","web"] },
+{ id:"deep", cat:"boss", name:"ディープスリーパー", sum:"ウェーブ制の戦い。最後にボスが出る。マップではテレビから手が出ているマーク。",
+  rows:[["呼び出し","目覚めの砂100"],["報酬","現実の残片35など。高レベルでは流派モッドカスタムボックス・EXTREMEも（攻略記事）"]],
+  pts:["進行ゲージは時間で進み、光る円の中で敵を倒すと速くなる","上空の「夢の樹状突起」（3回）と、エリートの「夢の守護者」（3回）を全部倒すとボスが出る","残り1分になると条件を満たしていなくてもボスが出る","エターナルスリーパーを強化している"], links:["shallow","eternal","state","invasion"], src:["off","web"] },
+{ id:"eternal", cat:"boss", name:"エターナルスリーパー", alias:"眠れる眷属（旧名）", sum:"大型のボス。マップでは目のマーク。倒した数でステージの短縮とエンディングが決まる。",
+  rows:[["呼び出し","目覚めの砂1000（初回）、残像は2000"],["全報酬","受け取りに現実の残片60が必要"],["種類","全28種類（エターナルハントで確認）"]],
+  pts:["新しく倒せる種類はステージごとに上限があり、上限に達すると「潜伏中」になる","一度倒すと「残像」になり、何度でも再戦できる。残像でもエターナルハントとシナリオ栄光のカウントは増える","初回討伐でサーバー内の全員にスタークロム原石宝箱などがメールで届く","人数が少ないと難易度が下がり、多いと上がる（6月19日の調整）"],
+  rows2:[["シャドウハンター","ミサイルを撃ち、HPが減ると時空の亀裂に隠れる。分身3体を倒すと実体化"],["シークレットサーヴィター","止まらない竜巻。建物にぶつかると消える"],["セイレーン","レーダーを当てられるとゴースト化して攻撃が効かない。遮蔽物を建てて防ぐ"],["アレクシアム","「悪夢の凝視」を見ると理性が下がる。浮かぶ球体3つを壊す"]],
+  rows2Title:"代表的なエターナルスリーパー（攻略記事）",
+  links:["record","hunt","glory","state","manibus"], src:["off","web"] },
+{ id:"shadowmanibus", cat:"boss", name:"暗影のマニブス", sum:"夢の領域の中にランダムに出るボス。",
+  rows:[["報酬","現実の残片40、共振の拡張要素モッドボックス・秘蔵など（攻略記事）"]],
+  pts:["夢魔のマニブスが出ると出なくなり、永続サーバー化のあとまた出るとされる"], links:["manibus","safezone"], src:["web"] },
+{ id:"manibus", cat:"boss", name:"夢魔のマニブス", sum:"永い夢のラスボス。ステージ6から専用の戦闘空間で挑戦できる。",
+  rows:[["挑戦の条件","ステージ6に到達し、エターナルスリーパー20種類を討伐（攻略記事）。条件を満たした人の挑戦には参加できる（英語の記事）"],["出現場所","ステージ5で最後に残したエターナルスリーパーの場所（攻略記事）"],["全報酬","現実の残片60で、キーワードMOD箱EXTREMEと限定デビエーション「夢の領域・ウィッシュボックス」"]],
+  pts:["個人でもチームでも挑めて、HPは全体で管理される","永続サーバーでは各サーバーの決まった位置に出る（公式）","V2.1.1で永続サーバーにダンジョン版が追加された（攻略記事）"], links:["stage6","wishbox","hunt","shard"], src:["off","web","en"] },
+
+/* ---------- 夢の敵 ---------- */
+{ id:"nightmare", cat:"mob", name:"夢魔", sum:"すべての夢の領域に浮かんでいる。目が合うと迷い値が速く上がる。",
+  pts:["ふだんは攻撃が通らない。夢破壊型の徹甲弾で倒せる（V2.0）","建物でさえぎって、目を合わせないようにする"], links:["maiv","dreamammo"], src:["off"] },
+{ id:"sadness", cat:"mob", name:"悲しみ", sum:"爆発タイプのダメージしか効かない。追いかけてきて自爆し、周りの体温を一気に下げる。", links:["explode"], src:["off"] },
+{ id:"innocence", cat:"mob", name:"無邪気", sum:"巨大なテディベア。倒すと子グマが出て、子グマを倒すとさらに小さい子グマが出る。", src:["off"] },
+{ id:"pain", cat:"mob", name:"痛み", sum:"雷撃のエリアに出る。落雷でチャージして強い技を使うが、同時に落雷でオーバーロードもする。", pts:["公式お知らせでは、サンダーボールでチャージを無効にできるとされる"], links:["thunder","raiin"], src:["off"] },
+{ id:"fear", cat:"mob", name:"恐れ", sum:"極夜のエリアだけに出る。離れると見えなくなり、近づくと輪郭は見えるが「影の守り」でダメージが通らない。", pts:["悪夢の光源で影の効果を一時的に消せる","ルーメンで影の守りを消せる"], links:["polar","lumen","light"], src:["off"] },
+
+/* ---------- 素材 ---------- */
+{ id:"sand", cat:"mat", name:"目覚めの砂", sum:"悪夢の記録を起動してスリーパーを呼ぶための素材。夢の領域での建設にも使う。",
+  items:[["目覚める時計（小）",15],["目覚める時計（中）",30],["目覚める時計（大）",50],["ドリームボックス",30],["異常ポイントの宝箱（1個）",40],["悪夢の亀裂の宝箱（1個）",60],["夢の領域のエリート","5〜6"]], itemsTitle:"入手（攻略記事の目安）",
+  pts:["資源豊作期は目覚める時計から3倍取れる","スリーパーの呼び出し: シャロウ50・ディープ100・エターナル1000〜2000","エターナル1戦で2000使うので、ある程度ためてから挑むのがおすすめ"],
+  links:["clock","dreambox","rift","record","door"], src:["off","web"] },
+{ id:"shard", cat:"mat", name:"現実の残片", sum:"夢にまだ汚染されていない物質のかけら。現実アンカー剤・夢破壊型弾丸の製作や、夢の領域の商人との交換に使う。",
+  items:[["シャロウスリーパー",12],["ディープスリーパー",35],["暗影のマニブス",40],["シナリオチャレンジ（全部）","6,000"]], itemsTitle:"入手（攻略記事の目安）",
+  rows:[["使い道","エターナルスリーパーの全報酬 60／夢魔のマニブスの全報酬 60／現実アンカー剤 20／夢破壊型弾丸／ミス・メモリーとの交換"],["スタック","1000"]],
+  links:["anchor","dreamammo","memory","eternal","manibus"], src:["db","web"] },
+{ id:"light", cat:"mat", name:"悪夢の光源", sum:"極夜の法則のエリアで光る植物から採集する素材。そばにいると暗闇の侵食がやわらぐ。",
+  rows:[["入手","極夜悪夢の法則の影響エリアで採集"],["使い道","ルーメン、悪夢の提灯（燃料にもなる）"]],
+  links:["polar","lumen","lantern"], src:["db","off"] },
+{ id:"ether", cat:"mat", name:"スターダストエーテル", sum:"夢の領域の異夢の木などから取れる。特殊施設の建設やスターダストインゴットの精錬に使う。",
+  rows:[["入手","異夢の木の伐採、異夢の果実、夢の領域の箱、収容サイロ・モノリスなど"],["使い道","特殊施設、スターダストインゴット、上級装備"]],
+  note:"飛行機の素材のスターダストインゴット40個もここから作る（攻略記事）。", links:["tree","fruit"], src:["db","off","web"] },
+{ id:"fur", cat:"mat", name:"夢の毛皮", alias:"夢のシカの皮・夢のオオカミの皮・夢のウサギの皮・夢のウシの皮", sum:"夢の領域でドリームゲノムを持つ動物を捕まえて飼うと取れる防具素材。",
+  pts:["動物ごとに防具の効果があり、多くは夢の領域の中で効果が2倍になる（攻略記事）","自由取引できる（V2.0）"], links:["wool"], src:["db","off","web"] },
+{ id:"wool", cat:"mat", name:"夢のウール", sum:"夢の領域でドリームゲノムを持つ動物を捕まえて飼うと取れる。最上位の防具（エージェント装備など）の素材。", links:["fur"], src:["db"] },
+
+/* ---------- 採集・宝箱 ---------- */
+{ id:"clock", cat:"spot", name:"目覚める時計", sum:"夢の領域にある時計。ツールで掘ると目覚めの砂が取れる。",
+  items:[["小",15],["中",30],["大",50]], itemsTitle:"取れる目覚めの砂（攻略記事）",
+  pts:["粗末なプラスキアックス以上で掘れる","時計の下のパーツが長いほど多く取れる。いちばん長い所は車の上に乗って掘る（攻略記事）"], links:["sand"], src:["off","web"] },
+{ id:"tree", cat:"spot", name:"異夢の木", sum:"夢の領域の木。伐採するとスターダストエーテルが取れる。", links:["ether"], src:["off","db"] },
+{ id:"fruit", cat:"spot", name:"異夢の果実", sum:"宙に浮いている赤いシャボン玉のような実。建設の足場を使って取ると各種結晶が出る。", pts:["「自動で拾う」をオンにすると取りやすい（攻略記事）"], src:["off","web"] },
+{ id:"dreambox", cat:"spot", name:"ドリームボックス", sum:"姿を隠している箱。ピンクの光や地面の影が目印。倒すと目覚めの砂30など。", links:["sand"], src:["web"] },
+{ id:"rift", cat:"spot", name:"悪夢の亀裂", sum:"石壁・悪夢のテレビ・愚者が出るイベント。テレビ4体を倒すとクリアで、テレビが宝箱になる。", rows:[["宝箱","1個につき目覚めの砂60など（攻略記事）"]], links:["sand"], src:["web"] },
+{ id:"tower", cat:"spot", name:"異常ポイントの宝箱タワー", sum:"空中に浮かぶ宝箱5つ。1個につき目覚めの砂40など。", links:["sand"], src:["web"] },
+
+/* ---------- アイテム・施設 ---------- */
+{ id:"anchor", cat:"item", name:"現実アンカー剤", sum:"使うと迷い値が減り、悪夢に落ちるのを防ぐ。体に負担がかかるので30分に1回しか使えない。",
+  items:[["現実の残片",20],["ゴム",5],["ガラス",1],["酸液",1],["ミックス抗生物質",1]], itemsTitle:"素材（永い夢のレシピ）",
+  rows:[["製作","上級作業台など（5秒）"],["スタック","100"]],
+  note:"作業台の「現実アンカー」ミーム（永い夢だけの専門ミーム）から作れる（攻略記事）。", links:["maiv","shard"], src:["db","web"] },
+{ id:"lumen", cat:"item", name:"ルーメン", sum:"投げると着地点に一時的な光源を作り、半径8mを照らす戦術アイテム。モンスターの影の効果を消せる。",
+  items:[["金属廃物",15],["パーツ",3],["プラスチック",3],["悪夢の光源",1]], itemsTitle:"素材（永い夢のレシピ）",
+  rows:[["製作","上級研究作業台・キャンプサイトなど（10秒）"]], pts:["暗闇の侵食にも耐えられる"], links:["light","fear","polar","darkness"], src:["db"] },
+{ id:"lantern", cat:"item", name:"悪夢の提灯", alias:"悪夢のランプ", sum:"極夜のエリアで暗闇の侵食を防ぐ道具。悪夢の光源を燃料にする。",
+  items:[["ガラス",15],["金属廃物",10],["硫黄",5],["悪夢の光源",5]], itemsTitle:"素材（永い夢のレシピ）",
+  rows:[["製作","小型作業台・上級作業台など（20秒）"],["燃料","悪夢の光源を20秒に1個（V2.0で1分5個から変更）"]],
+  note:"公式お知らせでは「悪夢のランプ」と書かれている。", links:["light","polar","darkness"], src:["db","off"] },
+{ id:"raiin", cat:"item", name:"雷引球・雷引18・雷引24", sum:"永い夢専用レシピの戦術アイテム。上級研究作業台で作る。",
+  rows:[["雷引球","コッパーインゴット100（または鉄のインゴット100／スチールインゴット80）"],["雷引18","コッパーインゴット300（または鉄のインゴット300／スチールインゴット240）"],["雷引24","合金製スチールインゴット200（またはタングステンインゴット200）"]],
+  note:"かっこ内はどれか1つを選べる素材。効果の説明はまだ確認できていない。", links:["thunder"], src:["db","web"] },
+{ id:"dreamammo", cat:"item", name:"夢破壊型弾丸", alias:"夢破壊型徹甲弾", sum:"現実の残片を使う弾薬。夢魔を倒せるほか、夢の領域で戦闘中の敵へのダメージが10%上がる。",
+  rows:[["解放","弾薬アドバンスⅢ（攻略記事）"]], note:"必要な素材の数はまだ確認できていない。", links:["nightmare","shard"], src:["off","db","web"] },
+{ id:"rod", cat:"item", name:"避雷針", sum:"夢の領域で雷を避けるための建築物。", items:[["スチールインゴット",50],["ゴム",5]], itemsTitle:"素材（攻略記事）", links:["thunder"], src:["web"] },
+{ id:"door", cat:"item", name:"夢の門", alias:"Dream Door", sum:"目覚めの砂を入れると動き出し、時間とともにシナリオの資源を生み出す施設（2.2.0で追加）。エターナルハントの記録もここで見る。",
+  items:[["ガラス",15],["コッパーインゴット",10],["飲料水",30]], itemsTitle:"建設素材（英語の記事）",
+  rows:[["置き場所","領地の中ならどこでも。建設メニューの特殊施設"],["動かし方","目覚めの砂を入れる。1回200まで、満タンで20時間動く"],["受け取り","「夢のフィードバック」で受け取ると夢のウィッシュボックスが出る。中身は夢のウール・火薬・現実リセット剤・モロトフ・現実の残片など"]],
+  pts:["「銀の門」にあったダンジョンに入る機能は夢の門に移った（公式）","エターナルハントの進み具合を見られる。進めると報酬と夢の門の上級機能が開く（公式）"],
+  note:"名前は公式お知らせ（V2.2.0）で確認。建設素材の数、1回200・20時間、出てくる物は英語の記事の内容を訳したもの。", links:["sand","hunt","manibus"], src:["off","en"] },
+
+/* ---------- 報酬・商人 ---------- */
+{ id:"memory", cat:"reward", name:"ミス・メモリー", sum:"各街にいるシナリオの案内役。商人版は夢の領域のどこかにランダムに現れ、現実の残片で特別なアイテムを売る。",
+  pts:["限定デビエーション「夢の領域・NO.37」などを売っている","週ごとの購入制限は毎週月曜の朝6時にリセット","目玉は専門ミームの記憶残片宝箱（レベル帯ごとに週3個まで）","永続サーバーではいなくなる"], links:["no37","shard"], src:["db","web"] },
+{ id:"no37", cat:"reward", name:"夢の領域・NO.37", sum:"ミス・メモリーと交換できる限定デビエーション。",
+  rows:[["異能Lv3〜5","現実の残片300（Lv5の確率10%）、週5回まで"],["異能Lv4〜5","現実の残片1000（Lv5の確率50%）、週5回まで"]],
+  note:"自由取引できる（V2.0）。", links:["memory","shard"], src:["off","web"] },
+{ id:"wishbox", cat:"reward", name:"夢の領域・ウィッシュボックス", sum:"夢魔のマニブスの全報酬でもらえる限定デビエーション。テレビ型の見た目。", note:"自由取引できる（V2.0）。", links:["manibus"], src:["off","web"] },
+{ id:"hunt", cat:"reward", name:"エターナルハント", sum:"倒したエターナルスリーパーの種類を記録する。全28種類で限定家具がもらえる。",
+  rows:[["5体","夢の門の機能が増える（英語の記事）"],["20種類","夢魔のマニブスに挑めるようになる"],["28種類","限定家具（攻略記事）"]], links:["eternal","manibus","door"], src:["web","en"] },
+{ id:"glory", cat:"reward", name:"シナリオ栄光", sum:"いちばん上の栄光にはスコア500が必要。エターナルスリーパーの討伐数がかぎ。",
+  rows:[["シャロウ","1体1pt（上限200）"],["ディープ","1体2pt（上限200）"],["エターナル","1体3pt（上限なし）"],["もらえる物","スタートロフィー・夢の修道者（施設）"]],
+  note:"シャロウとディープはすぐ上限になるので、エターナルを100体以上倒すのが大事とされる（攻略記事）。", links:["eternal"], src:["web","db"] },
+{ id:"challenge", cat:"reward", name:"シナリオチャレンジ", sum:"ステージ2から開く課題。4つのチャプターで蝶の証と現実の残片がもらえる。",
+  items:[["初めての次元界","蝶の証750・残片1200"],["荒野へ向かって","蝶の証900・残片1350"],["虎穴に入る","蝶の証1050・残片1650"],["最も暗い刻","蝶の証1200・残片1800"]], itemsTitle:"全部クリアしたときの報酬（攻略記事、2025年8月時点）",
+  pts:["浄化貢献度はシャロウ5pt・ディープ12pt","ステージ6以降は浄化貢献度が加算されず、そのチャレンジはクリアできなくなる"], links:["stage2","shard"], src:["off","web"] }
+];
+
+/* 漢字の読み（読みで検索できるように） */
+const READ = {"永い夢":"ながいゆめ","夢":"ゆめ","迷い値":"まよいち","目覚めの砂":"めざめのすな","砂":"すな","現実の残片":"げんじつのざんぺん","残片":"ざんぺん","現実":"げんじつ","悪夢":"あくむ","記録":"きろく","眠り":"ねむり","眷属":"けんぞく","法則":"ほうそく","爆発":"ばくはつ","雷撃":"らいげき","極夜":"きょくや","暗闇":"くらやみ","侵食":"しんしょく","状態":"じょうたい","光源":"こうげん","提灯":"ちょうちん","夢魔":"むま","悲しみ":"かなしみ","無邪気":"むじゃき","痛み":"いたみ","恐れ":"おそれ","暗影":"あんえい","時計":"とけい","異夢":"いむ","木":"き","果実":"かじつ","亀裂":"きれつ","宝箱":"たからばこ","毛皮":"けがわ","皮":"かわ","避雷針":"ひらいしん","雷引":"らいいん","弾丸":"だんがん","徹甲弾":"てっこうだん","門":"もん","扉":"とびら","栄光":"えいこう","領域":"りょういき","侵攻":"しんこう","建設":"けんせつ","拠点":"きょてん","永続":"えいぞく","安全":"あんぜん","蝶の証":"ちょうのあかし","厄災":"やくさい","凶兆":"きょうちょう","虚実":"きょじつ","暗影":"あんえい","剤":"ざい"};
+
+/* ================= 描画 ================= */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const CAT = Object.fromEntries(CATS.map(c => [c.id, c]));
+const BY = Object.fromEntries(D.map(d => [d.id, d]));
+const NAME = new Map(); D.forEach(d => { NAME.set(d.name, d.id); (d.alias || "").split("・").forEach(a => a && a.length > 2 && !NAME.has(a) && NAME.set(a, d.id)); });
+NAME.set("シャロウ", "shallow"); NAME.set("ディープ", "deep"); NAME.set("エターナル", "eternal");
+$("#cnt").textContent = D.length;
+
+const norm = s => String(s).normalize("NFKC").toLowerCase().replace(/[ァ-ヶ]/g, c => String.fromCharCode(c.charCodeAt(0) - 0x60)).replace(/\s+/g, "");
+const flat = d => [d.name, d.alias, d.sum, d.note, ...(d.rows||[]).flat(), ...(d.rows2||[]).flat(), ...(d.items||[]).flat(), ...(d.pts||[]), ...(d.pts2||[])].filter(Boolean).join(" ");
+D.forEach(d => { const t = flat(d); d._s = norm(t + " " + Object.keys(READ).filter(k => t.includes(k)).map(k => READ[k]).join(" ") + " " + CAT[d.cat].name); });
+
+/* タブ */
+const TABS = [{ id:"all", name:"すべて", c:"#8b5cf6" }, ...CATS];
+$("#tabs").insertAdjacentHTML("beforeend", TABS.map(t => `<button type="button" role="tab" data-tab="${t.id}" style="--c:${t.c}"><i></i>${esc(t.id === "law" ? "法則" : t.id === "boss" ? "ボス" : t.id === "item" ? "アイテム" : t.id === "reward" ? "報酬" : t.id === "spot" ? "採集" : t.name)}</button>`).join(""));
+let tab = TABS.some(t => t.id === location.hash.slice(1)) ? location.hash.slice(1) : "all";
+
+function card(d, i){
+  const c = CAT[d.cat];
+  return `<div class="card" role="button" tabindex="0" data-id="${d.id}" style="--c:${c.c};--i:${Math.min(i, 16)}">
+    <span class="lbl">${esc(c.name)}</span><h3>${esc(d.name)}</h3><p>${esc(d.sum)}</p>
+    <div class="src">${d.src.map(s => `<span class="chip ${s}">${SRC[s]}</span>`).join("")}</div></div>`;
+}
+const legend = `<div class="legend">情報のもと: ${Object.entries(SRC).map(([k, v]) => `<span class="chip ${k}">${v}</span>`).join("")} ゲーム内で確認したものではありません。</div>`;
+const flow = `<ol class="flow">${D.filter(d => d.cat === "stage").map((d, i) => `<li data-id="${d.id}" role="button" tabindex="0"><b>0${i + 1}</b><span>${esc(d.name.replace(/^ステージ\d/, "").replace(/[「」]/g, ""))}</span><small>${esc((d.rows[0] || ["",""])[1])}</small></li>`).join("")}</ol>`;
+const sources = `<section class="group sources"><div class="ghead" style="--c:#8b5cf6"><i></i>情報源</div>
+  <ul>
+  <li>公式: <a href="https://www.oncehuman.game/jp/news/update/20250702/40792_1244571.html" target="_blank" rel="noopener">7月3日 V2.0アップデートのお知らせ</a>／<a href="https://www.oncehuman.game/jp/news/update/20250630/40792_1244000.html" target="_blank" rel="noopener">V2.0先行情報・永い夢 正式リリース前紹介</a>／<a href="https://www.oncehuman.game/jp/news/devBlog/20260914/40793_1313807.html" target="_blank" rel="noopener">シナリオ永続サーバー統合説明</a></li>
+  <li>ゲームDB: <a href="https://oncehuman.th.gl/ja/db" target="_blank" rel="noopener">oncehuman.th.gl（日本語）</a></li>
+  <li>攻略記事: <a href="https://note.com/pi_no_pi_co/n/n1fd68a2e6d1f" target="_blank" rel="noopener">ピノ「永い夢」基本ガイド（note）</a>／<a href="https://signyamo.blog/once_dream/" target="_blank" rel="noopener">しぐにゃもブログ</a>／<a href="https://game-shinden.com/once-human-endless-dream/" target="_blank" rel="noopener">ゲーム神殿</a>／<a href="https://gamerch.com/oncehuman-database/931085" target="_blank" rel="noopener">Gamerch シナリオチャレンジ</a></li>
+  <li>英語の記事: <a href="https://allthings.how/once-human-how-to-build-and-activate-the-dream-door/" target="_blank" rel="noopener">allthings.how（Dream Door）</a></li>
+  </ul></section>`;
+
+function render(animate){
+  const q = norm($("#q").value.trim());
+  $("#qx").hidden = !q;
+  document.querySelectorAll("#tabs button").forEach(b => b.setAttribute("aria-selected", !q && b.dataset.tab === tab));
+  movePill();
+  const list = D.filter(d => q ? d._s.includes(q) : (tab === "all" || d.cat === tab));
+  let html = "";
+  if (q) {
+    html = `<div class="sec-head"><h2>「${esc($("#q").value.trim())}」<small>${list.length} results</small></h2></div>` + (list.length ? `<div class="grid">${list.map(card).join("")}</div>` : `<div class="empty">見つかりませんでした。ひらがなや別の名前でも探してみてください。</div>`);
+  } else if (tab === "all") {
+    html = `<div class="sec-head"><h2>シナリオの流れ<small>Six stages</small></h2><p>押すと詳しく見られます</p></div>${flow}${legend}` +
+      CATS.filter(c => c.id !== "stage").map(c => { const l = D.filter(d => d.cat === c.id); return `<section class="group"><div class="ghead" style="--c:${c.c}"><i></i>${esc(c.name)}<span>${l.length}</span></div><div class="grid">${l.map(card).join("")}</div></section>`; }).join("") + sources;
+  } else {
+    const c = CAT[tab];
+    html = `<div class="sec-head"><h2>${esc(c.name)}<small>${c.en}</small></h2><p>${list.length}項目</p></div>${legend}<div class="grid">${list.map(card).join("")}</div>`;
+  }
+  const m = $("#main"); m.innerHTML = html;
+  phrasify(m);
+  if (animate) { m.classList.remove("enter"); void m.offsetWidth; m.classList.add("enter"); }
+}
+function movePill(){
+  const b = document.querySelector('#tabs button[aria-selected="true"]'), pill = $("#pill");
+  if (!b) { pill.style.width = "0px"; return; }
+  pill.style.width = b.offsetWidth + "px"; pill.style.transform = `translateX(${b.offsetLeft}px)`;
+}
+// タブの列: マウスでつかんで横に動かす（指ではそのままスワイプ）。ホイールの縦回転も横に流す
+{ const el = $("#tabs"); let sx = 0, sl = 0, down = false, moved = false;
+  el.addEventListener("pointerdown", e => { if (e.pointerType !== "mouse" || e.button) return; down = true; moved = false; sx = e.clientX; sl = el.scrollLeft; });
+  addEventListener("pointermove", e => { if (!down) return; const dx = e.clientX - sx;
+    if (!moved && Math.abs(dx) > 5) { moved = true; el.classList.add("dragging"); }
+    if (moved) { el.scrollLeft = sl - dx; e.preventDefault(); } });
+  addEventListener("pointerup", () => { if (!down) return; down = false; el.classList.remove("dragging"); });
+  el.addEventListener("click", e => { if (moved) { e.stopImmediatePropagation(); e.preventDefault(); moved = false; } }, true);
+  el.addEventListener("dragstart", e => e.preventDefault());
+  el.addEventListener("wheel", e => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && el.scrollWidth > el.clientWidth) { el.scrollLeft += e.deltaY; e.preventDefault(); } }, { passive: false });
+}
+$("#tabs").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  tab = b.dataset.tab; $("#q").value = "";
+  history.replaceState(history.state, "", "#" + tab);
+  render(true); b.scrollIntoView({ inline: "nearest", block: "nearest", behavior: "smooth" });
+  const top = $(".bar").offsetTop; if (scrollY > top) scrollTo({ top, behavior: "smooth" });
+});
+let qt; $("#q").addEventListener("input", () => { clearTimeout(qt); qt = setTimeout(() => render(true), 120); });
+$("#qx").addEventListener("click", () => { $("#q").value = ""; render(true); $("#q").focus(); });
+addEventListener("resize", movePill);
+
+/* ---------- 日本語の改行位置: 文節の切れ目でだけ折り返す（Safari対策） ---------- */
+const SEG = typeof Intl !== "undefined" && Intl.Segmenter ? new Intl.Segmenter("ja", { granularity: "word" }) : null;
+const KANJI = /[一-鿿々]/, KATA = /[ァ-ヺー]/, HIRA = /^[ぁ-ゟー]+$/, OPEN = /[「『（(【〔［\[]$/, ATTACH = /^[、。，．・）)」』】〕］\]！？!?:：/／〜~ー…%％×]/, DIGIT = /[0-9０-９.]$/;
+function phraseHTML(text){
+  const parts = [...SEG.segment(text)].map(x => x.segment);
+  let out = "", prev = "";
+  for (const w of parts) {
+    const glue = !prev || /\s$/.test(prev) || /^\s/.test(w) || OPEN.test(prev) || ATTACH.test(w)
+      || (HIRA.test(w) && !/[、。]$/.test(prev)) || (DIGIT.test(prev) && !/^[0-9０-９]/.test(w) && w.length <= 2)
+      || (KANJI.test(prev.slice(-1)) && KANJI.test(w[0])) || (KATA.test(prev.slice(-1)) && KATA.test(w[0]));
+    out += (glue ? "" : "<wbr>") + esc(w); prev = w;
+  }
+  return out;
+}
+function phrasify(root){
+  if (!SEG) return;
+  root.querySelectorAll("p, dd, dt, h2, h3, li, .lead, footer div, .note, .sum, .alias, td, .flow span").forEach(el => {
+    if (el.dataset.ph) return; el.dataset.ph = 1; el.classList.add("ph");
+    [...el.childNodes].forEach(n => {
+      if (n.nodeType === 3 && /[぀-ヿ一-鿿]/.test(n.textContent)) { const s = document.createElement("span"); s.innerHTML = phraseHTML(n.textContent); n.replaceWith(...s.childNodes); }
+    });
+  });
+}
+
+/* ---------- 全画面詳細（関連項目へ進む・戻る） ---------- */
+const sheet = $("#sheet");
+const linkName = n => { const base = String(n).replace(/（.*?）$/, ""); const id = NAME.get(base); return id ? `<button type="button" class="xref" data-go="${id}">${esc(n)}</button>` : esc(n); };
+function detail(d){
+  let h = "";
+  if (d.alias) h += `<p class="alias">別名・表記: ${esc(d.alias)}</p>`;
+  h += `<p class="sum">${esc(d.sum)}</p>`;
+  if (d.rows) h += `<dl class="kv">${d.rows.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>`;
+  if (d.items) h += `<h4>${esc(d.itemsTitle || "素材")}</h4><ul class="items">${d.items.map(([n, q]) => `<li><span>${linkName(n)}</span><b>${typeof q === "number" ? "×" + q.toLocaleString() : esc(q)}</b></li>`).join("")}</ul>`;
+  if (d.pts) h += `<h4>ポイント</h4><ul class="pts">${d.pts.map(p => `<li>${esc(p)}</li>`).join("")}</ul>`;
+  if (d.rows2) h += `<h4>${esc(d.rows2Title)}</h4><dl class="kv">${d.rows2.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>`;
+  if (d.pts2) h += `<h4>${esc(d.pts2Title)}</h4><ul class="pts">${d.pts2.map(p => `<li>${esc(p)}</li>`).join("")}</ul>`;
+  if (d.note) h += `<p class="note">${esc(d.note)}</p>`;
+  if (d.links && d.links.length) h += `<h4>関連</h4><div class="chips">${d.links.filter(id => BY[id]).map(id => `<button type="button" class="xref" data-go="${id}">${esc(BY[id].name)}</button>`).join("")}</div>`;
+  h += `<div class="srcs">情報のもと: ${d.src.map(s => `<span class="chip ${s}">${SRC[s]}</span>`).join("")}</div>`;
+  return h;
+}
+let stack = [];
+function showSheet(id){
+  const d = BY[id], c = CAT[d.cat];
+  sheet.style.setProperty("--c", c.c);
+  $("#sheet-cat").textContent = c.name;
+  $("#sheet-title").textContent = d.name;
+  $("#sheet-content").innerHTML = detail(d);
+  phrasify($("#sheet-content"));
+  if (SEG) { $("#sheet-title").classList.add("ph"); $("#sheet-title").innerHTML = phraseHTML(d.name); }
+  const prev = stack[stack.length - 2];
+  $("#sheet-back").hidden = !prev;
+  if (prev) $("#sheet-back").textContent = `← ${BY[prev].name}に戻る`;
+  sheet.hidden = false; sheet.scrollTop = 0;
+  sheet.classList.remove("open"); void sheet.offsetWidth; sheet.classList.add("open");
+  document.body.classList.add("lock");
+}
+let opener = null;
+function openSheet(id, deeper){
+  if (!deeper) { if (!sheet.hidden) return; stack = []; opener = document.activeElement; }
+  stack.push(id); showSheet(id);
+  history.pushState({ sheet: stack.length }, "");
+  if (!deeper) $("#sheet-x").focus({ preventScroll: true });
+}
+function hideSheet(){ sheet.hidden = true; document.body.classList.remove("lock"); stack = []; opener && opener.focus && opener.focus({ preventScroll: true }); }
+function closeSheet(){ if (sheet.hidden) return; const n = stack.length; hideSheet(); if (history.state && history.state.sheet) history.go(-n); }
+document.addEventListener("click", e => {
+  const x = e.target.closest(".xref[data-go]"); if (x) { openSheet(x.dataset.go, true); return; }
+  const t = e.target.closest(".card[data-id], .flow li[data-id]"); if (t) openSheet(t.dataset.id);
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeSheet();
+  const t = e.target.closest && e.target.closest(".card[data-id], .flow li[data-id]");
+  if (t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openSheet(t.dataset.id); }
+});
+$("#sheet-x").addEventListener("click", closeSheet);
+$("#sheet-back").addEventListener("click", () => history.back());
+addEventListener("popstate", () => {
+  const d = (history.state && history.state.sheet) || 0;
+  if (!d) { if (!sheet.hidden) hideSheet(); return; }
+  if (!stack.length) return;
+  stack.length = Math.min(d, stack.length); showSheet(stack[stack.length - 1]);
+});
+
+/* ---------- 画面の色: ライト／ダーク（選んだ色はこの端末に覚える） ---------- */
+{ const root = document.documentElement, btn = $("#theme");
+  const SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>';
+  const MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>';
+  let saved = null; try { saved = localStorage.getItem("ed-theme"); } catch (e) {}
+  const cur = () => root.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const show = () => { const d = cur() === "dark"; btn.innerHTML = (d ? MOON : SUN) + (d ? "ダークモード" : "ライトモード"); btn.setAttribute("aria-pressed", d); };
+  if (saved === "light" || saved === "dark") root.dataset.theme = saved;
+  show();
+  btn.addEventListener("click", () => { const next = cur() === "dark" ? "light" : "dark"; root.dataset.theme = next; try { localStorage.setItem("ed-theme", next); } catch (e) {} show(); });
+  const mq = matchMedia("(prefers-color-scheme: dark)"); mq.addEventListener && mq.addEventListener("change", show);
+}
+render(false);
+phrasify(document.querySelector(".hero")); phrasify(document.querySelector("footer"));
+
+/* ---------- 夜空: またたく星・ゆっくり昇る夢の泡・流れ星 ---------- */
+(function sky(){
+  const cv = $("#sky"), ctx = cv.getContext("2d");
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let W = 0, H = 0, dpr = 1, stars = [], bubbles = [], shoot = null, t0 = performance.now();
+  function size(){
+    dpr = Math.min(devicePixelRatio || 1, 2); W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    stars = Array.from({ length: Math.round(W * H / 2600) }, () => ({ x: Math.random() * W, y: Math.random() * H * .9, r: Math.random() * 1.3 + .3, p: Math.random() * 6.28, s: .6 + Math.random() * 1.6 }));
+    bubbles = Array.from({ length: Math.max(8, Math.round(W / 70)) }, () => bub(true));
+  }
+  function bub(any){
+    const hue = [268, 290, 312, 330][Math.random() * 4 | 0];
+    return { x: Math.random() * W, y: any ? Math.random() * H : H + 40, r: 6 + Math.random() * 26, v: .12 + Math.random() * .3, w: Math.random() * 6.28, hue, a: .18 + Math.random() * .25 };
+  }
+  function frame(now){
+    const t = (now - t0) / 1000;
+    ctx.clearRect(0, 0, W, H);
+    for (const s of stars) {
+      const a = .35 + .65 * (.5 + .5 * Math.sin(t * s.s + s.p));
+      ctx.globalAlpha = a; ctx.fillStyle = "#fff8e6"; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.283); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    for (const b of bubbles) {
+      b.y -= b.v; b.x += Math.sin(t * .5 + b.w) * .25;
+      if (b.y < -40) Object.assign(b, bub(false));
+      const g = ctx.createRadialGradient(b.x - b.r * .35, b.y - b.r * .35, b.r * .1, b.x, b.y, b.r);
+      g.addColorStop(0, `hsla(${b.hue},100%,92%,${b.a * 1.4})`); g.addColorStop(.7, `hsla(${b.hue},80%,70%,${b.a * .5})`); g.addColorStop(1, `hsla(${b.hue},80%,75%,${b.a})`);
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, 6.283); ctx.fill();
+      ctx.strokeStyle = `hsla(${b.hue},100%,90%,${b.a})`; ctx.lineWidth = 1; ctx.stroke();
+    }
+    if (!shoot && Math.random() < .004) shoot = { x: Math.random() * W * .7 + W * .2, y: Math.random() * H * .35, l: 0 };
+    if (shoot) {
+      shoot.l += 9; const len = Math.min(shoot.l, 140);
+      const x2 = shoot.x - shoot.l, y2 = shoot.y + shoot.l * .45;
+      const g = ctx.createLinearGradient(x2, y2, x2 + len, y2 - len * .45);
+      g.addColorStop(0, "rgba(255,248,230,.9)"); g.addColorStop(1, "rgba(255,248,230,0)");
+      ctx.strokeStyle = g; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(x2, y2); ctx.lineTo(x2 + len, y2 - len * .45); ctx.stroke();
+      if (shoot.l > W * .5) shoot = null;
+    }
+    if (!still) requestAnimationFrame(frame);
+  }
+  size(); addEventListener("resize", size); requestAnimationFrame(frame);
+})();
+</script>
+
+<script>
+(() => {
+  // ガイドだけを直接開いたとき（検索から来た人など）は、公開サイトでは選択画面つきのページへ移す
+  if (parent === window){
+    if (/github.io$/.test(location.hostname)) location.replace("../#" + (location.hash.slice(1) || "dream"));
+    return;
+  }
+  const hide = document.createElement("style"); hide.textContent = "#theme-btn,#theme{display:none!important}"; document.head.appendChild(hide);
+  const root = document.documentElement;
+  const setTheme = t => { if (t === "dark" || t === "light") root.dataset.theme = t; };
+  try { setTheme(new URLSearchParams(location.search).get("theme")); } catch (e) {}
+  addEventListener("message", e => {
+    if (e.source !== parent) return;
+    const m = e.data || {};
+    if (m.type === "theme") setTheme(m.v);
+    if (m.type === "q") {
+      const q = document.getElementById("q"); if (!q) return;
+      q.value = m.v; q.dispatchEvent(new Event("input"));
+      const bar = document.querySelector(".bar"); if (bar) setTimeout(() => bar.scrollIntoView({ block: "start" }), 160);
+    }
+  });
+  // 全画面のおまけ（船の素材計算）を開いている間は、親の上のバーを隠してもらう
+  const sc = document.getElementById("sc-host");
+  if (sc && window.MutationObserver) new MutationObserver(() => parent.postMessage({ type: "full", v: !sc.hidden }, "*")).observe(sc, { attributes: true, attributeFilter: ["hidden"] });
+  parent.postMessage({ type: "ready", id: "dream" }, "*");
+})();
+</script>
+</body>
+</html>
