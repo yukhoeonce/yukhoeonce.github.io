@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>マニブス ガイド</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: 星の降る夜のヒーロー（裂け目の赤い光・流れる星屑）→ 下端は廃墟の街並みと霧 → ガラスのタブバー → 色分けの小カード。
+   色は夜の藍と深紅、アクセントは星屑の金だけ */
+:root{
+  --bg:#f5f2f6; --surface:#ffffff; --surface-2:#f8f5f9; --ink:#1c1222; --ink-2:#3f2f48; --muted:#6c5d74;
+  --line:#e4dbe7; --accent:#b7791f; --violet:#9b2c4f; --violet-soft:#f6e6ec;
+  --glass:rgba(245,242,246,.84);
+  --f-display:"Instrument Serif","Times New Roman",serif;
+  --f-jp:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --ease:cubic-bezier(.2,.7,.1,1);
+  --mist:#f5f2f6;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#120c17; --surface:#1b1322; --surface-2:#22182b; --ink:#f3ebf5; --ink-2:#d0bfd6; --muted:#a08fa8;
+  --line:#33263d; --accent:#f2c165; --violet:#ff8fb0; --violet-soft:#2d1a2a; --glass:rgba(18,12,23,.82); --mist:#120c17; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#120c17; --surface:#1b1322; --surface-2:#22182b; --ink:#f3ebf5; --ink-2:#d0bfd6; --muted:#a08fa8;
+  --line:#33263d; --accent:#f2c165; --violet:#ff8fb0; --violet-soft:#2d1a2a; --glass:rgba(18,12,23,.82); --mist:#120c17; color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scrollbar-gutter:stable;overflow-y:scroll}
+.ph{word-break:keep-all;overflow-wrap:anywhere}
+body{word-break:auto-phrase;line-break:strict;margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-jp);font-size:17px;line-height:1.8;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:#140c1c}
+body.lock{overflow:hidden}
+a{color:inherit}
+button{font:inherit;color:inherit}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media (min-width:700px){.gut{padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}}
+.inner{max-width:1120px;margin:0 auto}
+
+/* ---------- Hero: 夜空（意図的に単一テーマ） ---------- */
+.hero{position:relative;overflow:hidden;background:radial-gradient(90% 80% at 78% 0%,#7a1f3d 0%,rgba(122,31,61,0) 58%),radial-gradient(70% 70% at 0% 100%,#3a2470 0%,rgba(58,36,112,0) 60%),linear-gradient(180deg,#0d0816 0%,#1a0f2a 50%,#26143a 100%);color:#f8eef6}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.halo{position:absolute;right:max(8%,26px);top:40px;width:clamp(80px,12vw,140px);aspect-ratio:1;border-radius:50%;z-index:1;
+  background:radial-gradient(circle,#fff6e0 0%,#ffd27a 26%,rgba(255,120,120,.38) 50%,rgba(200,40,90,0) 72%);animation:halo 8s ease-in-out infinite;opacity:.9}
+@keyframes halo{50%{transform:scale(1.06);opacity:1}}
+.mist{position:absolute;left:0;right:0;bottom:-1px;height:120px;z-index:1;pointer-events:none}
+.mist svg{position:absolute;bottom:0;left:0;width:200%;height:100%}
+.mist svg.ridge{width:100%;height:96%}
+.mist .ridge path{fill:#e9d6f0;opacity:.14}
+.mist .m1{animation:drift 26s linear infinite}
+.mist .m2{animation:drift 17s linear infinite reverse}
+.mist .m3{animation:drift 34s linear infinite}
+.mist .m1 path{fill:#b98ad6;opacity:.28}
+.mist .m2 path{fill:#ffd9e6;opacity:.25}
+.mist .m3 path{fill:var(--mist)}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.hero .inner{position:relative;z-index:2;padding-block:52px 118px;display:flex;flex-direction:column;gap:18px}
+.kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#e3b3cf;display:flex;gap:12px;align-items:center}
+.kicker .dot{width:7px;height:7px;border-radius:50%;background:#ffd27a;animation:twinkle 2.6s infinite}
+@keyframes twinkle{0%,100%{box-shadow:0 0 0 0 rgba(255,210,122,.6)}70%{box-shadow:0 0 0 12px rgba(255,210,122,0)}}
+.hero h1{margin:0;font-weight:400;line-height:.95}
+.hero h1 .en{display:block;font-family:var(--f-display);font-style:italic;font-size:clamp(54px,9.5vw,116px);background:linear-gradient(100deg,#ffffff 8%,#ffd27a 52%,#ff7a9e 90%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:.08em}
+.hero h1 .jp{display:block;font-weight:900;font-size:clamp(22px,3.4vw,34px);letter-spacing:.2em;margin-top:12px;color:#f8eef6}
+.hero p.lead{margin:0;max-width:34em;color:#e2cfe0;font-size:clamp(15px,1.6vw,17px)}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:6px;font-size:14.5px;color:#e3b3cf}
+.hero-meta b{display:block;font-family:var(--f-display);font-size:34px;font-weight:400;color:#fff4fa;line-height:1.1;font-variant-numeric:tabular-nums}
+.rise{animation:rise .9s var(--ease) both}
+.rise.d1{animation-delay:.08s}.rise.d2{animation-delay:.16s}.rise.d3{animation-delay:.24s}.rise.d4{animation-delay:.32s}
+@keyframes rise{from{transform:translateY(14px);opacity:.25}to{transform:none;opacity:1}}
+
+/* ---------- Sticky bar ---------- */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--glass);backdrop-filter:saturate(1.5) blur(16px);-webkit-backdrop-filter:saturate(1.5) blur(16px);border-bottom:1px solid var(--line)}
+.bar .inner{display:flex;gap:12px;align-items:center;padding-block:10px;flex-wrap:wrap}
+.tabs{position:relative;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1 1 560px;min-width:0}
+.tabs::-webkit-scrollbar{display:none}
+.tabs{touch-action:pan-x pan-y;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+@media (hover:hover) and (pointer:fine){.tabs{cursor:grab}.tabs.dragging,.tabs.dragging button{cursor:grabbing;user-select:none}}
+.tabs button{position:relative;z-index:1;font-size:15.5px;font-weight:700;color:var(--ink-2);background:none;border:0;padding:9px 15px;border-radius:999px;cursor:pointer;white-space:nowrap;flex:none;transition:color .3s;display:flex;gap:7px;align-items:center}
+.tabs button i{width:8px;height:8px;border-radius:50%;background:var(--c);display:inline-block}
+.tabs button[aria-selected="true"]{color:#fff}
+.tabs button[aria-selected="true"] i{background:#fff}
+.tabs button:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.tabs .pill{position:absolute;z-index:0;top:0;height:100%;border-radius:999px;background:linear-gradient(120deg,#9b2c4f,#c4566f);transition:transform .45s var(--ease),width .45s var(--ease);box-shadow:0 4px 18px -6px rgba(155,44,79,.7)}
+.search{flex:1 1 240px;display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 6px 4px 16px}
+.search:focus-within{border-color:var(--violet);box-shadow:0 0 0 3px color-mix(in srgb,var(--violet) 22%,transparent)}
+.search input{flex:1;min-width:0;border:0;background:none;font:inherit;font-size:16px;color:var(--ink);padding:7px 0;outline:none}
+.search input::placeholder{color:var(--muted)}
+.search button{border:0;background:var(--violet-soft);color:var(--ink-2);border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer}
+
+/* ---------- Main ---------- */
+main{padding-block:28px 40px;min-height:100vh}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:6px 0 16px}
+.sec-head h2{margin:0;font-size:clamp(22px,2.6vw,28px);font-weight:900;letter-spacing:.04em}
+.sec-head h2 small{font-family:var(--f-display);font-style:italic;font-weight:400;color:var(--violet);font-size:.85em;margin-left:10px;letter-spacing:0}
+.sec-head p{margin:0;color:var(--muted);font-size:14px}
+.group{margin-bottom:34px}
+.ghead{display:flex;align-items:center;gap:10px;margin:0 0 12px;font-size:15px;font-weight:900;color:var(--ink-2);letter-spacing:.06em}
+.ghead i{width:10px;height:10px;border-radius:3px;background:var(--c);transform:rotate(45deg)}
+.ghead span{font-weight:500;color:var(--muted);font-size:13px;letter-spacing:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.card{position:relative;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 16px 14px;cursor:pointer;overflow:hidden;
+  display:flex;flex-direction:column;gap:6px;min-height:132px;transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
+.card::before{content:"";position:absolute;inset:0 0 auto;height:4px;background:var(--c)}
+.card::after{content:"";position:absolute;right:-40px;top:-40px;width:120px;height:120px;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--c) 22%,transparent),transparent);pointer-events:none}
+@media (hover:hover){.card:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px color-mix(in srgb,var(--c) 70%,#000);border-color:color-mix(in srgb,var(--c) 45%,var(--line))}}
+.card:focus-visible{outline:2px solid var(--c);outline-offset:2px}
+.card .lbl{font-size:12px;font-weight:700;color:color-mix(in srgb,var(--c) 75%,var(--ink));letter-spacing:.06em}
+.card h3{margin:0;font-size:18px;line-height:1.4;font-weight:900}
+.card p{margin:0;font-size:14px;line-height:1.65;color:var(--ink-2);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card .src{margin-top:auto;padding-top:6px;display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:11.5px;font-weight:700;border-radius:999px;padding:1px 9px;border:1px solid var(--line);color:var(--muted);background:var(--surface-2);white-space:nowrap}
+.chip.off{color:#1f5f9e;border-color:#b7d3ef;background:#e8f2fc}
+.chip.db{color:#0f766e;border-color:#a7dcd5;background:#e9f7f5}
+.chip.web{color:#a1561a;border-color:#efcfae;background:#fdf3e8}
+.chip.en{color:#9f2f5c;border-color:#f1b9cf;background:#fdeef4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .chip.off{color:#a9d0ff;border-color:#2c4d73;background:#16283f}
+  :root:not([data-theme="light"]) .chip.db{color:#7fe0d2;border-color:#1e5a55;background:#10302e}
+  :root:not([data-theme="light"]) .chip.web{color:#f3c08e;border-color:#6a4220;background:#33220f}
+  :root:not([data-theme="light"]) .chip.en{color:#f7a8c8;border-color:#6d2747;background:#341424}}
+:root[data-theme="dark"] .chip.off{color:#a9d0ff;border-color:#2c4d73;background:#16283f}
+:root[data-theme="dark"] .chip.db{color:#7fe0d2;border-color:#1e5a55;background:#10302e}
+:root[data-theme="dark"] .chip.web{color:#f3c08e;border-color:#6a4220;background:#33220f}
+:root[data-theme="dark"] .chip.en{color:#f7a8c8;border-color:#6d2747;background:#341424}
+.enter .card{animation:cardin .6s var(--ease) both;animation-delay:calc(var(--i,0) * 30ms)}
+@keyframes cardin{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
+.empty{padding:40px 0;text-align:center;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:13px;color:var(--muted);margin:-4px 0 20px}
+
+/* ステージの流れ（概要タブ上部） */
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 30px;padding:0;list-style:none}
+.flow li{background:linear-gradient(160deg,color-mix(in srgb,#6b4fc4 16%,var(--surface)),var(--surface));border:1px solid var(--line);border-radius:16px;padding:12px 14px;cursor:pointer;transition:transform .3s var(--ease)}
+@media (hover:hover){.flow li:hover{transform:translateY(-2px)}}
+.flow b{display:block;font-family:var(--f-display);font-style:italic;font-weight:400;font-size:30px;line-height:1;color:var(--violet)}
+.flow span{display:block;font-weight:900;font-size:15px;margin-top:6px}
+.flow small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+
+/* ---------- 全画面詳細 ---------- */
+.sheet{position:fixed;inset:0;z-index:50;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.sheet.open{animation:sheetin .45s var(--ease)}
+@keyframes sheetin{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.sheet-head{position:sticky;top:0;z-index:2;background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.sheet-head .inner{display:flex;align-items:center;gap:10px;padding-block:10px;max-width:860px}
+.sheet-back,.sheet-x{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
+.sheet-back{max-width:55%;overflow:hidden;text-overflow:ellipsis;color:var(--violet)}
+.sheet-x{margin-left:auto}
+.sheet-cat{font-size:13px;font-weight:700;color:color-mix(in srgb,var(--c) 75%,var(--ink));display:flex;align-items:center;gap:8px;min-width:0}
+.sheet-cat::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--c);transform:rotate(45deg);flex:none}
+.sheet-body{max-width:860px;margin:0 auto;padding:26px max(18px,env(safe-area-inset-left,0px)) 80px}
+.sheet-body h2{margin:0 0 4px;font-size:clamp(26px,4vw,36px);font-weight:900;line-height:1.3}
+.sheet-body .alias{color:var(--muted);font-size:14px;margin:0 0 14px}
+.sheet-body .sum{font-size:17.5px;color:var(--ink-2);margin:0 0 20px;padding:14px 16px;border-radius:14px;background:color-mix(in srgb,var(--c) 9%,var(--surface));border:1px solid color-mix(in srgb,var(--c) 22%,var(--line))}
+.kv{display:grid;grid-template-columns:minmax(96px,9em) 1fr;gap:0;margin:0 0 22px;border-top:1px solid var(--line)}
+.kv dt,.kv dd{margin:0;padding:11px 4px;border-bottom:1px solid var(--line)}
+.kv dt{font-weight:700;color:var(--muted);font-size:14.5px}
+.kv dd{font-size:16px}
+@media (max-width:520px){.kv{grid-template-columns:1fr}.kv dt{border-bottom:0;padding-bottom:0}.kv dd{padding-top:2px}}
+.sheet h4{margin:24px 0 10px;font-size:14px;letter-spacing:.12em;color:var(--violet);font-weight:900}
+.items{list-style:none;margin:0 0 8px;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.items li{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:9px 13px;font-size:15.5px}
+.items li b{font-family:var(--f-mono);font-weight:500;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.pts{margin:0 0 8px;padding-left:1.2em}
+.pts li{margin:4px 0}
+.xref{border:0;background:none;padding:0;color:var(--violet);font-weight:700;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;cursor:pointer;text-align:left}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips .xref{text-decoration:none;border:1px solid color-mix(in srgb,var(--violet) 35%,var(--line));background:var(--violet-soft);border-radius:999px;padding:5px 13px;font-size:14.5px}
+.note{font-size:13.5px;color:var(--muted);border-left:3px solid var(--line);padding:2px 0 2px 12px;margin:18px 0 0}
+.srcs{margin-top:22px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px;color:var(--muted)}
+table.st{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 10px}
+table.st th,table.st td{border-bottom:1px solid var(--line);padding:9px 6px;text-align:left;vertical-align:top}
+table.st th{font-size:13px;color:var(--muted);font-weight:700}
+
+/* ---------- 情報源・フッター ---------- */
+.sources{margin-top:10px;font-size:14px;color:var(--ink-2)}
+.sources ul{margin:8px 0 0;padding-left:1.2em}
+.sources li{margin:3px 0;overflow-wrap:anywhere}
+footer .inner{padding-block:28px 48px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px}
+footer b{color:var(--ink)}
+.hide{display:none!important}
+/* 画面の色の切り替え（右上） */
+.theme{position:absolute;z-index:40;top:calc(env(safe-area-inset-top,0px) + 10px);right:max(10px,env(safe-area-inset-right,0px));
+  display:flex;align-items:center;gap:6px;height:34px;padding:0 12px 0 10px;border-radius:999px;cursor:pointer;
+  border:1px solid rgba(255,255,255,.28);background:rgba(26,14,34,.55);color:#f8eef6;font-size:12.5px;font-weight:700;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 4px 16px -8px rgba(0,0,0,.5)}
+.theme svg{width:16px;height:16px}
+.theme:focus-visible{outline:2px solid #ffd27a;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<button type="button" class="theme" id="theme" aria-label="ダークモードとライトモードを切り替える"></button>
+<header class="hero">
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="halo" aria-hidden="true"></div>
+  <div class="inner gut">
+    <div class="kicker rise"><span class="dot"></span>Once Human · Scenario Guide · 非公式</div>
+    <h1 class="rise d1"><span class="en">Manibus</span><span class="jp">マニブス ガイド</span></h1>
+    <p class="lead rise d2">ナルコット大陸を舞台にしたPvEシナリオ「マニブス」のまとめです。初心者版と通常版のちがい、ステージ、根源の戦い、収容サイロ、サーバーとワールドを名前で検索できます。</p>
+    <div class="hero-meta rise d3">
+      <div><b>5</b>ステージ</div>
+      <div><b>5</b>根源の戦いの難易度</div>
+      <div><b id="cnt">0</b>項目</div>
+      <div><b>54</b>日で1シーズン</div>
+    </div>
+  </div>
+  <div class="mist" aria-hidden="true">
+    <svg class="ridge" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0 96 H60 V70 H96 V84 H130 V52 H170 V78 H220 V88 H260 V60 L280 46 L300 60 V86 H350 V74 H400 V40 H430 V30 H446 V40 H470 V82 H530 V92 H580 V66 H640 V80 H690 V56 H730 V88 H790 V72 H820 V48 H860 V84 H920 V94 H960 V64 H1010 V78 H1060 V58 H1100 V86 H1150 V76 H1200 V120 H0Z"/></svg>
+    <svg class="m1" viewBox="0 0 2400 120" preserveAspectRatio="none"><path d="M0 70 Q150.0 36 300 70 T600 70 T900 70 T1200 70 T1500 70 T1800 70 T2100 70 T2400 70 V120 H0Z"/></svg>
+    <svg class="m2" viewBox="0 0 2400 120" preserveAspectRatio="none"><path d="M0 84 Q200.0 60 400 84 T800 84 T1200 84 T1600 84 T2000 84 T2400 84 V120 H0Z"/></svg>
+    <svg class="m3" viewBox="0 0 2400 120" preserveAspectRatio="none"><path d="M0 98 Q120.0 84 240 98 T480 98 T720 98 T960 98 T1200 98 T1440 98 T1680 98 T1920 98 T2160 98 T2400 98 V120 H0Z"/></svg>
+  </div>
+</header>
+
+<div class="bar gut">
+  <div class="inner">
+    <div class="tabs" id="tabs" role="tablist"><span class="pill" id="pill"></span></div>
+    <label class="search"><input id="q" type="search" placeholder="名前で検索（例: 根源の戦い、DOOM、永続サーバー）" autocomplete="off" enterkeyhint="search" aria-label="検索"><button type="button" id="qx" hidden>消す</button></label>
+  </div>
+</div>
+
+<main class="gut">
+  <div class="inner" id="main"></div>
+</main>
+
+<footer class="gut">
+  <div class="inner">
+    <div><b>非公式</b>のファン製作ページです。開発・運営元とは関係ありません。広告・収益化はしていません。</div>
+    <div>Once Human © NetEase / Starry Studio。権利者から要請があれば速やかに修正・削除します。</div>
+    <div>運営・ご連絡: ユッケ（X <a href="https://x.com/Yukhoeonce" target="_blank" rel="noopener">@Yukhoeonce</a>）</div>
+  </div>
+</footer>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+  <div class="sheet-head gut"><div class="inner"><button type="button" class="sheet-back" id="sheet-back" hidden></button><span class="sheet-cat" id="sheet-cat"></span><button type="button" class="sheet-x" id="sheet-x">閉じる ✕</button></div></div>
+  <div class="sheet-body"><h2 id="sheet-title"></h2><div id="sheet-content"></div></div>
+</div>
+
+<script>
+/* ================= データ =================
+   src: off=公式お知らせ, db=ゲームデータDB（oncehuman.th.gl/ja）, web=日本語の攻略記事, en=英語の攻略記事
+   rows: [見出し, 本文]  items: [素材名, 数]  pts: 箇条書き  links: 関連項目のid */
+const CATS = [
+  { id:"basic",  name:"基本",       short:"基本",   en:"Basics",      c:"#9b3a5a" },
+  { id:"stage",  name:"ステージ",   short:"ステージ", en:"Stages",    c:"#6b4fc4" },
+  { id:"prime",  name:"根源の戦い", short:"根源の戦い", en:"The Prime War", c:"#c2410c" },
+  { id:"silo",   name:"収容サイロ・ダンジョン", short:"サイロ", en:"Silos & Dungeons", c:"#b4508a" },
+  { id:"server", name:"サーバー・ワールド", short:"サーバー", en:"Servers & Worlds", c:"#2f6fb0" },
+  { id:"zone",   name:"マップ・拠点", short:"マップ", en:"Map & Base", c:"#3d8a5a" }
+];
+const SRC = { off:"公式", web:"攻略記事", en:"英語の記事" };
+
+const D = [
+/* ---------- 基本 ---------- */
+{ id:"about", cat:"basic", name:"マニブスとは", alias:"Manibus", sum:"ナルコット大陸を舞台にしたPvEシナリオ。探索・建築・クラフト・ダンジョン・ボス戦といったOnce Humanの基本をひと通り遊べる。後半はサーバーのみんなで「根源の戦い」に挑み、最後に巨大な敵マニブスと戦う。",
+  rows:[["タイプ","PvE"],["舞台","ナルコット大陸（デイトン湿地から始まる）"],["種類","マニブス（初心者）と、通常のマニブスの2つ"],["目玉","根源の戦い（サーバー全体で巨大ボスと戦う）"],["1シーズン","5ステージ。休息期間まで入れて54日（通常版）"]],
+  pts:["公式の紹介: 「ナルコット大陸を探索し、仲間を探して集結し、素早く力を蓄え、マニブスを駆逐しましょう」","対人戦は任意参加のイベントだけなので、PvPが苦手でも遊べる（攻略記事）","地形や気候がおだやかで、寒さ・暑さで倒れる心配が少ない（攻略記事）"],
+  links:["novice","flow","pw","st1"], src:["off","web"] },
+{ id:"novice", cat:"basic", name:"マニブス（初心者）と通常版のちがい", alias:"初心者シナリオ・Novice・経験者", sum:"初めての人は「マニブス（初心者）」、ひと通り遊んだことがある人は通常の「マニブス」。マップと物語は同じで、通常版は敵が強く、ジョブと最上位の難易度がある。",
+  rows:[["向いている人","初心者版: 初めての人／通常版: サバイバル経験がある人"],["戦闘","初心者版のほうがやさしい"],["ジョブ","初心者版: なし／通常版: あり"],["ステージ","初心者版: 6つ／通常版: 5つ"],["最上位の難易度","通常版だけ: 収容サイロ EXTREME、根源の戦い DOOM"],["異常現象の輪","初心者版は対象外"]],
+  pts:["2026年7月（V3.0.1）に、初心者シナリオの名前が「マニブス（初心者）」に変わった（公式）","シナリオ選択画面では、通常版は中くらいの難易度として表示される（英語の記事）"],
+  links:["job","stn","anomaly","doom"], src:["off","en"] },
+{ id:"flow", cat:"basic", name:"基本の進め方", sum:"メインクエストを進めながら拠点の設備をそろえ、地域が変わるたびに武器と防具を作り直す。ステージ2から根源の戦いに参加でき、後半はMODやビルドを仕上げて高い難易度に挑む。",
+  pts:["序盤はメインクエストと拠点の設備（分解作業台・作業台・調理・保管箱・水と食料）を優先する","テレポートタワーは見つけたらすぐ開放しておく","新しい地域に入ったら、武器だけでなく防具も今の地域に合うものに作り直す","ステージ2から根源の戦い（NORMAL/HARD）に参加できる。最初は他の人が始めた戦いに合流するのが楽","後半は武器・防具・MOD・校正・デビエーションを組み合わせてビルドを仕上げる"],
+  note:"進め方はゲーム神殿の攻略記事（2026年9月）の整理による。",
+  links:["map","base","pw","st2"], src:["web"] },
+{ id:"job", cat:"basic", name:"ジョブ（通常版のみ）", alias:"職業・クラス", sum:"通常のマニブスでは、チュートリアルのあとにジョブを選べる。マニブス（初心者）にはジョブがない。",
+  pts:["ジョブはシェフ・テイマーなど。選ばない「自由人」もある（英語の記事）","初心者版から始めた人は、次のシナリオに移ったときに初めてジョブを選ぶことになる（英語の記事）"],
+  note:"ジョブの日本語名は一部しか確認できていない。",
+  links:["novice"], src:["off","en"] },
+{ id:"challenge", cat:"basic", name:"シナリオチャレンジ", sum:"シナリオごとのやり込みクエスト。2025年12月24日以降に始まったサーバーでは、ステージごとではなく、ポイントを一定数ためると開放される。",
+  pts:["数が減り、高難易度のチャレンジ2組だけになった（公式 V2.2.4）","チャレンジではポイントがもらえなくなり、レベルアップでもらえる形になった（公式 V2.2.4）","乗り物のドリフトや空中浮遊のクエストもある（公式 V2.0）"],
+  note:"V2.2.4のお知らせでは「ミームポイント」と書かれているが、2026年4月にミームがテクに変わったので、今の呼び名はゲーム内で確認が必要。",
+  links:["perm"], src:["off"] },
+{ id:"m2", cat:"basic", name:"マニブス2.0（来年予定）", sum:"公式が「来年実装予定」と発表しているマニブスの新しい版。新しい飛行の乗り物と、飛行の乗り物を使った空中戦が入る予定。",
+  pts:["2026年10月21日の「超越者ホットライン vol.11」で発表（公式）","くわしい内容はまだ発表されていない"],
+  links:["about"], src:["off"] },
+
+/* ---------- ステージ ---------- */
+{ id:"st1", cat:"stage", name:"ステージ1「スカイ・ミラージュ」", alias:"Of Mist and Mirage", sum:"最初のステージ。メインクエストと拠点づくりを進め、ダンジョン（NORMAL）が開く。",
+  rows:[["期間","4日"],["開くもの","ダンジョン（NORMAL）"]],
+  note:"期間は2025年3月27日以降に開いた通常版のサーバー（公式）。",
+  links:["st2","flow","dungeon"], src:["off"] },
+{ id:"st2", cat:"stage", name:"ステージ2「スターロイド拘束」", alias:"Tame the Staroid", sum:"根源の戦いが始まるステージ。ダンジョン（HARD）とハイリスクパブリックイベントも開く。",
+  rows:[["期間","6日"],["開くもの","ダンジョン（HARD）、ハイリスクパブリックイベント、根源の戦い（NORMAL・HARD）"]],
+  links:["st1","st3","pw","crisis"], src:["off"] },
+{ id:"st3", cat:"stage", name:"ステージ3「スターダストシャウト」", alias:"Stardust Roar", sum:"いちばん長いステージ。最高難易度の収容サイロが開き、装備とMODを集め込む時期。",
+  rows:[["期間","14日"],["開くもの","ダンジョン（MASTER）、根源の戦い（MASTER）、収容サイロ（EXTREME）"]],
+  links:["st2","st4","silo"], src:["off"] },
+{ id:"st4", cat:"stage", name:"ステージ4「マニブス」", alias:"Manibus", sum:"シナリオの山場。根源の戦いの最上位 EXTREME と DOOM が開き、ボスのマニブスに挑む。",
+  rows:[["期間","16日"],["開くもの","根源の戦い（EXTREME・DOOM）"]],
+  links:["st3","st5","doom","boss"], src:["off"] },
+{ id:"st5", cat:"stage", name:"ステージ5「星空との再会」", alias:"A New Dawn・休息期間", sum:"最後のステージ（休息期間）。新しいシナリオに登録して移るか、このサーバーに残るかを決める。",
+  rows:[["期間","14日"]],
+  pts:["休息期間は2025年8月14日以降に開いたサーバーで28日から14日に短くなった（公式）","残った場合、休息期間に入ってから14日後に永続サーバーへ自動で統合される（公式）"],
+  links:["after","perm"], src:["off"] },
+{ id:"stn", cat:"stage", name:"マニブス（初心者）のステージ", alias:"初心者シナリオ・Novice", sum:"初心者版はステージが6つ。通常版にない「眷属の怒り」が3番目に入り、全体の進み方がゆっくりになっている。",
+  rows:[["1 スカイ・ミラージュ","4日"],["2 スターロイド拘束","6日"],["3 眷属の怒り","6日"],["4 スターダストシャウト","12日"],["5 マニブス","12日"],["6 星空との再会","最後のステージ（休息期間）"]],
+  note:"日数は2025年3月27日以降に開いたサーバー（公式）。収容サイロ EXTREME と根源の戦い DOOM は初心者版にはない。",
+  links:["novice","st1"], src:["off","en"] },
+
+/* ---------- 根源の戦い ---------- */
+{ id:"pw", cat:"prime", name:"根源の戦いとは", alias:"The Prime War・プライムウォー", sum:"マニブスの目玉。マップ上の決まったエリアで、サーバーのプレイヤーが集まって巨大ボスと戦う。拘束器を守りながら戦う、防衛と建築を組み合わせたPvE。",
+  rows:[["開放","ステージ2「スターロイド拘束」から"],["人数","サーバーの誰でも参加できる（レギオンに入っていなくてよい）"],["勝ち方","ボスのシールドを壊してから本体を削る。拘束器を壊されないように守る"]],
+  pts:["ソロでも参加はできるが、他の人と一緒のほうがずっと楽（攻略記事）","個人でもチームでも、もらえる報酬は同じ（公式）"],
+  links:["pwstart","shield","pwdiff","score"], src:["off","web"] },
+{ id:"pwstart", cat:"prime", name:"始め方（スターロイドと拘束器）", alias:"スターロイド拘束器・Staroid Restrainer", sum:"根源の戦いのエリアにある「拘束器」に、スターロイドを使って起動すると始まる。始まった戦いには、サーバーの誰でも合流できる。",
+  pts:["初めてなら、自分で起動するより他の人が始めた戦いに合流するのがおすすめ（攻略記事）","始まる前に、拘束器のまわりに壁や障害物などの防衛設備を作っておく（公式・攻略記事）"],
+  links:["pw","shield"], src:["off","web"] },
+{ id:"shield", cat:"prime", name:"ボスのシールドの壊し方", sum:"ボスはシールドを持っていて、ふつうの銃ではなかなか削れない。爆発系の攻撃やプラズマ弾でシールドを壊し、消えたら本体に火力を集中する。",
+  pts:["シールドに効くもの: 近接防御タレット＋プラズマ弾、グレネードランチャー、ロケットランチャー、グレネードなどの爆発物（公式）","近接防御タレット＋プラズマ弾がいちばん効率がよい（公式の開発者インタビュー）","2025年3月に、シールド用のレッドプラズマ系（ロケットランチャーの弾頭・榴弾・弾）が追加された（攻略記事）","シールド担当が足りていれば、雑魚処理や拘束器の防衛に回るのもよい（攻略記事）"],
+  links:["pw","pwstart"], src:["off","web"] },
+{ id:"pwdiff", cat:"prime", name:"難易度と開くステージ", sum:"根源の戦いは5段階。ステージが進むごとに上の難易度が開く。",
+  rows:[["NORMAL・HARD","ステージ2「スターロイド拘束」"],["MASTER","ステージ3「スターダストシャウト」"],["EXTREME","ステージ4「マニブス」"],["DOOM","ステージ4「マニブス」（通常版だけ）"]],
+  note:"2025年3月27日以降に開いた通常版のサーバー（公式）。",
+  links:["doom","st2","st3","st4"], src:["off"] },
+{ id:"doom", cat:"prime", name:"DOOM（最高難易度）", sum:"通常版のマニブスだけにある根源の戦いの最高難易度。ステージ4で開く。",
+  pts:["EXTREMEのエリアの入口から、難易度を選んで入る（公式）","根源の戦いの各エリアで、毎週の挑戦回数を共有する（公式）","毎週の初回クリアで高品質のモッドがもらえる（公式）"],
+  links:["pwdiff","st4","silo"], src:["off"] },
+{ id:"score", cat:"prime", name:"スコアと報酬", sum:"報酬は「初回クリア報酬」と「クリアスコア報酬」の2種類。スコアはボスへのダメージだけでなく、防衛などいろいろな貢献で決まる。",
+  pts:["ボスだけでなく、一緒に出る雑魚やエリートを倒してもスコアが入る（攻略記事）","うろうろするだけ・放置ではスコアが伸びない仕組み（公式）","永続サーバーのマンスリーチャレンジに「根源の戦い（MASTER）を5回クリア、1回のスコア2,000超え」がある（公式 V3.0.4）"],
+  links:["pw","perm"], src:["off","web"] },
+{ id:"boss", cat:"prime", name:"ボス「マニブス」", sum:"シナリオの名前にもなっている最後の敵。ステージ4「マニブス」で、根源の戦いの上位難易度に現れる。",
+  pts:["倒すにはシールド破壊と拘束器の防衛を、根源の戦いと同じように進める"],
+  note:"出るエリアや戦い方のくわしい情報は、確かなものが見つからなかった。",
+  links:["st4","doom","shield"], src:["web","en"] },
+
+/* ---------- 収容サイロ・ダンジョン ---------- */
+{ id:"silo", cat:"silo", name:"収容サイロ（EXTREME）", sum:"通常版のマニブスにある、収容サイロの最高難易度。ステージ3で開き、毎週の挑戦回数に限りがある。",
+  pts:["6つの収容サイロすべてにEXTREMEがある（公式）","各サイロの入口で難易度を選んで入る（公式）","挑戦回数はサイロごとに別（公式）","初回クリアに豪華な報酬がある（公式）"],
+  note:"6つのサイロの日本語名と場所は、確かな情報が見つからなかった。",
+  links:["st3","dungeon","doom"], src:["off"] },
+{ id:"dungeon", cat:"silo", name:"ダンジョンの難易度", sum:"ダンジョンはステージが進むごとに上の難易度が開く。NORMAL（ステージ1）→ HARD（ステージ2）→ MASTER（ステージ3）。",
+  rows:[["NORMAL","ステージ1"],["HARD","ステージ2"],["MASTER","ステージ3"]],
+  pts:["装備が足りないうちは、最高難易度だけを回る必要はない（攻略記事）"],
+  links:["silo","st1","st2","st3"], src:["off","web"] },
+{ id:"crisis", cat:"silo", name:"ハイリスクパブリックイベント", sum:"ステージ2「スターロイド拘束」から開く、難しいパブリックイベント。",
+  links:["st2"], src:["off"] },
+
+/* ---------- サーバー・ワールド ---------- */
+{ id:"open", cat:"server", name:"新しいサーバーの開放日", sum:"日本の通常版マニブスは、毎月1日と15日の朝8時に新しいサーバーが開く。マニブス（初心者）は運営が直接サーバーを開く。",
+  pts:["新しく始めるなら、開いたばかりのサーバーを選ぶとステージの遅れがない（公式）","開放の24時間前に先行エントリーが締め切られる。それ以降は開いてから入るか、次の開放を待つ（英語の記事）","友達と遊ぶなら、同じサーバーに入る必要がある。チームエントリーで一緒に登録できる（公式）"],
+  note:"開放日は2026年8月時点の公式のお知らせ。変わることがあるのでゲーム内の「サーバー開放計画」も確認。",
+  links:["worlds","after"], src:["off","en"] },
+{ id:"worlds", cat:"server", name:"NORMALワールドと異常現象ワールド", sum:"2026年5月28日から、1つのサーバーの中に「NORMALワールド」と「異常現象ワールド」がある。異常現象のイベントは異常現象ワールドでだけ起きる。",
+  rows:[["切り替え","ワールドストーンのワールド切り替えで選ぶ"],["領地","2つのワールドの間で自由に移転できる"],["新しいサーバー","マニブスはワールドの数が多い（地域によって数がちがう）"]],
+  pts:["異常現象ワールドからNORMALワールドに移ると、異常現象でついた状態は消える（公式）","アイテムを使って得た効果は、ワールドを切り替えても消えない（公式）","攻略動画やビルドを見るときは、NORMALか異常現象かを確認する（攻略記事）"],
+  links:["anomaly","open"], src:["off","web"] },
+{ id:"anomaly", cat:"server", name:"異常現象の輪（S4 グラビティアビス）", alias:"Visional Wheel・異常現象", sum:"異常現象ワールドで起きる、期間ごとの特別ルール。今はS4「グラビティアビス」（2026年5月28日から、終了日は未発表）。マニブス（初心者）は対象外。",
+  pts:["重力失衡: 一部の拠点エリアの重力が崩れ、探索するとモッドやグラビティクリスタルが手に入る（公式）","スカイリッパーが空を飛び、遺物を空から落とす。近づくとエリートが出る（公式）","空域ハンティング: 異常現象の15分後、ランダムな3つの集落の上にスカイリッパーが現れる（公式）","アビスコアからは防具用の閃光モッドも出る（公式）"],
+  links:["worlds","novice"], src:["off"] },
+{ id:"after", cat:"server", name:"休息期間のあと（残る・移る）", sum:"最後のステージ「星空との再会」に入ったら、新しいシナリオに登録して移るか、このサーバーに残るかを選べる。",
+  rows:[["残る","そのまま遊べる。休息期間に入ってから14日後に、マニブスの永続サーバーへ自動で統合される（手続き不要）"],["移る","シナリオエントリーで新しいシナリオやサーバーを選ぶ。チームエントリーで友達と同じサーバーに入れる"]],
+  links:["perm","st5"], src:["off"] },
+{ id:"perm", cat:"server", name:"永続サーバー", alias:"マニブス（永続サーバー）", sum:"シーズンが終わったあとも遊び続けられるマニブスのサーバー。日本の永続サーバーは2026年9月に1つに統合された。",
+  pts:["日本・南米・韓国・香港マカオ台湾は、2026年9月16〜17日のメンテナンスから先に統合（公式）","統合してもキャラクターのレベル・物資・テクは引き継がれる。チャレンジの進み具合はリセット（公式）","マンスリーチャレンジ: 根源の戦い（MASTER）を合計5回クリア、かつ1回のスコア2,000超え（公式 V3.0.4）","永続サーバーにもNORMALワールドと異常現象ワールドがある（公式）"],
+  links:["after","score","worlds"], src:["off"] },
+
+/* ---------- マップ・拠点 ---------- */
+{ id:"map", cat:"zone", name:"マップと6つの地域", sum:"ナルコット大陸の東部が舞台。デイトン湿地から始まり、奥の地域ほど敵が強くなる。",
+  rows:[["デイトン湿地","スタート地点・序盤"],["ブロークンデルタ","序盤〜中盤"],["アイアンリバー","中盤"],["チョークピーク","中盤〜後半"],["レッドサンズ","後半"],["ブラックハート地域","後半・高レベル"]],
+  pts:["今の装備で倒しやすい敵がいる地域から順に回るほうが効率がよい（攻略記事）","クルタ山エリアにはバッファローがいる（公式 V3.0.6）"],
+  note:"地域の名前と順番は攻略記事による。ゲーム内の表記は確認が必要。",
+  links:["base","flow"], src:["off","web"] },
+{ id:"base", cat:"zone", name:"最初の拠点の場所", sum:"初めてならデイトン湿地がおすすめ。敵のレベルが低く、ワープポイントが多くて他の地域にも行きやすい。",
+  pts:["湿地の部分は建てにくいが、ほかは平らな場所が多い（攻略記事）","水・木材・鉱石・町・テレポートタワーが近いところを選ぶ（攻略記事）","拠点はあとで移せるので、最初から最終拠点を決めなくてよい。後半は作りたいもの（原油・鉱石・農業など）に合わせて移す（攻略記事）"],
+  links:["map","flow"], src:["web"] }
+];
+const READ = {"根源":"こんげん","戦い":"たたかい","収容":"しゅうよう","拘束器":"こうそくき","拘束":"こうそく","初心者":"しょしんしゃ","通常":"つうじょう","通常版":"つうじょうばん","永続":"えいぞく","異常現象":"いじょうげんしょう","休息":"きゅうそく","星空":"ほしぞら","再会":"さいかい","湿地":"しっち","難易度":"なんいど","報酬":"ほうしゅう","統合":"とうごう","地域":"ちいき","拠点":"きょてん","領地":"りょうち","職業":"しょくぎょう","飛行":"ひこう","乗り物":"のりもの","重力":"じゅうりょく","初回":"しょかい","挑戦":"ちょうせん","防衛":"ぼうえい","建築":"けんちく","爆発":"ばくはつ","榴弾":"りゅうだん","弾頭":"だんとう","眷属":"けんぞく","怒り":"いかり","開放":"かいほう","自由人":"じゆうじん","空中戦":"くうちゅうせん","失衡":"しっこう","遺物":"いぶつ","集落":"しゅうらく","山":"やま","最高":"さいこう","進め方":"すすめかた"};
+
+/* ================= 描画 ================= */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const CAT = Object.fromEntries(CATS.map(c => [c.id, c]));
+const BY = Object.fromEntries(D.map(d => [d.id, d]));
+const NAME = new Map(); D.forEach(d => { NAME.set(d.name, d.id); (d.alias || "").split("・").forEach(a => a && a.length > 2 && !NAME.has(a) && NAME.set(a, d.id)); });
+
+$("#cnt").textContent = D.length;
+
+const norm = s => String(s).normalize("NFKC").toLowerCase().replace(/[ァ-ヶ]/g, c => String.fromCharCode(c.charCodeAt(0) - 0x60)).replace(/\s+/g, "");
+const flat = d => [d.name, d.alias, d.sum, d.note, ...(d.rows||[]).flat(), ...(d.rows2||[]).flat(), ...(d.items||[]).flat(), ...(d.pts||[]), ...(d.pts2||[])].filter(Boolean).join(" ");
+D.forEach(d => { const t = flat(d); d._s = norm(t + " " + Object.keys(READ).filter(k => t.includes(k)).map(k => READ[k]).join(" ") + " " + CAT[d.cat].name); });
+
+/* タブ */
+const TABS = [{ id:"all", name:"すべて", c:"#9b3a5a" }, ...CATS];
+$("#tabs").insertAdjacentHTML("beforeend", TABS.map(t => `<button type="button" role="tab" data-tab="${t.id}" style="--c:${t.c}"><i></i>${esc(t.short || t.name)}</button>`).join(""));
+let tab = TABS.some(t => t.id === location.hash.slice(1)) ? location.hash.slice(1) : "all";
+
+function card(d, i){
+  const c = CAT[d.cat];
+  return `<div class="card" role="button" tabindex="0" data-id="${d.id}" style="--c:${c.c};--i:${Math.min(i, 16)}">
+    <span class="lbl">${esc(c.name)}</span><h3>${esc(d.name)}</h3><p>${esc(d.sum)}</p>
+    <div class="src">${d.src.map(s => `<span class="chip ${s}">${SRC[s]}</span>`).join("")}</div></div>`;
+}
+const legend = `<div class="legend">情報のもと: ${Object.entries(SRC).map(([k, v]) => `<span class="chip ${k}">${v}</span>`).join("")} ゲーム内で確認したものではありません。</div>`;
+const flow = `<ol class="flow">${D.filter(d => d.cat === "stage" && d.id !== "stn").map((d, i) => `<li data-id="${d.id}" role="button" tabindex="0"><b>0${i + 1}</b><span>${esc(d.name.replace(/^ステージ\d/, "").replace(/[「」]/g, ""))}</span><small>${esc((d.rows[0] || ["",""])[1])}</small></li>`).join("")}</ol>`;
+const sources = `<section class="group sources"><div class="ghead" style="--c:#9b3a5a"><i></i>情報源</div>
+  <ul>
+  <li>公式: <a href="https://www.oncehuman.game/jp/news/update/20250321/40792_1221190.html" target="_blank" rel="noopener">シナリオステージ調整の予告（2025年3月）</a>／<a href="https://www.oncehuman.game/jp/news/update/20250813/40792_1253599.html" target="_blank" rel="noopener">V2.1.1（休息期間の短縮）</a>／<a href="https://www.oncehuman.game/jp/news/update/20251223/40792_1278160.html" target="_blank" rel="noopener">V2.2.4（シナリオチャレンジ）</a>／<a href="https://www.oncehuman.game/jp/news/devBlog/20240725/40793_1169794.html" target="_blank" rel="noopener">Dev Talk 根源の戦い</a>／<a href="https://www.oncehuman.game/jp/news/devBlog/20260525/40793_1301447.html" target="_blank" rel="noopener">異常現象ワールドとNORMALワールド</a>／<a href="https://www.oncehuman.game/jp/news/devBlog/20260522/40793_1301330.html" target="_blank" rel="noopener">異常現象の輪S4</a>／<a href="https://www.oncehuman.game/jp/news/update/20260709/40792_1307155.html" target="_blank" rel="noopener">V3.0.1（名前の変更）</a>／<a href="https://www.oncehuman.game/jp/news/update/20260820/40792_1311773.html" target="_blank" rel="noopener">コンソール版FAQ</a>／<a href="https://www.oncehuman.game/jp/news/update/20260824/40792_1312054.html" target="_blank" rel="noopener">サーバー開放のお知らせ（2026年8月）</a>／<a href="https://www.oncehuman.game/jp/news/update/20260824/40792_1312016.html" target="_blank" rel="noopener">V3.0.4</a>／<a href="https://www.oncehuman.game/jp/news/devBlog/20260914/40793_1313807.html" target="_blank" rel="noopener">シナリオ永続サーバー統合説明</a>／<a href="https://www.oncehuman.game/jp/news/update/20261021/40792_1317217.html" target="_blank" rel="noopener">超越者ホットライン vol.11</a></li>
+  <li>攻略記事: <a href="https://game-shinden.com/once-human-manibus/" target="_blank" rel="noopener">ゲーム神殿 マニブス</a>／<a href="https://game-shinden.com/once-human-prime-war/" target="_blank" rel="noopener">ゲーム神殿 根源の戦い</a>／<a href="https://gamerch.com/oncehuman/918382" target="_blank" rel="noopener">Gamerch シナリオのおすすめ</a></li>
+  <li>英語の記事: <a href="https://oncehumanguide.com/manibus/" target="_blank" rel="noopener">Once Human Guide Manibus</a>／<a href="https://oncehumanguide.com/manibus/novice-vs-normal/" target="_blank" rel="noopener">Novice vs normal</a></li>
+  </ul></section>`;
+
+function render(animate){
+  const q = norm($("#q").value.trim());
+  $("#qx").hidden = !q;
+  document.querySelectorAll("#tabs button").forEach(b => b.setAttribute("aria-selected", !q && b.dataset.tab === tab));
+  movePill();
+  const list = D.filter(d => q ? d._s.includes(q) : (tab === "all" || d.cat === tab));
+  let html = "";
+  if (q) {
+    html = `<div class="sec-head"><h2>「${esc($("#q").value.trim())}」<small>${list.length} results</small></h2></div>` + (list.length ? `<div class="grid">${list.map(card).join("")}</div>` : `<div class="empty">見つかりませんでした。ひらがなや別の名前でも探してみてください。</div>`);
+  } else if (tab === "all") {
+    html = `<div class="sec-head"><h2>シナリオの流れ<small>Five stages</small></h2><p>押すと詳しく見られます</p></div>${flow}${legend}` +
+      CATS.filter(c => c.id !== "stage").map(c => { const l = D.filter(d => d.cat === c.id); return `<section class="group"><div class="ghead" style="--c:${c.c}"><i></i>${esc(c.name)}<span>${l.length}</span></div><div class="grid">${l.map(card).join("")}</div></section>`; }).join("") + sources;
+  } else {
+    const c = CAT[tab];
+    html = `<div class="sec-head"><h2>${esc(c.name)}<small>${c.en}</small></h2><p>${list.length}項目</p></div>${legend}<div class="grid">${list.map(card).join("")}</div>`;
+  }
+  const m = $("#main"); m.innerHTML = html;
+  phrasify(m);
+  if (animate) { m.classList.remove("enter"); void m.offsetWidth; m.classList.add("enter"); }
+}
+function movePill(){
+  const b = document.querySelector('#tabs button[aria-selected="true"]'), pill = $("#pill");
+  if (!b) { pill.style.width = "0px"; return; }
+  pill.style.width = b.offsetWidth + "px"; pill.style.transform = `translateX(${b.offsetLeft}px)`;
+}
+// タブの列: マウスでつかんで横に動かす（指ではそのままスワイプ）。ホイールの縦回転も横に流す
+{ const el = $("#tabs"); let sx = 0, sl = 0, down = false, moved = false;
+  el.addEventListener("pointerdown", e => { if (e.pointerType !== "mouse" || e.button) return; down = true; moved = false; sx = e.clientX; sl = el.scrollLeft; });
+  addEventListener("pointermove", e => { if (!down) return; const dx = e.clientX - sx;
+    if (!moved && Math.abs(dx) > 5) { moved = true; el.classList.add("dragging"); }
+    if (moved) { el.scrollLeft = sl - dx; e.preventDefault(); } });
+  addEventListener("pointerup", () => { if (!down) return; down = false; el.classList.remove("dragging"); });
+  el.addEventListener("click", e => { if (moved) { e.stopImmediatePropagation(); e.preventDefault(); moved = false; } }, true);
+  el.addEventListener("dragstart", e => e.preventDefault());
+  el.addEventListener("wheel", e => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && el.scrollWidth > el.clientWidth) { el.scrollLeft += e.deltaY; e.preventDefault(); } }, { passive: false });
+}
+$("#tabs").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  tab = b.dataset.tab; $("#q").value = "";
+  history.replaceState(history.state, "", "#" + tab);
+  render(true); b.scrollIntoView({ inline: "nearest", block: "nearest", behavior: "smooth" });
+  const top = $(".bar").offsetTop; if (scrollY > top) scrollTo({ top, behavior: "smooth" });
+});
+let qt; $("#q").addEventListener("input", () => { clearTimeout(qt); qt = setTimeout(() => render(true), 120); });
+$("#qx").addEventListener("click", () => { $("#q").value = ""; render(true); $("#q").focus(); });
+addEventListener("resize", movePill);
+
+/* ---------- 日本語の改行位置: 文節の切れ目でだけ折り返す（Safari対策） ---------- */
+const SEG = typeof Intl !== "undefined" && Intl.Segmenter ? new Intl.Segmenter("ja", { granularity: "word" }) : null;
+const KANJI = /[一-鿿々]/, KATA = /[ァ-ヺー]/, HIRA = /^[ぁ-ゟー]+$/, OPEN = /[「『（(【〔［\[]$/, ATTACH = /^[、。，．・）)」』】〕］\]！？!?:：/／〜~ー…%％×]/, DIGIT = /[0-9０-９.]$/;
+function phraseHTML(text){
+  const parts = [...SEG.segment(text)].map(x => x.segment);
+  let out = "", prev = "";
+  for (const w of parts) {
+    const glue = !prev || /\s$/.test(prev) || /^\s/.test(w) || OPEN.test(prev) || ATTACH.test(w)
+      || (HIRA.test(w) && !/[、。]$/.test(prev)) || (DIGIT.test(prev) && !/^[0-9０-９]/.test(w) && w.length <= 2)
+      || (KANJI.test(prev.slice(-1)) && KANJI.test(w[0])) || (KATA.test(prev.slice(-1)) && KATA.test(w[0]));
+    out += (glue ? "" : "<wbr>") + esc(w); prev = w;
+  }
+  return out;
+}
+function phrasify(root){
+  if (!SEG) return;
+  root.querySelectorAll("p, dd, dt, h2, h3, li, .lead, footer div, .note, .sum, .alias, td, .flow span").forEach(el => {
+    if (el.dataset.ph) return; el.dataset.ph = 1; el.classList.add("ph");
+    [...el.childNodes].forEach(n => {
+      if (n.nodeType === 3 && /[぀-ヿ一-鿿]/.test(n.textContent)) { const s = document.createElement("span"); s.innerHTML = phraseHTML(n.textContent); n.replaceWith(...s.childNodes); }
+    });
+  });
+}
+
+/* ---------- 全画面詳細（関連項目へ進む・戻る） ---------- */
+const sheet = $("#sheet");
+const linkName = n => { const base = String(n).replace(/（.*?）$/, ""); const id = NAME.get(base); return id ? `<button type="button" class="xref" data-go="${id}">${esc(n)}</button>` : esc(n); };
+function detail(d){
+  let h = "";
+  if (d.alias) h += `<p class="alias">別名・表記: ${esc(d.alias)}</p>`;
+  h += `<p class="sum">${esc(d.sum)}</p>`;
+  if (d.rows) h += `<dl class="kv">${d.rows.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>`;
+  if (d.items) h += `<h4>${esc(d.itemsTitle || "素材")}</h4><ul class="items">${d.items.map(([n, q]) => `<li><span>${linkName(n)}</span><b>${typeof q === "number" ? "×" + q.toLocaleString() : esc(q)}</b></li>`).join("")}</ul>`;
+  if (d.pts) h += `<h4>ポイント</h4><ul class="pts">${d.pts.map(p => `<li>${esc(p)}</li>`).join("")}</ul>`;
+  if (d.rows2) h += `<h4>${esc(d.rows2Title)}</h4><dl class="kv">${d.rows2.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>`;
+  if (d.pts2) h += `<h4>${esc(d.pts2Title)}</h4><ul class="pts">${d.pts2.map(p => `<li>${esc(p)}</li>`).join("")}</ul>`;
+  if (d.note) h += `<p class="note">${esc(d.note)}</p>`;
+  if (d.links && d.links.length) h += `<h4>関連</h4><div class="chips">${d.links.filter(id => BY[id]).map(id => `<button type="button" class="xref" data-go="${id}">${esc(BY[id].name)}</button>`).join("")}</div>`;
+  h += `<div class="srcs">情報のもと: ${d.src.map(s => `<span class="chip ${s}">${SRC[s]}</span>`).join("")}</div>`;
+  return h;
+}
+let stack = [];
+function showSheet(id){
+  const d = BY[id], c = CAT[d.cat];
+  sheet.style.setProperty("--c", c.c);
+  $("#sheet-cat").textContent = c.name;
+  $("#sheet-title").textContent = d.name;
+  $("#sheet-content").innerHTML = detail(d);
+  phrasify($("#sheet-content"));
+  if (SEG) { $("#sheet-title").classList.add("ph"); $("#sheet-title").innerHTML = phraseHTML(d.name); }
+  const prev = stack[stack.length - 2];
+  $("#sheet-back").hidden = !prev;
+  if (prev) $("#sheet-back").textContent = `← ${BY[prev].name}に戻る`;
+  sheet.hidden = false; sheet.scrollTop = 0;
+  sheet.classList.remove("open"); void sheet.offsetWidth; sheet.classList.add("open");
+  document.body.classList.add("lock");
+}
+let opener = null;
+function openSheet(id, deeper){
+  if (!deeper) { if (!sheet.hidden) return; stack = []; opener = document.activeElement; }
+  stack.push(id); showSheet(id);
+  history.pushState({ sheet: stack.length }, "");
+  if (!deeper) $("#sheet-x").focus({ preventScroll: true });
+}
+function hideSheet(){ sheet.hidden = true; document.body.classList.remove("lock"); stack = []; opener && opener.focus && opener.focus({ preventScroll: true }); }
+function closeSheet(){ if (sheet.hidden) return; const n = stack.length; hideSheet(); if (history.state && history.state.sheet) history.go(-n); }
+document.addEventListener("click", e => {
+  const x = e.target.closest(".xref[data-go]"); if (x) { openSheet(x.dataset.go, true); return; }
+  const t = e.target.closest(".card[data-id], .flow li[data-id]"); if (t) openSheet(t.dataset.id);
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeSheet();
+  const t = e.target.closest && e.target.closest(".card[data-id], .flow li[data-id]");
+  if (t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openSheet(t.dataset.id); }
+});
+$("#sheet-x").addEventListener("click", closeSheet);
+$("#sheet-back").addEventListener("click", () => history.back());
+addEventListener("popstate", () => {
+  const d = (history.state && history.state.sheet) || 0;
+  if (!d) { if (!sheet.hidden) hideSheet(); return; }
+  if (!stack.length) return;
+  stack.length = Math.min(d, stack.length); showSheet(stack[stack.length - 1]);
+});
+
+/* ---------- 画面の色: ライト／ダーク（選んだ色はこの端末に覚える） ---------- */
+{ const root = document.documentElement, btn = $("#theme");
+  const SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>';
+  const MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>';
+  let saved = null; try { saved = localStorage.getItem("mb-theme"); } catch (e) {}
+  const cur = () => root.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const show = () => { const d = cur() === "dark"; btn.innerHTML = (d ? MOON : SUN) + (d ? "ダークモード" : "ライトモード"); btn.setAttribute("aria-pressed", d); };
+  if (saved === "light" || saved === "dark") root.dataset.theme = saved;
+  show();
+  btn.addEventListener("click", () => { const next = cur() === "dark" ? "light" : "dark"; root.dataset.theme = next; try { localStorage.setItem("mb-theme", next); } catch (e) {} show(); });
+  const mq = matchMedia("(prefers-color-scheme: dark)"); mq.addEventListener && mq.addEventListener("change", show);
+}
+render(false);
+phrasify(document.querySelector(".hero")); phrasify(document.querySelector("footer"));
+
+/* ---------- 星の夜: またたく星・流れる星屑（金）・ゆっくり舞う赤い光の粒 ---------- */
+(function sky(){
+  const cv = $("#sky"), ctx = cv.getContext("2d");
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let W = 0, H = 0, dpr = 1, stars = [], dust = [], motes = [], last = performance.now(), t0 = last;
+  function streak(any){ return { x: Math.random() * W * 1.2, y: any ? Math.random() * H * .7 : -20, v: 2.2 + Math.random() * 2.6, len: 30 + Math.random() * 60, a: .5 + Math.random() * .5, wait: any ? Math.random() * 400 : 120 + Math.random() * 500 }; }
+  function mote(any){ return { x: Math.random() * W, y: any ? Math.random() * H : H + 4, v: .15 + Math.random() * .35, w: Math.random() * 6.28, r: Math.random() * 1.6 + .6, life: any ? Math.random() : 0 }; }
+  function size(){
+    const nw = cv.clientWidth, nh = cv.clientHeight, widthChanged = nw !== W;
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    if (H && !widthChanged) { const k = nh / H; motes.forEach(m => m.y *= k); }
+    W = nw; H = nh; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (widthChanged) {
+      stars = Array.from({ length: Math.round(W * H / 2600) }, () => ({ x: Math.random() * W, y: Math.random() * H * .8, r: Math.random() * 1.1 + .2, p: Math.random() * 6.28, s: .8 + Math.random() * 1.6 }));
+      dust = Array.from({ length: Math.max(3, Math.round(W / 260)) }, () => streak(true));
+      motes = Array.from({ length: Math.max(8, Math.round(W / 70)) }, () => mote(true));
+    }
+  }
+  function frame(now){
+    const dt = Math.min((now - last) / 16.7, 3); last = now; const t = (now - t0) / 1000;
+    ctx.clearRect(0, 0, W, H);
+    for (const s of stars) { ctx.globalAlpha = .2 + .55 * (.5 + .5 * Math.sin(t * s.s + s.p)); ctx.fillStyle = "#fff3ea"; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.283); ctx.fill(); }
+    ctx.lineCap = "round";
+    for (const d of dust) {
+      if (d.wait > 0) { d.wait -= dt; continue; }
+      d.x -= d.v * .55 * dt; d.y += d.v * dt;
+      if (d.y > H * .9 || d.x < -80) { Object.assign(d, streak(false)); continue; }
+      const g = ctx.createLinearGradient(d.x, d.y, d.x + d.len * .55, d.y - d.len);
+      g.addColorStop(0, "rgba(255,226,150," + d.a + ")"); g.addColorStop(1, "rgba(255,226,150,0)");
+      ctx.globalAlpha = 1; ctx.strokeStyle = g; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d.x + d.len * .55, d.y - d.len); ctx.stroke();
+    }
+    for (const m of motes) {
+      m.y -= m.v * dt; m.x += Math.sin(t * .9 + m.w) * .25 * dt; m.life += .003 * dt;
+      if (m.y < -6 || m.life > 1) Object.assign(m, mote(false));
+      ctx.globalAlpha = Math.max(0, .6 * Math.sin(Math.PI * m.life)); ctx.fillStyle = "#ff7a9e"; ctx.beginPath(); ctx.arc(m.x, m.y, m.r, 0, 6.283); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    if (!still) requestAnimationFrame(frame);
+  }
+  size();
+  if (window.ResizeObserver) new ResizeObserver(size).observe(cv); else addEventListener("resize", size);
+  requestAnimationFrame(frame);
+})();
+</script>
+
+<script>
+(() => {
+  // ガイドだけを直接開いたとき（検索から来た人など）は、公開サイトでは選択画面つきのページへ移す
+  if (parent === window){
+    if (/github.io$/.test(location.hostname)) location.replace("../#" + (location.hash.slice(1) || "manibus"));
+    return;
+  }
+  const hide = document.createElement("style"); hide.textContent = "#theme-btn,#theme{display:none!important}"; document.head.appendChild(hide);
+  const root = document.documentElement;
+  const setTheme = t => { if (t === "dark" || t === "light") root.dataset.theme = t; };
+  try { setTheme(new URLSearchParams(location.search).get("theme")); } catch (e) {}
+  addEventListener("message", e => {
+    if (e.source !== parent) return;
+    const m = e.data || {};
+    if (m.type === "theme") setTheme(m.v);
+    if (m.type === "q") {
+      const q = document.getElementById("q"); if (!q) return;
+      q.value = m.v; q.dispatchEvent(new Event("input"));
+      const bar = document.querySelector(".bar"); if (bar) setTimeout(() => bar.scrollIntoView({ block: "start" }), 160);
+    }
+  });
+  // 全画面のおまけ（船の素材計算）を開いている間は、親の上のバーを隠してもらう
+  const sc = document.getElementById("sc-host");
+  if (sc && window.MutationObserver) new MutationObserver(() => parent.postMessage({ type: "full", v: !sc.hidden }, "*")).observe(sc, { attributes: true, attributeFilter: ["hidden"] });
+  parent.postMessage({ type: "ready", id: "manibus" }, "*");
+})();
+</script>
+</body>
+</html>

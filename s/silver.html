@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>白銀の荒野 ガイド</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: 雪の夜明けのヒーロー（降る雪・白い太陽・西の火山の残り火）→ 下端は雪山と流れる雪煙 → ガラスのタブバー → 色分けの小カード。
+   色は氷の青と白銀、アクセントは余燼のオレンジだけ */
+:root{
+  --bg:#eef3f8; --surface:#ffffff; --surface-2:#f5f8fb; --ink:#0f1c2b; --ink-2:#2e4258; --muted:#5b6f84;
+  --line:#d8e2ec; --accent:#d9682a; --violet:#2a6aac; --violet-soft:#e3eef9;
+  --glass:rgba(238,243,248,.84);
+  --f-display:"Instrument Serif","Times New Roman",serif;
+  --f-jp:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  --ease:cubic-bezier(.2,.7,.1,1);
+  --mist:#eef3f8;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0b1420; --surface:#121e2d; --surface-2:#172638; --ink:#e8f0f8; --ink-2:#b9cadb; --muted:#8aa0b6;
+  --line:#22344a; --accent:#ff9a5a; --violet:#8cc4ff; --violet-soft:#1a2c44; --glass:rgba(11,20,32,.82); --mist:#0b1420; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0b1420; --surface:#121e2d; --surface-2:#172638; --ink:#e8f0f8; --ink-2:#b9cadb; --muted:#8aa0b6;
+  --line:#22344a; --accent:#ff9a5a; --violet:#8cc4ff; --violet-soft:#1a2c44; --glass:rgba(11,20,32,.82); --mist:#0b1420; color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scrollbar-gutter:stable;overflow-y:scroll}
+.ph{word-break:keep-all;overflow-wrap:anywhere}
+body{word-break:auto-phrase;line-break:strict;margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-jp);font-size:17px;line-height:1.8;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:#0e1a2b}
+body.lock{overflow:hidden}
+a{color:inherit}
+button{font:inherit;color:inherit}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media (min-width:700px){.gut{padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}}
+.inner{max-width:1120px;margin:0 auto}
+
+/* ---------- Hero: 夜空（意図的に単一テーマ） ---------- */
+.hero{position:relative;overflow:hidden;background:radial-gradient(110% 90% at 80% 0%,#3f6f9c 0%,rgba(63,111,156,0) 55%),radial-gradient(70% 70% at 0% 100%,#7a3a1e 0%,rgba(122,58,30,0) 60%),linear-gradient(180deg,#0c1626 0%,#13243a 45%,#1b3350 100%);color:#eef6ff}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.halo{position:absolute;right:max(8%,26px);top:40px;width:clamp(80px,12vw,140px);aspect-ratio:1;border-radius:50%;z-index:1;
+  background:radial-gradient(circle,#ffffff 0%,#eaf5ff 34%,rgba(220,238,255,.35) 52%,rgba(220,238,255,0) 70%);animation:halo 8s ease-in-out infinite;opacity:.9}
+@keyframes halo{50%{transform:scale(1.06);opacity:1}}
+.mist{position:absolute;left:0;right:0;bottom:-1px;height:120px;z-index:1;pointer-events:none}
+.mist svg{position:absolute;bottom:0;left:0;width:200%;height:100%}
+.mist svg.ridge{width:100%;height:96%}
+.mist .ridge path{fill:#dcebf8;opacity:.16}
+.mist .m1{animation:drift 26s linear infinite}
+.mist .m2{animation:drift 17s linear infinite reverse}
+.mist .m3{animation:drift 34s linear infinite}
+.mist .m1 path{fill:#a9cdef;opacity:.3}
+.mist .m2 path{fill:#ffffff;opacity:.35}
+.mist .m3 path{fill:var(--mist)}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.hero .inner{position:relative;z-index:2;padding-block:52px 118px;display:flex;flex-direction:column;gap:18px}
+.kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#a9cbef;display:flex;gap:12px;align-items:center}
+.kicker .dot{width:7px;height:7px;border-radius:50%;background:#dff1ff;animation:twinkle 2.6s infinite}
+@keyframes twinkle{0%,100%{box-shadow:0 0 0 0 rgba(223,241,255,.6)}70%{box-shadow:0 0 0 12px rgba(223,241,255,0)}}
+.hero h1{margin:0;font-weight:400;line-height:.95}
+.hero h1 .en{display:block;font-family:var(--f-display);font-style:italic;font-size:clamp(54px,9.5vw,116px);background:linear-gradient(100deg,#ffffff 10%,#cfe6ff 50%,#ffc49c 88%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:.08em}
+.hero h1 .jp{display:block;font-weight:900;font-size:clamp(22px,3.4vw,34px);letter-spacing:.2em;margin-top:12px;color:#eef6ff}
+.hero p.lead{margin:0;max-width:34em;color:#c8d9ec;font-size:clamp(15px,1.6vw,17px)}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px 30px;margin-top:6px;font-size:14.5px;color:#a9cbef}
+.hero-meta b{display:block;font-family:var(--f-display);font-size:34px;font-weight:400;color:#f4f9ff;line-height:1.1;font-variant-numeric:tabular-nums}
+.rise{animation:rise .9s var(--ease) both}
+.rise.d1{animation-delay:.08s}.rise.d2{animation-delay:.16s}.rise.d3{animation-delay:.24s}.rise.d4{animation-delay:.32s}
+@keyframes rise{from{transform:translateY(14px);opacity:.25}to{transform:none;opacity:1}}
+
+/* ---------- Sticky bar ---------- */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--glass);backdrop-filter:saturate(1.5) blur(16px);-webkit-backdrop-filter:saturate(1.5) blur(16px);border-bottom:1px solid var(--line)}
+.bar .inner{display:flex;gap:12px;align-items:center;padding-block:10px;flex-wrap:wrap}
+.tabs{position:relative;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1 1 560px;min-width:0}
+.tabs::-webkit-scrollbar{display:none}
+.tabs{touch-action:pan-x pan-y;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+@media (hover:hover) and (pointer:fine){.tabs{cursor:grab}.tabs.dragging,.tabs.dragging button{cursor:grabbing;user-select:none}}
+.tabs button{position:relative;z-index:1;font-size:15.5px;font-weight:700;color:var(--ink-2);background:none;border:0;padding:9px 15px;border-radius:999px;cursor:pointer;white-space:nowrap;flex:none;transition:color .3s;display:flex;gap:7px;align-items:center}
+.tabs button i{width:8px;height:8px;border-radius:50%;background:var(--c);display:inline-block}
+.tabs button[aria-selected="true"]{color:#fff}
+.tabs button[aria-selected="true"] i{background:#fff}
+.tabs button:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.tabs .pill{position:absolute;z-index:0;top:0;height:100%;border-radius:999px;background:linear-gradient(120deg,#2a6aac,#3f9bd1);transition:transform .45s var(--ease),width .45s var(--ease);box-shadow:0 4px 18px -6px rgba(42,106,172,.7)}
+.search{flex:1 1 240px;display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 6px 4px 16px}
+.search:focus-within{border-color:var(--violet);box-shadow:0 0 0 3px color-mix(in srgb,var(--violet) 22%,transparent)}
+.search input{flex:1;min-width:0;border:0;background:none;font:inherit;font-size:16px;color:var(--ink);padding:7px 0;outline:none}
+.search input::placeholder{color:var(--muted)}
+.search button{border:0;background:var(--violet-soft);color:var(--ink-2);border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer}
+
+/* ---------- Main ---------- */
+main{padding-block:28px 40px;min-height:100vh}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:6px 0 16px}
+.sec-head h2{margin:0;font-size:clamp(22px,2.6vw,28px);font-weight:900;letter-spacing:.04em}
+.sec-head h2 small{font-family:var(--f-display);font-style:italic;font-weight:400;color:var(--violet);font-size:.85em;margin-left:10px;letter-spacing:0}
+.sec-head p{margin:0;color:var(--muted);font-size:14px}
+.group{margin-bottom:34px}
+.ghead{display:flex;align-items:center;gap:10px;margin:0 0 12px;font-size:15px;font-weight:900;color:var(--ink-2);letter-spacing:.06em}
+.ghead i{width:10px;height:10px;border-radius:3px;background:var(--c);transform:rotate(45deg)}
+.ghead span{font-weight:500;color:var(--muted);font-size:13px;letter-spacing:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.card{position:relative;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 16px 14px;cursor:pointer;overflow:hidden;
+  display:flex;flex-direction:column;gap:6px;min-height:132px;transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
+.card::before{content:"";position:absolute;inset:0 0 auto;height:4px;background:var(--c)}
+.card::after{content:"";position:absolute;right:-40px;top:-40px;width:120px;height:120px;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--c) 22%,transparent),transparent);pointer-events:none}
+@media (hover:hover){.card:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px color-mix(in srgb,var(--c) 70%,#000);border-color:color-mix(in srgb,var(--c) 45%,var(--line))}}
+.card:focus-visible{outline:2px solid var(--c);outline-offset:2px}
+.card .lbl{font-size:12px;font-weight:700;color:color-mix(in srgb,var(--c) 75%,var(--ink));letter-spacing:.06em}
+.card h3{margin:0;font-size:18px;line-height:1.4;font-weight:900}
+.card p{margin:0;font-size:14px;line-height:1.65;color:var(--ink-2);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card .src{margin-top:auto;padding-top:6px;display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:11.5px;font-weight:700;border-radius:999px;padding:1px 9px;border:1px solid var(--line);color:var(--muted);background:var(--surface-2);white-space:nowrap}
+.chip.off{color:#1f5f9e;border-color:#b7d3ef;background:#e8f2fc}
+.chip.db{color:#0f766e;border-color:#a7dcd5;background:#e9f7f5}
+.chip.web{color:#a1561a;border-color:#efcfae;background:#fdf3e8}
+.chip.en{color:#9f2f5c;border-color:#f1b9cf;background:#fdeef4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .chip.off{color:#a9d0ff;border-color:#2c4d73;background:#16283f}
+  :root:not([data-theme="light"]) .chip.db{color:#7fe0d2;border-color:#1e5a55;background:#10302e}
+  :root:not([data-theme="light"]) .chip.web{color:#f3c08e;border-color:#6a4220;background:#33220f}
+  :root:not([data-theme="light"]) .chip.en{color:#f7a8c8;border-color:#6d2747;background:#341424}}
+:root[data-theme="dark"] .chip.off{color:#a9d0ff;border-color:#2c4d73;background:#16283f}
+:root[data-theme="dark"] .chip.db{color:#7fe0d2;border-color:#1e5a55;background:#10302e}
+:root[data-theme="dark"] .chip.web{color:#f3c08e;border-color:#6a4220;background:#33220f}
+:root[data-theme="dark"] .chip.en{color:#f7a8c8;border-color:#6d2747;background:#341424}
+.enter .card{animation:cardin .6s var(--ease) both;animation-delay:calc(var(--i,0) * 30ms)}
+@keyframes cardin{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
+.empty{padding:40px 0;text-align:center;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:13px;color:var(--muted);margin:-4px 0 20px}
+
+/* ステージの流れ（概要タブ上部） */
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 30px;padding:0;list-style:none}
+.flow li{background:linear-gradient(160deg,color-mix(in srgb,#3b82c4 16%,var(--surface)),var(--surface));border:1px solid var(--line);border-radius:16px;padding:12px 14px;cursor:pointer;transition:transform .3s var(--ease)}
+@media (hover:hover){.flow li:hover{transform:translateY(-2px)}}
+.flow b{display:block;font-family:var(--f-display);font-style:italic;font-weight:400;font-size:30px;line-height:1;color:var(--violet)}
+.flow span{display:block;font-weight:900;font-size:15px;margin-top:6px}
+.flow small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+
+/* ---------- 全画面詳細 ---------- */
+.sheet{position:fixed;inset:0;z-index:50;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.sheet.open{animation:sheetin .45s var(--ease)}
+@keyframes sheetin{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.sheet-head{position:sticky;top:0;z-index:2;background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.sheet-head .inner{display:flex;align-items:center;gap:10px;padding-block:10px;max-width:860px}
+.sheet-back,.sheet-x{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
+.sheet-back{max-width:55%;overflow:hidden;text-overflow:ellipsis;color:var(--violet)}
+.sheet-x{margin-left:auto}
+.sheet-cat{font-size:13px;font-weight:700;color:color-mix(in srgb,var(--c) 75%,var(--ink));display:flex;align-items:center;gap:8px;min-width:0}
+.sheet-cat::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--c);transform:rotate(45deg);flex:none}
+.sheet-body{max-width:860px;margin:0 auto;padding:26px max(18px,env(safe-area-inset-left,0px)) 80px}
+.sheet-body h2{margin:0 0 4px;font-size:clamp(26px,4vw,36px);font-weight:900;line-height:1.3}
+.sheet-body .alias{color:var(--muted);font-size:14px;margin:0 0 14px}
+.sheet-body .sum{font-size:17.5px;color:var(--ink-2);margin:0 0 20px;padding:14px 16px;border-radius:14px;background:color-mix(in srgb,var(--c) 9%,var(--surface));border:1px solid color-mix(in srgb,var(--c) 22%,var(--line))}
+.kv{display:grid;grid-template-columns:minmax(96px,9em) 1fr;gap:0;margin:0 0 22px;border-top:1px solid var(--line)}
+.kv dt,.kv dd{margin:0;padding:11px 4px;border-bottom:1px solid var(--line)}
+.kv dt{font-weight:700;color:var(--muted);font-size:14.5px}
+.kv dd{font-size:16px}
+@media (max-width:520px){.kv{grid-template-columns:1fr}.kv dt{border-bottom:0;padding-bottom:0}.kv dd{padding-top:2px}}
+.sheet h4{margin:24px 0 10px;font-size:14px;letter-spacing:.12em;color:var(--violet);font-weight:900}
+.items{list-style:none;margin:0 0 8px;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.items li{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:9px 13px;font-size:15.5px}
+.items li b{font-family:var(--f-mono);font-weight:500;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.pts{margin:0 0 8px;padding-left:1.2em}
+.pts li{margin:4px 0}
+.xref{border:0;background:none;padding:0;color:var(--violet);font-weight:700;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;cursor:pointer;text-align:left}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips .xref{text-decoration:none;border:1px solid color-mix(in srgb,var(--violet) 35%,var(--line));background:var(--violet-soft);border-radius:999px;padding:5px 13px;font-size:14.5px}
+.note{font-size:13.5px;color:var(--muted);border-left:3px solid var(--line);padding:2px 0 2px 12px;margin:18px 0 0}
+.srcs{margin-top:22px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px;color:var(--muted)}
+table.st{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 10px}
+table.st th,table.st td{border-bottom:1px solid var(--line);padding:9px 6px;text-align:left;vertical-align:top}
+table.st th{font-size:13px;color:var(--muted);font-weight:700}
+
+/* ---------- 情報源・フッター ---------- */
+.sources{margin-top:10px;font-size:14px;color:var(--ink-2)}
+.sources ul{margin:8px 0 0;padding-left:1.2em}
+.sources li{margin:3px 0;overflow-wrap:anywhere}
+footer .inner{padding-block:28px 48px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px}
+footer b{color:var(--ink)}
+.hide{display:none!important}
+/* 画面の色の切り替え（右上） */
+.theme{position:absolute;z-index:40;top:calc(env(safe-area-inset-top,0px) + 10px);right:max(10px,env(safe-area-inset-right,0px));
+  display:flex;align-items:center;gap:6px;height:34px;padding:0 12px 0 10px;border-radius:999px;cursor:pointer;
+  border:1px solid rgba(255,255,255,.28);background:rgba(12,22,38,.55);color:#eef6ff;font-size:12.5px;font-weight:700;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 4px 16px -8px rgba(0,0,0,.5)}
+.theme svg{width:16px;height:16px}
+.theme:focus-visible{outline:2px solid #dff1ff;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<button type="button" class="theme" id="theme" aria-label="ダークモードとライトモードを切り替える"></button>
+<header class="hero">
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="halo" aria-hidden="true"></div>
+  <div class="inner gut">
+    <div class="kicker rise"><span class="dot"></span>Once Human · Scenario Guide · 非公式</div>
+    <h1 class="rise d1"><span class="en">The Way of Winter</span><span class="jp">白銀の荒野 ガイド</span></h1>
+    <p class="lead rise d2">北のアーカム雪原を舞台にしたPvEシナリオ「白銀の荒野」のまとめです。寒さ・暑さの温度システムと対策、温度制御塔、エクスターミネーター、エリアを名前で検索できます。</p>
+    <div class="hero-meta rise d3">
+      <div><b>5</b>ステージ</div>
+      <div><b>3</b>エリア</div>
+      <div><b id="cnt">0</b>項目</div>
+      <div><b>2024.10.17</b>配信</div>
+    </div>
+  </div>
+  <div class="mist" aria-hidden="true">
+    <svg class="ridge" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0 92 L90 70 L160 82 L260 38 L330 66 L420 52 L520 78 L610 30 L700 64 L790 50 L880 76 L980 44 L1060 70 L1200 58 V120 H0Z"/></svg>
+    <svg class="m1" viewBox="0 0 2400 120" preserveAspectRatio="none"><path d="M0 70 Q150.0 36 300 70 T600 70 T900 70 T1200 70 T1500 70 T1800 70 T2100 70 T2400 70 V120 H0Z"/></svg>
+    <svg class="m2" viewBox="0 0 2400 120" preserveAspectRatio="none"><path d="M0 84 Q200.0 60 400 84 T800 84 T1200 84 T1600 84 T2000 84 T2400 84 V120 H0Z"/></svg>
+    <svg class="m3" viewBox="0 0 2400 120" preserveAspectRatio="none"><path d="M0 98 Q120.0 84 240 98 T480 98 T720 98 T960 98 T1200 98 T1440 98 T1680 98 T1920 98 T2160 98 T2400 98 V120 H0Z"/></svg>
+  </div>
+</header>
+
+<div class="bar gut">
+  <div class="inner">
+    <div class="tabs" id="tabs" role="tablist"><span class="pill" id="pill"></span></div>
+    <label class="search"><input id="q" type="search" placeholder="名前で検索（例: 温度制御塔、低温石、余燼）" autocomplete="off" enterkeyhint="search" aria-label="検索"><button type="button" id="qx" hidden>消す</button></label>
+  </div>
+</div>
+
+<main class="gut">
+  <div class="inner" id="main"></div>
+</main>
+
+<footer class="gut">
+  <div class="inner">
+    <div><b>非公式</b>のファン製作ページです。開発・運営元とは関係ありません。広告・収益化はしていません。</div>
+    <div>Once Human © NetEase / Starry Studio。権利者から要請があれば速やかに修正・削除します。</div>
+    <div>運営・ご連絡: ユッケ（X <a href="https://x.com/Yukhoeonce" target="_blank" rel="noopener">@Yukhoeonce</a>）</div>
+  </div>
+</footer>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+  <div class="sheet-head gut"><div class="inner"><button type="button" class="sheet-back" id="sheet-back" hidden></button><span class="sheet-cat" id="sheet-cat"></span><button type="button" class="sheet-x" id="sheet-x">閉じる ✕</button></div></div>
+  <div class="sheet-body"><h2 id="sheet-title"></h2><div id="sheet-content"></div></div>
+</div>
+
+<script>
+/* ================= データ =================
+   src: off=公式お知らせ, db=ゲームデータDB（oncehuman.th.gl/ja）, web=日本語の攻略記事, en=英語の攻略記事
+   rows: [見出し, 本文]  items: [素材名, 数]  pts: 箇条書き  links: 関連項目のid */
+const CATS = [
+  { id:"basic",  name:"基本",       short:"基本",   en:"Basics",      c:"#3b82c4" },
+  { id:"stage",  name:"ステージ",   short:"ステージ", en:"Stages",    c:"#5b7fd6" },
+  { id:"temp",   name:"温度・天気", short:"温度",   en:"Temperature", c:"#0891b2" },
+  { id:"gear",   name:"寒さ・暑さ対策", short:"対策", en:"Survival",  c:"#0d9488" },
+  { id:"build",  name:"施設・温度制御塔", short:"施設", en:"Facilities", c:"#7c6fd6" },
+  { id:"boss",   name:"エクスターミネーター・ダンジョン", short:"ボス", en:"Bosses", c:"#e0582a" },
+  { id:"zone",   name:"エリア・探索", short:"エリア", en:"Regions",    c:"#c9861c" },
+  { id:"dev",    name:"新デビエーション", short:"デビエーション", en:"Deviants", c:"#b4508a" }
+];
+const SRC = { off:"公式", web:"攻略記事", en:"英語の記事" };
+
+const D = [
+/* ---------- 基本 ---------- */
+{ id:"about", cat:"basic", name:"白銀の荒野とは", alias:"The Way of Winter・雪国シナリオ", sum:"北のアーカム雪原が舞台のPvEサバイバル・探索シナリオ。寒さと暑さの「極限温度サバイバル」が特徴で、ボスのエクスターミネーターを倒していく。",
+  rows:[["配信","2024年10月17日（バージョン1.3）"],["タイプ","PvEサバイバルと探索"],["特殊システム","極限温度サバイバル"],["舞台","北部アーカムエリア（メノウ凍原・ヴィーナ峡湾・余燼の浜辺）"],["物語","生存者勢力「縦隊」と協力し、ハゲワシのボス・イグナの陰謀を止める。異常気象を起こす巨大な生体兵器を倒す"],["チーム人数","16人"]],
+  pts:["目標は極寒の克服とエクスターミネーターの撃破（公式のシナリオ紹介）","初めてなら基本を覚えやすいマニブス（初心者）のほうが向いているとされる（攻略記事）"],
+  links:["flow","temp","v2","onyx"], src:["off","web"] },
+{ id:"flow", cat:"basic", name:"基本の進め方", sum:"まず寒さ対策をそろえて東の雪原から始め、西の火山へ行く前に暑さ対策も用意する。後半はサーバー全体でエクスターミネーターと極端な天候に立ち向かう。",
+  pts:["メインクエストを進めて基本の設備を開放する","寒冷耐性のあるトップス・ボトムス、寒さ用の料理や高温石を用意する","余燼の浜辺（火山）へ行く前に酷暑耐性もそろえる","領地にヒーター・クーラーを置いて拠点の温度を整える","極端な天候が始まったらエントロピーターミナル（更新版）に参加し、みんなでエクスターミネーターを倒す"],
+  note:"順番はゲーム神殿の攻略記事（2026年9月）の整理による。",
+  links:["temp","fur","stone","heater","terminal"], src:["web"] },
+{ id:"v2", cat:"basic", name:"更新版（白銀の荒野 2.0）", alias:"更新テスト・アップデートテスト", sum:"2025年6月5日から「更新テスト」タグ付きで登場した最適化版。温度制御塔・極端な天候・エンディングのルールが変わり、エントロピーターミナルが追加された。",
+  rows:[["開始","2025年6月5日（バージョン1.6.2）。以後に増える白銀の荒野サーバーはすべて更新版"],["温度制御塔","領地の中に建てる大型施設。権限を共有して効果を分け合う（共有できる範囲には限りがある）。置いたあとも動かせる"],["極端な天候","シナリオの進行とともに各エリアへ広がる。早く解決しないと周りのエリアへ温度の影響が広がる"],["新施設","エントロピーターミナル（エントロピーコアで天候レベルを下げる・エクスターミネーターを呼んで倒す）"],["エンディング","極端な天候を打ち消せた回数で変わる"],["そのまま","クエスト・ダンジョン・パブリックイベントは従来どおり"]],
+  links:["tower","weather","terminal","exterminator"], src:["off","web"] },
+{ id:"perma", cat:"basic", name:"永続サーバー", sum:"白銀の荒野にも永続サーバーがある。2026年9月17日からすべての永続サーバーが1つに統合された。",
+  pts:["2026年9月17日のメンテナンスで白銀の荒野のすべての永続サーバーの統合を開始（公式）","永続サーバーでは極端な天候が周期的に起きる仕組みがあるとされる（攻略記事）"],
+  links:["v2","tower"], src:["off","web"] },
+{ id:"entropy", cat:"basic", name:"エントロピー", alias:"Chaosium", sum:"白銀の荒野の大事な資源。温度制御塔やエントロピーランタンの燃料になる。ハゲワシのイグナもこれを力の源にしている。",
+  pts:["温度制御塔は動かすとエントロピーを使い、温度の強さと範囲が大きいほど早く減る（公式）","エントロピーランタンの燃料（攻略記事）","専用ミーム「エントロピー成分分析」で、溶解炉を使った電気ファーネスのエントロピー生産が強くなる（攻略記事）","更新版ではエントロピーターミナルで特殊エリアボーナスにも使える（公式）"],
+  links:["tower","lantern","melt","terminal"], src:["off","web"] },
+
+/* ---------- ステージ ---------- */
+{ id:"stage1", cat:"stage", name:"ステージ1「極寒の地」", sum:"メノウ凍原とヴィーナ峡湾が開く。パブリックイベントや収容サイロなども開放。", rows:[["期間","7日"],["開放","エリア メノウ凍原・ヴィーナ峡湾、パブリックイベント、ヘイルズの動く家、貨物争奪、収容サイロ"]], links:["stage2","onyx","vena"], src:["off"] },
+{ id:"stage2", cat:"stage", name:"ステージ2「立ち込める灰燼」", alias:"立ち込める粉塵", sum:"西の余燼の浜辺が開き、雪国エリアが全開放。温度制御塔のミームもここから。", rows:[["期間","8日"],["開放","エリア 余燼の浜辺（雪国エリア全開放）、ダンジョン HARD、温度制御塔のミーム"],["シーズン進行","エクスターミネーター撃破"]], links:["stage1","stage3","ember","tower"], src:["off"] },
+{ id:"stage3", cat:"stage", name:"ステージ3「かすかな光」", alias:"微光の存続", sum:"ダンジョンのMASTER難易度が開く。", rows:[["期間","10日"],["開放","ダンジョン MASTER"],["シーズン進行","エクスターミネーター撃破"]], links:["stage2","stage4"], src:["off"] },
+{ id:"stage4", cat:"stage", name:"ステージ4「雪と火の終わり」", alias:"最後の雪と火", sum:"イベント「氷雪と烈火」で最上級のエクスターミネーターが現れる。温度制御塔の防衛も始まる。", rows:[["期間","10日"],["開放","イベント 氷雪と烈火"],["シーズン進行","エクスターミネーター撃破、ランドマーク 温度制御塔の防衛"]], links:["stage3","stage5","icefire","defense"], src:["off"] },
+{ id:"stage5", cat:"stage", name:"ステージ5「夜明けの時」", sum:"シーズンの締めくくり。次のシナリオへのエントリーが始まる。", rows:[["期間","28日"],["内容","新シーズンのエントリー開始。最初の4ステージがメインで、ここでは移る準備をする"]], note:"ステージの期間・内容は公式お知らせ（2024年）による。今のサーバーでは変わっている可能性がある。", links:["stage4","v2"], src:["off"] },
+
+/* ---------- 温度・天気 ---------- */
+{ id:"temp", cat:"temp", name:"温度システム", sum:"「温度」と「耐性」の2つで決まる。エリア・天気・昼夜・場所・持ち物で温度が変わり、耐性が高いほど暑さ寒さに強くなる。",
+  rows:[["温度が変わるもの","エリア、天気、昼と夜、場所（シーン）、アイテム"],["耐性","寒冷耐性・酷暑耐性。耐性が高いほど過酷な気温でも動きやすい"],["例","ふつうは10℃以下で寒く感じるが、寒冷耐性10Ptあれば10℃でも快適で、0℃以下から寒くなる"],["快適の目安","10〜35℃（攻略記事）"]],
+  pts:["共通システムなので全シナリオで有効。ただしブラックフェル側はふつうの気温で、準備はいらない（公式）","夜は-10℃くらいまで下がる場所がある（攻略記事）"],
+  links:["tstate","sick","wet","fur","stone"], src:["off","web"] },
+{ id:"tstate", cat:"temp", name:"温度の5段階", alias:"凍結・寒冷・快適・酷暑・燃焼", sum:"凍結・寒冷・快適・酷暑・燃焼の5段階。寒いと満腹度、暑いと水分が早く減る。いちばん端の段階は放っておくと死ぬ。",
+  rows:[["凍結","満腹度が急に減り、体温が急に下がる。3秒ごとにフローズン（1秒ごとにHP-5%・動きが遅くなる）が1つたまり、4つで死亡"],["寒冷","満腹度が早く減り、体温がだんだん下がる。続くと低体温症"],["快適","体温がだんだん元に戻る"],["酷暑","水分が早く減り、体温がだんだん上がる。続くと熱中症"],["燃焼","水分が急に減り、体温が急に上がる。3秒ごとに自然発火（1秒ごとにHP-5%・装備の耐久度-1%）が1つたまり、4つで死亡"]],
+  note:"凍結や燃焼になってからではなく、寒冷・酷暑の段階で場所を離れるか耐性を足すのが基本とされる（攻略記事）。",
+  links:["temp","sick"], src:["off","web"] },
+{ id:"sick", cat:"temp", name:"低体温症・熱中症", sum:"耐性が足りないまま寒い・暑い場所に長くいると体温が上下して病気になる。快適な場所に戻ると自然に治る。",
+  pts:["長くいるほど症状が重くなり、最悪は死亡（公式）","一部の料理で体温を戻したり病気を治したりできる（公式）","低体温症は-5℃以下が長く続くとなるとされる（攻略記事）","熱中症は理性が減り続け、0で死亡するとされる（攻略記事）","低体温症で死ぬとダウンを飛ばしてそのまま倒れる（攻略記事）","キャンプ・拠点にいると悪化しないとされる（攻略記事）"],
+  links:["tstate","food","camp"], src:["off","web"] },
+{ id:"wet", cat:"temp", name:"びしょ濡れ状態", alias:"ずぶ濡れ", sum:"泳ぐと全身が濡れる。暑さには強くなるが寒さに弱くなる。",
+  rows:[["効果","寒冷耐性-5・酷暑耐性+10（攻略記事）"]],
+  pts:["雪山の近くで水に入ってそのまま移動すると、いつもより冷えやすい","火山では逆に暑さしのぎに使える。ワニの皮の防具なら濡れている時間が延びる（攻略記事）"],
+  links:["fur","temp"], src:["off","web"] },
+{ id:"body", cat:"temp", name:"体型と温度", sum:"雪国では体型の変化が温度耐性に影響する。", note:"どれだけ変わるかの数値は確認できていない。無理に管理しなくてもよいとする記事もある。", links:["temp"], src:["off","web"] },
+{ id:"weather", cat:"temp", name:"動的天気・極端な天候", sum:"天気が変わると環境も変わり、極端な天気ではサバイバルがより厳しくなる。更新版では極端な天候がエリアに広がっていく。",
+  pts:["温度・天気・環境の変化はプレイヤー、敵、施設に影響する（公式）","エクスターミネーターが出ると、そのエリアは暴風雪か火山嵐になる（公式）","更新版: 極端な天候はシナリオの進行で各エリアに広がり、ステージごとに特有の気象効果がある。早く解決しないと周りへ広がる（公式）","更新版: エントロピーターミナルで天候レベルを下げ、エクスターミネーターを倒すと打ち消せる（公式）"],
+  links:["terminal","exterminator","v2"], src:["off"] },
+
+/* ---------- 寒さ・暑さ対策 ---------- */
+{ id:"fur", cat:"gear", name:"毛皮で作る防具", sum:"トップスとボトムスを作るとき選んだ毛皮で温度耐性がつく。クマの皮は寒さに、ワニの皮は暑さに強い。",
+  rows:[["対象","トップスとボトムスだけ（2部位ぶん足せる）"],["ワニの皮","酷暑・燃焼耐性+10、濡れている時間+50%（攻略記事）。上下両方で+20"],["クマの皮","手に入りやすく防寒性能が高い。遊園地のクマ狩りがおすすめとされる（攻略記事）"],["修理","防具の修理素材は生皮から「切れ端」に変わった。ミーム「製革技術」で小型作業台から作る"]],
+  pts:["序盤に作れる防具のセット効果にも寒冷耐性がある（攻略記事）","雪山用と火山用で装備を分けると安定する（攻略記事）"],
+  note:"毛皮ごとの細かい数値は一部しか確認できていない。",
+  links:["temp","wet","stone"], src:["off","web"] },
+{ id:"stone", cat:"gear", name:"恒温石・高温石・低温石", sum:"バッグに入れておくだけで耐性が上がる石。恒温石を作ってから、高温石（寒さ用）か低温石（暑さ用）に作り替える。",
+  rows:[["開放","ミーム 採集 →「極地探索-I」"],["作る場所","小型作業台"],["高温石","恒温石＋石炭など。寒冷耐性+10"],["低温石","恒温石＋氷10 または コールドクリスタル鉱石5。酷暑・燃焼耐性+10"],["持続","作ってから1時間。過ぎると恒温石に戻るので作り直す"]],
+  note:"素材と数値は攻略記事（らくハレ・はまっちゲームズ・BaskMedia）。高温石は公式のお知らせでも紹介されている。",
+  links:["fur","food","lantern"], src:["off","web"] },
+{ id:"torch", cat:"gear", name:"トーチ・フローズンノーザンパイク", sum:"手に持つと周りの温度を変える近接武器。トーチは温かく、フローズンノーザンパイクは涼しくなる。攻撃した相手の温度も上下させる。",
+  rows:[["トーチ","持つと約5℃上がる（攻略記事）"],["フローズンノーザンパイク","持つと約5℃下がる（攻略記事）"]],
+  pts:["武器として手に持っている間だけ効く（攻略記事）","効果はわずかなので、序盤のつなぎと考える"],
+  links:["stone","fur"], src:["off","web"] },
+{ id:"lantern", cat:"gear", name:"エントロピーランタン", sum:"エントロピーを燃料にするランタン。寒いときは温め、暑いときは冷やしてくれる。",
+  rows:[["効果","10℃より低いと15℃上げ、30℃より高いと15℃下げる（攻略記事）"],["注意","エントロピーをかなり使うので序盤には向かない（攻略記事）"]],
+  links:["entropy","stone"], src:["web"] },
+{ id:"food", cat:"gear", name:"温度対策の料理", sum:"雪国の作物で作る料理で耐性が上がる。ヨウガ・極地唐辛子・ファイアフルーツは寒さに、ミント・極寒瓜は暑さに効く。",
+  items:[["極寒瓜ジュース（極寒瓜1・水1）","炎熱+10"],["さっぱり肉の和え物（肉1・ミント1）","炎熱+10"],["さっぱり魚の和え物（魚1・ミント1）","炎熱+10"],["アイスミントティー（唐辛子1・ミント1・氷2）","炎熱+20"],["熱々キンキンスープ（極寒瓜2・火棘果2・ミント2・茗荷2）","炎熱・寒冷+30"]], itemsTitle:"料理と効果（攻略記事）",
+  pts:["食べ物と飲み物は別枠なので、両方の効果を重ねられる（攻略記事）","熱々キンキンスープはスタミナ上限も30%上がる（攻略記事）","ファイアフルーツの塩焼きなどで寒冷耐性が上がる（攻略記事）","氷菓は理性が回復するが、続けて食べると頭痛になることがある（攻略記事）","トウモロコシは自生が見つからず、アイスキャンプで種を買えるとされる（攻略記事）"],
+  note:"作物の種類は公式お知らせ。レシピと数値は攻略記事の内容で、ゲーム内表記は「炎熱耐性」となっているものがある。",
+  links:["sick","stone"], src:["off","web"] },
+{ id:"tactical", cat:"gear", name:"温度を変える戦術アイテム", sum:"投げると爆発した範囲の温度を大きく変える。フロストグレネードは冷やし、モロトフとテルミットグレネードは温める。",
+  pts:["フロストグレネード: 範囲の温度を大きく下げる（公式）","モロトフ・テルミットグレネード: 範囲の温度を大きく上げる（公式）","専用ミーム「フロストトラップ」で、クレイモア地雷が発動後にフロストボルテックスを4つ作るようになる（攻略記事）"],
+  links:["torch","icejar"], src:["off","web"] },
+{ id:"camp", cat:"gear", name:"キャンプで暖をとる", sum:"キャンプや拠点の中では低体温症・熱中症が悪化しないとされる。エクスターミネーター戦でも、キャンプを置いて戦うと体温の被害を抑えられる。",
+  pts:["たき火や燃えるドラム缶にも周りを温める効果がある（公式）。近づきすぎると火傷に注意"],
+  links:["sick","exterminator","heater"], src:["off","web"] },
+
+/* ---------- 施設・温度制御塔 ---------- */
+{ id:"heater", cat:"build", name:"ヒーター・クーラー", sum:"領地の周りの温度を変える温度制御施設。燃料を入れると周辺の温度を調節できる。",
+  rows:[["ヒーター","周りの温度を上げる。寒い地域の拠点向け"],["クーラー","周りの温度を下げる。余燼の浜辺など暑い地域向け"]],
+  pts:["ミームから建設方法を覚える（公式）","屋内だから安全とは限らない。拠点の中で寒冷表示になったら温度制御施設を置く（攻略記事）"],
+  links:["stove","tower","ember"], src:["off","web"] },
+{ id:"stove", cat:"build", name:"簡易なアンティークストーブ", sum:"入れる燃料によって周りの温度を上げたり下げたりできる。燃料が尽きると元の温度に戻る。", links:["heater"], src:["off"] },
+{ id:"tower", cat:"build", name:"温度制御塔", alias:"Thermal Tower・ランドマーク", sum:"広い範囲の温度と環境を変える巨大な施設。エントロピーを燃料に動き、範囲内の領地にいろいろなバフを与える。ステージ2から建てられる。",
+  rows:[["開放","ステージ2「立ち込める灰燼」から、ミーム（建設）で覚える"],["置き場所","領地の中に建てる大型施設。権限を共有して効果を他の人と分け合う。置いたあとも場所を動かせる。ただし共有できる範囲には限りがある（ゲーム内で確認）"],["範囲","テクノロジーで広げられ、最大324m四方（領地5×5=25個分）。領地の中心が入っていれば領地全体に効く"],["モジュール","熱処理炉・平温シェルター・防御施設・放射器の4つ。それぞれ8種類のテクノロジー"],["燃料","エントロピー。温度の強さと範囲が大きいほど早く減り、なくなると止まる"],["倉庫","テクのレベルアップや毎日の稼働に使う素材は塔の倉庫から使われる"]],
+  items:[["合金製スチールインゴット",40],["スチールインゴット",60],["金属廃物",30],["電子部品",20],["蓄電池",10]], itemsTitle:"建設素材（英語の記事・V2.3.6以降）",
+  pts:["権限は管理権限と収納権限。1つの塔で最大48人と共有できる（公式FAQ）","60℃を超えているのにさらに温めようとする（寒いのに冷やす）とオーバーロードになり、耐久度が急に下がって壊れる（公式FAQ）","長く動かしていない・テクを上げていない塔は自動で回収される（公式FAQ）","マップの温度制御塔ビューで全部の塔の状態・レベルを見られる（公式FAQ）"],
+  note:"建設素材の数は記事によって違うので、ゲーム内で確認を。範囲・権限・オーバーロードは2024年の公式FAQの内容。",
+  links:["defense","entropy","v2","terminal"], src:["off","en"] },
+{ id:"defense", cat:"build", name:"温度制御塔の浄化と防衛", sum:"塔を動かすとエントロピー廃材がたまる。80%を超えたら浄化すると、廃材が使えるエントロピーと報酬に変わる。その間は敵の攻撃から塔を守る。",
+  pts:["浄化が終わると、領地が塔の範囲にある人に報酬が自動で届く（公式）","廃材が100%になると塔が止まる（英語の記事）","ステージ4ではシーズン進行クエスト「ランドマーク - 温度制御塔の防衛」が始まる（公式）","シーズン終盤はエクスターミネーターが温度制御塔を襲ってくるとされる（ゲームニュース記事）"],
+  links:["tower","stage4","exterminator"], src:["off","en","web"] },
+{ id:"terminal", cat:"build", name:"エントロピーターミナル", alias:"エントロピーコア", sum:"更新版で追加された大型の公共施設。エントロピーコアを使うとエリアの極端な天候レベルを下げられ、エクスターミネーターを呼び出して倒せば天候を打ち消せる。",
+  pts:["エクスターミネーターを倒して極端な天候の温度影響を打ち消し、最終的にそのステージの極端な天候を完全に解除する（公式）","エントロピーを使って特殊エリアボーナスをもらい、環境に対抗できる（公式）","打ち消せた回数でシナリオのエンディングが変わる（公式）"],
+  note:"エントロピーコアの入手方法や、ターミナルの場所は確認できていない。",
+  links:["weather","exterminator","v2","entropy"], src:["off"] },
+{ id:"icepump", cat:"build", name:"破氷ポンプ", sum:"氷や水面の上に建てられるポンプ。氷を割って下の資源を集める。専用ミーム「地下ポンプ」で開放。", links:["melt"], src:["web"] },
+{ id:"melt", cat:"build", name:"温度で強くなる専用ミーム", alias:"エントロピー成分分析・熱エネルギー発散", sum:"白銀の荒野の専用ミームには、周りの温度が高いほど産出や電力が増えるものがある。",
+  rows:[["エントロピー成分分析（溶解炉）","電気ファーネスでエントロピーを作るとき製作速度-30%。30℃を超えると5℃ごとに産出+1、最大+10"],["熱エネルギー発散（発電機）","周りが20℃を超えると1℃ごとに電力+0.2%、60℃を超えると1℃ごとに+0.5%、最大+40%"]],
+  pts:["溶鉱炉は木炭やインゴットを作っている間だけ周りを温めるようになった（攻略記事）","温度で産出が増えるプラントボックスもあるらしい（未確認）"],
+  note:"数値はらくハレの攻略メモ（2024年10月）より。",
+  links:["entropy","icepump","heater"], src:["web"] },
+
+/* ---------- エクスターミネーター・ダンジョン ---------- */
+{ id:"exterminator", cat:"boss", name:"エクスターミネーター", alias:"Chaosweaver・巨大生体兵器", sum:"異常気象を起こす巨大な生体兵器。出てくるとそのエリアは暴風雪か火山嵐になる。倒すと天気がおさまり報酬がもらえる。",
+  rows:[["出現","出る確率と強さはシーズンステージが進むほど変わる（公式）"],["倒し方","エンジン（機関）を1つ壊すとエネルギーが暴走してアーマーが溶け、奥の弱点がむき出しになる。最後に中心の「偽りの太陽」が現れる（公式）"],["更新版","エントロピーターミナルで呼び出して倒すと、極端な天候を打ち消せる（公式）"]],
+  pts:["シールドがないので、プラズマ弾がなくても参加しやすい（攻略記事）","寒さで体温が下がるなら、キャンプを置いて戦うと被害を抑えられる（攻略記事）","サーバー全体で協力して倒す前提の相手（攻略記事）"],
+  links:["icefire","terminal","camp","weather"], src:["off","web"] },
+{ id:"icefire", cat:"boss", name:"イベント「氷雪と烈火」", sum:"ステージ4のイベント。最上級のエクスターミネーターが現れて広い範囲の気温に影響する。完全に倒すことができる。", links:["exterminator","stage4"], src:["off"] },
+{ id:"servitor", cat:"boss", name:"亀裂空間 - シークレットサーヴィター", sum:"白銀の荒野で追加されたモノリス（ダンジョン）。", note:"倒したときのアニメーションが追加された（V1.3）。", links:["treant"], src:["off"] },
+{ id:"treant", cat:"boss", name:"亀裂空間 - トレント", sum:"白銀の荒野のモノリス。登場ムービーのあと、高台ではなく地上から戦闘が始まり、出てくる雑魚も違う。", note:"中身は攻略記事（NORMAL）での確認。", links:["servitor"], src:["off","web"] },
+{ id:"delta", cat:"boss", name:"収容サイロ - デルタ", sum:"マニブスとはまったく違う新しいサイロ。炎と大量の敵に注意。", links:["tau","prison","blizzard"], src:["off","web"] },
+{ id:"tau", cat:"boss", name:"収容サイロ - タウ", sum:"新しいサイロ。透明な敵には、フィールドにあるカラーボールをぶつけると透明が解ける。", links:["delta"], src:["off","web"] },
+{ id:"prison", cat:"boss", name:"収容サイロ - プリズン", sum:"敵がロゼッタになり、ボスも違う。ボスはクレーンゲーム。", pts:["セキュリティを解除し、1階の部屋のワープゲートからクレーンゲームへ向かう（攻略記事）","壁にはばまれて攻撃できない信号機のボスは無視でよい。赤信号には注意（攻略記事）","HARDではマスクモッドのセレクト宝箱が出る（公式）"], links:["delta"], src:["off","web"] },
+{ id:"blizzard", cat:"boss", name:"収容サイロ - ブリザード", sum:"出てくる敵がデビアントになっているサイロ。", note:"冷蔵庫を攻撃して出る炎の敵を収容していくと温度低下がやわらぐらしい（攻略記事、未確認）。", links:["delta"], src:["off","web"] },
+{ id:"stardust", cat:"boss", name:"スターダスト秘境 - ブラックフィールド", sum:"白銀の荒野で追加された挑戦モード。", links:["servitor"], src:["off"] },
+{ id:"events", cat:"boss", name:"パブリックイベントほか", alias:"ヘイルズの動く家・貨物争奪", sum:"ステージ1からパブリックイベント、ヘイルズの動く家、貨物争奪、収容サイロが遊べる。", pts:["パブリックイベント「魚群の異変」: その中で釣りをすると異変値がたまり、魚群の品質が上がってレアな魚が寄ってくる（公式）"], links:["stage1","fishing"], src:["off"] },
+
+/* ---------- エリア・探索 ---------- */
+{ id:"onyx", cat:"zone", name:"メノウ凍原", alias:"Onyx Tundra", sum:"アーカムの東側。凍った海とケーブルカーの雪山、メノウ色のツンドラ。スイーツの町や遊園地がある。", rows:[["気候","雪・凍った海などの寒い地域。防寒を準備"],["開放","ステージ1"]], pts:["ムースシティ食品工場（推奨Lv9、デビアントが出る）などの集落がある（攻略記事）","遊園地のクマ狩りで防寒用のクマの皮を集めやすい（攻略記事）"], links:["vena","ember","fur"], src:["off","web"] },
+{ id:"vena", cat:"zone", name:"ヴィーナ峡湾", alias:"Vena Fjord", sum:"アーカムの中央。曲がりくねった海岸、緑の丘、エリア最高峰の雪山がある。", rows:[["気候","海岸・丘・雪山が混ざる。場所ごとに温度が大きく違う"],["開放","ステージ1"]], pts:["雪山では極限の低温に挑むことになる","ジップラインで空を渡れる"], links:["onyx","ember","zipline"], src:["off","web"] },
+{ id:"ember", cat:"zone", name:"余燼の浜辺", alias:"Ember Strand", sum:"アーカムの最西端。ファイアスロート火山が唸り、マグマと硫黄泉がある灼熱の地。", rows:[["気候","火山・マグマ・硫黄泉。酷暑耐性と水分の管理が必要"],["開放","ステージ2"]], pts:["名前に「白銀」とあっても、ここでは暑さ対策が主役","マグマで釣りができる（攻略記事）"], links:["onyx","vena","fishing","heater"], src:["off","web"] },
+{ id:"explore", cat:"zone", name:"異常探索ポイント", sum:"アーカムエリアに60か所。7種類のチャレンジがあり、成功するたびに報酬がもらえる。",
+  pts:["氷の宝箱","影の消散","子グマ風船","ぬいぐるみアイドル","洞窟宝ネズミ","洞窟食いしん坊ネズミ","足跡探し"], links:["view","purple"], src:["off"] },
+{ id:"view", cat:"zone", name:"展望スポット", sum:"景色のよい場所に29か所（お知らせによっては30か所）。ブラックウォーターカメラを調べると報酬と景観図鑑がもらえる。", links:["explore","purple"], src:["off"] },
+{ id:"purple", cat:"zone", name:"紫の光点秘蔵", sum:"各エリアに5か所ずつある隠しポイント。見逃さないように。", links:["explore","view"], src:["off"] },
+{ id:"zipline", cat:"zone", name:"ジップライン", sum:"ワイヤーで地形を渡れる仕掛け。下りだけでなく上りにも使える。", links:["vena"], src:["off","web"] },
+{ id:"fishing", cat:"zone", name:"マグマ釣り", sum:"マグマで釣りができる。釣り堀にいるNPCから上級釣り竿のレシピを買って作る必要がある。", links:["ember","events"], src:["web"] },
+
+/* ---------- 新デビエーション ---------- */
+{ id:"tarpudding", cat:"dev", name:"タールプリン", sum:"領地で働く。周りで燃料（原油）を集め、燃料精製施設で働くと変換が速くなる。", links:["spacefish"], src:["off","web"] },
+{ id:"spacefish", cat:"dev", name:"宇宙飛行魚", sum:"領地の外で海水を集め、ときどき魚もとってくる。浄水器や発酵用のタルの変換効率が上がる。", links:["tarpudding"], src:["off","web"] },
+{ id:"snapshot", cat:"dev", name:"スナップショット", sum:"背中にくっつく戦闘型。肩撃ち・スコープ中に敵をロックオンし続けてダメージを与え、敵が受ける銃器DMGを増やす。", links:["bigeye"], src:["off","web"] },
+{ id:"bigeye", cat:"dev", name:"ビッグ・アイ", sum:"戦闘型。指定した相手にブレイズDMGを与え、周りの敵に火傷を与え続ける。", links:["snapshot"], src:["off","web"] },
+{ id:"winterspirit", cat:"dev", name:"冬の精", sum:"戦闘型。相手の近くにアイスクリスタルを作り、弾が当たると砕けて周りにフロストDMG。敵が受けるフロストDMGも増える。", note:"サブクエスト「デビエーション：冬の精」では、先に氷を溶かすとクリアできない不具合があった（V1.3当時）。", links:["icejar"], src:["off","web"] },
+{ id:"icejar", cat:"dev", name:"氷の瓶", sum:"不思議な付着力を持つ氷（特殊な素材）を作る製作型。戦術アイテムが作れて、使うと大きな氷ができる。", links:["winterspirit","tactical"], src:["off","web"] },
+{ id:"nightlamp", cat:"dev", name:"夜の灯火", sum:"領地をパトロールし、怪しい相手を攻撃する。光線で敵をしびれさせ、影を消す戦術アイテムも放つ。", links:["tarpudding"], src:["off","web"] },
+{ id:"mrwish", cat:"dev", name:"ミスターウィッシュ", sum:"戦闘型。銃で敵を攻撃し、ハンティングマークをつける。", note:"関わるクエストで、ライオンは話しかけたあと少し動かずにいるとよいらしい（攻略記事）。", links:["snapshot"], src:["web"] }
+];
+
+/* 漢字の読み（読みで検索できるように） */
+const READ = {"白銀":"しろがね はくぎん","荒野":"こうや","雪国":"ゆきぐに","温度":"おんど","制御塔":"せいぎょとう","塔":"とう","耐性":"たいせい","寒冷":"かんれい","酷暑":"こくしょ","凍結":"とうけつ","快適":"かいてき","燃焼":"ねんしょう","炎熱":"えんねつ","体温":"たいおん","低体温症":"ていたいおんしょう","熱中症":"ねっちゅうしょう","濡れ":"ぬれ","体型":"たいけい","天気":"てんき","天候":"てんこう","極端":"きょくたん","毛皮":"けがわ","皮":"かわ","防具":"ぼうぐ","恒温石":"こうおんせき","高温石":"こうおんせき","低温石":"ていおんせき","石":"いし","料理":"りょうり","瓜":"うり","極寒":"ごっかん","唐辛子":"とうがらし","茗荷":"みょうが","火棘果":"かきょくか","氷":"こおり","氷菓":"ひょうか","魚":"さかな","肉":"にく","施設":"しせつ","浄化":"じょうか","防衛":"ぼうえい","廃材":"はいざい","倉庫":"そうこ","権限":"けんげん","範囲":"はんい","放射器":"ほうしゃき","熱処理炉":"ねつしょりろ","平温":"へいおん","溶解炉":"ようかいろ","溶鉱炉":"ようこうろ","発電機":"はつでんき","破氷":"はひょう","地下":"ちか","機関":"きかん","偽りの太陽":"いつわりのたいよう","氷雪":"ひょうせつ","烈火":"れっか","亀裂空間":"きれつくうかん","収容":"しゅうよう","秘境":"ひきょう","凍原":"とうげん","峡湾":"きょうわん","余燼":"よじん","浜辺":"はまべ","火山":"かざん","硫黄":"いおう","探索":"たんさく","展望":"てんぼう","紫":"むらさき","光点":"こうてん","秘蔵":"ひぞう","釣り":"つり","宇宙飛行魚":"うちゅうひこうぎょ","冬の精":"ふゆのせい","瓶":"びん","夜の灯火":"よるのともしび","灯火":"ともしび","縦隊":"じゅうたい","永続":"えいぞく","更新版":"こうしんばん","戦術":"せんじゅつ","暴風雪":"ぼうふうせつ","嵐":"あらし","極寒の地":"ごっかんのち","灰燼":"かいじん","夜明け":"よあけ","雪":"ゆき","火":"ひ","光":"ひかり"};
+
+/* ================= 描画 ================= */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const CAT = Object.fromEntries(CATS.map(c => [c.id, c]));
+const BY = Object.fromEntries(D.map(d => [d.id, d]));
+const NAME = new Map(); D.forEach(d => { NAME.set(d.name, d.id); (d.alias || "").split("・").forEach(a => a && a.length > 2 && !NAME.has(a) && NAME.set(a, d.id)); });
+
+$("#cnt").textContent = D.length;
+
+const norm = s => String(s).normalize("NFKC").toLowerCase().replace(/[ァ-ヶ]/g, c => String.fromCharCode(c.charCodeAt(0) - 0x60)).replace(/\s+/g, "");
+const flat = d => [d.name, d.alias, d.sum, d.note, ...(d.rows||[]).flat(), ...(d.rows2||[]).flat(), ...(d.items||[]).flat(), ...(d.pts||[]), ...(d.pts2||[])].filter(Boolean).join(" ");
+D.forEach(d => { const t = flat(d); d._s = norm(t + " " + Object.keys(READ).filter(k => t.includes(k)).map(k => READ[k]).join(" ") + " " + CAT[d.cat].name); });
+
+/* タブ */
+const TABS = [{ id:"all", name:"すべて", c:"#3b82c4" }, ...CATS];
+$("#tabs").insertAdjacentHTML("beforeend", TABS.map(t => `<button type="button" role="tab" data-tab="${t.id}" style="--c:${t.c}"><i></i>${esc(t.short || t.name)}</button>`).join(""));
+let tab = TABS.some(t => t.id === location.hash.slice(1)) ? location.hash.slice(1) : "all";
+
+function card(d, i){
+  const c = CAT[d.cat];
+  return `<div class="card" role="button" tabindex="0" data-id="${d.id}" style="--c:${c.c};--i:${Math.min(i, 16)}">
+    <span class="lbl">${esc(c.name)}</span><h3>${esc(d.name)}</h3><p>${esc(d.sum)}</p>
+    <div class="src">${d.src.map(s => `<span class="chip ${s}">${SRC[s]}</span>`).join("")}</div></div>`;
+}
+const legend = `<div class="legend">情報のもと: ${Object.entries(SRC).map(([k, v]) => `<span class="chip ${k}">${v}</span>`).join("")} ゲーム内で確認したものではありません。</div>`;
+const flow = `<ol class="flow">${D.filter(d => d.cat === "stage").map((d, i) => `<li data-id="${d.id}" role="button" tabindex="0"><b>0${i + 1}</b><span>${esc(d.name.replace(/^ステージ\d/, "").replace(/[「」]/g, ""))}</span><small>${esc((d.rows[0] || ["",""])[1])}</small></li>`).join("")}</ol>`;
+const sources = `<section class="group sources"><div class="ghead" style="--c:#3b82c4"><i></i>情報源</div>
+  <ul>
+  <li>公式: <a href="https://www.oncehuman.game/jp/news/update/20241016/40792_1187312.html" target="_blank" rel="noopener">バージョン1.3アップデートのお知らせ</a>／<a href="https://www.oncehuman.game/jp/news/devBlog/20241017/40793_1187706.html" target="_blank" rel="noopener">雪国生存マニュアル</a>／<a href="https://www.oncehuman.game/jp/news/update/20241022/40792_1188396.html" target="_blank" rel="noopener">温度制御塔システムFAQ</a>／<a href="https://www.oncehuman.game/jp/news/update/20250603/40792_1238303.html" target="_blank" rel="noopener">6月5日 V1.6.2（白銀の荒野 アップデートテスト）</a>／<a href="https://www.oncehuman.game/jp/news/devBlog/20260914/40793_1313807.html" target="_blank" rel="noopener">シナリオ永続サーバー統合説明</a></li>
+  <li>攻略記事: <a href="https://kirisamehare.com/once-human_memo/" target="_blank" rel="noopener">らくハレ 白銀の荒野メモ</a>／<a href="https://hamatti-games.com/oh-silver-heat-prevention/" target="_blank" rel="noopener">はまっちゲームズ 暑さ対策</a>／<a href="https://baskmedia.jp/heat-cold-resistance/" target="_blank" rel="noopener">BaskMedia 寒さと暑さ</a>／<a href="https://game-shinden.com/once-human-way-of-winter/" target="_blank" rel="noopener">ゲーム神殿（現行仕様）</a>／<a href="https://gamebiz.jp/news/394266" target="_blank" rel="noopener">gamebiz</a></li>
+  <li>英語の記事: <a href="https://game8.co/games/Once-Human/archives/481842" target="_blank" rel="noopener">Game8 Thermal Tower</a>／<a href="https://www.gnlmagazine.com/article/comprehensive-guide-to-thermal-towers-in-once-humans-way-of-winter" target="_blank" rel="noopener">GNL Magazine Thermal Towers</a></li>
+  </ul></section>`;
+
+function render(animate){
+  const q = norm($("#q").value.trim());
+  $("#qx").hidden = !q;
+  document.querySelectorAll("#tabs button").forEach(b => b.setAttribute("aria-selected", !q && b.dataset.tab === tab));
+  movePill();
+  const list = D.filter(d => q ? d._s.includes(q) : (tab === "all" || d.cat === tab));
+  let html = "";
+  if (q) {
+    html = `<div class="sec-head"><h2>「${esc($("#q").value.trim())}」<small>${list.length} results</small></h2></div>` + (list.length ? `<div class="grid">${list.map(card).join("")}</div>` : `<div class="empty">見つかりませんでした。ひらがなや別の名前でも探してみてください。</div>`);
+  } else if (tab === "all") {
+    html = `<div class="sec-head"><h2>シナリオの流れ<small>Five stages</small></h2><p>押すと詳しく見られます</p></div>${flow}${legend}` +
+      CATS.filter(c => c.id !== "stage").map(c => { const l = D.filter(d => d.cat === c.id); return `<section class="group"><div class="ghead" style="--c:${c.c}"><i></i>${esc(c.name)}<span>${l.length}</span></div><div class="grid">${l.map(card).join("")}</div></section>`; }).join("") + sources;
+  } else {
+    const c = CAT[tab];
+    html = `<div class="sec-head"><h2>${esc(c.name)}<small>${c.en}</small></h2><p>${list.length}項目</p></div>${legend}<div class="grid">${list.map(card).join("")}</div>`;
+  }
+  const m = $("#main"); m.innerHTML = html;
+  phrasify(m);
+  if (animate) { m.classList.remove("enter"); void m.offsetWidth; m.classList.add("enter"); }
+}
+function movePill(){
+  const b = document.querySelector('#tabs button[aria-selected="true"]'), pill = $("#pill");
+  if (!b) { pill.style.width = "0px"; return; }
+  pill.style.width = b.offsetWidth + "px"; pill.style.transform = `translateX(${b.offsetLeft}px)`;
+}
+// タブの列: マウスでつかんで横に動かす（指ではそのままスワイプ）。ホイールの縦回転も横に流す
+{ const el = $("#tabs"); let sx = 0, sl = 0, down = false, moved = false;
+  el.addEventListener("pointerdown", e => { if (e.pointerType !== "mouse" || e.button) return; down = true; moved = false; sx = e.clientX; sl = el.scrollLeft; });
+  addEventListener("pointermove", e => { if (!down) return; const dx = e.clientX - sx;
+    if (!moved && Math.abs(dx) > 5) { moved = true; el.classList.add("dragging"); }
+    if (moved) { el.scrollLeft = sl - dx; e.preventDefault(); } });
+  addEventListener("pointerup", () => { if (!down) return; down = false; el.classList.remove("dragging"); });
+  el.addEventListener("click", e => { if (moved) { e.stopImmediatePropagation(); e.preventDefault(); moved = false; } }, true);
+  el.addEventListener("dragstart", e => e.preventDefault());
+  el.addEventListener("wheel", e => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && el.scrollWidth > el.clientWidth) { el.scrollLeft += e.deltaY; e.preventDefault(); } }, { passive: false });
+}
+$("#tabs").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  tab = b.dataset.tab; $("#q").value = "";
+  history.replaceState(history.state, "", "#" + tab);
+  render(true); b.scrollIntoView({ inline: "nearest", block: "nearest", behavior: "smooth" });
+  const top = $(".bar").offsetTop; if (scrollY > top) scrollTo({ top, behavior: "smooth" });
+});
+let qt; $("#q").addEventListener("input", () => { clearTimeout(qt); qt = setTimeout(() => render(true), 120); });
+$("#qx").addEventListener("click", () => { $("#q").value = ""; render(true); $("#q").focus(); });
+addEventListener("resize", movePill);
+
+/* ---------- 日本語の改行位置: 文節の切れ目でだけ折り返す（Safari対策） ---------- */
+const SEG = typeof Intl !== "undefined" && Intl.Segmenter ? new Intl.Segmenter("ja", { granularity: "word" }) : null;
+const KANJI = /[一-鿿々]/, KATA = /[ァ-ヺー]/, HIRA = /^[ぁ-ゟー]+$/, OPEN = /[「『（(【〔［\[]$/, ATTACH = /^[、。，．・）)」』】〕］\]！？!?:：/／〜~ー…%％×]/, DIGIT = /[0-9０-９.]$/;
+function phraseHTML(text){
+  const parts = [...SEG.segment(text)].map(x => x.segment);
+  let out = "", prev = "";
+  for (const w of parts) {
+    const glue = !prev || /\s$/.test(prev) || /^\s/.test(w) || OPEN.test(prev) || ATTACH.test(w)
+      || (HIRA.test(w) && !/[、。]$/.test(prev)) || (DIGIT.test(prev) && !/^[0-9０-９]/.test(w) && w.length <= 2)
+      || (KANJI.test(prev.slice(-1)) && KANJI.test(w[0])) || (KATA.test(prev.slice(-1)) && KATA.test(w[0]));
+    out += (glue ? "" : "<wbr>") + esc(w); prev = w;
+  }
+  return out;
+}
+function phrasify(root){
+  if (!SEG) return;
+  root.querySelectorAll("p, dd, dt, h2, h3, li, .lead, footer div, .note, .sum, .alias, td, .flow span").forEach(el => {
+    if (el.dataset.ph) return; el.dataset.ph = 1; el.classList.add("ph");
+    [...el.childNodes].forEach(n => {
+      if (n.nodeType === 3 && /[぀-ヿ一-鿿]/.test(n.textContent)) { const s = document.createElement("span"); s.innerHTML = phraseHTML(n.textContent); n.replaceWith(...s.childNodes); }
+    });
+  });
+}
+
+/* ---------- 全画面詳細（関連項目へ進む・戻る） ---------- */
+const sheet = $("#sheet");
+const linkName = n => { const base = String(n).replace(/（.*?）$/, ""); const id = NAME.get(base); return id ? `<button type="button" class="xref" data-go="${id}">${esc(n)}</button>` : esc(n); };
+function detail(d){
+  let h = "";
+  if (d.alias) h += `<p class="alias">別名・表記: ${esc(d.alias)}</p>`;
+  h += `<p class="sum">${esc(d.sum)}</p>`;
+  if (d.rows) h += `<dl class="kv">${d.rows.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>`;
+  if (d.items) h += `<h4>${esc(d.itemsTitle || "素材")}</h4><ul class="items">${d.items.map(([n, q]) => `<li><span>${linkName(n)}</span><b>${typeof q === "number" ? "×" + q.toLocaleString() : esc(q)}</b></li>`).join("")}</ul>`;
+  if (d.pts) h += `<h4>ポイント</h4><ul class="pts">${d.pts.map(p => `<li>${esc(p)}</li>`).join("")}</ul>`;
+  if (d.rows2) h += `<h4>${esc(d.rows2Title)}</h4><dl class="kv">${d.rows2.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>`;
+  if (d.pts2) h += `<h4>${esc(d.pts2Title)}</h4><ul class="pts">${d.pts2.map(p => `<li>${esc(p)}</li>`).join("")}</ul>`;
+  if (d.note) h += `<p class="note">${esc(d.note)}</p>`;
+  if (d.links && d.links.length) h += `<h4>関連</h4><div class="chips">${d.links.filter(id => BY[id]).map(id => `<button type="button" class="xref" data-go="${id}">${esc(BY[id].name)}</button>`).join("")}</div>`;
+  h += `<div class="srcs">情報のもと: ${d.src.map(s => `<span class="chip ${s}">${SRC[s]}</span>`).join("")}</div>`;
+  return h;
+}
+let stack = [];
+function showSheet(id){
+  const d = BY[id], c = CAT[d.cat];
+  sheet.style.setProperty("--c", c.c);
+  $("#sheet-cat").textContent = c.name;
+  $("#sheet-title").textContent = d.name;
+  $("#sheet-content").innerHTML = detail(d);
+  phrasify($("#sheet-content"));
+  if (SEG) { $("#sheet-title").classList.add("ph"); $("#sheet-title").innerHTML = phraseHTML(d.name); }
+  const prev = stack[stack.length - 2];
+  $("#sheet-back").hidden = !prev;
+  if (prev) $("#sheet-back").textContent = `← ${BY[prev].name}に戻る`;
+  sheet.hidden = false; sheet.scrollTop = 0;
+  sheet.classList.remove("open"); void sheet.offsetWidth; sheet.classList.add("open");
+  document.body.classList.add("lock");
+}
+let opener = null;
+function openSheet(id, deeper){
+  if (!deeper) { if (!sheet.hidden) return; stack = []; opener = document.activeElement; }
+  stack.push(id); showSheet(id);
+  history.pushState({ sheet: stack.length }, "");
+  if (!deeper) $("#sheet-x").focus({ preventScroll: true });
+}
+function hideSheet(){ sheet.hidden = true; document.body.classList.remove("lock"); stack = []; opener && opener.focus && opener.focus({ preventScroll: true }); }
+function closeSheet(){ if (sheet.hidden) return; const n = stack.length; hideSheet(); if (history.state && history.state.sheet) history.go(-n); }
+document.addEventListener("click", e => {
+  const x = e.target.closest(".xref[data-go]"); if (x) { openSheet(x.dataset.go, true); return; }
+  const t = e.target.closest(".card[data-id], .flow li[data-id]"); if (t) openSheet(t.dataset.id);
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeSheet();
+  const t = e.target.closest && e.target.closest(".card[data-id], .flow li[data-id]");
+  if (t && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openSheet(t.dataset.id); }
+});
+$("#sheet-x").addEventListener("click", closeSheet);
+$("#sheet-back").addEventListener("click", () => history.back());
+addEventListener("popstate", () => {
+  const d = (history.state && history.state.sheet) || 0;
+  if (!d) { if (!sheet.hidden) hideSheet(); return; }
+  if (!stack.length) return;
+  stack.length = Math.min(d, stack.length); showSheet(stack[stack.length - 1]);
+});
+
+/* ---------- 画面の色: ライト／ダーク（選んだ色はこの端末に覚える） ---------- */
+{ const root = document.documentElement, btn = $("#theme");
+  const SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>';
+  const MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>';
+  let saved = null; try { saved = localStorage.getItem("ww-theme"); } catch (e) {}
+  const cur = () => root.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const show = () => { const d = cur() === "dark"; btn.innerHTML = (d ? MOON : SUN) + (d ? "ダークモード" : "ライトモード"); btn.setAttribute("aria-pressed", d); };
+  if (saved === "light" || saved === "dark") root.dataset.theme = saved;
+  show();
+  btn.addEventListener("click", () => { const next = cur() === "dark" ? "light" : "dark"; root.dataset.theme = next; try { localStorage.setItem("ww-theme", next); } catch (e) {} show(); });
+  const mq = matchMedia("(prefers-color-scheme: dark)"); mq.addEventListener && mq.addEventListener("change", show);
+}
+render(false);
+phrasify(document.querySelector(".hero")); phrasify(document.querySelector("footer"));
+
+/* ---------- 雪空: 降る雪・かすかな星・左下から立ちのぼる余燼の火の粉 ---------- */
+(function sky(){
+  const cv = $("#sky"), ctx = cv.getContext("2d");
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let W = 0, H = 0, dpr = 1, flakes = [], stars = [], embers = [], last = performance.now(), t0 = last;
+  function flake(any){ const r = Math.random() * 2.2 + .5; return { x: Math.random() * W, y: any ? Math.random() * H : -6, r, v: .25 + r * .32, w: Math.random() * 6.28, s: .4 + Math.random() * .8, a: .45 + Math.random() * .5 }; }
+  function ember(any){ return { x: Math.random() * W * .35, y: any ? H * (.5 + Math.random() * .5) : H + 4, v: .3 + Math.random() * .6, w: Math.random() * 6.28, r: Math.random() * 1.4 + .6, life: any ? Math.random() : 0 }; }
+  function size(){
+    const nw = cv.clientWidth, nh = cv.clientHeight, widthChanged = nw !== W;
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    if (H && !widthChanged) { const k = nh / H; flakes.forEach(f => f.y *= k); embers.forEach(e => e.y *= k); }
+    W = nw; H = nh; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (widthChanged) {
+      flakes = Array.from({ length: Math.round(W * H / 4200) }, () => flake(true));
+      stars = Array.from({ length: Math.round(W * H / 9000) }, () => ({ x: Math.random() * W, y: Math.random() * H * .6, r: Math.random() * .9 + .2, p: Math.random() * 6.28 }));
+      embers = Array.from({ length: Math.max(5, Math.round(W / 120)) }, () => ember(true));
+    }
+  }
+  function frame(now){
+    const dt = Math.min((now - last) / 16.7, 3); last = now; const t = (now - t0) / 1000;
+    ctx.clearRect(0, 0, W, H);
+    for (const s of stars) { ctx.globalAlpha = .25 + .35 * (.5 + .5 * Math.sin(t * 1.3 + s.p)); ctx.fillStyle = "#eaf4ff"; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.283); ctx.fill(); }
+    for (const e of embers) {
+      e.y -= e.v * dt; e.x += Math.sin(t * 1.4 + e.w) * .3 * dt; e.life += .004 * dt;
+      if (e.y < H * .35 || e.life > 1) Object.assign(e, ember(false));
+      ctx.globalAlpha = Math.max(0, .75 * (1 - e.life)); ctx.fillStyle = "#ffa45c"; ctx.beginPath(); ctx.arc(e.x, e.y, e.r, 0, 6.283); ctx.fill();
+    }
+    for (const f of flakes) {
+      f.y += f.v * dt; f.x += Math.sin(t * f.s + f.w) * .35 * dt;
+      if (f.y > H + 6) Object.assign(f, flake(false));
+      if (f.x < -6) f.x = W + 6; else if (f.x > W + 6) f.x = -6;
+      ctx.globalAlpha = f.a; ctx.fillStyle = "#ffffff"; ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, 6.283); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    if (!still) requestAnimationFrame(frame);
+  }
+  size();
+  if (window.ResizeObserver) new ResizeObserver(size).observe(cv); else addEventListener("resize", size);
+  requestAnimationFrame(frame);
+})();
+</script>
+
+<script>
+(() => {
+  // ガイドだけを直接開いたとき（検索から来た人など）は、公開サイトでは選択画面つきのページへ移す
+  if (parent === window){
+    if (/github.io$/.test(location.hostname)) location.replace("../#" + (location.hash.slice(1) || "silver"));
+    return;
+  }
+  const hide = document.createElement("style"); hide.textContent = "#theme-btn,#theme{display:none!important}"; document.head.appendChild(hide);
+  const root = document.documentElement;
+  const setTheme = t => { if (t === "dark" || t === "light") root.dataset.theme = t; };
+  try { setTheme(new URLSearchParams(location.search).get("theme")); } catch (e) {}
+  addEventListener("message", e => {
+    if (e.source !== parent) return;
+    const m = e.data || {};
+    if (m.type === "theme") setTheme(m.v);
+    if (m.type === "q") {
+      const q = document.getElementById("q"); if (!q) return;
+      q.value = m.v; q.dispatchEvent(new Event("input"));
+      const bar = document.querySelector(".bar"); if (bar) setTimeout(() => bar.scrollIntoView({ block: "start" }), 160);
+    }
+  });
+  // 全画面のおまけ（船の素材計算）を開いている間は、親の上のバーを隠してもらう
+  const sc = document.getElementById("sc-host");
+  if (sc && window.MutationObserver) new MutationObserver(() => parent.postMessage({ type: "full", v: !sc.hidden }, "*")).observe(sc, { attributes: true, attributeFilter: ["hidden"] });
+  parent.postMessage({ type: "ready", id: "silver" }, "*");
+})();
+</script>
+</body>
+</html>
