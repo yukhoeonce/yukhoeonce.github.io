@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ワンスヒューマン ダメージラボ</title>
+<meta name="description" content="ワンスヒューマンの武器を選んでステータスを入れると、1発のダメージがわかる計算ツール（初心者／プロ切り替え）。非公式ファンツール。">
+<meta name="theme-color" content="#05070a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ダメージラボ">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:title" content="ワンスヒューマン ダメージラボ">
+<meta property="og:description" content="武器を選んでステータスを入れると1発のダメージがわかる計算ツール（非公式）">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yukhoeonce.github.io/damage/">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Chakra+Petch:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: 黒い計器盤。PCは1画面に収める（左=入力、中央=結果、右=武器情報とプロ用）。武器はポップアップで選ぶ。スマホは縦積み＋下に結果バー */
+:root{
+  --bg:#05070a; --bg-2:#0a0f13; --pnl:rgba(12,17,21,.78); --pnl-2:rgba(24,32,38,.72); --pnl-solid:#0d1317;
+  --line:rgba(130,175,195,.14); --line-2:rgba(110,210,235,.34);
+  --ink:#e8eff2; --ink-2:#aab8be; --muted:#6c7c84;
+  --atk:#ffb347; --atk-dim:rgba(255,179,71,.14); --atk-glow:rgba(255,179,71,.45);
+  --psi:#3fe3ff; --psi-dim:rgba(63,227,255,.12); --psi-glow:rgba(63,227,255,.45);
+  --ok:#52e3a0; --wait:#ffd34d; --wait-dim:rgba(255,211,77,.12); --down:#ff7a66;
+  --f-display:"Dela Gothic One","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-body:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-num:"Chakra Petch","IBM Plex Mono",ui-monospace,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.6;margin:0;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 84px}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--psi);outline-offset:2px}
+::selection{background:var(--psi);color:#001017}
+*{scrollbar-width:thin;scrollbar-color:rgba(120,170,190,.25) transparent}
+
+/* 背景: 光る床グリッド＋指に追従する光＋走査線 */
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;
+  background:radial-gradient(900px 500px at 12% -10%,rgba(63,227,255,.10),transparent 60%),
+             radial-gradient(700px 500px at 100% 110%,rgba(255,179,71,.07),transparent 60%),var(--bg)}
+.bg .spot{position:absolute;inset:0;background:radial-gradient(420px 420px at var(--mx,70%) var(--my,30%),rgba(63,227,255,.07),transparent 70%)}
+.bg .floor{position:absolute;left:-50%;right:-50%;bottom:-10%;height:62%;transform:perspective(520px) rotateX(64deg);transform-origin:50% 100%;
+  background:linear-gradient(rgba(63,227,255,.16) 1px,transparent 1px) 0 0/56px 56px,linear-gradient(90deg,rgba(63,227,255,.13) 1px,transparent 1px) 0 0/56px 56px;
+  -webkit-mask-image:linear-gradient(to top,#000 10%,transparent 85%);mask-image:linear-gradient(to top,#000 10%,transparent 85%)}
+.bg .scan{position:absolute;inset:0;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.018) 0 1px,transparent 1px 3px)}
+.bg .beam{position:absolute;left:0;right:0;height:140px;top:-140px;background:linear-gradient(to bottom,transparent,rgba(63,227,255,.05),transparent)}
+@media (prefers-reduced-motion:no-preference){
+  .bg .floor{animation:floor 2.8s linear infinite}
+  .bg .beam{animation:beam 9s linear infinite}
+}
+@keyframes floor{to{background-position:0 56px,0 0}}
+@keyframes beam{to{transform:translateY(calc(100vh + 280px))}}
+
+/* ヘッダー */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px;
+  background:linear-gradient(to bottom,var(--bg) 60%,rgba(5,7,10,0))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.logo{width:30px;height:30px;flex:0 0 auto}
+.brand b{display:block;font-family:var(--f-num);font-weight:700;font-size:15px;letter-spacing:.22em;line-height:1.1}
+.brand b em{font-style:normal;color:var(--psi)}
+.brand span{display:block;font-size:11px;color:var(--muted);letter-spacing:.08em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mode{position:relative;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line-2);border-radius:999px;padding:3px;background:rgba(10,15,19,.8);flex:0 0 auto}
+.mode .ind{position:absolute;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);border-radius:999px;background:linear-gradient(135deg,rgba(63,227,255,.28),rgba(63,227,255,.12));box-shadow:0 0 18px rgba(63,227,255,.35),inset 0 0 0 1px rgba(63,227,255,.6);transition:transform .45s cubic-bezier(.2,.9,.2,1.15),background .3s}
+body.pro .mode .ind{transform:translateX(100%);background:linear-gradient(135deg,rgba(255,179,71,.3),rgba(255,179,71,.12));box-shadow:0 0 18px rgba(255,179,71,.35),inset 0 0 0 1px rgba(255,179,71,.6)}
+.mode button{position:relative;border:0;background:transparent;border-radius:999px;padding:6px 16px;font-weight:700;font-size:13px;cursor:pointer;color:var(--ink-2);white-space:nowrap;transition:color .3s}
+.mode button[aria-pressed="true"]{color:var(--ink)}
+.mode small{display:block;font-family:var(--f-num);font-weight:500;font-size:9.5px;letter-spacing:.18em;opacity:.7;line-height:1.1}
+
+/* パネル（四隅に計器の角） */
+.pnl{position:relative;background:var(--pnl);border:1px solid var(--line);border-radius:4px;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.pnl::before,.pnl::after{content:"";position:absolute;width:12px;height:12px;pointer-events:none;border-color:var(--line-2);border-style:solid}
+.pnl::before{top:-1px;left:-1px;border-width:1px 0 0 1px}
+.pnl::after{bottom:-1px;right:-1px;border-width:0 1px 1px 0}
+.ttl{display:flex;align-items:center;gap:8px;font-family:var(--f-num);font-size:11px;font-weight:600;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin:0 0 10px}
+.ttl::before{content:"";width:6px;height:6px;background:var(--psi);box-shadow:0 0 8px var(--psi)}
+.ttl::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.ttl i{font-style:normal;font-family:var(--f-body);letter-spacing:.06em;text-transform:none;color:var(--ink-2);font-size:12px}
+
+/* 並び */
+.cols{display:flex;flex-direction:column;gap:12px}
+.main{display:flex;flex-direction:column;gap:12px;min-width:0}
+.main>*{flex-shrink:0}
+.col{min-width:0}
+.stage{order:-1}
+@media (max-width:899px){.main{display:contents}.side{order:1}}
+@media (min-width:900px){
+  .cols{display:grid;grid-template-columns:330px minmax(0,1fr);align-items:start}
+  .stage{order:0}
+}
+/* PCで十分な高さ: ページを動かさず、各列の中だけスクロール */
+@media (min-width:900px) and (min-height:600px){
+  body{height:100dvh;overflow:hidden;padding-block:0 14px;display:flex;flex-direction:column}
+  .cols{flex:1;min-height:0;align-items:stretch}
+  .cols>.col,.main{min-height:0;overflow:auto;overscroll-behavior:contain}
+  .main{padding-right:2px}
+}
+@media (min-width:1280px) and (min-height:600px){
+  .cols{grid-template-columns:330px minmax(0,1fr) 340px}
+  .main{display:contents}
+  .main>*{min-height:0;overflow:auto;overscroll-behavior:contain}
+  .stage{overflow:auto}
+}
+@media (min-width:1280px) and (max-height:599px){.cols{grid-template-columns:330px minmax(0,1fr) 340px}.main{display:contents}}
+
+/* 入力 */
+.form{padding:14px;display:flex;flex-direction:column;gap:14px}
+.grp{display:flex;flex-direction:column;gap:8px}
+.grp-t{font-size:11.5px;font-weight:700;color:var(--ink-2);letter-spacing:.06em;display:flex;align-items:center;gap:8px}
+.grp-t::after{content:"";flex:1;height:1px;background:var(--line)}
+.grp-t .tag{font-family:var(--f-num);font-size:9.5px;letter-spacing:.16em;color:var(--atk);border:1px solid rgba(255,179,71,.5);padding:0 5px;border-radius:2px}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.f{display:flex;flex-direction:column;gap:3px;min-width:0}
+.f label{font-size:11.5px;color:var(--ink-2);line-height:1.3}
+.f .in{position:relative;display:flex;align-items:center;border:1px solid var(--line);border-radius:3px;background:rgba(0,0,0,.35);padding:0 9px;transition:border-color .2s,box-shadow .2s}
+.f .in:focus-within{border-color:var(--psi);box-shadow:0 0 0 3px rgba(63,227,255,.12),0 0 16px rgba(63,227,255,.15)}
+.f input,.f select{border:0;background:transparent;outline:none;width:100%;min-width:0;padding:6px 0;font-family:var(--f-num);font-size:16px;font-weight:600;font-variant-numeric:tabular-nums}
+.f select{font-family:var(--f-body);font-size:13px;font-weight:500;padding:8px 0}
+.f select option{background:var(--pnl-solid)}
+.f .u{font-family:var(--f-num);color:var(--muted);font-size:12px;margin-left:4px}
+.f.atk .in{border-left:2px solid var(--atk)}
+.f.psi .in{border-left:2px solid var(--psi)}
+.f .hint{font-size:10.5px;color:var(--muted);line-height:1.35}
+.f.wide{grid-column:1/-1}
+input[type=number]{-moz-appearance:textfield}
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{border:1px solid var(--line-2);background:rgba(63,227,255,.06);border-radius:3px;padding:7px 12px;font-size:12.5px;font-weight:700;cursor:pointer;transition:background .2s,box-shadow .2s,border-color .2s}
+.btn:hover{background:rgba(63,227,255,.14);box-shadow:0 0 14px rgba(63,227,255,.2)}
+.btn.primary{background:var(--psi);color:#00141b;border-color:var(--psi)}
+.btn.primary:hover{box-shadow:0 0 20px var(--psi-glow)}
+select.btn{padding:6px 10px}
+select.btn option{background:var(--pnl-solid)}
+.small{font-size:11.5px;color:var(--muted)}
+
+/* 中央: 結果 */
+.stage{padding:16px 18px 18px;display:flex;flex-direction:column;gap:14px;overflow:hidden}
+.wpick{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;margin:-4px -6px 0;border:1px solid transparent;border-radius:4px;transition:border-color .25s,background .25s}
+.wpick:hover,.wpick:focus-visible{border-color:var(--line-2);background:rgba(63,227,255,.05)}
+.wpick:focus-visible{outline:2px solid var(--psi)}
+.wpick .eye{font-family:var(--f-num);font-size:11px;letter-spacing:.2em;color:var(--psi)}
+.wpick h2{font-family:var(--f-display);font-weight:400;font-size:clamp(20px,2.6vw,30px);line-height:1.2;margin:2px 0 0;letter-spacing:.02em;text-wrap:balance}
+.wpick .chg{flex:0 0 auto;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--ink-2);border:1px solid var(--line-2);border-radius:999px;padding:6px 12px;white-space:nowrap}
+.wpick .chg kbd{font-family:var(--f-num);font-size:10px;color:var(--muted);border:1px solid var(--line);border-radius:3px;padding:0 4px}
+@media (hover:none){.wpick .chg kbd{display:none}}
+.atabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
+.atab{flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-start;gap:0;border:1px solid var(--line);background:rgba(0,0,0,.3);border-radius:3px;padding:6px 12px;cursor:pointer;min-width:7.5em;text-align:left;transition:border-color .2s,background .2s,box-shadow .2s}
+.atab span{font-size:11.5px;color:var(--ink-2);white-space:nowrap}
+.atab b{font-family:var(--f-num);font-weight:600;font-size:15px;font-variant-numeric:tabular-nums}
+.atab.atk b{color:var(--atk)} .atab.psi b{color:var(--psi)} .atab.wait b{color:var(--wait)}
+.atab[aria-selected="true"]{border-color:var(--line-2);background:rgba(63,227,255,.08);box-shadow:inset 0 -2px 0 var(--psi)}
+.atab.atk[aria-selected="true"]{background:var(--atk-dim);box-shadow:inset 0 -2px 0 var(--atk);border-color:rgba(255,179,71,.4)}
+.atab.wait[aria-selected="true"]{background:var(--wait-dim);box-shadow:inset 0 -2px 0 var(--wait);border-color:rgba(255,211,77,.4)}
+.atab .w{font-family:var(--f-num);font-size:9px;letter-spacing:.14em;color:var(--wait)}
+
+.hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr);gap:12px;--c:var(--psi);--g:var(--psi-glow)}
+.hero.atk{--c:var(--atk);--g:var(--atk-glow)}
+.hero.wait{--c:var(--wait);--g:rgba(255,211,77,.35)}
+.hero-top{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chip{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:2px;white-space:nowrap;letter-spacing:.04em}
+.chip.ok{color:var(--ok);border:1px solid rgba(82,227,160,.5);background:rgba(82,227,160,.08)}
+.chip.ok::before{content:"● ";font-size:8px;vertical-align:2px}
+.chip.wait{color:var(--wait);border:1px dashed rgba(255,211,77,.6);background:var(--wait-dim)}
+.chip.base{color:var(--ink-2);border:1px solid var(--line)}
+.readout{position:relative;display:flex;align-items:center;gap:16px;min-height:150px;padding:10px 0}
+.reticle{position:absolute;right:-10px;top:50%;width:190px;height:190px;margin-top:-95px;opacity:.55;pointer-events:none;color:var(--c)}
+.reticle .r1{transform-origin:50% 50%}
+@media (prefers-reduced-motion:no-preference){.reticle .r1{animation:spin 24s linear infinite}.reticle .r2{animation:spin 40s linear infinite reverse;transform-origin:50% 50%}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.num{position:relative;min-width:0}
+.num .v{display:block;font-family:var(--f-num);font-weight:700;font-size:clamp(54px,7.4vw,100px);line-height:.95;font-variant-numeric:tabular-nums;letter-spacing:.01em;color:var(--c);text-shadow:0 0 28px var(--g),0 0 2px var(--c)}
+.num .l{display:block;margin-top:8px;font-size:12.5px;color:var(--ink-2)}
+.num .unit{font-family:var(--f-num);font-size:12px;letter-spacing:.3em;color:var(--muted);margin-left:4px;vertical-align:top}
+.cmp{display:inline-block;margin-top:8px;font-family:var(--f-num);font-size:13px;font-weight:600;padding:1px 8px;border-radius:2px;border:1px solid var(--line);color:var(--ink-2)}
+.cmp.up{color:var(--ok);border-color:rgba(82,227,160,.45)} .cmp.down{color:var(--down);border-color:rgba(255,122,102,.45)}
+.flash .v{animation:flash .5s ease-out}
+@keyframes flash{0%{filter:brightness(1.8)}100%{filter:none}}
+
+.bars{display:flex;flex-direction:column;gap:7px}
+.bar-r{display:grid;grid-template-columns:6.4em minmax(0,1fr) 5.4em;gap:10px;align-items:center}
+.bar-r .n{font-size:12px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-r .track{position:relative;height:8px;background:rgba(255,255,255,.05);border-radius:1px;overflow:hidden}
+.bar-r .track i{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,color-mix(in srgb,var(--c) 30%,transparent),var(--c));box-shadow:0 0 12px var(--g);transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.bar-r .track i::after{content:"";position:absolute;right:0;top:-2px;bottom:-2px;width:2px;background:#fff;box-shadow:0 0 8px #fff}
+.bar-r b{font-family:var(--f-num);font-weight:600;font-size:16px;text-align:right;font-variant-numeric:tabular-nums}
+.formula{font-family:var(--f-num);font-size:11.5px;line-height:1.7;color:var(--ink-2);background:rgba(0,0,0,.35);border:1px solid var(--line);border-left:2px solid var(--c);border-radius:2px;padding:8px 10px;margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.formula::before{content:"FORMULA  ";color:var(--muted);letter-spacing:.2em;font-size:10px}
+.note-wait{font-size:12px;color:var(--wait);margin:0}
+.hidden-note{font-size:12px;color:var(--ink-2);border:1px dashed var(--line-2);border-radius:3px;padding:8px 12px;margin:0}
+.hidden-note b{color:var(--atk)}
+
+/* 武器を変えたときの入場 */
+@media (prefers-reduced-motion:no-preference){
+  .swap .atabs,.swap .hero-top,.swap .readout,.swap .bars,.swap .formula{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
+  .swap .hero-top{animation-delay:.04s}.swap .readout{animation-delay:.08s}.swap .bars{animation-delay:.14s}.swap .formula{animation-delay:.2s}
+  .swap .stage-sweep{animation:sweep .8s ease-out}
+}
+@keyframes rise{from{opacity:0;transform:translateY(10px);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+.stage-sweep{position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,transparent 30%,rgba(63,227,255,.10) 50%,transparent 70%);transform:translateX(-100%)}
+@keyframes sweep{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+
+/* 右: 武器情報・プロ用 */
+.side{display:flex;flex-direction:column;gap:12px}
+.info{padding:14px}
+.specs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.spec{background:var(--pnl-solid);padding:7px 9px;min-width:0}
+.spec b{display:block;font-family:var(--f-num);font-size:17px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.2}
+.spec span{display:block;font-size:10.5px;color:var(--muted)}
+.point{margin:12px 0 0;font-size:12.5px;color:var(--ink-2);line-height:1.7}
+.point::before{content:"計算のポイント";display:block;font-size:10.5px;font-weight:700;letter-spacing:.1em;color:var(--psi);margin-bottom:2px}
+details.trait{margin-top:10px;font-size:12.5px;border-top:1px solid var(--line);padding-top:8px}
+details.trait summary{cursor:pointer;color:var(--ink-2);font-weight:700;font-size:12px;list-style:none;display:flex;align-items:center;gap:6px}
+details.trait summary::-webkit-details-marker{display:none}
+details.trait summary::before{content:"+";font-family:var(--f-num);color:var(--psi);width:1em;transition:transform .25s}
+details.trait[open] summary::before{transform:rotate(45deg)}
+details.trait p{margin:6px 0 0;color:var(--ink-2);line-height:1.7}
+.pp{padding:14px}
+.dps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.dps .spec b{color:var(--atk);font-size:18px}
+.gain{display:flex;flex-direction:column;gap:6px}
+.gain-r{display:grid;grid-template-columns:minmax(0,8em) 3.6em minmax(0,1fr) 4.4em;gap:8px;align-items:center;font-size:12px}
+.gain-r .bar{height:6px;background:var(--psi);box-shadow:0 0 10px var(--psi-glow);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.gain-r.atkb .bar{background:var(--atk);box-shadow:0 0 10px var(--atk-glow)}
+.gain-r .nm{font-family:var(--f-num);font-variant-numeric:tabular-nums;text-align:right;font-weight:600}
+.gain-r .lbl{min-width:0;overflow-wrap:anywhere;color:var(--ink-2)}
+.gain-r:first-child .lbl{color:var(--ink);font-weight:700}
+.fine{color:var(--muted);font-size:11px;line-height:1.7;padding:0 4px}
+.fine p{margin:0 0 6px}
+.fine a{color:var(--ink-2)}
+
+.pro-only{display:none!important}
+body.pro .pro-only{display:revert!important}
+body.pro .grp.pro-only,body.pro .side>.pro-only{display:flex!important}
+body.pro .fields.pro-only{display:grid!important}
+body.pro .side>.pnl.pro-only{display:block!important}
+@media (prefers-reduced-motion:no-preference){body.pro .pro-only{animation:rise .45s cubic-bezier(.2,.8,.2,1) both}}
+
+/* 武器選択ポップアップ */
+.picker{position:fixed;inset:0;z-index:50;display:flex;justify-content:center;align-items:flex-start;
+  padding:max(24px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+  background:rgba(2,4,6,.6);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;transition:opacity .25s}
+.picker.open{opacity:1}
+.pbox{width:min(980px,100%);max-height:100%;display:flex;flex-direction:column;gap:10px;padding:14px;background:rgba(9,13,16,.94);
+  clip-path:inset(0 0 100% 0);transition:clip-path .45s cubic-bezier(.2,.8,.2,1)}
+.picker.open .pbox{clip-path:inset(0 0 0 0)}
+.pbox>*{flex-shrink:0}
+.phead{display:flex;gap:10px;align-items:center}
+.search{flex:1;display:flex;align-items:center;gap:8px;border:1px solid var(--line-2);border-radius:3px;padding:0 12px;background:rgba(0,0,0,.4);min-width:0}
+.search:focus-within{border-color:var(--psi);box-shadow:0 0 16px rgba(63,227,255,.18)}
+.search svg{flex:0 0 auto;color:var(--psi)}
+.search input{border:0;background:transparent;outline:none;min-width:0;width:100%;padding:10px 0;font-size:16px}
+.x{border:1px solid var(--line);background:transparent;border-radius:3px;width:40px;height:40px;cursor:pointer;font-size:18px;color:var(--ink-2);flex:0 0 auto}
+.x:hover{border-color:var(--line-2);color:var(--ink)}
+.cats{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
+.cats button{flex:0 0 auto;border:1px solid var(--line);background:transparent;border-radius:2px;padding:5px 11px;font-size:12.5px;font-weight:700;cursor:pointer;color:var(--ink-2);transition:all .2s}
+.cats button:hover{border-color:var(--line-2);color:var(--ink)}
+.cats button[aria-pressed="true"]{border-color:var(--psi);color:#00141b;background:var(--psi);box-shadow:0 0 14px var(--psi-glow)}
+.cats .n{font-family:var(--f-num);font-weight:600;opacity:.65;margin-left:5px;font-size:11px}
+.wlist{flex:1 1 auto!important;overflow-y:auto;overscroll-behavior:contain;min-height:0;display:flex;flex-direction:column;gap:12px;padding-right:4px}
+.effs{gap:5px;flex-wrap:wrap}
+.effs .lbl{flex:0 0 auto;align-self:center;font-family:var(--f-num);font-size:10px;letter-spacing:.2em;color:var(--muted);margin-right:4px}
+.effs button{padding:3px 10px;font-size:11.5px;border-radius:999px}
+.effs button.atk{color:var(--atk)} .effs button.psi{color:var(--psi)}
+.effs button.atk[aria-pressed="true"]{background:var(--atk);border-color:var(--atk);color:#1a0f00;box-shadow:0 0 14px var(--atk-glow)}
+.mrow{display:grid;grid-template-columns:8.5em minmax(0,1fr);gap:10px;align-items:start;padding:7px 0;border-top:1px solid var(--line)}
+.mrow:first-of-type{border-top:0}
+.mrow .mn{font-family:var(--f-num);font-weight:700;font-size:14px;letter-spacing:.04em;padding-top:6px;color:var(--ink);overflow-wrap:anywhere}
+.vars{display:flex;flex-wrap:wrap;gap:6px}
+.vars button,.recent button{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:rgba(255,255,255,.02);border-radius:3px;padding:6px 10px;cursor:pointer;font-size:13px;line-height:1.3;max-width:100%;transition:border-color .2s,background .2s,transform .2s}
+.vars button:hover,.recent button:hover{border-color:var(--line-2);background:rgba(63,227,255,.06);transform:translateY(-1px)}
+.vars button[aria-pressed="true"],.recent button[aria-pressed="true"]{border-color:var(--psi);background:rgba(63,227,255,.12);box-shadow:0 0 0 1px var(--psi),0 0 14px rgba(63,227,255,.2)}
+.vars .nm,.recent .nm{overflow-wrap:anywhere;text-align:left}
+.vars .plain .nm{color:var(--ink-2)}
+.recent{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.recent .lbl{font-family:var(--f-num);font-size:10px;letter-spacing:.2em;color:var(--muted);margin-right:4px}
+@media (max-width:520px){.mrow{grid-template-columns:minmax(0,1fr);gap:4px}.mrow .mn{padding-top:0;font-size:13px;color:var(--psi)}}
+@media (prefers-reduced-motion:no-preference){.picker.open .vars button,.picker.open .recent button{animation:rise .4s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0) * 10ms + 100ms)}}
+.wsec h5{margin:0 0 6px;font-family:var(--f-num);font-size:11px;letter-spacing:.2em;color:var(--muted);font-weight:600}
+.wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px}
+.wgrid button{display:flex;align-items:center;gap:8px;text-align:left;border:1px solid var(--line);background:rgba(255,255,255,.02);border-radius:3px;padding:8px 10px;cursor:pointer;font-size:13px;line-height:1.35;min-width:0;transition:border-color .2s,background .2s,transform .2s}
+.wgrid button:hover{border-color:var(--line-2);background:rgba(63,227,255,.06);transform:translateX(2px)}
+.wgrid button[aria-pressed="true"]{border-color:var(--psi);background:rgba(63,227,255,.1);box-shadow:inset 2px 0 0 var(--psi)}
+.kw{flex:0 0 auto;font-size:10px;font-weight:700;padding:1px 6px;border-radius:2px;border:1px solid currentColor;letter-spacing:.04em}
+.kw.atk{color:var(--atk)} .kw.psi{color:var(--psi)} .kw.gun{color:var(--muted)}
+.wgrid .nm{min-width:0;overflow-wrap:anywhere}
+.empty{color:var(--muted);font-size:13px;padding:8px 2px;margin:0}
+@media (prefers-reduced-motion:no-preference){.picker.open .wgrid button{animation:rise .4s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0) * 14ms + 120ms)}}
+
+/* スマホ: 下の結果バー */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:25;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+  background:rgba(6,9,12,.92);border-top:1px solid var(--line-2);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  transform:translateY(110%);transition:transform .35s cubic-bezier(.2,.8,.2,1);cursor:pointer}
+.dock.show{transform:none}
+.dock span{font-size:12px;color:var(--ink-2);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dock b{font-family:var(--f-num);font-size:26px;font-weight:700;color:var(--psi);text-shadow:0 0 16px var(--psi-glow);font-variant-numeric:tabular-nums}
+.dock.atk b{color:var(--atk);text-shadow:0 0 16px var(--atk-glow)}
+.dock.wait b{color:var(--wait)}
+@media (min-width:900px){.dock{display:none}}
+@media (max-width:520px){
+  .readout{min-height:110px}
+  .reticle{width:130px;height:130px;margin-top:-65px;right:-20px}
+  .specs,.dps{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .bar-r{grid-template-columns:5.2em minmax(0,1fr) 4.8em}
+  .brand span{display:none}
+  .wpick{position:relative}
+  .wpick .eye{padding-right:84px}
+  .wpick .chg{position:absolute;top:8px;right:8px;padding:3px 10px;font-size:11px}
+}
+</style>
+</head>
+<body>
+
+
+<div class="bg" aria-hidden="true"><div class="spot"></div><div class="floor"></div><div class="beam"></div><div class="scan"></div></div>
+
+<header class="top">
+  <div class="brand">
+    <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="none" stroke="var(--psi)" stroke-width="1.5" stroke-dasharray="3 3"/><circle cx="16" cy="16" r="7" fill="none" stroke="var(--atk)" stroke-width="1.5"/><path d="M16 1v8M16 23v8M1 16h8M23 16h8" stroke="var(--psi)" stroke-width="1.5"/><circle cx="16" cy="16" r="1.6" fill="var(--ink)"/></svg>
+    <div><b>DAMAGE<em>LAB</em></b><span>ワンスヒューマン ダメージ計算 · 非公式</span></div>
+  </div>
+  <div class="mode" role="group" aria-label="表示モード">
+    <span class="ind" aria-hidden="true"></span>
+    <button type="button" id="mBeg" aria-pressed="true">初心者<small>BASIC</small></button>
+    <button type="button" id="mPro" aria-pressed="false">プロ<small>PRO</small></button>
+  </div>
+</header>
+
+<div class="cols">
+  <div class="col">
+    <form class="pnl form" id="form" autocomplete="off">
+      <div class="ttl">Input <i>ステータス画面（C）の数字</i></div>
+      <div class="grp">
+        <div class="fields">
+          <div class="f atk" data-need="atk"><label for="atk">攻撃力</label><div class="in"><input id="atk" type="number" step="any" inputmode="decimal"></div></div>
+          <div class="f psi" data-need="psi"><label for="psi">超感覚強度</label><div class="in"><input id="psi" type="number" step="any" inputmode="decimal" value="370"></div></div>
+          <div class="f" data-need="gun"><label for="gunDmg">銃器DMG増加</label><div class="in"><input id="gunDmg" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div></div>
+          <div class="f" data-need="any"><label for="target">対象DMG</label><div class="in"><input id="target" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div></div>
+          <div class="f" data-need="crit"><label for="critRate">クリティカル確率</label><div class="in"><input id="critRate" type="number" step="any" inputmode="decimal"><span class="u">%</span></div></div>
+          <div class="f" data-need="crit"><label for="critDmg">クリティカルDMG</label><div class="in"><input id="critDmg" type="number" step="any" inputmode="decimal"><span class="u">%</span></div></div>
+          <div class="f" data-need="ws"><label for="wsDmg">弱点DMG</label><div class="in"><input id="wsDmg" type="number" step="any" inputmode="decimal"><span class="u">%</span></div></div>
+          <div class="f" data-need="status"><label for="status">状態異常DMG増加</label><div class="in"><input id="status" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div></div>
+          <div class="f" data-need="elem"><label for="elem" id="elemLbl">エレメントDMG増加</label><div class="in"><input id="elem" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div></div>
+        </div>
+        <span class="small">対象DMGは、対通常モンスター・対ボスなど狙う敵に当てはまる分の合計です。</span>
+      </div>
+      <div class="grp" id="kwGroup">
+        <div class="grp-t">キーワードDMG（画面の値）</div>
+        <div class="fields" id="kwFields"></div>
+      </div>
+      <div class="grp pro-only">
+        <div class="grp-t"><span class="tag">PRO</span>キーワードの追加倍率</div>
+        <div class="fields pro-only">
+          <div class="f"><label for="kwFinal">KW最終DMG・係数</label><div class="in"><input id="kwFinal" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div><span class="hint">画面に出ない別枠（ガスマスク等）</span></div>
+          <div class="f"><label for="wsRate">弱点に当たる割合</label><div class="in"><input id="wsRate" type="number" step="any" inputmode="decimal" value="30"><span class="u">%</span></div><span class="hint">期待値の計算用</span></div>
+          <div class="f"><label for="kwWs">KW弱点DMG</label><div class="in"><input id="kwWs" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div><span class="hint">バウンス弱点DMG（MOD）等</span></div>
+          <div class="f"><label for="kwCrit">KWクリDMG</label><div class="in"><input id="kwCrit" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div><span class="hint">バウンスクリDMG（MOD）等</span></div>
+          <div class="f"><label for="stacks">火傷スタック数</label><div class="in"><input id="stacks" type="number" step="1" min="1" inputmode="numeric" value="5"></div><span class="hint">武器で決まるものは自動</span></div>
+          <div class="f"><label for="hits">バウンス等の発数</label><div class="in"><input id="hits" type="number" step="1" min="1" inputmode="numeric" value="1"></div><span class="hint">武器で決まっていないとき</span></div>
+        </div>
+      </div>
+      <div class="grp pro-only">
+        <div class="grp-t"><span class="tag">PRO</span>全体に掛かる倍率（別の掛け算）</div>
+        <div class="fields pro-only">
+          <div class="f"><label for="mark">ハンティングマーク</label><div class="in"><select id="mark"><option value="0">なし</option><option value="8">+8%（基本）</option><option value="16">+16%（増幅）</option><option value="32">+32%（2人分）</option></select></div></div>
+          <div class="f"><label for="affin">武器と敵の相性（実弾）</label><div class="in"><select id="affin"><option value="0">なし</option><option value="25">インパクト×通常 +25%</option><option value="-10">スポットオン×ダミー −10%</option></select></div></div>
+          <div class="f"><label for="finalDmg">最終DMG（ククリ等）</label><div class="in"><input id="finalDmg" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div></div>
+          <div class="f"><label for="part">部位倍率</label><div class="in"><input id="part" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div></div>
+          <div class="f"><label for="devGun">デビ 銃器DMG</label><div class="in"><input id="devGun" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div></div>
+          <div class="f"><label for="devWs">デビ 弱点DMG</label><div class="in"><input id="devWs" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div></div>
+          <div class="f"><label for="devKw">デビ キーワード</label><div class="in"><input id="devKw" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div></div>
+          <div class="f"><label for="quest">クエスト・異変</label><div class="in"><input id="quest" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div></div>
+        </div>
+      </div>
+      <div class="row">
+        <button type="button" class="btn" id="fillBp">参考値を入れ直す</button>
+        <span class="small">武器を選ぶと参考値が入ります。星で変わるので、ステータス画面の数字に直してください。</span>
+      </div>
+    </form>
+  </div>
+
+  <div class="main">
+    <section class="pnl stage" id="stage" aria-live="polite">
+      <div class="stage-sweep" aria-hidden="true"></div>
+      <button type="button" class="wpick" id="pick" aria-haspopup="dialog">
+        <div style="min-width:0"><div class="eye" id="pType"></div><h2 id="pName"></h2></div>
+        <span class="chg">武器を変える <kbd>/</kbd></span>
+      </button>
+      <div class="atabs" id="atabs" role="tablist" aria-label="攻撃の種類"></div>
+      <div class="hero" id="hero"></div>
+      <div id="hiddenNote"></div>
+    </section>
+
+    <aside class="col side">
+      <section class="pnl info">
+        <div class="ttl">Blueprint <i>設計図の参考値</i></div>
+        <div class="specs" id="pSpecs"></div>
+        <p class="small" style="margin:8px 0 0">スクショを撮ったときの星の値です。攻撃力などは星やレベルで変わるので、計算には自分のステータス画面の数字を使ってください。</p>
+        <p class="point" id="pNote"></p>
+        <details class="trait"><summary>ゲーム内の武器特性を読む</summary><p id="pTrait"></p></details>
+      </section>
+      <section class="pnl pp pro-only">
+        <div class="ttl">Compare <i>比べる</i></div>
+        <div class="row"><button type="button" class="btn primary" id="saveA">今の結果をAとして保存</button><button type="button" class="btn" id="clearA" hidden>Aを消す</button></div>
+        <p class="small" id="aInfo" style="margin:8px 0 0"></p>
+      </section>
+      <section class="pnl pp pro-only">
+        <div class="ttl">DPS <i>実弾の目安</i></div>
+        <div class="dps" id="dps"></div>
+        <p class="small" style="margin:8px 0 0">期待値 × 射撃速度 ÷ 60。リロード・命中率は含みません。</p>
+      </section>
+      <section class="pnl pp pro-only">
+        <div class="ttl">Upgrade <i>どれを伸ばすと一番増える？</i></div>
+        <div class="row" style="margin-bottom:10px"><label class="small" for="gainAtk">対象</label><select id="gainAtk" class="btn"></select></div>
+        <div class="gain" id="gain"></div>
+        <p class="small" style="margin:8px 0 0">各ステータスを少し足したとき、期待値が何%増えるか。</p>
+      </section>
+      <div class="fine">
+        <p>ゲーム内のダミーで、実弾・クリ・弱点、スプレッドガン、バウンス、パワーサージ、フロストボルテックス、火傷（最大スタックまで）を測り、式と一致しました。表示は四捨五入です。<b>確認待ち</b>の攻撃（不安定爆弾・特殊弾・武器固有の範囲ダメージなど）はまだ確かめていない予想の式で、初心者モードでは表示しません。近接武器は未検証のため載せていません。</p>
+        <p>式の出典: 木の葉さんの <a href="https://leaf-human.memo.wiki/" target="_blank" rel="noopener">oncehuman まとめwiki</a>、LoiLiAさん・今川かいりさんの解説動画、ゲーム内での実測。非公式のファンツールです。© NetEase / Starry Studio</p>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div class="dock" id="dock" role="button" tabindex="0" aria-label="結果を見る"><span id="dockL"></span><b id="dockV"></b></div>
+
+<div class="picker" id="picker" hidden role="dialog" aria-modal="true" aria-label="武器を選ぶ">
+  <div class="pnl pbox" id="pbox">
+    <div class="phead">
+      <label class="search"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M11 11l4 4" stroke="currentColor" stroke-width="1.6"/></svg><input id="q" type="search" placeholder="武器名で探す（例: シロガシラ）" aria-label="武器名で検索"></label>
+      <button type="button" class="x" id="pickClose" aria-label="閉じる">✕</button>
+    </div>
+    <div class="cats" id="cats"></div>
+    <div class="cats effs" id="effs" aria-label="効果で絞る"></div>
+    <div class="wlist" id="wlist"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const KINDS={
+    gun:{name:'実弾',base:'atk'}, aoe:{name:'銃器の範囲ダメージ',base:'atk'},
+    spread:{name:'スプレッドガン',base:'atk',coef:60,kw:'スプレッドガンDMG'}, bounce:{name:'バウンス',base:'atk',coef:40,kw:'バウンスDMG'},
+    special:{name:'特殊弾',base:'atk'}, burn:{name:'火傷',base:'psi',kw:'火傷DMG',el:'ブレイズ'},
+    frost:{name:'フロストボルテックス',base:'psi',coef:50,kw:'フロストボルテックスDMG',el:'フロスト'},
+    surge:{name:'パワーサージ',base:'psi',coef:50,kw:'パワーサージDMG',el:'ショック'},
+    bomber:{name:'不安定爆弾',base:'psi',coef:120,kw:'不安定爆弾DMG',el:'バースト'},
+    weapon:{name:'武器固有エレメント',base:'psi'}
+  };
+  const VERIFIED=new Set(['gun','spread','bounce','surge','frost','burn']);
+  const G=(k,o)=>Object.assign({k},o||{});
+  const DE=[6,60,25],RV=[4,65,25],GL=[8,55,28],DB=[10,25,30],DP=[8,20,28],AA=[8,15,27],MP7=[8,50,30],MP5=[8,55,30],VEC=[10,45,30],P90=[8,30,45],TEC=[10,45,30],AKM=[6,55,30],SCAR=[6,60,27],M4=[6,60,27],AUG=[10,60,25],MG4=[8,35,30],RPD=[10,40,30],QBJ=[5,55,30],M700=[2,90,24],AWM=[2,95,26],M82=[2,80,30],SKS=[5,50,40],MK14=[5,50,40],BOW=[2,70,28];
+  const WEAPONS=[
+    {id:'greatwhite',type:'ハンドガン',name:'デザートイーグル - ホホジロザメ',b:DE,s:[939, 190, 9],t:'3回命中で不安定爆弾。クリ命中は2回命中扱い。クリ命中時30%で不安定爆弾。不安定爆弾のクリ能力を解放、爆弾のクリ率+35%（キャラのクリ率に加算）。',note:'3回命中（クリは2回分）で不安定爆弾。実弾クリ時30%で追加発動。不安定爆弾がクリ可能（クリ率+35%）。',a:[G('gun'),G('bomber',{elemCrit:1,critAdd:35})]},
+    {id:'blueflame',type:'ハンドガン',name:'デザートイーグル - ブルーフレイム',b:DE,s:[826, 190, 8],t:'命中時60%でハンティングマーク。マーク状態の対象に命中すると80%でマークが15m内の別の敵1名に拡散、対象がいなければ銃器DMG+25%（10秒）。マーク状態の敵の弱点に命中で攻撃力+3%（10秒、最大3）。',note:'60%でハンティングマーク。マーク中の敵の弱点で攻撃力+3%（最大3）。',a:[G('gun')]},
+    {id:'de',type:'ハンドガン',name:'デザートイーグル（特性なし）',b:DE,s:[599,190,7],t:'特性なし。',note:'実弾だけの武器。',a:[G('gun')]},
+    {id:'farewell',type:'ハンドガン',name:'リボルバー - 別れのお礼',b:RV,s:[1093, 145, 5],t:'命中時45%でラピッドガン（弱点命中なら100%）、弱点DMG+40%。発動で予備弾から1発補充。射撃は50%で追加1発消費し、その命中時の攻撃力+100%。外れたら次のリロードで+1発（最大5）。',note:'45%（弱点100%）でラピッドガン。50%で弾を2発消費し、その1発は攻撃力+100%（攻撃力欄を2倍にして計算）。',a:[G('gun')]},
+    {id:'hammerhead',type:'ハンドガン',name:'リボルバー - ハンマーヘッド',b:RV,s:[894, 145, 5],t:'命中時40%（弱点90%）でパワーサージ。パワーサージ状態の敵に命中すると、周囲のパワーサージ状態の敵全員に超感覚強度80%のショックDMG（メイン対象150%、プレイヤー100%）。ショックDMG4回ごとに1発自動装填。',note:'弱点90%・他40%でパワーサージ。パワーサージ異常の敵に当てると連鎖ショック（メイン150%・周囲80%、パワーサージDMGは乗らない）。',a:[G('gun'),G('surge'),G('weapon',{coef:150,label:'連鎖ショック（メイン対象）'})]},
+    {id:'hunter500',type:'ハンドガン',name:'リボルバー - ハンター500',b:RV,s:[796,145,5],t:'命中時30%でラピッドガン。発動で銃器DMG+30%（3秒）。',note:'ラピッドガン中は銃器DMG+30%（銃器DMG欄に足す）。',a:[G('gun')]},
+    {id:'hazard',type:'ハンドガン',name:'グロック - 危険物',b:GL,s:[438, 410, 13],t:'命中時20%で不安定爆弾が発動し、リロードが武器投げに。全弾消費で半径3mに不安定爆弾DMG（超感覚強度50%＋消費弾×18%、最大480%、超越者28%）。投げた後75%で消費弾の75%、25%で25%を回復。不安定爆弾DMGを与えると係数と範囲+10%（10秒、最大5）。',note:'命中時20%で不安定爆弾。投擲リロードは超感覚強度×(50%+消費弾×18%、上限480%)で、不安定爆弾DMG・係数は乗るが単独爆破などのMODは乗らない。下の投擲は13発消費の例。',a:[G('gun'),G('bomber'),G('bomber',{coef:284,label:'投擲リロード（13発）'})]},
+    {id:'gravel',type:'ハンドガン',name:'グロック - 砂利',b:GL,s:[313, 410, 13],t:'命中時30%（弱点65%）でスプレッドガン。発動時に命中部位を除外しない。弱点DMG+15%。',note:'弱点65%・他30%でスプレッドガン。同じ部位に飛ぶことがある。弱点DMG+15%。',a:[G('gun'),G('spread')]},
+    {id:'doom',type:'ショットガン',name:'猟銃 - 悪運宣告',b:DB,s:[434, 180, 2],t:'命中時30%（8m以内80%）でハンティングマーク。全弾がマーク状態の非超越者に命中で攻撃力+12%・リロード効率+8%（15秒、最大3）。マーク付与後DMG無効+5%（8秒、最大4）。マーク状態の対象にクリ率+30%。',note:'攻撃力は1ペレット分（×6発）。8m以内80%でマーク。マーク中の敵に全弾命中で攻撃力+12%（最大3）、クリ率+30%。',a:[G('gun')]},
+    {id:'doublefury',type:'ショットガン',name:'猟銃 - ダブルフューリー',b:DB,s:[325, 180, 2],t:'マガジン最後の弾が命中で火傷1スタック、全弾命中なら追加1スタック。全弾命中4回で自身が特殊火傷（HPが減る、攻撃力+20%・被DMG+10%、8秒）。火傷の敵に全弾命中で50%で1発装填。',note:'攻撃力は1ペレット分（×6発）。最後の弾で火傷。全弾命中4回で攻撃力+20%。',a:[G('gun'),G('burn')]},
+    {id:'veteran',type:'ショットガン',name:'猟銃 - ベテランハンター',b:DB,s:[289,180,2],t:'命中時35%でハンティングマーク。マーク対象へのダメージバフ+20%。',note:'攻撃力は1ペレット分（×6発）。マーク対象へのダメージ+20%（マーク欄で調整）。',a:[G('gun')]},{id:'huntgun',type:'ショットガン',name:'猟銃（特性なし）',b:DB,s:[289,180,2],t:'特性なし。',note:'攻撃力は1ペレット分（×6発）。',a:[G('gun')]},
+    {id:'desert',type:'ショットガン',name:'M870 - 砂漠化',b:null,s:[280, 80, 8],t:'武器切り替え後にウェポンバースト（CD20秒）。ウェポンバースト状態では銃器DMG+10%。',note:'攻撃力は1ペレット分（×6発）。武器切り替え後にウェポンバースト、中は銃器DMG+10%。サブ武器向け。',a:[G('gun')]},
+    {id:'goldrain',type:'ショットガン',name:'DP12 - 札束の暴力',b:DP,s:[322, 105, 12],t:'リロードか武器切替後、最初の命中でウェポンバースト（CD10秒）。ボルトアクション1回ごとに次回リロードで1発即装填（最大10、武器切替で解除）。連続で1発装填するごとに最終DMG+8%（最大10）。ウェポンバースト中クリ率+30%・DMG無効+30%。',note:'攻撃力は1ペレット分（×5発）。1発ずつ装填するごとに最終DMG+8%（最大80%、最終DMG欄に入れる）。ウェポンバースト中クリ率+30%。',a:[G('gun')]},
+    {id:'backfire',type:'ショットガン',name:'DP12 - バックファイア',b:DP,s:[289, 105, 12],t:'5回命中でフロストボルテックス。ボルテックス内の対象に1回命中で3秒フローズン（単一対象CD4秒）。フローズン状態の対象にDMG+60%。',note:'5回命中でフロストボルテックス。ボルテックス内の敵をフローズンにし、フローズンの敵へのダメージ+60%。',a:[G('gun'),G('frost')]},
+    {id:'corrosion',type:'ショットガン',name:'AA12 - 腐蝕',b:AA,s:[210, 180, 18],t:'命中時80%でパワーサージ（非超越者にはパワーサージの状態異常を付与しない）。パワーサージのクリ能力を解放、クリ率+25%（キャラのクリ率に加算）。非超越者にパワーサージ発動後、パワーサージのクリDMG+40%（6秒、最大5層）。サージダメージ係数+15%。',note:'80%でパワーサージ（係数+15%で57.5%）。パワーサージがクリ可能（クリ率+25%）。発動後クリDMG+40%（最大5層、クリDMG欄に足す）。',a:[G('gun'),G('surge',{coef:57.5,elemCrit:1,critAdd:25})]},
+    {id:'annihilation',type:'ショットガン',name:'AA12 - 殲滅のトリガー',b:AA,s:[210, 180, 18],t:'命中時27%で火傷。命中時20%で異常粒子（拾うと60秒チャージ）。リロード時に全チャージ消費しドラゴンブレス弾に：攻撃力95%のブレイズ状態異常DMG（火傷DMGバフが乗る）。ブレイズDMG+20%、チャージ消費で1スタックごとにさらに+8%（最大4、次のリロードまで）。',note:'27%で火傷。異常粒子を拾ってリロードするとドラゴンブレス弾（攻撃力95%×状態異常×ブレイズ×火傷DMG×(弱点+クリ)）。ブレイズDMG+20%。',a:[G('gun'),G('burn'),G('special',{coef:95,label:'ドラゴンブレス弾',kwOf:'burn'})]},
+    {id:'yomi',type:'ショットガン',name:'AA12 - 黄泉',b:AA,s:[188, 180, 18],t:'全弾命中時50%でラピッドガン。2回発動後、次の1撃が強化（弾を1発追加消費、弾丸5発追加）。空撃ちリロード後、最初の12発の攻撃力+20%。',note:'全弾命中で50%ラピッドガン。空のマガジンリロードで最初の12発の攻撃力+20%。',a:[G('gun')]},
+    {id:'outerspace',type:'サブマシンガン',name:'MP7 - アウタースペース',b:MP7,s:[192, 850, 35],t:'命中時30%でパワーサージ。パワーサージ状態の敵に12回命中で天雷（超感覚強度500%のショックDMG、超越者40%）。リロード後パワーサージ付与率+40%（6秒）。ショックDMG+30%。',note:'30%でパワーサージ。パワーサージ異常の敵に12回命中で天雷（超感覚強度500%、パワーサージDMGは乗らない。実測で確認）。ショックDMG+30%。',a:[G('gun'),G('surge'),G('weapon',{coef:500,label:'天雷',ok:1})]},
+    {id:'evo',type:'サブマシンガン',name:'MP7 - ブレイクエボリューション',b:MP7,s:[208, 850, 35],t:'命中時30%でスプレッドガン。撃破すると4秒間必ず発動。弱点命中でスプレッドガンの命中部位数+1（6秒）。',note:'30%でスプレッドガン（実測で式どおり）。ダミーでは1部位だけ。弱点命中で部位+1。',a:[G('gun'),G('spread')]},
+    {id:'mp7',type:'サブマシンガン',name:'MP7（特性なし）',b:MP7,s:[152,850,35],t:'特性なし。',note:'実弾だけの武器。',a:[G('gun')]},
+    {id:'bear',type:'サブマシンガン',name:'MP5 - クマ出没!',b:MP5,s:[216, 750, 30],t:'命中時25%でバウンス。バウンスが命中すると1回跳ね返り、発動した対象に100%のバウンスDMG。リロード完了後、バウンス発動時に1回追加（6秒、武器切替で解除）。バウンスDMG係数+75%、1回のバウンス対象+3。',note:'25%でバウンス（最大3体、2回目は元の対象に戻る）。バウンスDMG係数+75%。リロード後6秒バウンス回数+1。',a:[G('gun'),G('bounce',{kwFinalAdd:75})]},
+    {id:'rage',type:'サブマシンガン',name:'MP5 - 憤怒の起源',b:MP5,s:[216, 750, 30],t:'命中時35%でガンスリンガー。残弾1のとき最大HP1%を消費して予備弾から射撃（致死なし）。命中時0.1%×ガンスリンガーのスタック数の失ったHPを回復。HPが1%変化するごとに銃器DMG+1%（5秒、各スタック個別、最大80）。',note:'35%でラピッドガン。HPが増減するたび銃器DMG+1%（最大80）。',a:[G('gun')]},
+    {id:'bluetiger',type:'サブマシンガン',name:'MP5 - ブルータイガー',b:MP5,s:[184,750,30],t:'命中時25%でバウンス。バウンスDMG+60%。',note:'25%でバウンス。バウンスDMG+60%（バウンスDMG欄に足す）。',a:[G('gun'),G('bounce')]},
+    {id:'lws',type:'サブマシンガン',name:'ベクター - リトルホワイトシャーク',b:VEC,s:[167, 1000, 30],t:'命中で不安定爆弾（CD0.9秒、超越者40%）。爆弾の遅延+0.2秒。不安定爆弾を付与された敵に命中するたびに、その爆弾の最終DMG+20%。遅延が0.1秒増えるごとにDMG係数+15%。',note:'命中で不安定爆弾（CD0.9秒）。遅延+0.2秒で係数+30%（ここでは+30%で計算）。爆弾待ち中の命中ごとに最終DMG+20%（最終DMG欄で足す）。',a:[G('gun'),G('bomber',{kwFinalAdd:30})]},
+    {id:'icyrain',type:'サブマシンガン',name:'ベクター - アイシーレイン',b:VEC,s:[149, 1000, 30],t:'クリ命中時30%でフロストボルテックス。生成時に弾丸を20%自動リロード。フロストボルテックスのDMG係数+30。',note:'クリ時30%でフロストボルテックス。係数+30%。発動でマガジン20%リロード。',a:[G('gun'),G('frost',{kwFinalAdd:30})]},
+    {id:'p90',type:'サブマシンガン',name:'P-90 - シンクロホログラフ',b:P90,s:[171, 900, 50],t:'命中時20%でハンティングマーク。11回命中でAOE（半径10m、攻撃力800%の銃器DMG、超越者30%）。マーク対象にAOEが命中で弾薬3%装填（1回最大15%）。マーク状態の対象にクリ率+20%。',note:'20%でハンティングマーク。11回命中ごとに半径10mへ攻撃力800%の銃器ダメージ。マーク対象へのクリ率+20%。',a:[G('gun'),G('aoe',{coef:800,label:'AOE（11回命中ごと）'})]},
+    {id:'tec9',type:'サブマシンガン',name:'TEC9 - 追加ルール',b:TEC,s:[449, 450, 30],t:'命中でウェポンバースト（間隔10秒）。デビエーションスキル使用後、弾丸が攻撃力120%のエレメント状態異常DMG（エレメントはデビエーション依存）。空マガジンでリロードすると25%分の異常エネルギー回復（最大20Pt）。ウェポンバースト中クリ率+15%。',note:'デビエーションスキル後に属性弾（攻撃力120%×状態異常×エレメント×キーワード×(弱点+クリ)）。キーワード最終DMG・係数は乗らない。ウェポンバースト中クリ率+15%。',a:[G('gun'),G('special',{coef:120,label:'属性弾'})]},
+    {id:'abyss',type:'ライフル',name:'AKM - アビスアイ',b:AKM,s:[285, 600, 50],t:'命中でフロストボルテックス（CD7秒、超越者30%）。命中でCD0.5秒短縮。ボルテックス内の非超越者に命中すると自分のボルテックスの最終DMG+5%（最大10）。フロストDMG+30%、ボルテックスのダメージ頻度+100%。',note:'命中でフロストボルテックス（CD7秒）。ボルテックス内命中で最終DMG+5%（最大10、最終DMG欄で足す）。フロストDMG+30%はステ画面に含まれる。',a:[G('gun'),G('frost')]},
+    {id:'furious',type:'ライフル',name:'AKM - フューリアス',b:AKM,s:[249, 600, 40],t:'7回命中で火傷。最大スタック付与後、火傷DMG+15%（8秒）。火傷スタック上限+2。',note:'7回命中ごとに火傷1スタック。49発で最大7スタックになり、火傷DMG+15%が足される（計算に組み込み済み）。ゲームで確認済み: 5スタック248、7スタック397。',a:[G('gun'),G('burn',{stacks:7,kwAdd:15,label:'火傷（最大7スタック）'})]},
+    {id:'pioneer',type:'ライフル',name:'AKM - 開拓者',b:AKM,s:[182,600,40],t:'命中時30%でスプレッドガン。スプレッドガンDMG+60%。',note:'30%でスプレッドガン。スプレッドガンDMG+60%（スプレッドDMG欄に足す）。',a:[G('gun'),G('spread')]},{id:'akm',type:'ライフル',name:'AKM（特性なし）',b:AKM,s:[182,600,40],t:'特性なし。',note:'実弾だけの武器。',a:[G('gun')]},
+    {id:'lastvalor',type:'ライフル',name:'SCAR - ラストヴァラー',b:SCAR,s:[330, 515, 30],t:'4回命中でスプレッドガン。クリ命中は2回命中扱い。クリ後、スプレッドガン発動時に追加で1回発動（1秒）。スプレッドガンのクリDMG+30%。',note:'4回命中（クリは2回分）でスプレッドガン。クリ時スプレッドガン回数+1。スプレッドガンクリDMG+30%。',a:[G('gun'),G('spread',{kwCritAdd:30})]},
+    {id:'outsider',type:'ライフル',name:'SCAR - アウトサイダー',b:SCAR,s:[237, 515, 30],t:'命中時35%でパワーサージ。クリ命中でパワーサージ発動率+30%（3秒）。パワーサージ発動率+30%。',note:'35%でパワーサージ。実弾クリで3秒間発動確率+30%。',a:[G('gun'),G('surge')]},
+    {id:'raider',type:'ライフル',name:'SCAR - 天外来客',b:SCAR,s:[330,515,30],t:'命中10%でフロストボルテックス、リロード後の最初の命中は必ず発動。5回命中ごとに対象へロックオンする「アイスランス」を1本発射（2m内に130%のフロストボルテックスダメージ）。フロストボルテックス生成時にアイスランス2本、撃破時に4本（50m内を自動攻撃、CD2秒）。',note:'アイスランス＝超感覚強度130%のフロストボルテックスダメージ（2026-11-07 ゲーム内で確認済み: 超感覚強度370・フロスト16%で558）。リロード後1発目で必ずボルテックス＋アイスランス2本。',a:[G('gun'),G('frost'),G('frost',{coef:130,label:'アイスランス',ok:1})]},
+    {id:'egress',type:'ライフル',name:'M416 - 静寂の帰途',b:M4,s:[240, 750, 36],t:'命中時12%でフロストボルテックス。命中で氷の結晶（CD1.5秒、15秒持続、超越者40%）。持続終了でアイスクリスタル爆発（超感覚強度100%のフロストボルテックスDMG）。結晶に命中で早期爆発、係数100%→350%。フロストDMG+30%、結晶1つ破壊ごとにフロスト+8%（15秒、最大3）。',note:'12%でフロストボルテックス。命中で氷の結晶。弾で壊すと超感覚強度350%（時間経過は100%）で、フロストボルテックスDMGが乗る。フロストDMG+30%（ステ画面に含まれる）に加えて、結晶を壊すごとにフロスト+8%（最大3、画面には出ないのでエレメント欄に足す）。結晶は「氷の造物」なので氷核エンハンスの+5%も発動。実測で一致（結晶4022/4217、渦575/630）。',a:[G('gun'),G('frost'),G('frost',{coef:350,label:'アイスクリスタル（弾で破壊）',ok:1})]},
+    {id:'equinox',type:'ライフル',name:'M416 - 秋分',b:M4,s:[173, 750, 36],t:'7回命中でウェポンバースト（CD15秒）。範囲内の味方は毎秒最大HP4%回復。自身のHPが75%超なら銃器DMG+25%。',note:'7回命中でウェポンバースト。HP75%以上で銃器DMG+25%。',a:[G('gun')]},
+    {id:'scorched',type:'ライフル',name:'M416 - 焦土作戦',b:M4,s:[152,750,36],t:'命中時12%で火傷。火傷DMG+10%。',note:'12%で火傷。火傷DMG+10%（火傷DMG欄に足す）。',a:[G('gun'),G('burn')]},
+    {id:'aug',type:'ライフル',name:'AUG - 電子雲',b:AUG,s:[201, 720, 40],t:'命中時30%でパワーサージ。リロード後最初の命中で半径4mの電磁異常エリア（7秒、最大1）。エリア内でパワーサージ発動時にパルスボール1つ。パルスボールは跳ね返り（最大10回）、敵に命中で超感覚強度42%のショックDMG。ショックDMG+30%。',note:'30%でパワーサージ。リロード後の初命中で電磁エリア。エリア内でパワーサージ発動時にパルスボール（超感覚強度42%×ショック×状態異常、最大10回跳ねる）。',a:[G('gun'),G('surge'),G('weapon',{coef:42,label:'パルスボール（1ヒット）'})]},
+    {id:'predator',type:'ライトマシンガン',name:'MG4 - プレデター',b:MG4,s:[188, 700, 75],t:'命中40%で速射（ラピッドガン）。速射5スタックごとに0.5秒弾薬無限。同じ対象への命中ごとに銃器DMG+4%（最大20、対象切替で半減）。弾薬40%以上の間は攻撃力+60%。',note:'同じ対象に撃ち続けると銃器DMG+80%（4%×20、銃器DMG欄に足す）。残弾40%以上なら攻撃力+60%（攻撃力欄に足す）。',a:[G('gun')]},
+    {id:'conflict',type:'ライトマシンガン',name:'MG4 - 矛盾する記憶',b:MG4,s:[188, 700, 75],t:'6回命中ごとにスプレッド。リロード後か12回命中ごとに次のスプレッドが「追憶の嵐」（範囲内の全対象に命中）。スプレッドごとにスーパーアーマー0.5秒。スプレッド部位+2、スプレッド係数+20%。',note:'6回命中でスプレッド（係数60%+20%＝80%で設定済み）。部位+2なので命中部位数は3。',a:[G('gun'),G('spread',{coef:80})]},
+    {id:'rageMG',type:'ライトマシンガン',name:'MG4 - レイジ',b:MG4,s:[167, 700, 75],t:'命中40%でラピッドガン。発動時と撃破時に予備弾を消費してサブ武器に弾を1発装填。',note:'ダメージを増やす効果はなし。実弾だけで計算。',a:[G('gun')]},
+    {id:'tako',type:'ライトマシンガン',name:'MG4 - ミスタータコ',b:MG4,s:[167, 700, 75],t:'クリ命中時70%でバウンス。バウンスでDMGを与えると銃器DMG+1%（最大50、5秒ごとに1減少）。2秒射撃し続けるとバウンス対象数+1。',note:'クリ時70%でバウンス。最大スタックで銃器DMG+50%（銃器DMG欄に足す）。',a:[G('gun'),G('bounce')]},
+    {id:'mg4',type:'ライトマシンガン',name:'MG4（特性なし）',b:MG4,s:[146,700,75],t:'特性なし。',note:'実弾だけの武器。',a:[G('gun')]},
+    {id:'rpd',type:'ライトマシンガン',name:'RPD - 爆発寸前!',b:RPD,s:[319, 500, 100],t:'命中18%で火傷。命中時に炎上：5m内の敵に超感覚強度300%のブレイズDMG（CD2秒、超越者40%）、非超越者に火傷1スタック。ブレイズDMG+30%。',note:'18%で火傷。命中で超感覚強度300%の範囲爆発（CD2秒、火傷DMGは乗らない）。ブレイズDMG+30%。',a:[G('gun'),G('burn'),G('weapon',{coef:300,label:'範囲爆発'})]},
+    {id:'icebreaker',type:'ライトマシンガン',name:'RPD - アイスブレーカー',b:RPD,s:[204,500,100],t:'リロード後の最初の命中でフロストボルテックス。フロストDMG+30%。',note:'リロード後1発目でフロストボルテックス。フロストDMG+30%はステータス画面の値に含まれる。',a:[G('gun'),G('frost')]},
+    {id:'qbj',type:'ライトマシンガン',name:'QBJ97 - 火樹銀花',b:QBJ,s:[214, 650, 60],t:'命中8%で不安定爆弾を付与。命中8%でミサイル（超感覚強度500%の不安定爆弾DMG）、撃ち続けると発射率上昇・射撃停止でリセット。ミサイルは5%で不安定爆弾を付与。ミサイル爆発で「スパーク」1スタック（反動・ブレ-5%、4秒、最大5）。最大スタックで不安定爆弾発動率+3%。',note:'8%で不安定爆弾、8%で誘導ミサイル（超感覚強度500%、不安定爆弾DMGは乗るが係数・最終DMGは乗らない）。',a:[G('gun'),G('bomber'),G('bomber',{coef:500,noKwFinal:1,label:'誘導ミサイル'})]},
+    {id:'megalo',type:'スナイパー',name:'M700 - メガロフォビア',b:M700,s:[1959, 40, 5],t:'命中30%（弱点90%）で不安定爆弾。撃破で爆弾の範囲-10%・係数+20%（30秒、最大5）。爆弾のクリ能力解放、必ずクリ。弱点DMG1%ごとに爆弾のクリDMG+1%。',note:'弱点90%・他30%で不安定爆弾。不安定爆弾は確定クリで、弱点DMG1%ごとに爆弾クリDMG+1%。撃破ごとに係数+20%（最大5、他の武器にも乗る）。',a:[G('gun'),G('bomber',{forceCrit:1,critFromWs:1})]},
+    {id:'zekkyo',type:'スナイパー',name:'M700 - 絶響',b:[10,45,30],s:[1330, 40, 5],t:'命中40%でスプレッド、弱点命中は必ず発動。発動時は命中済みの部位も対象。発動後「残響」1スタック（最大4、リロード・武器切替で解除）、1スタックごとにスプレッドの命中部位+1・反動-7%。残響1スタックごとにマガジン最後の1発のダメージ+5%。残響3以上なら最後の1発のスプレッドが残響の数だけ追加発動。',note:'40%（弱点100%）でスプレッド。残響4スタックで最後の1発のダメージ+20%。',a:[G('gun'),G('spread')]},
+    {id:'m700',type:'スナイパー',name:'M700（特性なし）',b:M700,s:[1490,40,5],t:'特性なし。',note:'実弾だけの武器。',a:[G('gun')]},
+    {id:'spoton',type:'スナイパー',name:'AWM - スポットオン',b:AWM,aff:-10,s:[2310, 40, 5],t:'弱点命中で70%でハンティングマーク。武器切替後最初の命中でマーク。非超越者に命中で弱点DMG+25%（10秒、最大4、武器切替で半分）。非超越者を弱点で撃破後、攻撃力+15%（20秒）。',note:'弱点70%でハンティングマーク。命中で弱点DMG+25%（最大4）。弱点撃破で攻撃力+15%。',a:[G('gun')]},
+    {id:'panther',type:'スナイパー',name:'AWM - ブラックパンサー',b:AWM,s:[1663,40,5],t:'2秒照準でウェポンバースト（CD10秒）。照準時間で攻撃力上昇（最大+40%）。ウェポンバースト発動後、弱点DMGが上がる重装の力3スタック（射撃ごとに1減少）。',note:'しっかり照準すると攻撃力+40%（攻撃力欄に足す）。',a:[G('gun')]},
+    {id:'kite',type:'スナイパー',name:'M82A1 - シロガシラトビ',b:M82,s:[1596, 85, 8],t:'命中でバウンス（75%、超越者35%）、バウンス回数+2。地形に当たってもバウンス可能（DMG-30%、超越者は95%）。バウンスの弱点命中率+100%。',note:'75%でバウンス。バウンス＝攻撃力40%、弱点に当たると×(1+弱点DMG)（2026-11-07 ゲーム内で確認済み: 攻撃力1596で胴体638・弱点1149）。1発で2〜4回跳ね、撃った相手にも戻ってくる。地形経由のバウンスは-30%。ダミー相性の-10%はなし。',a:[G('gun'),G('bounce',{hits:4})]},
+    {id:'ash',type:'スナイパー',name:'M82A1 - アッシュ',b:M82,s:[1021,85,8],t:'弱点命中60%で火傷。火傷DMG+10%。',note:'弱点60%で火傷。火傷DMG+10%（火傷DMG欄に足す）。',a:[G('gun'),G('burn')]},
+    {id:'sks',type:'スナイパー',name:'SKS - パスファインダー',b:SKS,s:[684,257,20],t:'命中でフロストボルテックス（CD5秒、命中ごとに1秒短縮）。命中60%で異常粒子（拾うとチャージ）、チャージのスタック上限+10。チャージを消費してチャージ射撃、貫通つららで攻撃力110%のフロスト状態異常DMG（フロストボルテックスDMGバフが乗る、超越者20%）。フロストDMG+30%。チャージ射撃後フロストDMG+8%（15秒、最大3）。',note:'命中でフロストボルテックス。チャージ射撃のつららは攻撃力110%×状態異常×フロスト×フロストボルテックスDMG。チャージ射撃3回でフロスト+24%（画面に出ないのでエレメントDMG欄に足す）。',a:[G('gun'),G('frost'),G('special',{coef:110,label:'ツララ弾',kwOf:'frost'})]},
+    {id:'takoyaki',type:'スナイパー',name:'MK14 - たこ!やきドーナツ!',b:MK14,s:[589, 300, 20],t:'命中50%で火傷。火傷が最大スタックのとき火の輪が広がり、6m内の敵に超感覚強度150%の火傷DMG。火傷DMG+75%、火傷の最大スタック-3、クリ率+20%。',note:'50%で火傷。火傷スタック上限が2になる代わりに火傷DMG+75%（ステータス画面の火傷DMGに含まれる想定）。最大スタックの敵で火の輪（超感覚強度150%）。クリ率+20%。',a:[G('gun'),G('burn',{stacks:2})]},
+    {id:'noescape',type:'弓',name:'コンパウンドボウ - 逃げ場がない',b:[5, 25, 45],s:[969, 65, 1],t:'攻撃時に必ずバウンス、対象数+2。バウンス回数+1、リロード速度+100%。バウンスでDMGを与えた対象にエコー1スタック（受けるバウンスDMG+1%、最大4）。フルチャージ後バウンスDMG+20%・クリ率+35%。命中時、エコー数×80%のバウンス銃器DMGを追加（発動後エコー半減）。バウンス先がいない場合バウンス回数+2。',note:'命中でバウンス。フルチャージでバウンスDMG+20%・クリ率+25%。エコー最大で（エコー数×攻撃力80%×銃器×クリ×バウンスDMG）のシールド無視ダメージ（ここでは未計算）。',a:[G('gun'),G('bounce')]},
+    {id:'pulse',type:'弓',name:'クリティカルパルス',b:BOW,s:[1812, 90, 1],t:'命中で連続パワーサージを付与、70%で異常粒子（拾うとチャージ）。連続パワーサージは0.5秒ごとにパワーサージ発動、スタックで間隔短縮（最短0.26秒、3秒、最大5、超越者40%）。命中でチャージ1消費し、3秒間0.5秒ごとに5m内へ超感覚強度75%のショック状態異常DMG（パワーサージDMG増加適用）。5%で異常粒子。ショックDMG+30%。',note:'命中で連続パワーサージ。異常粒子でサンダーボール（超感覚強度75%、0.5秒ごと、パワーサージDMGが乗る）。ショックDMG+30%。',a:[G('gun'),G('surge'),G('surge',{coef:75,label:'サンダーボール（1回）'})]},
+    {id:'compound',type:'弓',name:'コンパウンドボウ',b:BOW,s:[1812, 90, 1],t:'命中でクリ率+40%（5秒、CD10秒、武器切替で消える）。クリ命中で不安定爆弾（クリ可能、キャラのクリ率適用）。クリ命中で矢を1本自動装填。爆弾DMG+30%。',note:'命中でクリ率+40%（5秒）。クリ時に不安定爆弾（クリ可能）。爆発DMG+30%。',a:[G('gun'),G('bomber',{elemCrit:1})]},
+    {id:'recurve',type:'弓',name:'リカーブクロスボウ',b:BOW,s:[1992, 125, 1],t:'弱点命中でハンティングマーク。マークのついた対象には全ての武器のクリ率+15%（10秒）。20秒以内に同じ対象へは1回まで。',note:'弱点でハンティングマーク。マーク中の対象への全武器のクリ率+15%（クリ率欄に足す）。',a:[G('gun')]},
+    {id:'crude',type:'弓',name:'粗製クロスボウ（特性なし）',b:[2,70,28],s:[1268,125,1],t:'特性なし。',note:'実弾だけの武器。',a:[G('gun')]},
+    {id:'recurvebow',type:'弓',name:'リカーブボウ',b:[2,80,30],s:[1107,65,1],t:'しゃがんで止まっていると1秒ごとに攻撃力+10%・弱点DMG+15%（最大3）。立つ・移動・命中で解除。',note:'しゃがみ3スタックで攻撃力+30%・弱点DMG+45%（それぞれ攻撃力欄・弱点DMG欄に足す）。',a:[G('gun')]},
+    {id:'gl',type:'重火器',name:'グレネードランチャー',b:[4,35,30],s:[1620,140,6],t:'1マガジンで6回命中すると「大騒ぎ」、次のリロードでウェポンバースト。ウェポンバースト中は1秒ごとにグレネード自動装填。構造破壊力（Lv.2以下に有効、Lv.3以上へのダメージは低下）。',note:'実弾扱いで計算（爆発範囲は未考慮）。',a:[G('gun')]},
+    {id:'rpg',type:'重火器',name:'RPG7ロケットランチャー',b:[3,25,25],s:[1739,40,1],t:'構造破壊力（Lv.3以下に有効、Lv.4コンクリートへのダメージ低下）。',note:'実弾扱いで計算（爆発範囲は未考慮）。',a:[G('gun')]},
+  ];
+  const $=id=>document.getElementById(id);
+  const P=x=>x/100;
+  const fmt=n=>Math.round(n).toLocaleString('ja-JP');
+  const KEY='oh-damagelab-v1';
+  const RM=matchMedia('(prefers-reduced-motion: reduce)');
+  const numIds=['atk','psi','gunDmg','critRate','critDmg','wsDmg','target','status','elem','kwFinal','kwWs','kwCrit','wsRate','stacks','hits','finalDmg','devGun','devWs','devKw','quest','part'];
+  const selIds=['mark','affin'];
+  const KWK=['spread','bounce','surge','frost','burn','bomber'];
+  const kwVals={spread:0,bounce:0,surge:0,frost:0,burn:0,bomber:0};
+  let wid='kite', cat='すべて', pro=false, saved=null, sel=0, heroKey='', lastName='';
+
+  const isOk=a=>!!a.ok||(VERIFIED.has(a.k)&&a.coef==null&&!a.critAdd&&!a.forceCrit&&!a.elemCrit);
+  const W=id=>WEAPONS.find(w=>w.id===id)||WEAPONS[0];
+  const shownAttacks=w=>pro?w.a:w.a.filter(isOk);
+
+  try{const s=JSON.parse(localStorage.getItem(KEY)||'null');
+    if(s){ if(s.w&&WEAPONS.some(w=>w.id===s.w))wid=s.w; pro=!!s.pro; if(s.v)for(const k in s.v){const el=$(k); if(el)el.value=s.v[k]} if(s.kw)Object.assign(kwVals,s.kw); if(s.cat)cat=s.cat; if(typeof s.sel==='number')sel=s.sel; }
+  }catch(e){}
+
+  function fillBlueprint(){const w=W(wid); if(w.s&&typeof w.s[0]==='number')$('atk').value=w.s[0]; if(w.b){$('critRate').value=w.b[0];$('wsDmg').value=w.b[1];$('critDmg').value=w.b[2]}}
+  if(!$('atk').value) fillBlueprint();
+
+  /* ---- 演出 ---- */
+  function tween(el,to,dur){
+    to=Math.round(to); cancelAnimationFrame(el._raf);
+    const from=el._v==null?0:el._v; el._v=to;
+    if(RM.matches||from===to){el.textContent=fmt(to);return}
+    const t0=performance.now(), d=dur||420;
+    const step=t=>{const k=Math.min(1,(t-t0)/d), e=1-Math.pow(1-k,3); el.textContent=fmt(from+(to-from)*e); if(k<1)el._raf=requestAnimationFrame(step)};
+    el._raf=requestAnimationFrame(step);
+  }
+  const GLYPH='アイウエオカキクケコサシスセソ0123456789ABCDEFX#/+-';
+  function scramble(el,text){
+    cancelAnimationFrame(el._raf);
+    if(RM.matches){el.textContent=text;return}
+    const n=text.length, t0=performance.now(), d=Math.min(700,260+n*22);
+    const step=t=>{const k=Math.min(1,(t-t0)/d); let s='';
+      for(let i=0;i<n;i++){const c=text[i]; s+=(i/n<k||c===' '||c==='-')?c:GLYPH[(Math.random()*GLYPH.length)|0]}
+      el.textContent=s; if(k<1)el._raf=requestAnimationFrame(step)};
+    el._raf=requestAnimationFrame(step);
+  }
+  function replay(el,cls){el.classList.remove(cls);void el.offsetWidth;el.classList.add(cls)}
+  // 指に追従する光
+  const bg=document.querySelector('.bg'); let pend=null, queued=false;
+  addEventListener('pointermove',e=>{if(RM.matches)return; pend=[e.clientX,e.clientY]; if(queued)return; queued=true;
+    requestAnimationFrame(()=>{queued=false; bg.style.setProperty('--mx',pend[0]+'px');bg.style.setProperty('--my',pend[1]+'px')})},{passive:true});
+
+  /* ---- 武器選択 ---- */
+  const TYPES=['すべて',...[...new Set(WEAPONS.map(w=>w.type))]];
+  const SHORT={spread:'スプレッド',bounce:'バウンス',surge:'サージ',frost:'フロスト',burn:'火傷',bomber:'爆弾',aoe:'範囲',special:'特殊弾',weapon:'固有'};
+  function kwChip(w){const k=w.a.find(x=>x.k!=='gun'); if(!k)return '<span class="kw gun">実弾</span>'; return `<span class="kw ${KINDS[k.k].base}">${SHORT[k.k]}</span>`}
+  const kana=s=>s.replace(/[ぁ-ゖ]/g,c=>String.fromCharCode(c.charCodeAt(0)+0x60)).toLowerCase();
+  const EFFS=[['all','すべて',''],['gun','実弾のみ','gun'],['spread','スプレッド','atk'],['bounce','バウンス','atk'],['surge','サージ','psi'],['frost','フロスト','psi'],['burn','火傷','psi'],['bomber','爆弾','psi'],['etc','その他','atk']];
+  const effOf=w=>{const k=w.a.find(x=>x.k!=='gun'); if(!k)return 'gun'; return ['aoe','special','weapon'].includes(k.k)?'etc':k.k};
+  function split(n){let m=n.match(/^(.+?)\s+-\s+(.+)$/); if(m)return [m[1],m[2]]; m=n.match(/^(.+?)（(.+)）$/); if(m)return [m[1],m[2]]; return [n,'']}
+  let eff='all', recent=[];
+  try{recent=JSON.parse(localStorage.getItem(KEY+'-recent')||'[]').filter(id=>WEAPONS.some(w=>w.id===id))}catch(e){}
+  function renderPicker(){
+    const q=kana($('q').value.trim());
+    const base=WEAPONS.filter(w=>eff==='all'||effOf(w)===eff);
+    $('cats').innerHTML=TYPES.map(t=>{const n=t==='すべて'?base.length:base.filter(w=>w.type===t).length;return `<button type="button" data-t="${t}" aria-pressed="${t===cat}"${n?'':' disabled style="opacity:.35"'}>${t}<span class="n">${n}</span></button>`}).join('');
+    $('effs').innerHTML='<span class="lbl">EFFECT</span>'+EFFS.map(([k,l,c])=>`<button type="button" class="${c}" data-e="${k}" aria-pressed="${k===eff}">${l}</button>`).join('');
+    const list=base.filter(w=>(cat==='すべて'||w.type===cat)&&(!q||kana(w.name).includes(q)));
+    let i=0;
+    const vbtn=(w,txt)=>`<button type="button" data-w="${w.id}" aria-pressed="${w.id===wid}" class="${effOf(w)==='gun'?'plain':''}" style="--i:${Math.min(i++,50)}">${kwChip(w)}<span class="nm">${txt}</span></button>`;
+    let html='';
+    if(!q&&eff==='all'&&cat==='すべて'&&recent.length) html+=`<div class="recent"><span class="lbl">RECENT</span>${recent.map(id=>vbtn(W(id),W(id).name)).join('')}</div>`;
+    if(!list.length){$('wlist').innerHTML=html+'<p class="empty">見つかりませんでした。名前の一部で探すか、絞り込みを「すべて」に戻してみてください。</p>';return}
+    const groups=(cat==='すべて'?TYPES.slice(1):[cat]).map(t=>[t,list.filter(w=>w.type===t)]).filter(g=>g[1].length);
+    html+=groups.map(([t,ws])=>{
+      const models=[]; ws.forEach(w=>{const [m,v]=split(w.name); let g=models.find(x=>x.m===m); if(!g)models.push(g={m,items:[]}); g.items.push([w,v||w.name])});
+      return `<div class="wsec"><h5>${t.toUpperCase()} · ${ws.length}</h5>${models.map(g=>`<div class="mrow"><div class="mn">${g.m}</div><div class="vars">${g.items.map(([w,v])=>vbtn(w,v)).join('')}</div></div>`).join('')}</div>`}).join('');
+    $('wlist').innerHTML=html;
+  }
+  let opener=null;
+  function openPicker(){opener=document.activeElement; $('picker').hidden=false; renderPicker(); requestAnimationFrame(()=>requestAnimationFrame(()=>$('picker').classList.add('open')));
+    setTimeout(()=>{const cur=$('wlist').querySelector('.wsec [aria-pressed="true"]'); if(cur)cur.scrollIntoView({block:'center'}); if(matchMedia('(hover:hover)').matches)$('q').focus()},60)}
+  function closePicker(){const p=$('picker'); if(p.hidden)return; p.classList.remove('open'); setTimeout(()=>{p.hidden=true},RM.matches?0:260); if(opener&&opener.focus)opener.focus()}
+
+  /* ---- 入力 ---- */
+  function read(){const v={};numIds.forEach(i=>{const n=parseFloat($(i).value);v[i]=isFinite(n)?n:0});selIds.forEach(i=>v[i]=parseFloat($(i).value)||0);v.kw={...kwVals};return v}
+  function needs(w){const n=new Set(['any']);shownAttacks(w).forEach(a=>{const K=KINDS[a.k];
+    if(K.base==='atk'){n.add('atk'); if(a.k!=='aoe'){n.add('crit');n.add('ws')} if(a.k!=='special')n.add('gun')}
+    else n.add('psi');
+    if(K.base==='psi'||a.k==='special'){n.add('status');n.add('elem')}
+    if(canCrit(a))n.add('crit');
+  });return n}
+  function elemName(w){for(const a of w.a){const K=KINDS[a.k]; if(K.el)return K.el} if(/ショック|天雷|パワーサージ/.test(w.t||''))return 'ショック'; if(/ブレイズ|火傷/.test(w.t||''))return 'ブレイズ'; if(/フロスト/.test(w.t||''))return 'フロスト'; return ''}
+  function renderForm(){
+    const w=W(wid), n=needs(w);
+    document.querySelectorAll('#form .f[data-need]').forEach(f=>f.hidden=!n.has(f.dataset.need));
+    const el=elemName(w); $('elemLbl').textContent=(el?el+'エレメント':'エレメント')+'DMG増加';
+    const kinds=[...new Set(shownAttacks(w).map(a=>a.kwOf||a.k).filter(k=>KWK.includes(k)))];
+    $('kwGroup').hidden=!kinds.length;
+    $('kwFields').innerHTML=kinds.map(k=>`<div class="f ${KINDS[k].base}"><label for="kw_${k}">${KINDS[k].kw}増加</label><div class="in"><input id="kw_${k}" data-kw="${k}" type="number" step="any" inputmode="decimal" value="${kwVals[k]}"><span class="u">%</span></div></div>`).join('');
+  }
+
+  /* ---- 式 ---- */
+  function canCrit(a){if(['gun','spread','bounce','special'].includes(a.k))return true; return (a.k==='surge'||a.k==='bomber')&&!!(a.elemCrit||a.forceCrit)}
+  const hasWs=a=>['gun','spread','bounce','special'].includes(a.k);
+  const coefOf=a=>a.coef!=null?a.coef:(KINDS[a.k].coef||100);
+  const stacksOf=(v,a)=>a.stacks!=null?a.stacks:Math.max(1,Math.round(v.stacks));
+  const hitsOf=(v,a)=>(a.k==='spread'||a.k==='bounce')?Math.max(1,Math.round(a.hits!=null?a.hits:v.hits)):1;
+  function kwOf(v,a){const k=a.kwOf||a.k; return (v.kw[k]||0)+(a.kwAdd||0)}
+  function dmg(v,a,h){
+    const k=a.k, ws=h.ws, cr=h.cr;
+    const allBase=(1+P(v.mark))*(1+P(v.finalDmg))*(1+P(v.quest))*(1+P(v.part));
+    const kwF=v.kwFinal+(a.kwFinalAdd||0), kwC=v.kwCrit+(a.kwCritAdd||0);
+    if(k==='gun') return v.atk*(1+P(v.gunDmg))*(1+(ws?P(v.wsDmg):0)+(cr?P(v.critDmg):0))*(1+P(v.target))*(1+P(v.devGun))*(ws?1+P(v.devWs):1)*allBase*(1+P(v.affin));
+    if(k==='aoe') return v.atk*P(coefOf(a))*(1+P(v.gunDmg))*(1+P(v.target))*allBase*(1+P(v.affin));
+    if(k==='spread'||k==='bounce') return v.atk*P(coefOf(a))*(1+P(v.gunDmg))*(1+(ws?P(v.wsDmg)+P(v.kwWs):0)+(cr?P(v.critDmg)+P(kwC):0))*(1+P(v.target))*(1+P(kwOf(v,a)))*(1+P(kwF))*allBase*(1+P(v.affin));
+    if(k==='special') return v.atk*P(coefOf(a))*(1+(ws?P(v.wsDmg):0)+(cr?P(v.critDmg):0))*(1+P(v.status))*(1+P(v.elem))*(1+P(v.target))*(1+P(kwOf(v,a)))*allBase;
+    const coef=k==='burn'?0.12*stacksOf(v,a):P(coefOf(a));
+    const c=canCrit(a)&&cr?1+P(v.critDmg)+P(kwC)+(a.critFromWs?P(v.wsDmg):0):1;
+    let d=v.psi*coef*c*(1+P(v.status))*(1+P(v.elem))*(1+P(v.target))*allBase;
+    if(k!=='weapon') d*=(1+P(kwOf(v,a)))*(a.noKwFinal?1:(1+P(kwF)))*(1+P(v.devKw));
+    return d;
+  }
+  function critP(v,a){if(!canCrit(a))return 0; if(a.forceCrit)return 1; return Math.min(1,Math.max(0,P(v.critRate+(a.critAdd||0))))}
+  function expected(v,a){const w=hasWs(a)?Math.min(1,Math.max(0,P(v.wsRate))):0,c=critP(v,a);let e=0;
+    for(const ws of [false,true])for(const cr of [false,true]){const p=(ws?w:1-w)*(cr?c:1-c);if(p>0)e+=p*dmg(v,a,{ws,cr})}return e}
+  const label=a=>a.label||KINDS[a.k].name;
+  const keyOf=(w,i)=>w.id+':'+i;
+  function formula(v,a){
+    const m=x=>'×'+(1+P(x)).toFixed(3).replace(/0+$/,'').replace(/\.$/,''), k=a.k, cf=coefOf(a);
+    const all=(v.mark?` ${m(v.mark)}(マーク)`:'')+(v.finalDmg?` ${m(v.finalDmg)}(最終)`:'')+(v.quest?` ${m(v.quest)}(異変)`:'')+(v.part?` ${m(v.part)}(部位)`:'');
+    const af=v.affin?` ${m(v.affin)}(相性)`:'';
+    if(k==='gun') return `攻撃力 ${v.atk} ${m(v.gunDmg)}(銃器) ×(1+弱点${v.wsDmg}%+クリ${v.critDmg}%) ${m(v.target)}(対象)`+(v.devGun?` ${m(v.devGun)}(デビ)`:'')+all+af;
+    if(k==='aoe') return `攻撃力 ${v.atk} ×${cf}% ${m(v.gunDmg)}(銃器) ${m(v.target)}(対象)${all}${af}`;
+    if(k==='spread'||k==='bounce') return `攻撃力 ${v.atk} ×${cf}% ${m(v.gunDmg)}(銃器) ×(1+弱点${v.wsDmg+v.kwWs}%+クリ${v.critDmg+v.kwCrit+(a.kwCritAdd||0)}%) ${m(v.target)}(対象) ${m(kwOf(v,a))}(${KINDS[k].kw})`+(v.kwFinal||a.kwFinalAdd?` ${m(v.kwFinal+(a.kwFinalAdd||0))}(係数)`:'')+all+af;
+    if(k==='special') return `攻撃力 ${v.atk} ×${cf}% ×(1+弱点+クリ) ${m(v.status)}(状態異常) ${m(v.elem)}(エレメント) ${m(v.target)}(対象) ${m(kwOf(v,a))}(KW)${all}`;
+    const co=k==='burn'?`12%×${stacksOf(v,a)}スタック`:`${cf}%`;
+    let s=`超感覚強度 ${v.psi} ×${co} ${m(v.status)}(状態異常) ${m(v.elem)}(エレメント) ${m(v.target)}(対象)`;
+    if(k!=='weapon') s+=` ${m(kwOf(v,a))}(${KINDS[k].kw}${a.kwAdd?` +${a.kwAdd}%込み`:''})`+(v.kwFinal||a.kwFinalAdd?` ${m(v.kwFinal+(a.kwFinalAdd||0))}(係数)`:'');
+    if(canCrit(a)) s+=` ×(1+クリ)(クリ時)`;
+    return s+all;
+  }
+
+  /* ---- 表示 ---- */
+  function renderPlate(){
+    const w=W(wid);
+    $('pType').textContent=w.type.toUpperCase()+'  //  '+(w.a.filter(x=>x.k!=='gun').map(label).join('・')||'実弾のみ');
+    if(lastName!==w.name){scramble($('pName'),w.name); lastName=w.name}
+    const sp=[]; if(w.s){sp.push(['攻撃力',w.s[0]],['射撃速度',w.s[1]],['マガジン',w.s[2]])}
+    if(w.b){sp.push(['クリ率',w.b[0]+'%'],['弱点DMG',w.b[1]+'%'],['クリDMG',w.b[2]+'%'])}
+    $('pSpecs').innerHTML=sp.map(([l,x])=>`<div class="spec"><b>${x}</b><span>${l}</span></div>`).join('');
+    $('pNote').textContent=w.note||''; $('pNote').hidden=!w.note; $('pTrait').textContent=w.t||'';
+  }
+  function rowsOf(v,a){
+    if(hasWs(a)) return [['胴体',{ws:false,cr:false}],['弱点',{ws:true,cr:false}],['クリ',{ws:false,cr:true}],['弱点クリ',{ws:true,cr:true}]];
+    if(canCrit(a)) return a.forceCrit?[['クリ（確定）',{cr:true}]]:[['通常',{}],['クリ',{cr:true}]];
+    return [[a.k==='burn'?`1回（${stacksOf(v,a)}スタック）`:'1回',{}]];
+  }
+  function bigOf(v,a){
+    const hits=hitsOf(v,a), rows=rowsOf(v,a);
+    if(pro){let l=(canCrit(a)||hasWs(a))?`期待値（クリ率${Math.round(critP(v,a)*100)}%・弱点${hasWs(a)?v.wsRate:0}%で平均）`:'1回のダメージ'; if(hits>1)l+=`・${hits}発合計`; return [expected(v,a)*hits,l]}
+    return [dmg(v,a,rows[0][1]), hasWs(a)?'胴体に1発':(a.k==='burn'?`火傷1回（${stacksOf(v,a)}スタック時）`:'1回のダメージ')];
+  }
+  const clsOf=a=>isOk(a)?KINDS[a.k].base:'wait';
+
+  function renderStage(v){
+    const w=W(wid), all=w.a, shown=shownAttacks(w);
+    if(!shown.includes(all[sel])) sel=all.indexOf(shown[0]);
+    // 攻撃タブ
+    const tabsKey=w.id+'|'+pro;
+    if($('atabs').dataset.k!==tabsKey){
+      $('atabs').dataset.k=tabsKey;
+      $('atabs').innerHTML=shown.map(a=>{const i=all.indexOf(a);return `<button type="button" role="tab" class="atab ${clsOf(a)}" data-i="${i}" aria-selected="${i===sel}"><span>${label(a)}${isOk(a)?'':' <em class="w">確認待ち</em>'}</span><b data-tv></b></button>`}).join('');
+    }
+    $('atabs').hidden=shown.length<2;
+    $('atabs').querySelectorAll('.atab').forEach(b=>{const a=all[+b.dataset.i]; b.setAttribute('aria-selected',+b.dataset.i===sel); b.querySelector('[data-tv]').textContent=fmt(bigOf(v,a)[0])});
+
+    const a=all[sel], K=KINDS[a.k], ok=isOk(a), rows=rowsOf(v,a), hits=hitsOf(v,a);
+    const [bigV,bigL]=bigOf(v,a);
+    const key=[w.id,sel,pro,rows.length].join('|');
+    const fresh=key!==heroKey;
+    if(fresh){
+      heroKey=key;
+      const h=$('hero'); h.className='hero '+clsOf(a);
+      h.innerHTML=`<div class="hero-top">${ok?'<span class="chip ok">ゲームで確認済み</span>':'<span class="chip wait">確認待ち</span>'}<span class="chip base">${K.base==='atk'?'攻撃力':'超感覚強度'}で伸びる</span>${hits>1?`<span class="chip base">${hits}発</span>`:''}</div>
+        <div class="readout">
+          <svg class="reticle" viewBox="0 0 200 200" aria-hidden="true"><g class="r1"><circle cx="100" cy="100" r="92" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 6"/><path d="M100 2v14M100 184v14M2 100h14M184 100h14" stroke="currentColor" stroke-width="2"/></g><g class="r2"><circle cx="100" cy="100" r="70" fill="none" stroke="currentColor" stroke-opacity=".5" stroke-width="1" stroke-dasharray="40 14"/></g><circle cx="100" cy="100" r="46" fill="none" stroke="currentColor" stroke-opacity=".25"/></svg>
+          <div class="num" id="numBox"><span class="v" id="bigV">0</span><span class="l" id="bigL"></span><span id="cmp"></span></div>
+        </div>
+        <div class="bars">${rows.map(([n])=>`<div class="bar-r"><span class="n">${n}</span><div class="track"><i></i></div><b>0</b></div>`).join('')}</div>
+        ${ok?'':'<p class="note-wait">この攻撃の式はまだゲームで確かめていない予想です。</p>'}
+        ${pro?'<pre class="formula" id="formula"></pre>':''}`;
+      $('bigV')._v=0;
+    }
+    tween($('bigV'),bigV,fresh?700:380);
+    if(!fresh) replay($('numBox'),'flash');
+    $('bigL').textContent=bigL;
+    let cmp='';
+    if(pro&&saved&&saved.w===wid&&saved.r[keyOf(w,sel)]!=null){const b=saved.r[keyOf(w,sel)]; const d=b>0?(bigV/b-1)*100:0; cmp=`<span class="cmp ${d>0.05?'up':d<-0.05?'down':''}">Aと比べて ${d>=0?'+':''}${d.toFixed(1)}%</span>`}
+    $('cmp').innerHTML=cmp;
+    const vals=rows.map(([,h])=>dmg(v,a,h)), mx=Math.max(1,...vals);
+    const rEls=$('hero').querySelectorAll('.bar-r');
+    rEls.forEach((r,i)=>{const bar=r.querySelector('i'), b=r.querySelector('b'); tween(b,vals[i],fresh?700:380);
+      const wv=(vals[i]/mx*100).toFixed(1)+'%'; if(fresh){bar.style.width='0';requestAnimationFrame(()=>requestAnimationFrame(()=>{bar.style.width=wv}))}else bar.style.width=wv});
+    if(pro) $('formula').textContent=formula(v,a);
+
+    const hidden=all.filter(x=>!isOk(x));
+    $('hiddenNote').innerHTML=(!pro&&hidden.length)?`<p class="hidden-note">この武器には、まだゲームで確かめていない攻撃が${hidden.length}つあります（${hidden.map(label).join('・')}）。<b>プロ</b>にすると予想値を見られます。</p>`:'';
+    // スマホの結果バー
+    $('dock').className='dock '+clsOf(a)+($('dock').classList.contains('show')?' show':'');
+    $('dockL').textContent=w.name+' · '+label(a); $('dockV').textContent=fmt(bigV);
+  }
+
+  function renderPro(v){
+    const w=W(wid);
+    const g=w.a.find(a=>a.k==='gun'); const rpm=w.s&&typeof w.s[1]==='number'?w.s[1]:0;
+    $('dps').innerHTML=g&&rpm?`<div class="spec"><b>${fmt(expected(v,g)*rpm/60)}</b><span>毎秒ダメージ</span></div><div class="spec"><b>${rpm}</b><span>発/分</span></div>`+(w.s[2]?`<div class="spec"><b>${fmt(expected(v,g)*w.s[2])}</b><span>1マガジン（${w.s[2]}発）</span></div>`:''):'<div class="spec"><span>この武器は対象外です</span></div>';
+    const gs=$('gainAtk');
+    const opts=w.a.map((a,i)=>`<option value="${i}">${label(a)}${isOk(a)?'':'（確認待ち）'}</option>`).join('');
+    if(gs.dataset.w!==w.id){gs.innerHTML=opts;gs.dataset.w=w.id;gs.value=String(sel)}
+    const a=w.a[+gs.value||0], K=KINDS[a.k], base=expected(v,a), cand=[];
+    const add=(l,f,amt,u)=>cand.push({l,f,amt,u});
+    if(K.base==='atk')add('攻撃力',x=>x.atk+=Math.max(1,Math.round(x.atk*.05)),Math.max(1,Math.round(v.atk*.05)),'');
+    else add('超感覚強度',x=>x.psi+=Math.max(1,Math.round(x.psi*.05)),Math.max(1,Math.round(v.psi*.05)),'');
+    if(['gun','spread','bounce','aoe'].includes(a.k))add('銃器DMG',x=>x.gunDmg+=10,10,'%');
+    if(canCrit(a)){if(!a.forceCrit)add('クリ率',x=>x.critRate+=5,5,'%');add('クリDMG',x=>x.critDmg+=10,10,'%')}
+    if(hasWs(a)||a.critFromWs)add('弱点DMG',x=>x.wsDmg+=10,10,'%');
+    add('対象DMG',x=>x.target+=10,10,'%');
+    if(K.base==='psi'||a.k==='special'){add('状態異常DMG',x=>x.status+=10,10,'%');add('エレメントDMG',x=>x.elem+=10,10,'%')}
+    const kk=a.kwOf||a.k; if(KWK.includes(kk))add(KINDS[kk].kw,x=>x.kw[kk]+=10,10,'%');
+    cand.forEach(c=>{const v2={...v,kw:{...v.kw}};c.f(v2);c.g=base>0?(expected(v2,a)/base-1)*100:0});
+    cand.sort((x,y)=>y.g-x.g); const max=Math.max(1e-4,...cand.map(c=>c.g));
+    $('gain').innerHTML=cand.map(c=>`<div class="gain-r ${K.base==='atk'?'atkb':''}"><span class="lbl">${c.l}</span><span class="nm">+${c.amt}${c.u}</span><div><div class="bar" style="width:${(c.g/max*100).toFixed(1)}%"></div></div><span class="nm">+${c.g.toFixed(2)}%</span></div>`).join('');
+    $('clearA').hidden=!saved;
+    $('aInfo').textContent=saved?(saved.w===wid?`A（${saved.t} に保存）と比べています。結果の数字の下に差が出ます。`:`Aは「${W(saved.w).name}」の結果です。同じ武器で比べられます。`):'MODや料理を変える前に保存すると、結果にAとの差が出ます。';
+  }
+
+  function render(){
+    document.body.classList.toggle('pro',pro);
+    $('mBeg').setAttribute('aria-pressed',!pro); $('mPro').setAttribute('aria-pressed',pro);
+    renderForm(); renderPlate();
+    const v=read(); renderStage(v); if(pro)renderPro(v);
+    save();
+  }
+  function rerender(){const v=read(); renderStage(v); if(pro)renderPro(v); save()}
+  function save(){try{const v={};[...numIds,...selIds].forEach(i=>v[i]=$(i).value);localStorage.setItem(KEY,JSON.stringify({w:wid,pro,v,kw:kwVals,cat,sel}))}catch(e){}}
+
+  function chooseWeapon(id){
+    wid=id; recent=[id,...recent.filter(x=>x!==id)].slice(0,6); try{localStorage.setItem(KEY+'-recent',JSON.stringify(recent))}catch(e){} fillBlueprint(); const w=W(wid); $('affin').value=String(w.aff||0);
+    sel=w.a.indexOf(shownAttacks(w)[0]); heroKey=''; $('atabs').dataset.k='';
+    closePicker(); render(); replay($('stage'),'swap');
+  }
+
+  $('pick').addEventListener('click',openPicker);
+  $('pickClose').addEventListener('click',closePicker);
+  $('picker').addEventListener('click',e=>{if(e.target===$('picker'))closePicker()});
+  $('cats').addEventListener('click',e=>{const b=e.target.closest('button');if(b&&b.disabled)return;if(!b)return;cat=b.dataset.t;$('q').value='';renderPicker();$('wlist').scrollTop=0;save()});
+  $('wlist').addEventListener('click',e=>{const b=e.target.closest('button[data-w]');if(b)chooseWeapon(b.dataset.w)});
+  $('effs').addEventListener('click',e=>{const b=e.target.closest('button[data-e]');if(!b)return;eff=b.dataset.e;renderPicker();$('wlist').scrollTop=0});
+  $('q').addEventListener('input',()=>{if($('q').value.trim())cat='すべて';renderPicker()});
+  $('q').addEventListener('keydown',e=>{if(e.key==='Enter'){const b=$('wlist').querySelector('button[data-w]'); if(b){e.preventDefault();chooseWeapon(b.dataset.w)}}});
+  addEventListener('keydown',e=>{
+    if(e.key==='Escape')closePicker();
+    if(e.key==='/'&&$('picker').hidden&&!/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();openPicker()}
+  });
+  $('atabs').addEventListener('click',e=>{const b=e.target.closest('.atab');if(!b)return;sel=+b.dataset.i;const gs=$('gainAtk');if(gs.options.length)gs.value=String(sel);rerender()});
+  $('form').addEventListener('input',e=>{const k=e.target.dataset&&e.target.dataset.kw; if(k){const n=parseFloat(e.target.value);kwVals[k]=isFinite(n)?n:0} rerender()});
+  $('form').addEventListener('submit',e=>e.preventDefault());
+  $('fillBp').addEventListener('click',()=>{fillBlueprint();rerender()});
+  $('mBeg').addEventListener('click',()=>{if(!pro)return;pro=false;heroKey='';$('atabs').dataset.k='';render()});
+  $('mPro').addEventListener('click',()=>{if(pro)return;pro=true;heroKey='';$('atabs').dataset.k='';render()});
+  $('gainAtk').addEventListener('change',()=>renderPro(read()));
+  $('saveA').addEventListener('click',()=>{const v=read(),w=W(wid),r={};w.a.forEach((a,i)=>r[keyOf(w,i)]=expected(v,a)*hitsOf(v,a));const d=new Date();saved={w:wid,r,t:`${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`};rerender()});
+  $('clearA').addEventListener('click',()=>{saved=null;rerender()});
+  const goStage=()=>$('stage').scrollIntoView({behavior:RM.matches?'auto':'smooth',block:'start'});
+  $('dock').addEventListener('click',goStage);
+  $('dock').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();goStage()}});
+  render();
+  if('IntersectionObserver' in window){
+    const io=new IntersectionObserver(es=>es.forEach(en=>$('dock').classList.toggle('show',!en.isIntersecting)),{threshold:0.15});
+    io.observe($('stage'));
+  }
+  replay($('stage'),'swap');
+})();
+</script>
+
+</body>
+</html>
