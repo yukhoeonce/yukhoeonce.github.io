@@ -402,6 +402,27 @@ body.pro .card.pro-only{display:block!important}
   .cats button{padding:3px 11px;font-size:12.5px}
   .mbox>p.small,.mhd .small{display:none}
 }
+/* スマホ縦: 下タブで画面を切り替える */
+.mini,.tabbar,.tab-next{display:none}
+@media (max-width:640px){
+  body.tabbed{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+  body.tabbed .dock{display:none}
+  body.tabbed .top{margin-bottom:12px;padding-bottom:8px}
+  body.tabbed .mini{display:flex;width:100%;gap:8px;margin-top:8px;border:0;background:transparent;padding:0;cursor:pointer;text-align:left;color:var(--ink)}
+  body.tabbed[data-tab="r"] .mini{display:none}
+  .mini span{flex:1 1 0;min-width:0;display:flex;align-items:baseline;justify-content:space-between;gap:6px;background:var(--field);border-radius:9px;padding:5px 10px;font-size:11.5px;font-weight:700;color:var(--ink-2)}
+  .mini span b{font-family:var(--f-num);font-size:20px;font-weight:700;color:var(--atk);font-variant-numeric:tabular-nums}
+  .mini span.mag b{color:var(--ink)}
+  body.tabbed .tabbar{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;z-index:26;background:var(--surface);border-top:1px solid var(--line-2);padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));gap:4px}
+  .tabbar button{display:flex;flex-direction:column;align-items:center;gap:1px;border:0;background:transparent;border-radius:10px;padding:5px 2px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer}
+  .tabbar button b{font-family:var(--f-num);font-size:17px;line-height:1.1}
+  .tabbar button[aria-current="page"]{background:var(--sel);color:var(--sel-ink)}
+  body.tabbed[data-tab="w"] .card[data-tab]:not([data-tab="w"]),
+  body.tabbed[data-tab="s"] .card[data-tab]:not([data-tab="s"]),
+  body.tabbed[data-tab="m"] .card[data-tab]:not([data-tab="m"]),
+  body.tabbed[data-tab="r"] .card[data-tab]:not([data-tab="r"]){display:none!important}
+  body.tabbed .tab-next{display:block;width:100%;margin-top:4px;padding:11px;font-size:14.5px}
+}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -415,11 +436,13 @@ body.pro .card.pro-only{display:block!important}
     <button type="button" id="mBeg" aria-pressed="true">初心者<small>結果だけ</small></button>
     <button type="button" id="mPro" aria-pressed="false">プロ<small>式・比較も</small></button>
   </div>
-</div></header>
+</div>
+  <button type="button" class="mini" id="mini" aria-label="結果を見る"></button>
+</header>
 
 <div class="wrap layout">
   <div class="flow">
-    <section class="card" id="wcard">
+    <section data-tab="w" class="card" id="wcard">
       <div class="step-h"><span class="no">1</span><h3>武器を選ぶ</h3></div>
       <button type="button" class="wpick" id="pick" aria-haspopup="dialog">
         <div style="min-width:0"><div class="eye" id="pType"></div><h2 id="pName"></h2></div>
@@ -429,10 +452,11 @@ body.pro .card.pro-only{display:block!important}
         <div class="bp-h"><span>設計図の参考値（スクショを撮ったときの星）</span><button type="button" class="btn" id="fillBp">この値を2に入れる</button></div>
         <div class="specs" id="pSpecs"></div>
       </div>
+      <button type="button" class="btn primary tab-next" data-go="s">次へ：ステータスを写す →</button>
     </section>
 
     <form class="formwrap" id="form" autocomplete="off">
-      <section class="card">
+      <section data-tab="s" class="card">
         <div class="step-h"><span class="no">2</span><h3>ステータス画面の数字を写す</h3><span class="aside">ゲームでCキーの画面</span></div>
         <div class="grp">
           <div class="fields">
@@ -452,15 +476,17 @@ body.pro .card.pro-only{display:block!important}
         <div class="grp-t">キーワードDMG（画面の値）</div>
         <div class="fields" id="kwFields"></div>
       </div>
+        <button type="button" class="btn primary tab-next" data-go="m">次へ：MODを付け替えてみる →</button>
       </section>
 
-      <section class="card">
+      <section data-tab="m" class="card">
         <div class="step-h"><span class="no">3</span><h3>MODを付け替えてみる</h3><span class="aside">なくても計算できます</span></div>
         <button type="button" class="btn modbtn" id="modOpen" aria-haspopup="dialog">装備画面をひらく<em>付け替えたら何%変わる？</em></button>
         <div class="modsum" id="modSum"></div>
+        <button type="button" class="btn primary tab-next" data-go="r">結果を見る →</button>
       </section>
 
-      <section class="card pro-only">
+      <section data-tab="s" class="card pro-only">
         <div class="step-h"><span class="no">4</span><h3>くわしい倍率</h3><span class="tag">プロ</span></div>
       <div class="grp pro-only">
         <div class="grp-t"><span class="tag">プロ</span>キーワードの追加倍率</div>
@@ -489,7 +515,7 @@ body.pro .card.pro-only{display:block!important}
       </section>
     </form>
 
-    <section class="card s-info">
+    <section data-tab="w" class="card s-info">
       <div class="step-h"><h3>この武器について</h3></div>
       <p class="point" id="pNote"></p>
       <details class="trait"><summary>ゲーム内の武器特性を読む</summary><p id="pTrait"></p></details>
@@ -501,7 +527,7 @@ body.pro .card.pro-only{display:block!important}
   </div>
 
   <aside class="rcol">
-    <section class="card stage" id="stage" aria-live="polite">
+    <section data-tab="r" class="card stage" id="stage" aria-live="polite">
       <div class="res-h"><h3>結果</h3><span id="resSub">ダミーに当てたときのダメージ</span></div>
       <div class="shot" id="shot"></div>
       <div class="sub-h">攻撃ごとの1回のダメージ（内訳）</div>
@@ -509,18 +535,18 @@ body.pro .card.pro-only{display:block!important}
       <div class="hero" id="hero"></div>
       <div id="hiddenNote"></div>
     </section>
-    <section class="card pro-card pro-only">
+    <section data-tab="r" class="card pro-card pro-only">
       <div class="step-h"><h3>どれを伸ばすと一番増える？</h3></div>
         <div class="row" style="margin-bottom:10px"><label class="small" for="gainAtk">対象</label><select id="gainAtk" class="btn"></select></div>
         <div class="gain" id="gain"></div>
         <p class="small" style="margin:8px 0 0">各ステータスを少し足したとき、期待値が何%増えるか。</p>
     </section>
-    <section class="card pro-card pro-only">
+    <section data-tab="r" class="card pro-card pro-only">
       <div class="step-h"><h3>基準とくらべる</h3></div>
       <div class="row"><button type="button" class="btn primary" id="saveA">今の結果を基準にする</button><button type="button" class="btn" id="clearA" hidden>基準を消す</button></div>
       <p class="small" id="aInfo" style="margin:8px 0 0"></p>
     </section>
-    <section class="card pro-card pro-only">
+    <section data-tab="r" class="card pro-card pro-only">
       <div class="step-h"><h3>実弾のDPSの目安</h3></div>
       <div class="dps" id="dps"></div>
       <p class="small" style="margin:8px 0 0">期待値 × 射撃速度 ÷ 60。リロード・命中率は含みません。</p>
@@ -528,6 +554,7 @@ body.pro .card.pro-only{display:block!important}
   </aside>
 </div>
 
+<nav class="tabbar" id="tabbar" aria-label="画面の切り替え"><button type="button" data-t="w"><b>1</b>武器</button><button type="button" data-t="s"><b>2</b>ステータス</button><button type="button" data-t="m"><b>3</b>MOD</button><button type="button" data-t="r"><b>=</b>結果</button></nav>
 <div class="dock" id="dock" role="button" tabindex="0" aria-label="結果を見る"><span id="dockL"></span><b id="dockV"></b></div>
 
 <div class="picker" id="picker" hidden role="dialog" aria-modal="true" aria-label="武器を選ぶ">
@@ -1040,6 +1067,7 @@ body.pro .card.pro-only{display:block!important}
     $('hiddenNote').innerHTML=(!pro&&hidden.length)?`<p class="hidden-note">この武器には、まだゲームで確かめていない攻撃が${hidden.length}つあります（${hidden.map(label).join('・')}）。右上を<b>プロ</b>にすると予想値を見られます。</p>`:'';
     // スマホの結果バー
     $('dock').className='dock '+clsOf(a)+($('dock').classList.contains('show')?' show':'');
+    $('mini').innerHTML=shot?`<span>1発<b>${fmt(shot.tot)}</b></span><span class="mag">1マガジン<b>${shot.mag?fmt(shot.tot*shot.mag):'—'}</b></span>`:`<span>${label(a)}<b>${fmt(bigV)}</b></span>`;
     if(shot){$('dockL').textContent=w.name+' · 1発（追撃込み）'; $('dockV').textContent=fmt(shot.tot)} else {$('dockL').textContent=w.name+' · '+label(a); $('dockV').textContent=fmt(bigV)}
   }
 
@@ -1122,6 +1150,14 @@ body.pro .card.pro-only{display:block!important}
   $('gainAtk').addEventListener('change',()=>renderPro(read()));
   $('saveA').addEventListener('click',()=>{const v=read(),w=W(wid),r={};w.a.forEach((a,i)=>r[keyOf(w,i)]=expected(v,a)*hitsOf(v,a));const d=new Date();saved={w:wid,r,t:`${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`};rerender()});
   $('clearA').addEventListener('click',()=>{saved=null;rerender()});
+  const TABMQ=matchMedia('(max-width:640px)'); let tab='w';
+  try{tab=localStorage.getItem(KEY+'-tab')||'w'}catch(e){}
+  function setTab(t,scroll){tab=t; document.body.dataset.tab=t; document.querySelectorAll('#tabbar button').forEach(b=>{if(b.dataset.t===t)b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current')}); try{localStorage.setItem(KEY+'-tab',t)}catch(e){} if(scroll)window.scrollTo(0,0)}
+  function applyTabbed(){document.body.classList.toggle('tabbed',TABMQ.matches); setTab(tab,false)}
+  TABMQ.addEventListener('change',applyTabbed); applyTabbed();
+  $('tabbar').addEventListener('click',e=>{const b=e.target.closest('button[data-t]'); if(b)setTab(b.dataset.t,true)});
+  document.addEventListener('click',e=>{const b=e.target.closest('.tab-next'); if(b)setTab(b.dataset.go,true)});
+  $('mini').addEventListener('click',()=>setTab('r',true));
   const goStage=()=>$('stage').scrollIntoView({behavior:RM.matches?'auto':'smooth',block:'start'});
   $('dock').addEventListener('click',goStage);
   $('dock').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();goStage()}});
