@@ -362,6 +362,33 @@ body.pro .card.pro-only{display:block!important}
   .fields{grid-template-columns:repeat(2,minmax(0,1fr))}
   .wpick{flex-wrap:wrap}
 }
+/* スマホ縦: 設計図を1行に、説明は小さく */
+@media (max-width:640px){
+  .specs{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+  .spec{padding:4px 8px;display:flex;align-items:baseline;gap:6px}.spec b{font-size:15px}.spec span{font-size:10.5px}
+  .bp{margin-top:10px;gap:6px}.bp-h .btn{padding:5px 10px;font-size:12.5px}
+  .shot-n .small{font-size:11.5px}
+  .effs{flex-wrap:nowrap;overflow-x:auto}
+}
+/* スマホ横（高さが低い）: ヘッダーは固定しない、2列、ポップアップを詰める */
+@media (max-height:520px) and (orientation:landscape){
+  .top{position:static;padding-block:6px;margin-bottom:10px}
+  .brand span{display:none}
+  .mode button{padding:3px 12px}.mode small{display:none}
+  .card{padding:12px 14px}
+  .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,44%);gap:12px;align-items:start}
+  .flow,.rcol{display:flex;flex-direction:column;gap:12px;min-width:0}
+  .rcol{position:sticky;top:max(8px,env(safe-area-inset-top,0px));max-height:calc(100dvh - 16px);overflow-y:auto;overscroll-behavior:contain}
+  .dock{display:none}
+  .specs{grid-template-columns:repeat(6,minmax(0,1fr));gap:4px}.spec b{font-size:15px}
+  .shot .sh b{font-size:30px}
+  .picker{padding-top:max(8px,env(safe-area-inset-top,0px));padding-bottom:max(8px,env(safe-area-inset-bottom,0px))}
+  .pbox{padding:10px 12px;gap:8px}
+  .search input{padding:6px 0}.x{width:36px;height:36px}
+  .cats,.effs{flex-wrap:nowrap;overflow-x:auto}
+  .cats button{padding:3px 11px;font-size:12.5px}
+  .mbox>p.small,.mhd .small{display:none}
+}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -949,7 +976,7 @@ body.pro .card.pro-only{display:block!important}
     if(w.type==='ショットガン'){el.className='shot';el.innerHTML=`<p class="shot-n">ショットガンは1発に何粒も入るので、1発・1マガジンの合計はまだ出せません。下の内訳は1粒あたりの数字です。</p>`;return null}
     const r=shotOf(v,w); if(!r){el.innerHTML='';return null}
     el.className='shot '+(r.wait?'wait':'atk');
-    el.innerHTML=`<div class="sh"><span>1発撃つと（追撃込み）</span><b>${fmt(r.tot)}</b></div><div class="sh mag"><span>1マガジン${r.mag?`（${r.mag}発）`:''}で</span><b>${r.mag?fmt(r.tot*r.mag):'—'}</b></div>
+    el.innerHTML=`<div class="sh"><span>1発（追撃込み）</span><b>${fmt(r.tot)}</b></div><div class="sh mag"><span>1マガジン${r.mag?`（${r.mag}発）`:''}で</span><b>${r.mag?fmt(r.tot*r.mag):'—'}</b></div>
       <p class="shot-n">${r.parts.join(' ＋ ')}<span class="small">クリ率${Math.round(r.c*100)}%・弱点に当たる割合${Math.round(r.sr*100)}%で平均した目安です${pro?'':'（割合はプロで変えられます）'}。${r.skip.length?`含まない: ${r.skip.join('・')}（時間で入る・条件つきのため）。`:''}${r.wait?'確認待ちの攻撃を含みます。':''}${r.hid.length?`確認待ちの追撃（${r.hid.join('・')}）は入れていません。プロにすると予想値込みになります。`:''}発動率は武器特性の文章から計算しています。</span></p>`;
     return r}
 
