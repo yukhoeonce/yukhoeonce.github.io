@@ -128,6 +128,14 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
 /* 2 入力 */
 .grp{display:flex;flex-direction:column;gap:10px}
+.ammo{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.ammo .lbl{font-size:13px;font-weight:700;color:var(--ink-2)}
+.ammo-b{display:flex;gap:6px;flex-wrap:wrap}
+.ammo-b button{display:flex;align-items:baseline;gap:6px;border:1px solid var(--line-2);background:var(--surface);border-radius:999px;padding:5px 13px;font-size:14px;cursor:pointer;color:var(--ink)}
+.ammo-b button small{font-family:var(--f-num);font-size:12px;font-weight:600;color:var(--atk)}
+.ammo-b button[aria-pressed="true"]{background:var(--sel);border-color:var(--sel);color:var(--sel-ink)}
+.ammo-b button[aria-pressed="true"] small{color:var(--sel-ink);opacity:.8}
+.ammo-n{margin:0 0 12px}
 .grp+.grp{margin-top:14px}
 .grp-t{font-size:13px;font-weight:700;color:var(--ink-2);display:flex;align-items:center;gap:8px}
 .grp-t::after{content:"";flex:1;height:1px;background:var(--line)}
@@ -504,6 +512,8 @@ body.pro .card.pro-only{display:block!important}
     <form class="formwrap" id="form" autocomplete="off">
       <section data-tab="s" class="card">
         <div class="step-h"><span class="no">2</span><h3>ステータス画面の数字を写す</h3><span class="aside">ゲームでCキーの画面</span></div>
+        <div class="ammo"><span class="lbl">使っている弾</span><div class="ammo-b" id="ammoB" role="group" aria-label="使っている弾"></div><input type="hidden" id="ammo" value="0"></div>
+        <p class="small ammo-n" id="ammoN"></p>
         <div class="grp">
           <div class="fields">
           <div class="f atk" data-need="atk"><label for="atk">攻撃力</label><div class="in"><input id="atk" type="number" step="any" inputmode="decimal"></div></div>
@@ -721,7 +731,8 @@ body.pro .card.pro-only{display:block!important}
   const KEY='oh-damagelab-v1';
   const RM=matchMedia('(prefers-reduced-motion: reduce)');
   const numIds=['atk','psi','gunDmg','critRate','critDmg','wsDmg','target','status','elem','kwFinal','kwWs','kwCrit','wsRate','stacks','hits','finalDmg','devGun','devWs','devKw','quest','part'];
-  const selIds=['mark','affin'];
+  const selIds=['mark','affin','ammo'];
+  const AMMO=[[0,'銅弾','基本'],[8,'銅芯弾','+8%'],[15,'徹甲弾','+15%']];
   const KWK=['spread','bounce','surge','frost','burn','bomber'];
   const kwVals={spread:0,bounce:0,surge:0,frost:0,burn:0,bomber:0};
   let wid='kite', cat='すべて', pro=false, saved=null, sel=0, heroKey='', lastName='';
@@ -734,8 +745,11 @@ body.pro .card.pro-only{display:block!important}
     if(s){ if(s.w&&WEAPONS.some(w=>w.id===s.w))wid=s.w; pro=!!s.pro; if(s.v)for(const k in s.v){const el=$(k); if(el)el.value=s.v[k]} if(s.kw)Object.assign(kwVals,s.kw); if(s.cat)cat=s.cat; if(typeof s.sel==='number')sel=s.sel; }
   }catch(e){}
 
-  function fillBlueprint(){const w=W(wid); if(w.s&&typeof w.s[0]==='number')$('atk').value=w.s[0]; if(w.b){$('critRate').value=w.b[0];$('wsDmg').value=w.b[1];$('critDmg').value=w.b[2]}}
+  function renderAmmo(){const a=+$('ammo').value||0; $('ammoB').innerHTML=AMMO.map(([v,n,t])=>`<button type="button" data-a="${v}" aria-pressed="${v===a}"><b>${n}</b><small>${t}</small></button>`).join(''); $('ammoN').textContent=a?`攻撃力と超感覚強度が+${a}%になる弾です（シールドへのDMGは計算に入れていません）。弾を切り替えると、下の攻撃力と超感覚強度も自動で直します。`:'弾によって攻撃力と超感覚強度が上がります。いま撃っている弾を選んでください。'}
+  function fillBlueprint(){const w=W(wid); if(w.s&&typeof w.s[0]==='number')$('atk').value=Math.round(w.s[0]*(1+(+$('ammo').value||0)/100)); if(w.b){$('critRate').value=w.b[0];$('wsDmg').value=w.b[1];$('critDmg').value=w.b[2]}}
   if(!$('atk').value) fillBlueprint();
+  renderAmmo();
+  $('ammoB').addEventListener('click',e=>{const b=e.target.closest('button[data-a]'); if(!b)return; const o=+$('ammo').value||0, n=+b.dataset.a; if(o===n)return; ['atk','psi'].forEach(i=>{const x=parseFloat($(i).value); if(isFinite(x))$(i).value=Math.round(x/(1+o/100)*(1+n/100))}); $('ammo').value=n; renderAmmo(); rerender()});
 
   /* ---- 演出 ---- */
   function tween(el,to,dur){
