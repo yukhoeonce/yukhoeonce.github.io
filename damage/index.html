@@ -285,6 +285,19 @@ body.pro .card.pro-only{display:block!important}
 .wgrid .nm{min-width:0;overflow-wrap:anywhere}
 .empty{color:var(--muted);font-size:14px;padding:8px 2px;margin:0}
 
+/* 武器一覧: 小さいカードを詰めて並べる */
+.wlist{gap:10px}
+.wsec h5{position:sticky;top:0;z-index:1;background:var(--surface);margin:0;padding:4px 0 6px;font-size:12.5px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:6px}
+.tile{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:left;border:1px solid var(--line-2);background:var(--surface);border-radius:8px;padding:6px 10px 7px;cursor:pointer;min-width:0;color:var(--ink)}
+.tile:hover{border-color:var(--ink-2);background:var(--field)}
+.tile[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);background:var(--field)}
+.tile .tm{font-size:11px;font-weight:700;color:var(--muted);line-height:1.3;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .tv{font-size:13.5px;font-weight:700;line-height:1.35;overflow-wrap:anywhere}
+.tile .kw{font-size:10.5px;padding:0 6px;margin-top:3px}
+.recent{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px}
+.recent button{flex:0 0 auto;padding:4px 9px;font-size:13px}
+@media (max-width:400px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* 装備画面 */
 .mbox{width:min(920px,100%)}
 .mhd{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
@@ -684,18 +697,19 @@ body.pro .card.pro-only{display:block!important}
     const list=base.filter(w=>(cat==='すべて'||w.type===cat)&&(!q||kana(w.name).includes(q)));
     let i=0;
     const vbtn=(w,txt)=>`<button type="button" data-w="${w.id}" aria-pressed="${w.id===wid}" class="${effOf(w)==='gun'?'plain':''}" style="--i:${Math.min(i++,50)}">${kwChip(w)}<span class="nm">${txt}</span></button>`;
+    const tile=(w,m,v)=>`<button type="button" class="tile" data-w="${w.id}" aria-pressed="${w.id===wid}" style="--i:${Math.min(i++,50)}">${v===w.name?'':`<span class="tm">${m}</span>`}<span class="tv">${v===w.name?w.name:v}</span>${kwChip(w)}</button>`;
     let html='';
     if(!q&&eff==='all'&&cat==='すべて'&&recent.length) html+=`<div class="recent"><span class="lbl">最近</span>${recent.map(id=>vbtn(W(id),W(id).name)).join('')}</div>`;
     if(!list.length){$('wlist').innerHTML=html+'<p class="empty">見つかりませんでした。名前の一部で探すか、絞り込みを「すべて」に戻してみてください。</p>';return}
     const groups=(cat==='すべて'?TYPES.slice(1):[cat]).map(t=>[t,list.filter(w=>w.type===t)]).filter(g=>g[1].length);
     html+=groups.map(([t,ws])=>{
       const models=[]; ws.forEach(w=>{const [m,v]=split(w.name); let g=models.find(x=>x.m===m); if(!g)models.push(g={m,items:[]}); g.items.push([w,v||w.name])});
-      return `<div class="wsec"><h5>${t.toUpperCase()} · ${ws.length}</h5>${models.map(g=>`<div class="mrow"><div class="mn">${g.m}</div><div class="vars">${g.items.map(([w,v])=>vbtn(w,v)).join('')}</div></div>`).join('')}</div>`}).join('');
+      return `<div class="wsec"><h5>${t} · ${ws.length}</h5><div class="tiles">${models.map(g=>g.items.map(([w,v])=>tile(w,g.m,v)).join('')).join('')}</div></div>`}).join('');
     $('wlist').innerHTML=html;
   }
   let opener=null;
   function openPicker(){opener=document.activeElement; $('picker').hidden=false; renderPicker(); requestAnimationFrame(()=>requestAnimationFrame(()=>$('picker').classList.add('open')));
-    setTimeout(()=>{const cur=$('wlist').querySelector('.wsec [aria-pressed="true"]'); if(cur)cur.scrollIntoView({block:'center'}); if(matchMedia('(hover:hover)').matches)$('q').focus()},60)}
+    setTimeout(()=>{const cur=$('wlist').querySelector('.tiles [aria-pressed="true"]'); if(cur)cur.scrollIntoView({block:'center'}); if(matchMedia('(hover:hover)').matches)$('q').focus()},60)}
   function closePicker(){const p=$('picker'); if(p.hidden)return; p.classList.remove('open'); setTimeout(()=>{p.hidden=true},RM.matches?0:260); if(opener&&opener.focus)opener.focus()}
 
 
