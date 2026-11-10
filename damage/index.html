@@ -929,17 +929,51 @@ body.pro .card.pro-only{display:block!important}
     wAllCrush:{n:'オールクラッシュ',slot:'weapon',c:{'kw.spread':45},s:{'kw.spread':5},t:'3部位に命中'},
     wShieldPen:{n:'シールド貫通弾頭',slot:'weapon',c:{'kw.spread':20},s:{'kw.spread':5},t:'シールドに命中'},
     wChain:{n:'チェーンバウンス',slot:'weapon',c:{'kw.bounce':45},s:{'kw.bounce':5},t:'バウンス6回'},
-    wHiBounce:{n:'ハイエネルギーバウンス',slot:'weapon',a:{kwCrit:25},s:{'kw.bounce':5},note:'バウンスのクリ率+10%は未反映'},
+    wHiBounce:{n:'ハイエネルギーバウンス',slot:'weapon',a:{kwCrit:25},note:'バウンスのクリ率+10%は未反映'},
     wRapidKeep:{n:'継続ラピッドガン',slot:'weapon',c:{gun:15},t:'ラピッドガン中'},
     wAccurate:{n:'アキュレイトシューター',slot:'weapon',c:{ws:45},t:'ラピッドガン中・最大'},
     wSmoke:{n:'砲煙弾雨',slot:'weapon',c:{gun:30},t:'20スタック'},
     wBombCharge:{n:'爆弾チャージ',slot:'weapon',c:{'kw.bomber':30},s:{'kw.bomber':5},t:'6スタック'},
     wUnity:{n:'一致団結',slot:'weapon',c:{gun:40},t:'範囲に味方が多い'},
-    wIceCore:{n:'氷核エンハンス',slot:'weapon',a:{'kw.frost':10},s:{'kw.frost':5}},
-    wCryo:{n:'クライオブラスト',slot:'weapon',c:{'kw.frost':20},t:'5スタック'}
+    wIceCore:{n:'氷核エンハンス',slot:'weapon',a:{'kw.frost':10},c:{'kw.frost':5},s:{'kw.frost':5},t:'氷の造物の発動後'},
+    wCryo:{n:'クライオブラスト',slot:'weapon',c:{'kw.frost':20},t:'5スタック'},
+    // 武器（2026-11-10 ユッケの図鑑スクショで追加）火傷
+    wFlameReso:{n:'フレイムレゾナンス',slot:'weapon',etc:'火傷の最大スタック+2・持続-20%'},
+    wEmber:{n:'残り火',slot:'weapon',etc:'火傷が解除されてもスタック半分残る'},
+    wFlameGuard:{n:'フレイムガード',slot:'weapon',etc:'火傷の敵を撃破でHP回復'},
+    wWildBurn:{n:'ワイルドバーニング',slot:'weapon',etc:'25%で火傷+1スタック'},
+    // パワーサージ
+    wSurgeFreq:{n:'高頻度パワーサージ',slot:'weapon',etc:'サージの発生率アップ（未計算）'},
+    wSurgeSpread:{n:'パワーサージ拡散',slot:'weapon',etc:'近くの敵1体にもサージ'},
+    wTransient:{n:'トランジェントオーバーロード',slot:'weapon',a:{'kw.surge':20},note:'サージ時間-50%'},
+    wSurgeAmp:{n:'パワーサージ増幅',slot:'weapon',c:{'kw.surge':20},t:'4スタック'},
+    // フロストボルテックス
+    wFrostBreak:{n:'フロストブレイク',slot:'weapon',etc:'中心の敵撃破で周囲に氷DMG（未計算）'},
+    wFrostGuard:{n:'フロストガード',slot:'weapon',etc:'ボルテックス消滅でHP回復'},
+    // ハンティングマーク
+    wMarkHeal:{n:'回復マーク',slot:'weapon',etc:'マークの敵撃破でHP・スタミナ回復'},
+    wHunterGuard:{n:'ハンターガード',slot:'weapon',etc:'マークの敵の攻撃-20%'},
+    wMarkSpread:{n:'マーク拡散',slot:'weapon',etc:'撃破時に近くの敵へマーク'},
+    wMarkAmp:{n:'マーク増幅',slot:'weapon',c:{mark:8},s:{mark:5},t:'マーク中の敵（プロのマーク欄がONのとき）'},
+    // ウェポンバースト
+    wContBurst:{n:'コンティニューバースト',slot:'weapon',etc:'命中でバーストが延長'},
+    wPortable:{n:'ポータブルバースト',slot:'weapon',etc:'離れても重装2秒'},
+    wEndBurst:{n:'エンドバースト',slot:'weapon',c:{gun:10},t:'バースト終了後10秒'},
+    // 不安定爆弾
+    wExplArt:{n:'エクスプロージョンアート',slot:'weapon',a:{artBomb:1},note:'クリ率1%ごとに爆弾DMG+0.5%'},
+    wBombLoot:{n:'爆弾戦利品',slot:'weapon',etc:'爆弾でマガジン10%装填'},
+    wBombHeavy:{n:'猛撃爆弾',slot:'weapon',etc:'爆弾で硬直させる'},
+    // ラピッドガン
+    wCowboy:{n:'カウボーイ',slot:'weapon',etc:'空リロードでラピッドガンが出やすい'},
+    // バウンス
+    wBounceFreq:{n:'高頻度バウンス',slot:'weapon',etc:'バウンスの発生率アップ（未計算）'},
+    wMultiBounce:{n:'多重バウンス',slot:'weapon',c:{'kw.bounce':45},t:'3体以上に跳ねる'},
+    // スプレッドガン
+    wSpreadLoot:{n:'スプレッドガン戦利品',slot:'weapon',etc:'弱点命中で1発装填'},
+    wBlastHead:{n:'爆裂弾頭',slot:'weapon',etc:'スプレッドのクリ率+最大30%（未計算）'}
   };
-  Object.assign(SN,{critRate:'クリ率',kwFinal:'KW最終DMG',atkP:'攻撃力%',noWs:'弱点DMGなし'});
-  CALC.push('critRate','kwFinal','atkP');
+  Object.assign(SN,{critRate:'クリ率',kwFinal:'KW最終DMG',atkP:'攻撃力%',noWs:'弱点DMGなし',mark:'マーク',artBomb:'クリ率→爆弾DMG'});
+  CALC.push('critRate','kwFinal','atkP','mark','artBomb');
   const MAINOF={}; for(const k in MAINS)(MAINOF[MAINS[k].slot]=MAINOF[MAINS[k].slot]||[]).push(k);
   const MS={cur:{},try:{},cond:{mainC:true},dist:5};
   try{const m=JSON.parse(localStorage.getItem(KEY+'-mods')||'null'); if(m){Object.assign(MS.cur,m.cur||{});Object.assign(MS.try,m.try||{});Object.assign(MS.cond,m.cond||{}); if(isFinite(m.dist))MS.dist=m.dist}}catch(e){}
@@ -958,9 +992,9 @@ body.pro .card.pro-only{display:block!important}
   const r1=x=>Math.round(x*10)/10;
   const sgn=x=>(x>0?'+':x<0?'−':'±')+Math.abs(r1(x));
   function fxText(o,only){const nw=o.noWs; o={...o}; delete o.noWs; const ks=Object.keys(o).filter(k=>Math.abs(o[k])>=0.05); if(!ks.length&&!nw)return ''; if(nw)return (ks.length?fxText(o,only)+' ':'')+'弱点DMGなし';
-    const a=ks.filter(k=>CALC.includes(k)).map(k=>`${SN[k]}${sgn(o[k])}`), b=ks.filter(k=>!CALC.includes(k)).map(k=>`${SN[k]}${sgn(o[k])}`);
+    const a=ks.filter(k=>CALC.includes(k)).map(k=>k==='artBomb'?(o[k]>0?'クリ率で爆弾DMG↑':'クリ率で爆弾DMG↑なし'):`${SN[k]}${sgn(o[k])}`), b=ks.filter(k=>!CALC.includes(k)).map(k=>`${SN[k]}${sgn(o[k])}`);
     return a.join(' ')+(b.length&&!only?` <s>${b.join(' ')}</s>`:'')}
-  function applyMods(v){const d=modDelta(); v.gunDmg+=d.gun||0; v.critDmg+=d.critDmg||0; v.wsDmg+=d.ws||0; v.status+=d.status||0; v.elem+=d.elem||0; v.target+=d.target||0; v.kwWs+=d.kwWs||0; v.kwCrit+=d.kwCrit||0; KWK.forEach(k=>{v.kw[k]+=d['kw.'+k]||0}); v.critRate+=d.critRate||0; v.kwFinal+=d.kwFinal||0; if(d.atkP){v.atk*=1+P(d.atkP);} if(d.noWs){v.wsDmg=0; v.kwWs=0} return v}
+  function applyMods(v){const d=modDelta(); v.gunDmg+=d.gun||0; v.critDmg+=d.critDmg||0; v.wsDmg+=d.ws||0; v.status+=d.status||0; v.elem+=d.elem||0; v.target+=d.target||0; v.kwWs+=d.kwWs||0; v.kwCrit+=d.kwCrit||0; KWK.forEach(k=>{v.kw[k]+=d['kw.'+k]||0}); v.critRate+=d.critRate||0; v.kwFinal+=d.kwFinal||0; if(d.atkP){v.atk*=1+P(d.atkP);} if(d.mark&&v.mark)v.mark+=d.mark; if(d.artBomb)v.kw.bomber+=d.artBomb*Math.max(0,v.critRate)*0.5; if(d.noWs){v.wsDmg=0; v.kwWs=0} return v}
   function modGain(){const w=W(wid), a=w.a[sel]||w.a[0], b=expected(read(true),a), m=expected(read(),a); return {a,g:b>0?(m/b-1)*100:0}}
   const SCODE={weapon:'WPN',helmet:'HEAD',top:'TOP',bottom:'LEG',shoes:'FOOT',glove:'HAND',mask:'MASK'};
   let lay='try', editing=null, choose=null;
