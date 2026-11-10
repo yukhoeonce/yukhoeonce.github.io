@@ -415,6 +415,7 @@ body.pro .card.pro-only{display:block!important}
   .mini span.mag b{color:var(--ink)}
   body.tabbed .tabbar{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;z-index:26;background:var(--surface);border-top:1px solid var(--line-2);padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));gap:4px}
   .tabbar button{display:flex;flex-direction:column;align-items:center;gap:1px;border:0;background:transparent;border-radius:10px;padding:5px 2px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer}
+  body.tabbed[data-tab="w"] .formwrap,body.tabbed[data-tab="r"] .formwrap{display:none}
   .tabbar button b{font-family:var(--f-num);font-size:17px;line-height:1.1}
   .tabbar button[aria-current="page"]{background:var(--sel);color:var(--sel-ink)}
   body.tabbed[data-tab="w"] .card[data-tab]:not([data-tab="w"]),
@@ -448,10 +449,6 @@ body.pro .card.pro-only{display:block!important}
         <div style="min-width:0"><div class="eye" id="pType"></div><h2 id="pName"></h2></div>
         <span class="chg">武器を変える <kbd>/</kbd></span>
       </button>
-      <div class="bp">
-        <div class="bp-h"><span>設計図の参考値（スクショを撮ったときの星）</span><button type="button" class="btn" id="fillBp">この値を2に入れる</button></div>
-        <div class="specs" id="pSpecs"></div>
-      </div>
       <button type="button" class="btn primary tab-next" data-go="s">次へ：ステータスを写す →</button>
     </section>
 
@@ -470,7 +467,7 @@ body.pro .card.pro-only{display:block!important}
           <div class="f" data-need="status"><label for="status">状態異常DMG増加</label><div class="in"><input id="status" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div></div>
           <div class="f" data-need="elem"><label for="elem" id="elemLbl">エレメントDMG増加</label><div class="in"><input id="elem" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div></div>
           </div>
-          <span class="small">武器を選ぶと設計図の値が入ります。星やレベルで変わるので、自分の画面の数字に直してください。対象DMGは、対通常・対ボスなど狙う敵に当てはまる分の合計です。</span>
+          <div class="row"><span class="small" style="flex:1 1 220px">武器を選ぶと設計図の値が入ります。星やレベルで変わるので、自分の画面の数字に直してください。対象DMGは、対通常・対ボスなど狙う敵に当てはまる分の合計です。</span><button type="button" class="btn" id="fillBp">設計図の値に戻す</button></div>
         </div>
       <div class="grp" id="kwGroup">
         <div class="grp-t">キーワードDMG（画面の値）</div>
@@ -517,6 +514,10 @@ body.pro .card.pro-only{display:block!important}
 
     <section data-tab="w" class="card s-info">
       <div class="step-h"><h3>この武器について</h3></div>
+      <div class="bp" style="margin:0 0 14px">
+        <div class="bp-h"><span>設計図の値（スクショを撮ったときの星）</span></div>
+        <div class="specs" id="pSpecs"></div>
+      </div>
       <p class="point" id="pNote"></p>
       <details class="trait"><summary>ゲーム内の武器特性を読む</summary><p id="pTrait"></p></details>
       <div class="fine">
