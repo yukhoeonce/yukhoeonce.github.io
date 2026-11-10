@@ -353,6 +353,30 @@ body.pro .card.pro-only{display:block!important}
 .chips button[aria-pressed="true"]{border-color:var(--sel);color:var(--sel-ink);background:var(--sel)}
 .chips button[aria-pressed="true"] small{color:var(--sel-ink);opacity:.75}
 .chips.lv button{min-width:3.2em;align-items:center;font-family:var(--f-num);font-weight:600;font-size:15px}
+.big3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.big{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0;min-height:96px;border:1px solid var(--line-2);background:var(--surface);border-radius:12px;padding:12px 34px 12px 14px;cursor:pointer;color:var(--ink);text-align:left}
+.big:hover{border-color:var(--ink-2)}
+.big i{font-style:normal;font-size:12.5px;font-weight:700;color:var(--muted)}
+.big b{font-size:19px;font-weight:900;line-height:1.3;overflow-wrap:anywhere}
+.big span{font-size:12px;color:var(--ink-2)}
+.big em{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-style:normal;font-size:26px;color:var(--muted)}
+.chh{display:flex;gap:12px;align-items:center;position:sticky;top:0;z-index:1;background:var(--surface);padding-bottom:8px}
+.chh div{display:flex;flex-direction:column;min-width:0}.chh b{font-size:18px;font-weight:900}
+.chs{display:flex;align-items:center;gap:8px;border:1px solid var(--line-2);border-radius:10px;padding:0 12px;background:var(--field)}
+.chs input{flex:1;min-width:0;border:0;background:transparent;font-size:16px;padding:10px 0;outline:none;color:var(--ink)}
+.ctiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}
+.ctiles button{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:2px;min-height:62px;border:1px solid var(--line-2);background:var(--surface);border-radius:10px;padding:10px 14px;cursor:pointer;color:var(--ink);text-align:left;min-width:0}
+.ctiles button b{font-size:16px;font-weight:700;line-height:1.3;overflow-wrap:anywhere}
+.ctiles button small{font-size:12px;color:var(--muted)}
+.ctiles button:hover{border-color:var(--ink-2)}
+.ctiles button[aria-pressed="true"]{border-color:var(--sel);background:var(--sel);color:var(--sel-ink)}
+.ctiles button[aria-pressed="true"] small{color:var(--sel-ink);opacity:.75}
+.ctiles.lvt{grid-template-columns:repeat(6,minmax(0,1fr))}
+.ctiles.lvt button{align-items:center;min-height:56px}.ctiles.lvt button b{font-family:var(--f-num);font-size:20px;font-weight:600}
+.ctiles.lvt button:first-child{grid-column:span 2}
+#mods.choosing .pbox{height:100%}
+#mods.choosing .mcond,#mods.choosing .mfoot,#mods.choosing .mbox>p.small,#mods.choosing .phead{display:none}
+@media (max-width:640px){.big3{grid-template-columns:1fr;gap:8px}.big{min-height:0;padding:9px 34px 9px 14px;gap:1px}.big b{font-size:17px}.ctiles{grid-template-columns:repeat(2,minmax(0,1fr))}.ctiles.lvt{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .eqprev{background:var(--field);border-radius:9px;padding:9px 12px;font-size:13px;font-weight:700}
 .eqprev .mfx{font-size:13px;font-weight:500;margin-top:2px}
 .mfx{font-size:12px;color:var(--ink-2);line-height:1.5;overflow-wrap:anywhere}
@@ -880,7 +904,7 @@ body.pro .card.pro-only{display:block!important}
   function applyMods(v){const d=modDelta(); v.gunDmg+=d.gun||0; v.critDmg+=d.critDmg||0; v.wsDmg+=d.ws||0; v.status+=d.status||0; v.elem+=d.elem||0; v.target+=d.target||0; v.kwWs+=d.kwWs||0; v.kwCrit+=d.kwCrit||0; KWK.forEach(k=>{v.kw[k]+=d['kw.'+k]||0}); v.critRate+=d.critRate||0; v.kwFinal+=d.kwFinal||0; if(d.atkP){v.atk*=1+P(d.atkP);} if(d.noWs){v.wsDmg=0; v.kwWs=0} return v}
   function modGain(){const w=W(wid), a=w.a[sel]||w.a[0], b=expected(read(true),a), m=expected(read(),a); return {a,g:b>0?(m/b-1)*100:0}}
   const SCODE={weapon:'WPN',helmet:'HEAD',top:'TOP',bottom:'LEG',shoes:'FOOT',glove:'HAND',mask:'MASK'};
-  let lay='try', editing=null;
+  let lay='try', editing=null, choose=null;
   const same=(a,b)=>{a=a||[];b=b||[];return (a[0]||'')===(b[0]||'')&&(a[2]||'')===(b[2]||'')&&((a[0]||a[2])?(a[1]||17)===(b[1]||17):true)};
   const lvName=l=>l===18?'閃光':'Lv'+(l||17);
   const pickName=p=>{if(!p)return 'なし'; const M=MAINS[p[2]], X=MODX[p[0]]; return (M?M.n:'メイン効果なし')+`<span class="small">（${X?X.n:'拡張要素なし'}・${lvName(p[1])}）</span>`};
@@ -897,12 +921,21 @@ body.pro .card.pro-only{display:block!important}
     h+=`<div class="side2">${sd('cur')}<span class="arw" aria-hidden="true">→</span>${sd('try')}</div>`;
     h+=`<p class="small" style="margin:0">${lay==='cur'?'ステータス画面の数字には、いま付けているMODの分がもう入っています。まずそれを選んでください。':'付け替えたいMODを選びます。いまと同じなら「付け替えない」のままで大丈夫です。'}</p>`;
     if(lay==='try')h+=`<div class="chips">${chip('t-same',same(MS.cur[id],MS.try[id]),'付け替えない（いまと同じ）')}</div>`;
-    if(mains.length)h+=`<div class="eqsec"><span class="eqt"><em>${no++}</em>メイン効果（MODの名前）</span><div class="chips">${chip('m-',!p[2],'なし')}${mains.map(m=>chip('m-'+m,p[2]===m,MAINS[m].n,MAINS[m].t||MAINS[m].note||MAINS[m].etc)).join('')}</div></div>`;
-    h+=`<div class="eqsec"><span class="eqt"><em>${no++}</em>拡張要素（名前の横の＜＞）</span><div class="chips">${chip('x-',!p[0],'なし')}${list.map(x=>chip('x-'+x,p[0]===x,MODX[x].n)).join('')}</div></div>`;
-    let lv=chip('l-18',p[1]===18,'閃光'); for(let i=17;i>=1;i--)lv+=chip('l-'+i,(p[1]||17)===i,i); h+=`<div class="eqsec"><span class="eqt"><em>${no++}</em>レベル</span><div class="chips lv">${lv}</div></div>`;
+    const cur3={m:p[2]&&MAINS[p[2]]?MAINS[p[2]].n:'なし', x:p[0]&&MODX[p[0]]?MODX[p[0]].n:'なし', l:lvName(p[1])};
+    const sub3={m:p[2]&&MAINS[p[2]]?(MAINS[p[2]].t||MAINS[p[2]].note||MAINS[p[2]].etc||''):'', x:'', l:p[1]===18?'Lv17＋閃光効果':''};
+    const big=(c,t,hint)=>`<button type="button" class="big" data-act="choose" data-c="${c}" data-k="c-${c}"><i>${t}</i><b>${cur3[c]}</b><span>${sub3[c]||hint}</span><em aria-hidden="true">›</em></button>`;
+    if(choose){h=renderChooser(id,nm,list,mains,p); $('modList').innerHTML=`<div class="eqed">${h}</div>`; return}
+    h+=`<div class="big3">${mains.length?big('m','メイン効果','MODの名前'):''}${big('x','拡張要素','名前の横の＜＞')}${big('l','レベル','MODの右上の数字')}</div>`;
     h+=`<div class="eqprev">この枠の効果<div class="mfx">${MS[lay][id]?(fxText(modStats(MS[lay][id]))||'<s>計算に入る効果なし</s>'):'<s>未装備</s>'}</div></div>`;
     $('modList').innerHTML=`<div class="eqed">${h}</div>`}
-  function renderModList(){if(editing)renderEditor(); else renderEquip(); updateMods()}
+  const CHT={m:'メイン効果',x:'拡張要素',l:'レベル'};
+  function renderChooser(id,nm,list,mains,p){let h=`<div class="chh"><button type="button" class="btn" data-act="unchoose" data-k="unchoose">← もどる</button><div><b>${CHT[choose]}を選ぶ</b><span class="small">${nm}・${lay==='cur'?'① いま付けているMOD':'② 付け替えたいMOD'}</span></div></div>`;
+    const tile=(k,on,label,small)=>`<button type="button" data-k="${k}" aria-pressed="${on}"><b>${label}</b>${small?`<small>${small}</small>`:''}</button>`;
+    if(choose==='l'){let g=tile('l-18',p[1]===18,'閃光','Lv17＋閃光効果'); for(let i=17;i>=1;i--)g+=tile('l-'+i,p[1]!==18&&(p[1]||17)===i,i); return h+`<div class="ctiles lvt">${g}</div>`}
+    const items=choose==='m'?mains.map(m=>['m-'+m,p[2]===m,MAINS[m].n,MAINS[m].t||MAINS[m].note||MAINS[m].etc]):list.map(x=>['x-'+x,p[0]===x,MODX[x].n,'']);
+    if(items.length>8)h+=`<label class="chs"><span aria-hidden="true">🔍</span><input type="search" id="chq" placeholder="名前で探す" autocomplete="off"></label>`;
+    return h+`<div class="ctiles" id="chl">${tile(choose+'-',choose==='m'?!p[2]:!p[0],'なし')}${items.map(a=>tile(...a)).join('')}</div><p class="small chnone" id="chn" hidden>見つかりません。</p>`}
+  function renderModList(){$('mods').classList.toggle('choosing',!!(editing&&choose));if(editing)renderEditor(); else renderEquip(); updateMods()}
   function usedConds(){const u=new Set(); SLOTS.forEach(([id])=>['cur','try'].forEach(w=>{const p=MS[w][id]; if(p&&MODX[p[0]])MODX[p[0]].s.forEach(d=>{if(d[3])u.add(d[3])})})); return u}
   function renderCond(){const u=usedConds(); let h=''; const um=SLOTS.some(([id])=>['cur','try'].some(w=>{const q=MS[w][id]; return q&&MAINS[q[2]]&&MAINS[q[2]].c}));
     if(um)h+=`<button type="button" data-c="mainC" aria-pressed="${!!MS.cond.mainC}">メイン効果の条件を満たす（最大）</button>`;
@@ -916,7 +949,7 @@ body.pro .card.pro-only{display:block!important}
     $('modDelta').innerHTML=`${gs}${label(a)}の期待値<br><span class="small">${t}</span>`;
     $('modSum').innerHTML=`MODを付け替えると ${label(a)} ${gs}（${t}）`}
   let mOpener=null;
-  function openMods(){mOpener=document.activeElement; editing=null; renderCond(); renderModList(); $('mods').hidden=false; requestAnimationFrame(()=>requestAnimationFrame(()=>$('mods').classList.add('open')))}
+  function openMods(){mOpener=document.activeElement; editing=null; choose=null; renderCond(); renderModList(); $('mods').hidden=false; requestAnimationFrame(()=>requestAnimationFrame(()=>$('mods').classList.add('open')))}
   function closeMods(){const p=$('mods'); if(p.hidden)return; p.classList.remove('open'); setTimeout(()=>{p.hidden=true},RM.matches?0:260); if(mOpener&&mOpener.focus)mOpener.focus()}
 
   /* ---- 入力 ---- */
@@ -1127,12 +1160,15 @@ body.pro .card.pro-only{display:block!important}
     if(p[0]||p[2])MS[lay][id]=p; else delete MS[lay][id];
     if(lay==='cur'&&same(old,MS.try[id])){if(MS.cur[id])MS.try[id]=[...MS.cur[id]]; else delete MS.try[id]}}
   $('modList').addEventListener('click',e=>{const t=e.target.closest('button'); if(!t)return; const k=t.dataset.k;
-    if(t.dataset.slot){editing=t.dataset.slot; lay=MS.cur[editing]?'try':'cur'; renderModList(); const f=$('modList').querySelector('[data-act="back"]'); f&&f.focus(); $('modList').scrollTop=0; return}
-    if(t.dataset.act==='back'){const id=editing; editing=null; renderModList(); const f=$('modList').querySelector(`[data-k="s-${id}"]`); f&&f.focus(); return}
-    if(t.dataset.act==='side'){lay=t.dataset.w; renderModList(); const f=$('modList').querySelector(`[data-k="${k}"]`); f&&f.focus(); return}
+    if(t.dataset.slot){choose=null; editing=t.dataset.slot; lay=MS.cur[editing]?'try':'cur'; renderModList(); const f=$('modList').querySelector('[data-act="back"]'); f&&f.focus(); $('modList').scrollTop=0; return}
+    if(t.dataset.act==='choose'){choose=t.dataset.c; renderModList(); $('modList').scrollTop=0; const q=$('chq')||$('modList').querySelector('.ctiles [aria-pressed="true"]')||$('modList').querySelector('[data-act="unchoose"]'); q&&q.focus({preventScroll:true}); return}
+    if(t.dataset.act==='unchoose'){const c=choose; choose=null; renderModList(); const f=$('modList').querySelector(`[data-k="c-${c}"]`); f&&f.focus(); return}
+    if(t.dataset.act==='back'){const id=editing; editing=null; choose=null; renderModList(); const f=$('modList').querySelector(`[data-k="s-${id}"]`); f&&f.focus(); return}
+    if(t.dataset.act==='side'){choose=null; lay=t.dataset.w; renderModList(); const f=$('modList').querySelector(`[data-k="${k}"]`); f&&f.focus(); return}
     if(k==='t-same'){if(MS.cur[editing])MS.try[editing]=[...MS.cur[editing]]; else delete MS.try[editing]; saveMods(); renderCond(); rerender(); renderModList(); return}
-    if(t.dataset.act==='clear'){const id=editing; delete MS.cur[id]; delete MS.try[id]; editing=null; saveMods(); renderCond(); rerender(); renderModList(); const f=$('modList').querySelector(`[data-k="s-${id}"]`); f&&f.focus(); return}
-    if(!editing||!k)return; const f=k[0], v=k.slice(2); setPick(editing,f,v); saveMods(); renderCond(); rerender(); renderModList(); const n=$('modList').querySelector(`[data-k="${k}"]`); n&&n.focus()});
+    if(t.dataset.act==='clear'){const id=editing; delete MS.cur[id]; delete MS.try[id]; editing=null; choose=null; saveMods(); renderCond(); rerender(); renderModList(); const f=$('modList').querySelector(`[data-k="s-${id}"]`); f&&f.focus(); return}
+    if(!editing||!k)return; const f=k[0], v=k.slice(2); setPick(editing,f,v); const wasC=choose; choose=null; saveMods(); renderCond(); rerender(); renderModList(); const n=$('modList').querySelector(wasC?`[data-k="c-${f}"]`:`[data-k="${k}"]`); n&&n.focus()});
+  $('modList').addEventListener('input',e=>{if(e.target.id!=='chq')return; const q=e.target.value.trim().toLowerCase(); let n=0; $('chl').querySelectorAll('button').forEach(b=>{const hit=!q||b.textContent.toLowerCase().includes(q); b.hidden=!hit; if(hit)n++}); $('chn').hidden=n>0});
   $('modCond').addEventListener('click',e=>{const b=e.target.closest('button[data-c]'); if(!b)return; MS.cond[b.dataset.c]=!MS.cond[b.dataset.c]; b.setAttribute('aria-pressed',!!MS.cond[b.dataset.c]); saveMods(); rerender()});
   $('modCond').addEventListener('input',e=>{if(e.target.id!=='mDist')return; const n=parseFloat(e.target.value); MS.dist=isFinite(n)?n:15; saveMods(); rerender()});
   $('modReset').addEventListener('click',()=>{MS.cur={};MS.try={};editing=null;saveMods();renderCond();rerender();renderModList()});
@@ -1145,7 +1181,7 @@ body.pro .card.pro-only{display:block!important}
   $('q').addEventListener('input',()=>{if($('q').value.trim())cat='すべて';renderPicker()});
   $('q').addEventListener('keydown',e=>{if(e.key==='Enter'){const b=$('wlist').querySelector('button[data-w]'); if(b){e.preventDefault();chooseWeapon(b.dataset.w)}}});
   addEventListener('keydown',e=>{
-    if(e.key==='Escape'){if(!$('mods').hidden&&editing){editing=null;renderModList();return} closePicker();closeMods()}
+    if(e.key==='Escape'){if(!$('mods').hidden&&editing){if(choose){const c=choose; choose=null; renderModList(); const f=$('modList').querySelector(`[data-k="c-${c}"]`); f&&f.focus(); return} editing=null;renderModList();return} closePicker();closeMods()}
     if(e.key==='/'&&$('picker').hidden&&$('mods').hidden&&!/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();openPicker()}
   });
   $('atabs').addEventListener('click',e=>{const b=e.target.closest('.atab');if(!b)return;sel=+b.dataset.i;const gs=$('gainAtk');if(gs.options.length)gs.value=String(sel);rerender()});
