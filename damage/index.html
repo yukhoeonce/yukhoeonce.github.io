@@ -535,11 +535,12 @@ body.pro .card.pro-only{display:block!important}
         <div class="grp-t">キーワードDMG（画面の値）</div>
         <div class="fields" id="kwFields"></div>
       </div>
-        <button type="button" class="btn primary tab-next" data-go="m">次へ：MODを付け替えてみる →</button>
+        <button type="button" class="btn primary tab-next" data-go="m">次へ：いまのMODと比べる →</button>
       </section>
 
       <section data-tab="m" class="card">
-        <div class="step-h"><span class="no">3</span><h3>MODを付け替えてみる</h3><span class="aside">なくても計算できます</span></div>
+        <div class="step-h"><span class="no">3</span><h3>いまのMODと比べる</h3><span class="aside">なくても計算できます</span></div>
+        <p class="small">2の数字には、いま付けているMODの分がもう入っています。ここでは「別のMODに替えたら何%変わるか」だけを出します。</p>
         <button type="button" class="btn modbtn" id="modOpen" aria-haspopup="dialog">装備画面をひらく<em>付け替えたら何%変わる？</em></button>
         <div class="modsum" id="modSum"></div>
         <button type="button" class="btn primary tab-next" data-go="r">結果を見る →</button>
@@ -636,7 +637,7 @@ body.pro .card.pro-only{display:block!important}
 <div class="picker" id="mods" hidden role="dialog" aria-modal="true" aria-label="装備画面">
   <div class="pbox mbox">
     <div class="phead">
-      <div class="mhd"><b>MODを付け替えてみる</b><span class="small">枠を押して「いま付けているMOD」と「付け替えたいMOD」を選ぶと、付け替えたときに何%変わるかが出ます。</span></div>
+      <div class="mhd"><b>いまのMODと比べる</b><span class="small">枠を押して「いま付けているMOD」と「付け替えたいMOD」を選ぶと、付け替えたときに何%変わるかが出ます。</span></div>
       <button type="button" class="x" id="modClose" aria-label="閉じる">✕</button>
     </div>
     <div class="mlist" id="modList"></div>
@@ -1048,10 +1049,10 @@ body.pro .card.pro-only{display:block!important}
     $('modCond').innerHTML=h||'<span class="small">条件つきのMOD（オーメン・虚実など）を選ぶと、ここに条件のスイッチが出ます。</span>'}
   function updateMods(){
     const d=modDelta(), t=fxText(d,true);
-    if(!t){$('modSum').textContent='今のMODのまま計算しています。';$('modDelta').innerHTML=Object.keys(MS.cur).length||Object.keys(MS.try).length?'付け替えがないので、計算は変わりません。枠を押して「② 付け替えたいMOD」を選んでください。':'枠を押して、いま付けているMODと付け替えたいMODを選びます。';return}
+    if(!t){$('modSum').textContent='いまのMODのまま計算しています（2の数字にMODの分は入っています）。';$('modDelta').innerHTML=Object.keys(MS.cur).length||Object.keys(MS.try).length?'付け替えがないので、計算は変わりません。枠を押して「② 付け替えたいMOD」を選んでください。':'枠を押して、いま付けているMODと付け替えたいMODを選びます。';return}
     const {a,g}=modGain(), gs=`<b class="${g<0?'neg':''}">${g>=0?'+':'−'}${Math.abs(g).toFixed(1)}%</b>`;
     $('modDelta').innerHTML=`${gs}${label(a)}の期待値<br><span class="small">${t}</span>`;
-    $('modSum').innerHTML=`MODを付け替えると ${label(a)} ${gs}（${t}）`}
+    $('modSum').innerHTML=`②のMODに替えると ${label(a)} ${gs}（${t}）`}
   let mOpener=null;
   function openMods(){mOpener=document.activeElement; editing=null; choose=null; renderCond(); renderModList(); $('mods').hidden=false; requestAnimationFrame(()=>requestAnimationFrame(()=>$('mods').classList.add('open')))}
   function closeMods(){const p=$('mods'); if(p.hidden)return; p.classList.remove('open'); setTimeout(()=>{p.hidden=true},RM.matches?0:260); if(mOpener&&mOpener.focus)mOpener.focus()}
