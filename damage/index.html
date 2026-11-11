@@ -397,6 +397,9 @@ body.pro .card.pro-only{display:block!important}
 .ctiles button:hover{border-color:var(--ink-2)}
 .ctiles button[aria-pressed="true"]{border-color:var(--sel);background:var(--sel);color:var(--sel-ink)}
 .ctiles button[aria-pressed="true"] small{color:var(--sel-ink);opacity:.75}
+.cgrps{display:flex;flex-direction:column;gap:18px}
+.cgrp h4{margin:0 0 8px;font-size:13px;font-weight:700;color:var(--ink-2);letter-spacing:.04em;display:flex;align-items:center;gap:8px;padding-bottom:6px;border-bottom:1px solid var(--line-2)}
+.cgrp h4 span{font-size:11px;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--sel);color:var(--sel-ink);letter-spacing:0}
 .ctiles.lvt{grid-template-columns:repeat(6,minmax(0,1fr))}
 .ctiles.lvt button{align-items:center;min-height:56px}.ctiles.lvt button b{font-family:var(--f-num);font-size:20px;font-weight:600}
 .ctiles.lvt button:first-child{grid-column:span 2}
@@ -975,6 +978,7 @@ body.pro .card.pro-only{display:block!important}
   };
   Object.assign(SN,{critRate:'クリ率',kwFinal:'KW最終DMG',atkP:'攻撃力%',noWs:'弱点DMGなし',mark:'マーク',artBomb:'クリ率→爆弾DMG'});
   CALC.push('critRate','kwFinal','atkP','mark','artBomb');
+  const WGROUPS=[['火傷','burn',['wFlameReso','wEmber','wFlameGuard','wWildBurn']],['フロストボルテックス','frost',['wIceCore','wCryo','wFrostBreak','wFrostGuard']],['パワーサージ','surge',['wTransient','wSurgeAmp','wSurgeFreq','wSurgeSpread']],['不安定爆弾','bomber',['wBombCharge','wExplArt','wBombLoot','wBombHeavy']],['スプレッドガン','spread',['wAllCrush','wShieldPen','wBlastHead','wSpreadLoot']],['バウンス','bounce',['wChain','wMultiBounce','wHiBounce','wBounceFreq']],['ラピッドガン','rapid',['wRapidKeep','wAccurate','wSmoke','wCowboy']],['ハンティングマーク','mark',['wMarkAmp','wMarkHeal','wHunterGuard','wMarkSpread']],['ウェポンバースト','wburst',['wUnity','wEndBurst','wContBurst','wPortable']]];
   const MAINOF={}; for(const k in MAINS)(MAINOF[MAINS[k].slot]=MAINOF[MAINS[k].slot]||[]).push(k);
   const MS={cur:{},try:{},cond:{mainC:true},dist:5};
   try{const m=JSON.parse(localStorage.getItem(KEY+'-mods')||'null'); if(m){Object.assign(MS.cur,m.cur||{});Object.assign(MS.try,m.try||{});Object.assign(MS.cond,m.cond||{}); if(isFinite(m.dist))MS.dist=m.dist}}catch(e){}
@@ -1027,7 +1031,13 @@ body.pro .card.pro-only{display:block!important}
     const tile=(k,on,label,small)=>`<button type="button" data-k="${k}" aria-pressed="${on}"><b>${label}</b>${small?`<small>${small}</small>`:''}</button>`;
     if(choose==='l'){let g=tile('l-18',p[1]===18,'閃光','Lv17＋閃光効果'); for(let i=17;i>=1;i--)g+=tile('l-'+i,p[1]!==18&&(p[1]||17)===i,i); return h+`<div class="ctiles lvt">${g}</div>`}
     const items=choose==='m'?mains.map(m=>['m-'+m,p[2]===m,MAINS[m].n,MAINS[m].t||MAINS[m].note||MAINS[m].etc]):list.map(x=>['x-'+x,p[0]===x,MODX[x].n,'']);
+    const WG=choose==='m'&&mains.length&&MAINS[mains[0]].slot==='weapon';
     if(items.length>8)h+=`<label class="chs"><span aria-hidden="true">🔍</span><input type="search" id="chq" placeholder="名前で探す" autocomplete="off"></label>`;
+    if(WG){const mine=new Set(W(wid).a.map(a=>a.kwOf||a.k)), im=new Map(items.map(a=>[a[0].slice(2),a]));
+      const gs=WGROUPS.map(g=>[g,mine.has(g[1])]).sort((x,y)=>y[1]-x[1]);
+      let g=`<div class="ctiles">${tile('m-',!p[2],'なし')}</div>`;
+      gs.forEach(([[lab,k,ids],on])=>{const its=ids.filter(i=>im.has(i)).map(i=>tile(...im.get(i))).join(''); if(its)g+=`<section class="cgrp${on?' mine':''}"><h4>${lab}${on?'<span>いまの武器</span>':''}</h4><div class="ctiles">${its}</div></section>`});
+      return h+`<div id="chl" class="cgrps">${g}</div><p class="small chnone" id="chn" hidden>見つかりません。</p>`}
     return h+`<div class="ctiles" id="chl">${tile(choose+'-',choose==='m'?!p[2]:!p[0],'なし')}${items.map(a=>tile(...a)).join('')}</div><p class="small chnone" id="chn" hidden>見つかりません。</p>`}
   function renderModList(){$('mods').classList.toggle('choosing',!!(editing&&choose));if(editing)renderEditor(); else renderEquip(); updateMods()}
   function usedConds(){const u=new Set(); SLOTS.forEach(([id])=>['cur','try'].forEach(w=>{const p=MS[w][id]; if(p&&MODX[p[0]])MODX[p[0]].s.forEach(d=>{if(d[3])u.add(d[3])})})); return u}
@@ -1262,7 +1272,7 @@ body.pro .card.pro-only{display:block!important}
     if(k==='t-same'){if(MS.cur[editing])MS.try[editing]=[...MS.cur[editing]]; else delete MS.try[editing]; saveMods(); renderCond(); rerender(); renderModList(); return}
     if(t.dataset.act==='clear'){const id=editing; delete MS.cur[id]; delete MS.try[id]; editing=null; choose=null; saveMods(); renderCond(); rerender(); renderModList(); const f=$('modList').querySelector(`[data-k="s-${id}"]`); f&&f.focus(); return}
     if(!editing||!k)return; const f=k[0], v=k.slice(2); setPick(editing,f,v); const wasC=choose; choose=null; saveMods(); renderCond(); rerender(); renderModList(); const n=$('modList').querySelector(wasC?`[data-k="c-${f}"]`:`[data-k="${k}"]`); n&&n.focus()});
-  $('modList').addEventListener('input',e=>{if(e.target.id!=='chq')return; const q=e.target.value.trim().toLowerCase(); let n=0; $('chl').querySelectorAll('button').forEach(b=>{const hit=!q||b.textContent.toLowerCase().includes(q); b.hidden=!hit; if(hit)n++}); $('chn').hidden=n>0});
+  $('modList').addEventListener('input',e=>{if(e.target.id!=='chq')return; const q=e.target.value.trim().toLowerCase(); let n=0; $('chl').querySelectorAll('button').forEach(b=>{const hit=!q||b.textContent.toLowerCase().includes(q); b.hidden=!hit; if(hit)n++}); $('chl').querySelectorAll('.cgrp').forEach(g=>{g.hidden=![...g.querySelectorAll('button')].some(b=>!b.hidden)}); $('chn').hidden=n>0});
   $('modCond').addEventListener('click',e=>{const b=e.target.closest('button[data-c]'); if(!b)return; MS.cond[b.dataset.c]=!MS.cond[b.dataset.c]; b.setAttribute('aria-pressed',!!MS.cond[b.dataset.c]); saveMods(); rerender()});
   $('modCond').addEventListener('input',e=>{if(e.target.id!=='mDist')return; const n=parseFloat(e.target.value); MS.dist=isFinite(n)?n:15; saveMods(); rerender()});
   $('modReset').addEventListener('click',()=>{MS.cur={};MS.try={};editing=null;saveMods();renderCond();rerender();renderModList()});
