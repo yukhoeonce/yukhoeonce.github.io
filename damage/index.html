@@ -352,6 +352,21 @@ body.pro .card.pro-only{display:block!important}
 .eqs .ln.same{color:var(--muted);font-weight:500}
 .eqgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(140px,190px) minmax(0,1fr);gap:8px 14px;align-items:center}
 .eqcol{display:flex;flex-direction:column;gap:8px;min-width:0}
+.arbox{margin-top:14px;border-top:1px solid var(--line-2);padding-top:12px;display:flex;flex-direction:column;gap:8px}
+.arbox h4{margin:0;font-size:15px}
+.arbox>p.small{margin:0}
+.arside{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:start}
+.arside .arw{align-self:center;color:var(--muted)}
+.arcol{display:flex;flex-direction:column;gap:6px;min-width:0}
+.arcol i{font-style:normal;font-size:12px;font-weight:700;color:var(--muted)}
+.arrow2{display:flex;gap:6px}
+.arcol select{min-width:0;width:100%;font-size:15px;padding:8px 10px;border:1px solid var(--line-2);border-radius:8px;background:var(--surface);color:var(--ink)}
+.arrow2 select[data-ar$=".n"]{width:auto;flex:none}
+.ardesc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;font-size:13px}
+.ardesc>div{background:var(--field);border-radius:8px;padding:8px 10px;min-width:0}
+.ardesc ol{margin:4px 0 0;padding-left:1.4em}.ardesc li{color:var(--muted)}.ardesc li.on{color:var(--ink)}
+.ardesc p{margin:4px 0 0}
+@media (max-width:620px){.arside{grid-template-columns:minmax(0,1fr)}.arside .arw{display:none}.ardesc{grid-template-columns:minmax(0,1fr)}}
 .eqfig{align-self:stretch;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--line-2)}
 .eqfig svg{width:100%;max-width:170px;height:auto}
 .eqfig .tag{font-family:var(--f-num);font-weight:700;font-size:13px;color:var(--muted)}
@@ -982,6 +997,56 @@ body.pro .card.pro-only{display:block!important}
   const WGROUPS=[['火傷','burn',['wFlameReso','wEmber','wFlameGuard','wWildBurn']],['フロストボルテックス','frost',['wIceCore','wCryo','wFrostBreak','wFrostGuard']],['パワーサージ','surge',['wTransient','wSurgeAmp','wSurgeFreq','wSurgeSpread']],['不安定爆弾','bomber',['wBombCharge','wExplArt','wBombLoot','wBombHeavy']],['スプレッドガン','spread',['wAllCrush','wShieldPen','wBlastHead','wSpreadLoot']],['バウンス','bounce',['wChain','wMultiBounce','wHiBounce','wBounceFreq']],['ラピッドガン','rapid',['wRapidKeep','wAccurate','wSmoke','wCowboy']],['ハンティングマーク','mark',['wMarkAmp','wMarkHeal','wHunterGuard','wMarkSpread']],['ウェポンバースト','wburst',['wUnity','wEndBurst','wContBurst','wPortable']]];
   const KWTXT=[['mark',/ハンティングマーク|マーク/],['rapid',/ラピッドガン|ガンスリンガー/],['wburst',/ウェポンバースト/],['burn',/火傷/],['frost',/フロストボルテックス/],['surge',/パワーサージ/],['bomber',/不安定爆弾/],['spread',/スプレッドガン/],['bounce',/バウンス/]];
   function wKeys(w){const m=new Set(w.a.map(a=>a.kwOf||a.k)); let best=null,bi=1e9; KWTXT.forEach(([k,r])=>{const x=(w.t||'').search(r); if(x>=0&&x<bi){bi=x;best=k}}); if(best)m.add(best); return m}
+  // 防具セット（2026-11-11 ユッケの設計図スクショ）。t=段ごとの説明、a=いつも、c=条件を満たしたとき
+  const ASETS={
+    lone:{n:'ローンウルフ',t:['マガジン+10%','クリ率+5%','クリ2回で孤影＝クリDMG+6%（最大8）','孤影の上限10・リロード後2秒クリ率+8%'],a:[0,{critRate:5}],c:[0,0,{critDmg:48},{critDmg:12}],ct:'孤影が最大'},
+    rebel:{n:'反逆者',t:['リロード効率+10%','弱点DMG+10%','同じ敵に連続命中で弱点DMG+4%（最大10）','前マガジンの弱点命中率で弾を装填'],a:[0,{ws:10}],c:[0,0,{ws:40}],ct:'シューター集中が最大'},
+    savior:{n:'セイビアー',t:['薬品CD-20%','シールド中 銃器・状態異常DMG+10%','HP消費ごとに銃器・状態異常DMG+5%（最大4）','HP30%未満で治療薬を自動使用'],c:[0,{gun:10,status:10},{gun:20,status:20}],ct:'シールド中・4スタック'},
+    asylum:{n:'アサイラム',t:['状態異常DMG軽減15%','エレメントDMG+8%','銃器命中でエレメントDMG+1%（最大20）','上限+10・弱点で2スタック'],a:[0,{elem:8}],c:[0,0,{elem:20},{elem:10}],ct:'異能が最大'},
+    storm:{n:'ストームウィーバー',t:['ローリングのスタミナ-20%','マガジン+15%','被弾でDMG軽減+4%（最大6）','ローリングで爆発・HP回復']},
+    bastille:{n:'バスティーユ',t:['HP70%超で銃器DMG+10%','リロード効率+15%','0.5秒しゃがむと銃器DMG+40%','しゃがみ後アーマー→シールド'],c:[{gun:10},0,{gun:40}],ct:'HP70%超・しゃがみ中'},
+    blackstone:{n:'ブラックストーン',t:['寒冷・酷暑耐性2.5','エレメントDMGで温感＝エレメント+2%（最大5）','周囲10〜30℃で温和＝エレメント+18%','温感5で温和・10〜30℃なら追加+7%'],c:[0,{elem:10},{elem:18},{elem:7}],ct:'温感5・10〜30℃'},
+    crisis:{n:'クライシスランド',t:['銃器DMG軽減10%','HP70%未満で銃器・状態異常DMG+12%','HPが減るほど銃器・状態異常DMG 8%〜28%','HP40%未満でシールド30%'],a:[0,0,{gun:8,status:8}],c:[0,{gun:12,status:12},{gun:20,status:20}],ct:'HP60%以下'},
+    ghost:{n:'ゴーストリンク',t:['クリ率+3%','リロード効率+15%','銃器ダメージでシンクロ＝銃器DMG+3%（最大10）','シンクロ10で周囲に状態異常DMG（未計算）'],a:[{critRate:3}],c:[0,0,{gun:30}],ct:'シンクロが最大'},
+    darkskull:{n:'ダークスカル',t:['必殺技でシールド10%','異常エネルギーが満タンでない時 銃器・状態異常DMG+12%','エネルギー消費で銃器・状態異常DMG 最大+30%','戦闘スキルのCD半減'],c:[0,{gun:12,status:12},{gun:30,status:30}],ct:'エネルギー消費が最大'},
+    gravity:{n:'重力の潮流',t:['ジャンプ+10%','マガジン+15%','空中移動で銃器・状態異常DMG+2%（最大12）','8スタック超で銃器・状態異常DMG+15%'],c:[0,0,{gun:24,status:24},{gun:15,status:15}],ct:'空中で最大スタック'}
+  };
+  // 重要な防具（主要効果は1つだけ有効）
+  const AKEYS={
+    kPrison:{n:'牢獄ヘルメット',p:'ヘルメット',etc:'スプレッドガンが追加で1回発動'},
+    kAirtight:{n:'気密ヘルメット',p:'ヘルメット',etc:'スプレッドの命中部位1・係数+150%（未計算）'},
+    kYellow:{n:'黄色塗料マスク',p:'ヘルメット',etc:'撃破で周囲にパワーサージ1回'},
+    kGasHood:{n:'ガスマスクフード',p:'ヘルメット',etc:'サージ後クリ率+35%・サージ係数+15%（未計算）'},
+    kWindHood:{n:'ウィンドフード',p:'ヘルメット',etc:'爆弾で1発装填・爆弾係数+25%（未計算）'},
+    kDesert:{n:'デザートダストマスク',p:'マスク',etc:'ラピッドガン時70%で20発装填'},
+    kOasis:{n:'オアシスマスク',p:'マスク',c:{atkP:10},ct:'ラピッドガンのスタックが最大',etc:'ラピッドガン最大スタック+10、1スタックごと攻撃力+1%'},
+    kSpreader:{n:'スプレッダーマスク',p:'マスク',etc:'爆弾範囲+50%・範囲で係数アップ（未計算）'},
+    kAnka:{n:'アンカのマスク',p:'マスク',etc:'撃ち尽くし時40%でマガジン20%補充'},
+    kVulture:{n:'ハゲワシシャーマントップス',p:'トップス',c:{critRate:35},ct:'爆弾発動後3秒'},
+    kStealth:{n:'隠密行者シャツ',p:'トップス',etc:'ボルテックスのアイスコアで敵を吸い寄せ'},
+    kMagic:{n:'マジックトリガートップス',p:'トップス',etc:'ラピッドガン中、残弾が少ないほど追加弾（最大40%）'},
+    kBrokenSnow:{n:'ブロークンスノートップス',p:'トップス',c:{gun:25,status:25},ct:'異常粒子を拾ってから25秒'},
+    kSnowline:{n:'スノーラインエリートベスト',p:'トップス',c:{'kw.frost':25},ct:'ボルテックス5回生成',etc:'ボルテックス効果が追加で1回'},
+    kTwoTone:{n:'ツートンカラーズボン',p:'ボトムス',etc:'バウンス時70%で1発装填'},
+    kBraided:{n:'ブレイズドボン',p:'ボトムス',etc:'バウンスが追加で1回発動'},
+    kOverload:{n:'オーバーロードボトムス',p:'ボトムス',etc:'サージ20回後の6発 ショックDMG+20%（未計算）'},
+    kSlide:{n:'スライドボトムス',p:'ボトムス',etc:'スライド後リロード効率+100%'},
+    kVeteran:{n:'ベテラングローブ',p:'グローブ',etc:'火傷最大で炎上 超感覚強度300%（未計算）'},
+    kSnowCamo:{n:'雪原の迷彩グローブ',p:'グローブ',etc:'結晶破壊で氷ミサイル4つ 超感覚強度50%（未計算）'},
+    kMetallic:{n:'メタリックグローブ',p:'グローブ',etc:'火傷がクリティカルする・クリ率/クリDMG+20%（未計算）'},
+    kHardTac:{n:'ハードタクティカルブーツ',p:'シューズ',etc:'バースト中 1秒ごと1発リロード・射撃速度+15%'},
+    kCowboy:{n:'カウボーイブーツ',p:'シューズ',c:{atkP:25},ct:'ウェポンバースト中'},
+    kHunter:{n:'熟練ハンターブーツ',p:'シューズ',etc:'マーク後の次の1発が弱点扱い・マーク対象への弱点DMG+30%（未計算）'},
+    kBloody:{n:'ブラッディブーツ',p:'シューズ',c:{atkP:20},ct:'マーク中の敵にマークしてから5秒'},
+    kSpin:{n:'スピンステップブーツ',p:'シューズ',etc:'デビエーション奥義で戦闘スキルCDリセット'},
+    kStep:{n:'ステップ革ブーツ（紫）',p:'シューズ',c:{mark:30},ct:'マーク中の敵（プロのマーク欄ON）'}
+  };
+  const setOn=()=>MS.cond.setC!==false;
+  function armorStats(w){const o={}, add=x=>{if(x)for(const k in x)o[k]=(o[k]||0)+x[k]};
+    const sp=(w==='try'&&!MS.try.$set)?MS.cur.$set:MS[w].$set; if(sp&&ASETS[sp[0]]){const S=ASETS[sp[0]]; for(let i=0;i<Math.min(4,sp[1]||0);i++){add((S.a||[])[i]); if(setOn())add((S.c||[])[i])}}
+    const kp=(w==='try'&&MS.try.$key===undefined)?MS.cur.$key:MS[w].$key; if(kp&&AKEYS[kp]){add(AKEYS[kp].a); if(setOn())add(AKEYS[kp].c)}
+    return o}
+  function armorUsesCond(){return ['cur','try'].some(w=>{const sp=MS[w].$set, kp=MS[w].$key; return (sp&&ASETS[sp[0]]&&ASETS[sp[0]].c)||(kp&&AKEYS[kp]&&AKEYS[kp].c)})}
   const MAINOF={}; for(const k in MAINS)(MAINOF[MAINS[k].slot]=MAINOF[MAINS[k].slot]||[]).push(k);
   const MS={cur:{},try:{},cond:{mainC:true},dist:5};
   try{const m=JSON.parse(localStorage.getItem(KEY+'-mods')||'null'); if(m){Object.assign(MS.cur,m.cur||{});Object.assign(MS.try,m.try||{});Object.assign(MS.cond,m.cond||{}); if(isFinite(m.dist))MS.dist=m.dist}}catch(e){}
@@ -996,7 +1061,8 @@ body.pro .card.pro-only{display:block!important}
       o[k]=(o[k]||0)+val});
     return o}
   function modDelta(){const d={}; SLOTS.forEach(([id])=>{const a=modStats(MS.cur[id]),b=modStats(MS.try[id]); if(b.noWs&&!a.noWs)d.noWs=1; delete a.noWs; delete b.noWs;
-    for(const k in b)d[k]=(d[k]||0)+b[k]; for(const k in a)d[k]=(d[k]||0)-a[k]}); return d}
+    for(const k in b)d[k]=(d[k]||0)+b[k]; for(const k in a)d[k]=(d[k]||0)-a[k]});
+    const A=armorStats('cur'), B=armorStats('try'); for(const k in B)d[k]=(d[k]||0)+B[k]; for(const k in A)d[k]=(d[k]||0)-A[k]; return d}
   const r1=x=>Math.round(x*10)/10;
   const sgn=x=>(x>0?'+':x<0?'−':'±')+Math.abs(r1(x));
   function fxText(o,only){const nw=o.noWs; o={...o}; delete o.noWs; const ks=Object.keys(o).filter(k=>Math.abs(o[k])>=0.05); if(!ks.length&&!nw)return ''; if(nw)return (ks.length?fxText(o,only)+' ':'')+'弱点DMGなし';
@@ -1014,7 +1080,18 @@ body.pro .card.pro-only{display:block!important}
   const FIG=`<svg viewBox="0 0 120 220" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="60" cy="24" r="14"/><path d="M48 26h24" stroke-width="3" stroke-linecap="round"/><path d="M42 46q18-8 36 0l6 52-10 4-4 26H50l-4-26-10-4z"/><path d="M42 50l-14 44 6 14M78 50l14 44-6 14"/><path d="M50 128l-6 76M70 128l6 76M40 204h10M70 204h10"/><path d="M84 106l28-4v6l-28 6z" stroke-width="1.2"/><g fill="currentColor" stroke="none" opacity=".9"><circle cx="60" cy="24" r="2"/><circle cx="60" cy="74" r="2"/><circle cx="31" cy="100" r="2"/><circle cx="60" cy="150" r="2"/><circle cx="46" cy="200" r="2"/><circle cx="104" cy="104" r="2"/></g></svg>`;
   function renderEquip(){const L=['helmet','mask','top','glove'], R=['weapon','bottom','shoes'], nm=id=>SLOTS.find(x=>x[0]===id)[1];
     const n=SLOTS.filter(([id])=>!same(MS.cur[id],MS.try[id])).length;
-    $('modList').innerHTML=`<div class="eqgrid"><div class="eqcol">${L.map(id=>slotCard(id,nm(id))).join('')}</div><div class="eqfig">${FIG}<span class="tag">付け替え ${n}か所</span></div><div class="eqcol">${R.map(id=>slotCard(id,nm(id))).join('')}</div></div>`}
+    $('modList').innerHTML=`<div class="eqgrid"><div class="eqcol">${L.map(id=>slotCard(id,nm(id))).join('')}</div><div class="eqfig">${FIG}<span class="tag">付け替え ${n}か所</span></div><div class="eqcol">${R.map(id=>slotCard(id,nm(id))).join('')}</div></div>${armorBox()}`}
+  function armorBox(){const so=(sel,none)=>`<option value="">${none}</option>`+(none==='付け替えない'?`<option value="__none"${sel==='__none'?' selected':''}>セットなし（外す）</option>`:'')+Object.entries(ASETS).map(([k,S])=>`<option value="${k}"${sel===k?' selected':''}>${S.n}</option>`).join('');
+    const no=(sel)=>[1,2,3,4].map(n=>`<option value="${n}"${(sel||4)===n?' selected':''}>${n}部位</option>`).join('');
+    const ko=(sel,none)=>(none==='付け替えない'?`<option value="__same">付け替えない</option><option value=""${sel===''?' selected':''}>なし（外す）</option>`:`<option value="">${none}</option>`)+['ヘルメット','マスク','トップス','ボトムス','グローブ','シューズ'].map(p=>`<optgroup label="${p}">`+Object.entries(AKEYS).filter(([,K])=>K.p===p).map(([k,K])=>`<option value="${k}"${sel===k?' selected':''}>${K.n}</option>`).join('')+'</optgroup>').join('');
+    const cs=MS.cur.$set||[], ts=MS.try.$set, ck=MS.cur.$key||'', tk=MS.try.$key;
+    const side=(w,lab,set,key)=>`<div class="arcol"><i>${lab}</i><div class="arrow2"><select data-ar="${w}.set" aria-label="${lab}のセット">${so(set?set[0]:'',w==='try'?'付け替えない':'セットなし')}</select><select data-ar="${w}.n" aria-label="${lab}の部位数"${set&&ASETS[set[0]]?'':' hidden'}>${no(set?set[1]:4)}</select></div><select data-ar="${w}.key" aria-label="${lab}の重要な防具">${ko(key===undefined?'__same':key,w==='try'?'付け替えない':'重要な防具なし')}</select></div>`;
+    const desc=(sp,kp)=>{let h=''; if(sp&&ASETS[sp[0]]){const S=ASETS[sp[0]]; h+=`<b>${S.n}（${sp[1]||4}部位）</b><ol>${S.t.map((x,i)=>`<li class="${i<(sp[1]||4)?'on':''}">${x}</li>`).join('')}</ol>`}
+      if(kp&&AKEYS[kp]){const K=AKEYS[kp]; h+=`<b>${K.n}</b><p>${K.etc||''}${K.ct?`${K.etc?'。':''}条件：${K.ct}`:''}</p>`} return h};
+    const tsx=ts||cs, tkx=tk===undefined?ck:tk;
+    return `<section class="arbox"><h4>防具セット・重要な防具</h4><p class="small">ステータス画面に出ない「条件つき」の効果（スタック・HP条件など）だけを計算に足します。いつも付いている効果（クリ率+5%など）は2の数字にもう入っているので、付け替えたときの差だけが変わります。</p>
+      <div class="arside">${side('cur','① いまの防具',MS.cur.$set,MS.cur.$key)}<span class="arw" aria-hidden="true">→</span>${side('try','② 付け替えたい防具',ts,tk)}</div>
+      <div class="ardesc"><div>${desc(cs,ck)||'<span class="small">なし</span>'}</div><div>${(ts||tk!==undefined)?desc(tsx,tkx)||'<span class="small">なし</span>':'<span class="small">付け替えない</span>'}</div></div></section>`}
   function chip(k,on,label,small){return `<button type="button" data-k="${k}" aria-pressed="${on}">${label}${small?`<small>${small}</small>`:''}</button>`}
   function renderEditor(){const [id,nm,list]=SLOTS.find(x=>x[0]===editing), p=MS[lay][id]||['',17], mains=MAINOF[id]||[]; let no=1, h='';
     h+=`<div class="eqedh"><button type="button" class="btn" data-act="back" data-k="back">← 7つの枠にもどる</button><b>${nm}</b><button type="button" class="btn" data-act="clear" data-k="clear">この枠をリセット</button></div>`;
@@ -1046,6 +1123,7 @@ body.pro .card.pro-only{display:block!important}
   function usedConds(){const u=new Set(); SLOTS.forEach(([id])=>['cur','try'].forEach(w=>{const p=MS[w][id]; if(p&&MODX[p[0]])MODX[p[0]].s.forEach(d=>{if(d[3])u.add(d[3])})})); return u}
   function renderCond(){const u=usedConds(); let h=''; const um=SLOTS.some(([id])=>['cur','try'].some(w=>{const q=MS[w][id]; return q&&MAINS[q[2]]&&MAINS[q[2]].c}));
     if(um)h+=`<button type="button" data-c="mainC" aria-pressed="${!!MS.cond.mainC}">メイン効果の条件を満たす（最大）</button>`;
+    if(armorUsesCond())h+=`<button type="button" data-c="setC" aria-pressed="${setOn()}">セット・重要防具の条件を満たす（最大）</button>`;
     for(const c in CONDS)if(u.has(c))h+=`<button type="button" data-c="${c}" aria-pressed="${!!MS.cond[c]}">${CONDS[c]}</button>`;
     if(u.has('dist'))h+=`<label class="dist">敵との距離<input id="mDist" type="number" min="0" step="1" inputmode="numeric" value="${MS.dist}">m</label>`;
     $('modCond').innerHTML=h||'<span class="small">条件つきのMOD（オーメン・虚実など）を選ぶと、ここに条件のスイッチが出ます。</span>'}
@@ -1276,7 +1354,12 @@ body.pro .card.pro-only{display:block!important}
     if(t.dataset.act==='clear'){const id=editing; delete MS.cur[id]; delete MS.try[id]; editing=null; choose=null; saveMods(); renderCond(); rerender(); renderModList(); const f=$('modList').querySelector(`[data-k="s-${id}"]`); f&&f.focus(); return}
     if(!editing||!k)return; const f=k[0], v=k.slice(2); setPick(editing,f,v); const wasC=choose; choose=null; saveMods(); renderCond(); rerender(); renderModList(); const n=$('modList').querySelector(wasC?`[data-k="c-${f}"]`:`[data-k="${k}"]`); n&&n.focus()});
   $('modList').addEventListener('input',e=>{if(e.target.id!=='chq')return; const q=e.target.value.trim().toLowerCase(); let n=0; $('chl').querySelectorAll('button').forEach(b=>{const hit=!q||b.textContent.toLowerCase().includes(q); b.hidden=!hit; if(hit)n++}); $('chl').querySelectorAll('.cgrp').forEach(g=>{g.hidden=![...g.querySelectorAll('button')].some(b=>!b.hidden)}); $('chn').hidden=n>0});
-  $('modCond').addEventListener('click',e=>{const b=e.target.closest('button[data-c]'); if(!b)return; MS.cond[b.dataset.c]=!MS.cond[b.dataset.c]; b.setAttribute('aria-pressed',!!MS.cond[b.dataset.c]); saveMods(); rerender()});
+  $('modCond').addEventListener('click',e=>{const b=e.target.closest('button[data-c]'); if(!b)return; const ck=b.dataset.c; MS.cond[ck]=ck==='setC'?!setOn():!MS.cond[ck]; b.setAttribute('aria-pressed',ck==='setC'?setOn():!!MS.cond[ck]); saveMods(); rerender()});
+  $('modList').addEventListener('change',e=>{const t=e.target.closest('select[data-ar]'); if(!t)return; const [w,f]=t.dataset.ar.split('.'), v=t.value;
+    if(f==='set'){if(!v){if(w==='try')delete MS.try.$set; else delete MS.cur.$set} else MS[w].$set=[v,(MS[w].$set&&MS[w].$set[1])||4]}
+    else if(f==='n'){if(MS[w].$set)MS[w].$set[1]=+v}
+    else if(f==='key'){if(v==='__same')delete MS[w].$key; else if(w==='cur'&&!v)delete MS.cur.$key; else MS[w].$key=v}
+    saveMods(); renderCond(); rerender(); renderModList(); const n=$('modList').querySelector(`select[data-ar="${t.dataset.ar}"]`); n&&n.focus()});
   $('modCond').addEventListener('input',e=>{if(e.target.id!=='mDist')return; const n=parseFloat(e.target.value); MS.dist=isFinite(n)?n:15; saveMods(); rerender()});
   $('modReset').addEventListener('click',()=>{MS.cur={};MS.try={};editing=null;saveMods();renderCond();rerender();renderModList()});
   $('pick').addEventListener('click',openPicker);
