@@ -37,6 +37,7 @@
   --atk:#c2500a; --atk-soft:#fdeee2; --psi:#0a6f82; --psi-soft:#e1f1f4;
   --ok:#2b7a3b; --ok-soft:#e5f3e8; --wait:#8a5d00; --wait-soft:#fff3d1; --down:#c22a2a;
   --sel:#1c2024; --sel-ink:#ffffff; --scrim:rgba(28,32,36,.45);
+  --chg:#c2500a; --chg-soft:#fdeee2; --res-bg:#1c2024; --res-ink:#ffffff; --res-mut:#aab3b9; --res-ok:#7ee08f; --res-neg:#ff9a9a; --res-line:rgba(255,255,255,.22);
   --shadow:0 1px 2px rgba(28,32,36,.05),0 6px 20px rgba(28,32,36,.05);
   --f-body:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
   --f-num:"Barlow Semi Condensed","Zen Kaku Gothic New",ui-sans-serif,sans-serif;
@@ -47,6 +48,7 @@
   --atk:#ff9d57; --atk-soft:rgba(255,157,87,.13); --psi:#53cfdf; --psi-soft:rgba(83,207,223,.12);
   --ok:#6fd884; --ok-soft:rgba(111,216,132,.12); --wait:#ffd35a; --wait-soft:rgba(255,211,90,.12); --down:#ff8a8a;
   --sel:#eceef0; --sel-ink:#131517; --scrim:rgba(0,0,0,.6); --shadow:0 1px 2px rgba(0,0,0,.3);
+  --chg:#ff9d57; --chg-soft:rgba(255,157,87,.12); --res-bg:#2a2f34; --res-ink:#eceef0; --res-mut:#9aa4aa; --res-ok:#6fd884; --res-neg:#ff8a8a; --res-line:rgba(255,255,255,.16);
   color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#131517; --surface:#1c1f22; --field:#24282c; --ink:#eceef0; --ink-2:#b6bec4; --muted:#8c969c;
@@ -54,6 +56,7 @@
   --atk:#ff9d57; --atk-soft:rgba(255,157,87,.13); --psi:#53cfdf; --psi-soft:rgba(83,207,223,.12);
   --ok:#6fd884; --ok-soft:rgba(111,216,132,.12); --wait:#ffd35a; --wait-soft:rgba(255,211,90,.12); --down:#ff8a8a;
   --sel:#eceef0; --sel-ink:#131517; --scrim:rgba(0,0,0,.6); --shadow:0 1px 2px rgba(0,0,0,.3);
+  --chg:#ff9d57; --chg-soft:rgba(255,157,87,.12); --res-bg:#2a2f34; --res-ink:#eceef0; --res-mut:#9aa4aa; --res-ok:#6fd884; --res-neg:#ff8a8a; --res-line:rgba(255,255,255,.16);
   color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -367,6 +370,67 @@ body.pro .card.pro-only{display:block!important}
 .ardesc ol{margin:4px 0 0;padding-left:1.4em}.ardesc li{color:var(--muted)}.ardesc li.on{color:var(--ink)}
 .ardesc p{margin:4px 0 0}
 @media (max-width:620px){.arside{grid-template-columns:minmax(0,1fr)}.arside .arw{display:none}.ardesc{grid-template-columns:minmax(0,1fr)}}
+/* 装備をくらべる（表） */
+.mres{display:flex;flex-direction:column;gap:8px;background:var(--res-bg);color:var(--res-ink);border-radius:12px;padding:12px 14px}
+.mres .mdelta{flex:none;color:var(--res-ink);font-size:13.5px;font-weight:700}
+.mres .mdelta b{color:var(--res-ok);font-size:30px;line-height:1.1}
+.mres .mdelta b.neg{color:var(--res-neg)}
+.mres .mdelta .small{color:var(--res-mut);font-weight:500}
+.mres .mcond:empty{display:none}
+.mres .mcond>.small{color:var(--res-mut)}
+.mres .cats button{background:transparent;border-color:var(--res-line);color:var(--res-ink)}
+.mres .cats button[aria-pressed="true"]{background:var(--res-ok);border-color:var(--res-ok);color:#0f2414}
+.mres .mcond .dist{color:var(--res-ink);border-color:var(--res-line)}
+.mres .mcond .dist input{color:var(--res-ink);border-color:var(--res-line)}
+#mods.editing .mres .mdelta .small{display:none}
+#mods.choosing .mres{display:none}
+.chead,.crow{display:grid;grid-template-columns:112px minmax(0,1fr) 18px minmax(0,1fr);gap:8px;align-items:stretch}
+.chead{position:sticky;top:0;z-index:2;background:var(--surface);padding:2px 0 6px;font-size:12.5px;font-weight:700;color:var(--muted);align-items:end}
+.chead .chint{font-weight:500;margin-left:6px}
+.chead em{font-style:normal;margin-left:8px;font-size:11px;padding:1px 8px;border-radius:999px;background:var(--chg);color:var(--surface)}
+.cgroup{display:flex;flex-direction:column;gap:6px}
+.cgroup+.cgroup{margin-top:12px}
+.cgroup h4{margin:0;font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:3px}
+.cslot{display:flex;align-items:center;gap:7px;min-width:0;font-size:13.5px;font-weight:700;flex-wrap:wrap}
+.cslot .ic{flex:0 0 auto;min-width:36px;height:24px;padding:0 5px;border-radius:6px;display:grid;place-items:center;font-family:var(--f-num);font-size:11px;font-weight:700;background:var(--field);color:var(--ink-2)}
+.crow.chg .cslot .ic{background:var(--chg);color:var(--surface)}
+.cwimg{display:block;width:100%;max-width:104px;aspect-ratio:292/111;border-radius:5px;overflow:hidden;background:#151a20}
+.cwimg img{display:block;width:100%;height:100%;object-fit:cover}
+.carw{align-self:center;text-align:center;color:var(--line-2);font-size:15px}
+.crow.chg .carw{color:var(--chg);font-weight:700}
+.ceq{min-width:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:1px;text-align:left;border:1px solid var(--line-2);background:var(--surface);border-radius:10px;padding:8px 11px;min-height:58px;cursor:pointer;color:var(--ink);font:inherit;transition:border-color .15s,background .15s}
+.ceq:hover{border-color:var(--ink-2)}
+.ceq b{font-size:14px;line-height:1.3;overflow-wrap:anywhere}
+.ceq small{font-size:11.5px;color:var(--muted);line-height:1.4;overflow-wrap:anywhere}
+.ceq .cm{font-size:13.5px;font-weight:700;color:var(--muted)}
+.ceq.same,.ceq.empty{border-style:dashed;background:transparent}
+.ceq.same .cm{color:var(--muted);font-weight:500}.ceq.same small{display:none}.ceq.same:hover small{display:block}
+.ceq.empty:not(.off) .cm{color:var(--ink-2)}
+.ceq.off{border-color:var(--chg);background:var(--chg-soft)}
+.ceq.off .cm{color:var(--chg)}
+.crow.chg .ceq.to{border-color:var(--chg);background:var(--chg-soft);box-shadow:inset 3px 0 0 var(--chg)}
+.cfx{display:block;margin-top:3px;font-size:12px;font-weight:700;color:var(--ink-2);line-height:1.45;overflow-wrap:anywhere}
+.crow.chg .ceq.to .cfx{color:var(--chg)}
+.ceq .pc{font-family:var(--f-num);font-size:11px;font-weight:700;padding:0 6px;border-radius:999px;background:var(--field);color:var(--ink-2);margin-left:2px;vertical-align:1px}
+.ceq .etc{font-style:normal}
+.cnote{margin:12px 0 0}
+.ctiles .dim{opacity:.62}
+.ctiles .dim[aria-pressed="true"]{opacity:1}
+.tiers{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;font-size:13px}
+.tiers li{display:flex;gap:8px;align-items:flex-start;color:var(--muted);background:var(--field);border-radius:8px;padding:6px 10px}
+.tiers li.on{color:var(--ink)}
+.tiers .tn{flex:0 0 auto;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-num);font-size:12px;font-weight:700;border:1px solid var(--line-2)}
+.tiers li.on .tn{background:var(--sel);color:var(--sel-ink);border-color:var(--sel)}
+.tiers em{display:block;font-style:normal;font-weight:700;font-size:12px;color:var(--ok)}
+@media (max-width:620px){
+  .chead{grid-template-columns:minmax(0,1fr) 14px minmax(0,1fr);gap:6px}.chead>span:first-child{display:none}
+  .crow{grid-template-columns:minmax(0,1fr) 14px minmax(0,1fr);gap:4px 6px}
+  .crow .cslot{grid-column:1/-1;font-size:13px}
+  .cwimg{max-width:76px}
+  .ceq{padding:7px 9px;min-height:50px}.ceq b{font-size:13px}.cfx{font-size:11.5px}
+  .mres{padding:10px 12px}.mres .mdelta b{font-size:26px}
+  .chead .chint{display:none}.chead em{margin-left:4px}.mres .cats button{font-size:12px;padding:3px 10px;white-space:normal;text-align:left}
+}
 .eqfig{align-self:stretch;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--line-2)}
 .eqfig svg{width:100%;max-width:170px;height:auto}
 .eqfig .tag{font-family:var(--f-num);font-weight:700;font-size:13px;color:var(--muted)}
@@ -652,13 +716,12 @@ body.pro .card.pro-only{display:block!important}
 <div class="picker" id="mods" hidden role="dialog" aria-modal="true" aria-label="装備画面">
   <div class="pbox mbox">
     <div class="phead">
-      <div class="mhd"><b>いまのMODと比べる</b><span class="small">枠を押して「いま付けているMOD」と「付け替えたいMOD」を選ぶと、付け替えたときに何%変わるかが出ます。</span></div>
+      <div class="mhd"><b>装備をくらべる</b><span class="small">①いまの装備と②試す装備を選ぶと、②に替えたら何%変わるかが上に出ます。</span></div>
       <button type="button" class="x" id="modClose" aria-label="閉じる">✕</button>
     </div>
+    <div class="mres"><div class="mdelta" id="modDelta"></div><div class="cats mcond" id="modCond" aria-label="条件"></div></div>
     <div class="mlist" id="modList"></div>
-    <div class="cats mcond" id="modCond" aria-label="条件"></div>
     <div class="mfoot">
-      <div class="mdelta" id="modDelta"></div>
       <button type="button" class="btn" id="modReset">全部リセット</button>
       <button type="button" class="btn primary" id="modDone">計算にもどる</button>
     </div>
@@ -1078,23 +1141,57 @@ body.pro .card.pro-only{display:block!important}
   function slotCard(id,nm){const a=MS.cur[id], b=MS.try[id], e=!a&&!b, chg=!same(a,b);
     return `<button type="button" class="eqs${e?' empty':''}${chg?' chg':''}" data-slot="${id}" data-k="s-${id}"><span class="ic">${SCODE[id]}</span><span class="sn">${nm}</span>${e?'<b>押して選ぶ</b>':`<span class="ln"><i>いま</i>${pickName(a)}</span>${chg?`<span class="ln to"><i>→</i>${pickName(b)}</span>`:'<span class="ln same"><i>→</i>付け替えなし</span>'}`}${chg?'<span class="new">付け替え</span>':''}</button>`}
   const FIG=`<svg viewBox="0 0 120 220" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="60" cy="24" r="14"/><path d="M48 26h24" stroke-width="3" stroke-linecap="round"/><path d="M42 46q18-8 36 0l6 52-10 4-4 26H50l-4-26-10-4z"/><path d="M42 50l-14 44 6 14M78 50l14 44-6 14"/><path d="M50 128l-6 76M70 128l6 76M40 204h10M70 204h10"/><path d="M84 106l28-4v6l-28 6z" stroke-width="1.2"/><g fill="currentColor" stroke="none" opacity=".9"><circle cx="60" cy="24" r="2"/><circle cx="60" cy="74" r="2"/><circle cx="31" cy="100" r="2"/><circle cx="60" cy="150" r="2"/><circle cx="46" cy="200" r="2"/><circle cx="104" cy="104" r="2"/></g></svg>`;
-  function renderEquip(){const L=['helmet','mask','top','glove'], R=['weapon','bottom','shoes'], nm=id=>SLOTS.find(x=>x[0]===id)[1];
-    const n=SLOTS.filter(([id])=>!same(MS.cur[id],MS.try[id])).length;
-    $('modList').innerHTML=`<div class="eqgrid"><div class="eqcol">${L.map(id=>slotCard(id,nm(id))).join('')}</div><div class="eqfig">${FIG}<span class="tag">付け替え ${n}か所</span></div><div class="eqcol">${R.map(id=>slotCard(id,nm(id))).join('')}</div></div>${armorBox()}`}
-  function armorBox(){const so=(sel,none)=>`<option value="">${none}</option>`+(none==='付け替えない'?`<option value="__none"${sel==='__none'?' selected':''}>セットなし（外す）</option>`:'')+Object.entries(ASETS).map(([k,S])=>`<option value="${k}"${sel===k?' selected':''}>${S.n}</option>`).join('');
-    const no=(sel)=>[1,2,3,4].map(n=>`<option value="${n}"${(sel||4)===n?' selected':''}>${n}部位</option>`).join('');
-    const ko=(sel,none)=>(none==='付け替えない'?`<option value="__same">付け替えない</option><option value=""${sel===''?' selected':''}>なし（外す）</option>`:`<option value="">${none}</option>`)+['ヘルメット','マスク','トップス','ボトムス','グローブ','シューズ'].map(p=>`<optgroup label="${p}">`+Object.entries(AKEYS).filter(([,K])=>K.p===p).map(([k,K])=>`<option value="${k}"${sel===k?' selected':''}>${K.n}</option>`).join('')+'</optgroup>').join('');
-    const cs=MS.cur.$set||[], ts=MS.try.$set, ck=MS.cur.$key||'', tk=MS.try.$key;
-    const side=(w,lab,set,key)=>`<div class="arcol"><i>${lab}</i><div class="arrow2"><select data-ar="${w}.set" aria-label="${lab}のセット">${so(set?set[0]:'',w==='try'?'付け替えない':'セットなし')}</select><select data-ar="${w}.n" aria-label="${lab}の部位数"${set&&ASETS[set[0]]?'':' hidden'}>${no(set?set[1]:4)}</select></div><select data-ar="${w}.key" aria-label="${lab}の重要な防具">${ko(key===undefined?'__same':key,w==='try'?'付け替えない':'重要な防具なし')}</select></div>`;
-    const desc=(sp,kp)=>{let h=''; if(sp&&ASETS[sp[0]]){const S=ASETS[sp[0]]; h+=`<b>${S.n}（${sp[1]||4}部位）</b><ol>${S.t.map((x,i)=>`<li class="${i<(sp[1]||4)?'on':''}">${x}</li>`).join('')}</ol>`}
-      if(kp&&AKEYS[kp]){const K=AKEYS[kp]; h+=`<b>${K.n}</b><p>${K.etc||''}${K.ct?`${K.etc?'。':''}条件：${K.ct}`:''}</p>`} return h};
-    const tsx=ts||cs, tkx=tk===undefined?ck:tk;
-    return `<section class="arbox"><h4>防具セット・重要な防具</h4><p class="small">ステータス画面に出ない「条件つき」の効果（スタック・HP条件など）だけを計算に足します。いつも付いている効果（クリ率+5%など）は2の数字にもう入っているので、付け替えたときの差だけが変わります。</p>
-      <div class="arside">${side('cur','① いまの防具',MS.cur.$set,MS.cur.$key)}<span class="arw" aria-hidden="true">→</span>${side('try','② 付け替えたい防具',ts,tk)}</div>
-      <div class="ardesc"><div>${desc(cs,ck)||'<span class="small">なし</span>'}</div><div>${(ts||tk!==undefined)?desc(tsx,tkx)||'<span class="small">なし</span>':'<span class="small">付け替えない</span>'}</div></div></section>`}
+  const ROWS=['weapon','helmet','mask','top','glove','bottom','shoes'];
+  const fxChips=o=>{const t=fxText(o,true); return t?`<span class="cfx">${t}</span>`:''};
+  function modCell(id,w){const p=MS[w][id], a=MS.cur[id];
+    if(w==='try'&&same(a,p))return `<button type="button" class="ceq same" data-slot="${id}" data-w="try" data-k="s-${id}-try"><span class="cm">同じ</span><small>押して付け替える</small></button>`;
+    if(!p)return `<button type="button" class="ceq empty${w==='try'?' off':''}" data-slot="${id}" data-w="${w}" data-k="s-${id}-${w}"><span class="cm">${w==='try'?'外す':'＋ 選ぶ'}</span>${w==='try'?'<small>MODなし</small>':''}</button>`;
+    const M=MAINS[p[2]], X=MODX[p[0]];
+    return `<button type="button" class="ceq${w==='try'?' to':''}" data-slot="${id}" data-w="${w}" data-k="s-${id}-${w}"><b>${M?M.n:'メイン効果なし'}</b><small>${X?X.n:'拡張要素なし'}・${lvName(p[1])}</small>${fxChips(modStats(p))}</button>`}
+  const setOf=w=>w==='try'&&!MS.try.$set?MS.cur.$set:MS[w].$set, keyPick=w=>w==='try'&&MS.try.$key===undefined?MS.cur.$key:MS[w].$key;
+  const setSame=()=>!MS.try.$set||JSON.stringify(MS.try.$set)===JSON.stringify(MS.cur.$set||null)||(MS.try.$set[0]==='__none'&&!MS.cur.$set);
+  const keySame=()=>MS.try.$key===undefined||(MS.try.$key||'')===(MS.cur.$key||'');
+  function setStatsOne(sp){const o={}, add=x=>{if(x)for(const k in x)o[k]=(o[k]||0)+x[k]}; if(sp&&ASETS[sp[0]]){const S=ASETS[sp[0]]; for(let i=0;i<Math.min(4,sp[1]||0);i++){add((S.a||[])[i]); if(setOn())add((S.c||[])[i])}} return o}
+  function keyStatsOne(kp){const o={}; if(kp&&AKEYS[kp]){const K=AKEYS[kp]; [K.a,setOn()?K.c:null].forEach(x=>{if(x)for(const k in x)o[k]=(o[k]||0)+x[k]})} return o}
+  function armorCell(kind,w){const isSet=kind==='$set', sm=isSet?setSame():keySame(), dk=`s-${kind}-${w}`;
+    if(w==='try'&&sm)return `<button type="button" class="ceq same" data-slot="${kind}" data-w="try" data-k="${dk}"><span class="cm">同じ</span><small>押して付け替える</small></button>`;
+    if(isSet){const sp=MS[w].$set; if(!sp||!ASETS[sp[0]])return `<button type="button" class="ceq empty${w==='try'?' off':''}" data-slot="$set" data-w="${w}" data-k="${dk}"><span class="cm">${w==='try'?'セットなし':'＋ 選ぶ'}</span></button>`;
+      const S=ASETS[sp[0]]; return `<button type="button" class="ceq${w==='try'?' to':''}" data-slot="$set" data-w="${w}" data-k="${dk}"><b>${S.n} <span class="pc">${sp[1]||4}部位</span></b><small>${S.t[Math.min(4,sp[1]||4)-1]}</small>${fxChips(setStatsOne(sp))}</button>`}
+    const kp=MS[w].$key; if(!kp||!AKEYS[kp])return `<button type="button" class="ceq empty${w==='try'?' off':''}" data-slot="$key" data-w="${w}" data-k="${dk}"><span class="cm">${w==='try'?'なし':'＋ 選ぶ'}</span></button>`;
+    const K=AKEYS[kp]; return `<button type="button" class="ceq${w==='try'?' to':''}" data-slot="$key" data-w="${w}" data-k="${dk}"><b>${K.n}</b><small>${K.p}${K.ct?'・条件：'+K.ct:''}</small>${fxChips(keyStatsOne(kp))||(K.etc?`<small class="etc">${K.etc}</small>`:'')}</button>`}
+  function cmpRow(id,label,code,a,b,chg,extra){return `<div class="crow${chg?' chg':''}"><div class="cslot"><span class="ic">${code}</span><span>${label}</span>${extra||''}</div>${a}<span class="carw" aria-hidden="true">→</span>${b}</div>`}
+  function renderEquip(){const nm=id=>SLOTS.find(x=>x[0]===id)[1];
+    const n=SLOTS.filter(([id])=>!same(MS.cur[id],MS.try[id])).length+(setSame()?0:1)+(keySame()?0:1);
+    let h=`<div class="chead"><span></span><span>① いまの装備</span><span></span><span>② 試す装備<small class="chint">押して変える</small>${n?`<em>${n}か所 変更</em>`:''}</span></div>`;
+    h+=`<div class="cgroup"><h4>MOD</h4>`+ROWS.map(id=>cmpRow(id,nm(id),SCODE[id],modCell(id,'cur'),modCell(id,'try'),!same(MS.cur[id],MS.try[id]),id==='weapon'&&WIMG[wid]?`<span class="cwimg">${wimg(wid)}</span>`:'')).join('')+`</div>`;
+    h+=`<div class="cgroup"><h4>防具</h4>${cmpRow('$set','セット','SET',armorCell('$set','cur'),armorCell('$set','try'),!setSame())}${cmpRow('$key','重要な防具','KEY',armorCell('$key','cur'),armorCell('$key','try'),!keySame())}</div>`;
+    h+=`<p class="small cnote">ステータス画面の数字には①の分がもう入っています。②に替えたときの差だけを計算します。セット効果は「条件つき」の分（スタック・HP条件など）だけが差に出ます。</p>`;
+    $('modList').innerHTML=h}
+  function renderArmorEditor(){const isSet=editing==='$set', w=lay, nm=isSet?'防具セット':'重要な防具';
+    let h=`<div class="eqedh"><button type="button" class="btn" data-act="back" data-k="back">← 一覧にもどる</button><b>${nm}</b></div>`;
+    const sd=x=>{const lab=x==='cur'?'① いまの装備':'② 試す装備'; let v;
+      if(isSet){const sp=x==='try'&&setSame()?null:MS[x].$set; v=x==='try'&&setSame()?'同じ':(sp&&ASETS[sp[0]]?ASETS[sp[0]].n+' '+(sp[1]||4)+'部位':'なし')}
+      else {v=x==='try'&&keySame()?'同じ':(MS[x].$key&&AKEYS[MS[x].$key]?AKEYS[MS[x].$key].n:'なし')}
+      return `<button type="button" data-act="side" data-w="${x}" data-k="w-${x}" aria-pressed="${w===x}"><i>${lab}</i><b>${v}</b></button>`};
+    h+=`<div class="side2">${sd('cur')}<span class="arw" aria-hidden="true">→</span>${sd('try')}</div>`;
+    const tile=(k,on,label,small,cls)=>`<button type="button" data-k="${k}" aria-pressed="${on}"${cls?` class="${cls}"`:''}><b>${label}</b>${small?`<small>${small}</small>`:''}</button>`;
+    if(isSet){const sp=setOf(w)||[], cur=w==='try'&&setSame()?'':(MS[w].$set||[])[0]||'';
+      let g=''; if(w==='try')g+=tile('as-__same',setSame(),'同じ（付け替えない）');
+      g+=tile('as-',w==='cur'?!cur:(!setSame()&&MS.try.$set&&MS.try.$set[0]==='__none'),'セットなし');
+      h+=`<div class="ctiles">${g}</div><div class="eqt">セット</div><div class="ctiles stl">`+Object.entries(ASETS).map(([k,S])=>{const c=(S.c||[]).some(Boolean)||(S.a||[]).some(Boolean); return tile('as-'+k,cur===k,S.n,c?'火力アップあり':'火力アップなし',c?'':'dim')}).join('')+`</div>`;
+      if(cur&&ASETS[cur]){const S=ASETS[cur], np=(MS[w].$set||[])[1]||4;
+        h+=`<div class="eqt">部位数</div><div class="chips lv">${[1,2,3,4].map(n=>chip('an-'+n,np===n,n+'部位')).join('')}</div>`;
+        h+=`<ol class="tiers">${S.t.map((x,i)=>{const a=(S.a||[])[i], c=(S.c||[])[i]; const fx=[a?fxText(a,true):'',c?'条件：'+fxText(c,true):''].filter(Boolean).join(' / '); return `<li class="${i<np?'on':''}"><span class="tn">${i+1}</span><span>${x}${fx?`<em>${fx}</em>`:''}</span></li>`}).join('')}</ol>`;
+        if(S.ct)h+=`<p class="small">条件：${S.ct}（「セット・重要防具の条件を満たす」がONのとき計算に入ります）</p>`}}
+    else {const cur=w==='try'&&keySame()?'__same':(MS[w].$key||'');
+      let g=''; if(w==='try')g+=tile('ak-__same',keySame(),'同じ（付け替えない）');
+      g+=tile('ak-',cur==='','なし'); h+=`<div class="ctiles">${g}</div><label class="chs"><span aria-hidden="true">🔍</span><input type="search" id="chq" placeholder="名前で探す" autocomplete="off"></label><div id="chl" class="cgrps">`;
+      ['ヘルメット','マスク','トップス','ボトムス','グローブ','シューズ'].forEach(pt=>{h+=`<section class="cgrp"><h4>${pt}</h4><div class="ctiles">`+Object.entries(AKEYS).filter(([,K])=>K.p===pt).map(([k,K])=>tile('ak-'+k,cur===k,K.n,(K.c?fxText(K.c,true)+'（'+K.ct+'）':'')||K.etc||'',K.c?'':'dim')).join('')+`</div></section>`});
+      h+=`</div><p class="small chnone" id="chn" hidden>見つかりません。</p>`}
+    $('modList').innerHTML=`<div class="eqed">${h}</div>`}
   function chip(k,on,label,small){return `<button type="button" data-k="${k}" aria-pressed="${on}">${label}${small?`<small>${small}</small>`:''}</button>`}
   function renderEditor(){const [id,nm,list]=SLOTS.find(x=>x[0]===editing), p=MS[lay][id]||['',17], mains=MAINOF[id]||[]; let no=1, h='';
-    h+=`<div class="eqedh"><button type="button" class="btn" data-act="back" data-k="back">← 7つの枠にもどる</button><b>${nm}</b><button type="button" class="btn" data-act="clear" data-k="clear">この枠をリセット</button></div>`;
+    h+=`<div class="eqedh"><button type="button" class="btn" data-act="back" data-k="back">← 一覧にもどる</button><b>${nm}</b><button type="button" class="btn" data-act="clear" data-k="clear">この枠をリセット</button></div>`;
     const sd=w=>{const q=MS[w][id]; return `<button type="button" data-act="side" data-w="${w}" data-k="w-${w}" aria-pressed="${lay===w}"><i>${w==='cur'?'① いま付けているMOD':'② 付け替えたいMOD'}</i><b>${w==='try'&&same(MS.cur[id],q)?'付け替えない':(q?(MAINS[q[2]]?MAINS[q[2]].n:'メイン効果なし'):'なし')}</b><span>${q?(MODX[q[0]]?MODX[q[0]].n:'拡張要素なし')+'・'+lvName(q[1]):(w==='cur'?'何も付けていない':'外す')}</span></button>`};
     h+=`<div class="side2">${sd('cur')}<span class="arw" aria-hidden="true">→</span>${sd('try')}</div>`;
     h+=`<p class="small" style="margin:0">${lay==='cur'?'ステータス画面の数字には、いま付けているMODの分がもう入っています。まずそれを選んでください。':'付け替えたいMODを選びます。いまと同じなら「付け替えない」のままで大丈夫です。'}</p>`;
@@ -1119,7 +1216,7 @@ body.pro .card.pro-only{display:block!important}
       gs.forEach(([[lab,k,ids],on])=>{const its=ids.filter(i=>im.has(i)).map(i=>tile(...im.get(i))).join(''); if(its)g+=`<section class="cgrp${on?' mine':''}"><h4>${lab}${on?'<span>いまの武器</span>':''}</h4><div class="ctiles">${its}</div></section>`});
       return h+`<div id="chl" class="cgrps">${g}</div><p class="small chnone" id="chn" hidden>見つかりません。</p>`}
     return h+`<div class="ctiles" id="chl">${tile(choose+'-',choose==='m'?!p[2]:!p[0],'なし')}${items.map(a=>tile(...a)).join('')}</div><p class="small chnone" id="chn" hidden>見つかりません。</p>`}
-  function renderModList(){$('mods').classList.toggle('choosing',!!(editing&&choose));if(editing)renderEditor(); else renderEquip(); updateMods()}
+  function renderModList(){$('mods').classList.toggle('choosing',!!(editing&&choose));$('mods').classList.toggle('editing',!!editing);if(editing&&editing[0]==='$')renderArmorEditor(); else if(editing)renderEditor(); else renderEquip(); updateMods()}
   function usedConds(){const u=new Set(); SLOTS.forEach(([id])=>['cur','try'].forEach(w=>{const p=MS[w][id]; if(p&&MODX[p[0]])MODX[p[0]].s.forEach(d=>{if(d[3])u.add(d[3])})})); return u}
   function renderCond(){const u=usedConds(); let h=''; const um=SLOTS.some(([id])=>['cur','try'].some(w=>{const q=MS[w][id]; return q&&MAINS[q[2]]&&MAINS[q[2]].c}));
     if(um)h+=`<button type="button" data-c="mainC" aria-pressed="${!!MS.cond.mainC}">メイン効果の条件を満たす（最大）</button>`;
@@ -1129,7 +1226,7 @@ body.pro .card.pro-only{display:block!important}
     $('modCond').innerHTML=h||'<span class="small">条件つきのMOD（オーメン・虚実など）を選ぶと、ここに条件のスイッチが出ます。</span>'}
   function updateMods(){
     const d=modDelta(), t=fxText(d,true);
-    if(!t){$('modSum').textContent='いまのMODのまま計算しています（2の数字にMODの分は入っています）。';$('modDelta').innerHTML=Object.keys(MS.cur).length||Object.keys(MS.try).length?'付け替えがないので、計算は変わりません。枠を押して「② 付け替えたいMOD」を選んでください。':'枠を押して、いま付けているMODと付け替えたいMODを選びます。';return}
+    if(!t){$('modSum').textContent='いまのMODのまま計算しています（2の数字にMODの分は入っています）。';$('modDelta').innerHTML=Object.keys(MS.cur).length||Object.keys(MS.try).length?'付け替えがないので、計算は変わりません。②の列を押して、試したいMODや防具を選んでください。':'①の列にいまの装備、②の列に試したい装備を選びます。';return}
     const {a,g}=modGain(), gs=`<b class="${g<0?'neg':''}">${g>=0?'+':'−'}${Math.abs(g).toFixed(1)}%</b>`;
     $('modDelta').innerHTML=`${gs}${label(a)}の期待値<br><span class="small">${t}</span>`;
     $('modSum').innerHTML=`②のMODに替えると ${label(a)} ${gs}（${t}）`}
@@ -1345,21 +1442,21 @@ body.pro .card.pro-only{display:block!important}
     if(p[0]||p[2])MS[lay][id]=p; else delete MS[lay][id];
     if(lay==='cur'&&same(old,MS.try[id])){if(MS.cur[id])MS.try[id]=[...MS.cur[id]]; else delete MS.try[id]}}
   $('modList').addEventListener('click',e=>{const t=e.target.closest('button'); if(!t)return; const k=t.dataset.k;
-    if(t.dataset.slot){choose=null; editing=t.dataset.slot; lay=MS.cur[editing]?'try':'cur'; renderModList(); const f=$('modList').querySelector('[data-act="back"]'); f&&f.focus(); $('modList').scrollTop=0; return}
+    if(t.dataset.slot){choose=null; editing=t.dataset.slot; lay=t.dataset.w||(MS.cur[editing]?'try':'cur'); renderModList(); const f=$('modList').querySelector('[data-act="back"]'); f&&f.focus(); $('modList').scrollTop=0; return}
     if(t.dataset.act==='choose'){choose=t.dataset.c; renderModList(); $('modList').scrollTop=0; const q=$('chq')||$('modList').querySelector('.ctiles [aria-pressed="true"]')||$('modList').querySelector('[data-act="unchoose"]'); q&&q.focus({preventScroll:true}); return}
     if(t.dataset.act==='unchoose'){const c=choose; choose=null; renderModList(); const f=$('modList').querySelector(`[data-k="c-${c}"]`); f&&f.focus(); return}
-    if(t.dataset.act==='back'){const id=editing; editing=null; choose=null; renderModList(); const f=$('modList').querySelector(`[data-k="s-${id}"]`); f&&f.focus(); return}
+    if(t.dataset.act==='back'){const id=editing, w=lay; editing=null; choose=null; renderModList(); const f=$('modList').querySelector(`[data-k="s-${id}-${w}"]`); f&&f.focus(); return}
+    if(k&&(k.startsWith('as-')||k.startsWith('an-')||k.startsWith('ak-'))){const v=k.slice(3), w=lay;
+      if(k[1]==='s'){if(v==='__same')delete MS.try.$set; else if(!v){if(w==='cur')delete MS.cur.$set; else MS.try.$set=['__none',4]} else MS[w].$set=[v,(setOf(w)&&setOf(w)[0]===v&&setOf(w)[1])||4]}
+      else if(k[1]==='n'){const sp=MS[w].$set||(w==='try'&&MS.cur.$set?[...MS.cur.$set]:null); if(sp){sp[1]=+v; MS[w].$set=sp}}
+      else {if(v==='__same')delete MS.try.$key; else if(w==='cur'&&!v)delete MS.cur.$key; else MS[w].$key=v}
+      saveMods(); renderCond(); rerender(); renderModList(); const n=$('modList').querySelector(`[data-k="${k}"]`); n&&n.focus({preventScroll:true}); return}
     if(t.dataset.act==='side'){choose=null; lay=t.dataset.w; renderModList(); const f=$('modList').querySelector(`[data-k="${k}"]`); f&&f.focus(); return}
     if(k==='t-same'){if(MS.cur[editing])MS.try[editing]=[...MS.cur[editing]]; else delete MS.try[editing]; saveMods(); renderCond(); rerender(); renderModList(); return}
-    if(t.dataset.act==='clear'){const id=editing; delete MS.cur[id]; delete MS.try[id]; editing=null; choose=null; saveMods(); renderCond(); rerender(); renderModList(); const f=$('modList').querySelector(`[data-k="s-${id}"]`); f&&f.focus(); return}
+    if(t.dataset.act==='clear'){const id=editing; delete MS.cur[id]; delete MS.try[id]; editing=null; choose=null; saveMods(); renderCond(); rerender(); renderModList(); const f=$('modList').querySelector(`[data-k="s-${id}-cur"]`); f&&f.focus(); return}
     if(!editing||!k)return; const f=k[0], v=k.slice(2); setPick(editing,f,v); const wasC=choose; choose=null; saveMods(); renderCond(); rerender(); renderModList(); const n=$('modList').querySelector(wasC?`[data-k="c-${f}"]`:`[data-k="${k}"]`); n&&n.focus()});
   $('modList').addEventListener('input',e=>{if(e.target.id!=='chq')return; const q=e.target.value.trim().toLowerCase(); let n=0; $('chl').querySelectorAll('button').forEach(b=>{const hit=!q||b.textContent.toLowerCase().includes(q); b.hidden=!hit; if(hit)n++}); $('chl').querySelectorAll('.cgrp').forEach(g=>{g.hidden=![...g.querySelectorAll('button')].some(b=>!b.hidden)}); $('chn').hidden=n>0});
   $('modCond').addEventListener('click',e=>{const b=e.target.closest('button[data-c]'); if(!b)return; const ck=b.dataset.c; MS.cond[ck]=ck==='setC'?!setOn():!MS.cond[ck]; b.setAttribute('aria-pressed',ck==='setC'?setOn():!!MS.cond[ck]); saveMods(); rerender()});
-  $('modList').addEventListener('change',e=>{const t=e.target.closest('select[data-ar]'); if(!t)return; const [w,f]=t.dataset.ar.split('.'), v=t.value;
-    if(f==='set'){if(!v){if(w==='try')delete MS.try.$set; else delete MS.cur.$set} else MS[w].$set=[v,(MS[w].$set&&MS[w].$set[1])||4]}
-    else if(f==='n'){if(MS[w].$set)MS[w].$set[1]=+v}
-    else if(f==='key'){if(v==='__same')delete MS[w].$key; else if(w==='cur'&&!v)delete MS.cur.$key; else MS[w].$key=v}
-    saveMods(); renderCond(); rerender(); renderModList(); const n=$('modList').querySelector(`select[data-ar="${t.dataset.ar}"]`); n&&n.focus()});
   $('modCond').addEventListener('input',e=>{if(e.target.id!=='mDist')return; const n=parseFloat(e.target.value); MS.dist=isFinite(n)?n:15; saveMods(); rerender()});
   $('modReset').addEventListener('click',()=>{MS.cur={};MS.try={};editing=null;saveMods();renderCond();rerender();renderModList()});
   $('pick').addEventListener('click',openPicker);
