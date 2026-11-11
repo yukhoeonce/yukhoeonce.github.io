@@ -667,6 +667,9 @@ body{background-color:var(--bg);
 .picker.open .pbox{animation:pop .45s cubic-bezier(.3,1.6,.5,1)}
 .dock{border-top:3px solid var(--ink)!important}
 
+
+/* iPad縦など：武器カードは画像を上に */
+@media (min-width:641px) and (max-width:1100px){.wpick{position:relative;grid-template-columns:minmax(0,1fr)!important;gap:10px!important}.wpick .chg{position:absolute;top:18px;right:18px}}
 /* ===== MOD画面（装備をくらべる）レトロ版 ===== */
 #mods .pbox{background:var(--surface)!important;background-image:linear-gradient(var(--surface),var(--surface)),radial-gradient(circle at 1px 1px,rgba(59,35,64,.08) 1.2px,transparent 1.4px)!important}
 #mods .phead{position:relative;padding-bottom:10px;border-bottom:3px dashed rgba(59,35,64,.25)}
@@ -1926,6 +1929,98 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
   const apply=()=>{const p=document.body.classList.contains('pro');if(tk)tk.innerHTML=p?proTxt:begTxt;
     if(p!==was){cur.className='curtain';void cur.offsetWidth;cur.className='curtain go '+(p?'to-pro':'to-beg')}was=p};
   apply();new MutationObserver(apply).observe(document.body,{attributes:true,attributeFilter:['class']});
+})();
+</script>
+<style>
+/* ===== テンキー（タッチ端末だけ） ===== */
+.kp{position:fixed;left:0;right:0;bottom:0;z-index:120;display:flex;justify-content:center;pointer-events:none;
+  padding:0 max(10px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(10px,env(safe-area-inset-left,0px))}
+.kp-box{pointer-events:auto;width:min(420px,100%);background:var(--surface);color:var(--ink);border:2.5px solid var(--ink);border-radius:22px;
+  box-shadow:5px 5px 0 var(--ink),0 18px 40px rgba(0,0,0,.25);padding:12px;transform:translateY(120%);transition:transform .32s cubic-bezier(.3,1.4,.5,1)}
+.kp.open .kp-box{transform:none}
+.kp-hd{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.kp-hd .kp-nav{flex:0 0 auto;border:2px solid var(--ink);background:var(--field);color:var(--ink);border-radius:999px;padding:4px 12px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;box-shadow:2px 2px 0 var(--ink)}
+.kp-hd .kp-nav:disabled{opacity:.35;box-shadow:none}
+.kp-lbl{flex:1;min-width:0;text-align:center;font-family:var(--f-pop,inherit);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kp-disp{display:flex;align-items:baseline;justify-content:flex-end;gap:6px;background:#2c1f45;color:#ffe27a;border:2.5px solid var(--ink);border-radius:14px;padding:6px 16px;margin-bottom:10px;min-height:62px;position:relative;overflow:hidden}
+.kp-disp::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 2px,transparent 2px 4px);pointer-events:none}
+.kp-disp b{font-family:var(--f-num);font-weight:400;font-size:40px;line-height:1.1;text-shadow:3px 3px 0 #e8517a;font-variant-numeric:tabular-nums}
+.kp-disp b.fresh{background:rgba(255,226,122,.18);border-radius:6px;padding:0 4px}
+.kp-disp b::after{content:"";display:inline-block;width:3px;height:.9em;background:currentColor;margin-left:3px;vertical-align:-2px;animation:kpblink 1s steps(1) infinite}
+@keyframes kpblink{50%{opacity:0}}
+.kp-disp i{font-style:normal;font-family:var(--f-num);font-size:20px;color:#c9b8e0}
+.kp-keys{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.kp-keys button{height:58px;border:2.5px solid var(--ink);border-radius:14px;background:#fff;color:var(--ink);font-family:var(--f-num);font-size:26px;cursor:pointer;
+  box-shadow:3px 3px 0 var(--ink);transition:transform .08s,box-shadow .08s;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none}
+.kp-keys button:active,.kp-keys button.hit{transform:translate(3px,3px);box-shadow:0 0 0 var(--ink)}
+.kp-keys .fn{background:var(--lilac,#e9e1ff);font-size:20px}
+.kp-keys .del{background:var(--pink,#ffd1df)}
+.kp-keys .ok{background:var(--mint,#c9f2e6);font-family:var(--f-pop,inherit);font-size:18px;grid-row:span 2;height:auto}
+.kp-keys .zero{grid-column:span 2}
+.f .in.kp-on{border-color:var(--atk)!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--atk) 30%,transparent)!important}
+body.kp-open{padding-bottom:380px!important}
+/* 喫茶モード */
+body.pro .kp-box{border:1px solid #a77d3c;border-radius:8px;box-shadow:inset 0 0 0 4px var(--surface),inset 0 0 0 5px rgba(167,125,60,.55),0 18px 40px rgba(0,0,0,.45)}
+body.pro .kp-disp{background:#1c2b22;border:1px solid #a77d3c;border-radius:4px;color:#f3ead2}
+body.pro .kp-disp::before{display:none}
+body.pro .kp-disp b{font-weight:700;text-shadow:none}
+body.pro .kp-disp i{color:#b9c6b5}
+body.pro .kp-keys button{border:1px solid #b89a6c;border-radius:6px;box-shadow:0 2px 0 #b89a6c;background:#fffaf0;font-weight:500}
+body.pro .kp-keys button:active,body.pro .kp-keys button.hit{transform:translateY(2px);box-shadow:none}
+body.pro .kp-keys .fn{background:#f3e8d0}
+body.pro .kp-keys .del{background:#f6e0cf}
+body.pro .kp-keys .ok{background:#7a2e2a;color:#fbf3e2;border-color:#7a2e2a}
+body.pro .kp-hd .kp-nav{border:1px solid #b89a6c;box-shadow:none;border-radius:4px}
+@media (prefers-reduced-motion:reduce){.kp-box{transition:none}}
+@media (max-height:900px){.kp-keys button{height:48px;font-size:22px}.kp-disp{min-height:50px;padding:2px 14px}.kp-disp b{font-size:32px}.kp-box{padding:10px}.kp-hd{margin-bottom:6px}.kp-keys{gap:6px}}
+</style>
+<div class="kp" id="kp" aria-hidden="true">
+  <div class="kp-box" role="dialog" aria-label="数字を入れる">
+    <div class="kp-hd"><button type="button" class="kp-nav" data-k="prev">← 前</button><div class="kp-lbl" id="kpLbl"></div><button type="button" class="kp-nav" data-k="next">次 →</button></div>
+    <div class="kp-disp"><b id="kpVal">0</b><i id="kpUnit"></i></div>
+    <div class="kp-keys">
+      <button type="button" data-k="7">7</button><button type="button" data-k="8">8</button><button type="button" data-k="9">9</button><button type="button" class="del" data-k="del" aria-label="1文字消す">⌫</button>
+      <button type="button" data-k="4">4</button><button type="button" data-k="5">5</button><button type="button" data-k="6">6</button><button type="button" class="fn" data-k="clr">C</button>
+      <button type="button" data-k="1">1</button><button type="button" data-k="2">2</button><button type="button" data-k="3">3</button><button type="button" class="ok" data-k="ok">決定</button>
+      <button type="button" class="zero" data-k="0">0</button><button type="button" data-k=".">.</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  const touch=navigator.maxTouchPoints>0||matchMedia('(pointer:coarse)').matches;
+  if(!touch)return;
+  const kp=document.getElementById('kp'),val=document.getElementById('kpVal'),lbl=document.getElementById('kpLbl'),unit=document.getElementById('kpUnit');
+  let cur=null,fresh=false;
+  const SEL='input[type=number]';
+  const prep=root=>root.querySelectorAll(SEL+':not([data-kp])').forEach(i=>{i.dataset.kp='1';i.readOnly=true;i.setAttribute('inputmode','none')});
+  prep(document);new MutationObserver(()=>prep(document)).observe(document.body,{childList:true,subtree:true});
+  const list=()=>[...document.querySelectorAll(SEL)].filter(i=>i.offsetParent!==null&&!i.disabled);
+  const labelOf=i=>{if(i.id){const l=document.querySelector(`label[for="${i.id}"]`);if(l)return l.textContent.trim()}const l=i.closest('label');return l?l.textContent.replace(/[\d.]+/g,'').trim():'数字'};
+  const unitOf=i=>{const f=i.closest('.in');const u=f&&f.querySelector('.u');if(u)return u.textContent;const l=i.closest('label');return l&&/m$/.test(l.textContent.trim())?'m':''};
+  const show=()=>{val.textContent=cur.value===''?'0':cur.value;val.classList.toggle('fresh',fresh);
+    const L=list(),k=L.indexOf(cur);kp.querySelector('[data-k=prev]').disabled=k<=0;kp.querySelector('[data-k=next]').disabled=k<0||k>=L.length-1};
+  const set=v=>{cur.value=v;cur.dispatchEvent(new Event('input',{bubbles:true}));cur.dispatchEvent(new Event('change',{bubbles:true}));show()};
+  const open=i=>{if(cur)cur.closest('.in')&&cur.closest('.in').classList.remove('kp-on');cur=i;fresh=true;
+    lbl.textContent=labelOf(i);unit.textContent=unitOf(i);const w=i.closest('.in');w&&w.classList.add('kp-on');
+    kp.classList.add('open');kp.setAttribute('aria-hidden','false');document.body.classList.add('kp-open');show();
+    setTimeout(()=>{const r=i.getBoundingClientRect(),box=kp.querySelector('.kp-box').getBoundingClientRect(),hd=document.querySelector('.top'),ht=hd?hd.getBoundingClientRect().bottom:0;
+      if(r.bottom>box.top-10||r.top<ht+8){const want=Math.max(ht+8,(ht+box.top)/2-r.height/2);window.scrollBy({top:r.top-want,behavior:'smooth'})}},360)};
+  const close=()=>{if(!cur)return;const w=cur.closest('.in');w&&w.classList.remove('kp-on');cur.blur();cur=null;kp.classList.remove('open');kp.setAttribute('aria-hidden','true');document.body.classList.remove('kp-open')};
+  document.addEventListener('click',e=>{const i=e.target.closest&&e.target.closest(SEL);if(i){e.preventDefault();open(i);return}
+    const fin=e.target.closest&&e.target.closest('.f .in');if(fin){const j=fin.querySelector(SEL);if(j){open(j);return}}
+    if(cur&&!e.target.closest('.kp-box'))close()},true);
+  kp.addEventListener('pointerdown',e=>e.preventDefault());
+  kp.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||!cur)return;const k=b.dataset.k;
+    b.classList.add('hit');setTimeout(()=>b.classList.remove('hit'),90);
+    let v=cur.value||'';
+    if(/^\d$/.test(k)){if(fresh||v==='0')v='';fresh=false;if(v.replace('.','').length<9)set(v+k);else show()}
+    else if(k==='.'){if(fresh){v='0';fresh=false}if(!v.includes('.'))set((v||'0')+'.');}
+    else if(k==='del'){fresh=false;set(v.slice(0,-1))}
+    else if(k==='clr'){fresh=false;set('')}
+    else if(k==='ok'){if(cur.value===''||cur.value.endsWith('.'))set(String(parseFloat(cur.value)||0));close()}
+    else if(k==='prev'||k==='next'){if(cur.value.endsWith('.'))set(String(parseFloat(cur.value)||0));const L=list(),n=L.indexOf(cur)+(k==='next'?1:-1);if(L[n])open(L[n])}});
+  document.addEventListener('keydown',e=>{if(cur&&e.key==='Escape')close()});
 })();
 </script>
 
