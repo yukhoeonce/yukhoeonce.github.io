@@ -980,6 +980,8 @@ body.pro .card.pro-only{display:block!important}
   Object.assign(SN,{critRate:'クリ率',kwFinal:'KW最終DMG',atkP:'攻撃力%',noWs:'弱点DMGなし',mark:'マーク',artBomb:'クリ率→爆弾DMG'});
   CALC.push('critRate','kwFinal','atkP','mark','artBomb');
   const WGROUPS=[['火傷','burn',['wFlameReso','wEmber','wFlameGuard','wWildBurn']],['フロストボルテックス','frost',['wIceCore','wCryo','wFrostBreak','wFrostGuard']],['パワーサージ','surge',['wTransient','wSurgeAmp','wSurgeFreq','wSurgeSpread']],['不安定爆弾','bomber',['wBombCharge','wExplArt','wBombLoot','wBombHeavy']],['スプレッドガン','spread',['wAllCrush','wShieldPen','wBlastHead','wSpreadLoot']],['バウンス','bounce',['wChain','wMultiBounce','wHiBounce','wBounceFreq']],['ラピッドガン','rapid',['wRapidKeep','wAccurate','wSmoke','wCowboy']],['ハンティングマーク','mark',['wMarkAmp','wMarkHeal','wHunterGuard','wMarkSpread']],['ウェポンバースト','wburst',['wUnity','wEndBurst','wContBurst','wPortable']]];
+  const KWTXT=[['mark',/ハンティングマーク|マーク/],['rapid',/ラピッドガン|ガンスリンガー/],['wburst',/ウェポンバースト/],['burn',/火傷/],['frost',/フロストボルテックス/],['surge',/パワーサージ/],['bomber',/不安定爆弾/],['spread',/スプレッドガン/],['bounce',/バウンス/]];
+  function wKeys(w){const m=new Set(w.a.map(a=>a.kwOf||a.k)); let best=null,bi=1e9; KWTXT.forEach(([k,r])=>{const x=(w.t||'').search(r); if(x>=0&&x<bi){bi=x;best=k}}); if(best)m.add(best); return m}
   const MAINOF={}; for(const k in MAINS)(MAINOF[MAINS[k].slot]=MAINOF[MAINS[k].slot]||[]).push(k);
   const MS={cur:{},try:{},cond:{mainC:true},dist:5};
   try{const m=JSON.parse(localStorage.getItem(KEY+'-mods')||'null'); if(m){Object.assign(MS.cur,m.cur||{});Object.assign(MS.try,m.try||{});Object.assign(MS.cond,m.cond||{}); if(isFinite(m.dist))MS.dist=m.dist}}catch(e){}
@@ -1034,7 +1036,7 @@ body.pro .card.pro-only{display:block!important}
     const items=choose==='m'?mains.map(m=>['m-'+m,p[2]===m,MAINS[m].n,MAINS[m].t||MAINS[m].note||MAINS[m].etc]):list.map(x=>['x-'+x,p[0]===x,MODX[x].n,'']);
     const WG=choose==='m'&&mains.length&&MAINS[mains[0]].slot==='weapon';
     if(items.length>8)h+=`<label class="chs"><span aria-hidden="true">🔍</span><input type="search" id="chq" placeholder="名前で探す" autocomplete="off"></label>`;
-    if(WG){const mine=new Set(W(wid).a.map(a=>a.kwOf||a.k)), im=new Map(items.map(a=>[a[0].slice(2),a]));
+    if(WG){const mine=wKeys(W(wid)), im=new Map(items.map(a=>[a[0].slice(2),a]));
       const gs=WGROUPS.map(g=>[g,mine.has(g[1])]).sort((x,y)=>y[1]-x[1]);
       let g=`<div class="ctiles">${tile('m-',!p[2],'なし')}</div>`;
       gs.forEach(([[lab,k,ids],on])=>{const its=ids.filter(i=>im.has(i)).map(i=>tile(...im.get(i))).join(''); if(its)g+=`<section class="cgrp${on?' mine':''}"><h4>${lab}${on?'<span>いまの武器</span>':''}</h4><div class="ctiles">${its}</div></section>`});
