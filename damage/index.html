@@ -606,6 +606,8 @@ body.pro .card.pro-only{display:block!important}
           <div class="f" data-need="crit"><label for="critRate">クリティカル確率</label><div class="in"><input id="critRate" type="number" step="any" inputmode="decimal"><span class="u">%</span></div></div>
           <div class="f" data-need="crit"><label for="critDmg">クリティカルDMG</label><div class="in"><input id="critDmg" type="number" step="any" inputmode="decimal"><span class="u">%</span></div></div>
           <div class="f" data-need="ws"><label for="wsDmg">弱点DMG</label><div class="in"><input id="wsDmg" type="number" step="any" inputmode="decimal"><span class="u">%</span></div></div>
+          <div class="f" data-need="zk"><label for="zkParts">当てた部位の数（絶響）</label><div class="in"><input id="zkParts" type="number" step="1" min="1" max="12" inputmode="numeric" value="5"></div><span class="hint">その敵に当てたことのある部位。戦いが長いほど増える（ダミーは最大10前後）</span></div>
+          <div class="f" data-need="zk"><label for="zkPrison">牢獄ヘルメット</label><div class="in"><select id="zkPrison"><option value="2">あり（スプレッド2回発動）</option><option value="1">なし</option></select></div></div>
           <div class="f" data-need="status"><label for="status">状態異常DMG増加</label><div class="in"><input id="status" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div></div>
           <div class="f" data-need="elem"><label for="elem" id="elemLbl">エレメントDMG増加</label><div class="in"><input id="elem" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div></div>
           </div>
@@ -791,7 +793,7 @@ body.pro .card.pro-only{display:block!important}
     {id:'icebreaker',type:'ライトマシンガン',name:'RPD - アイスブレーカー',b:RPD,s:[204,500,100],t:'リロード後の最初の命中でフロストボルテックス。フロストDMG+30%。',note:'リロード後1発目でフロストボルテックス。フロストDMG+30%はステータス画面の値に含まれる。',a:[G('gun'),G('frost')]},
     {id:'qbj',type:'ライトマシンガン',name:'QBJ97 - 火樹銀花',b:QBJ,s:[214, 650, 60],t:'命中8%で不安定爆弾を付与。命中8%でミサイル（超感覚強度500%の不安定爆弾DMG）、撃ち続けると発射率上昇・射撃停止でリセット。ミサイルは5%で不安定爆弾を付与。ミサイル爆発で「スパーク」1スタック（反動・ブレ-5%、4秒、最大5）。最大スタックで不安定爆弾発動率+3%。',note:'8%で不安定爆弾、8%で誘導ミサイル（超感覚強度500%、不安定爆弾DMGは乗るが係数・最終DMGは乗らない）。',a:[G('gun'),G('bomber'),G('bomber',{coef:500,noKwFinal:1,label:'誘導ミサイル'})]},
     {id:'megalo',type:'スナイパー',name:'M700 - メガロフォビア',b:M700,s:[1959, 40, 5],t:'命中30%（弱点90%）で不安定爆弾。撃破で爆弾の範囲-10%・係数+20%（30秒、最大5）。爆弾のクリ能力解放、必ずクリ。弱点DMG1%ごとに爆弾のクリDMG+1%。',note:'弱点90%・他30%で不安定爆弾。不安定爆弾は確定クリで、弱点DMG1%ごとに爆弾クリDMG+1%。撃破ごとに係数+20%（最大5、他の武器にも乗る）。',a:[G('gun'),G('bomber',{forceCrit:1,critFromWs:1})]},
-    {id:'zekkyo',type:'スナイパー',name:'M700 - 絶響',b:[10,45,30],s:[1330, 40, 5],t:'命中40%でスプレッド、弱点命中は必ず発動。発動時は命中済みの部位も対象。発動後「残響」1スタック（最大4、リロード・武器切替で解除）、1スタックごとにスプレッドの命中部位+1・反動-7%。残響1スタックごとにマガジン最後の1発のダメージ+5%。残響3以上なら最後の1発のスプレッドが残響の数だけ追加発動。',note:'40%（弱点100%）でスプレッド。残響4スタックで最後の1発のダメージ+20%。',a:[G('gun'),G('spread')]},
+    {id:'zekkyo',type:'スナイパー',name:'M700 - 絶響',b:[10,45,30],s:[1330, 40, 5],t:'命中40%でスプレッド、弱点命中は必ず発動。発動時は命中済みの部位も対象。発動後「残響」1スタック（最大4、リロード・武器切替で解除）、1スタックごとにスプレッドの命中部位+1・反動-7%。残響1スタックごとにマガジン最後の1発のダメージ+5%。残響3以上なら最後の1発のスプレッドが残響の数だけ追加発動。',note:'40%（弱点100%）でスプレッド。スプレッドは「その敵に当てたことのある部位すべて」に当たる（ゲームで確認）。回数＝当てた部位の数×発動回数（牢獄ヘルメットで2回）。残響でさらに部位+1ずつ、最後の1発は残響の数だけ追加発動（この2つは計算に入れていません）。',a:[G('gun'),G('spread',{zk:1})]},
     {id:'m700',type:'スナイパー',name:'M700（特性なし）',b:M700,s:[1490,40,5],t:'特性なし。',note:'実弾だけの武器。',a:[G('gun')]},
     {id:'spoton',type:'スナイパー',name:'AWM - スポットオン',b:AWM,aff:-10,s:[2310, 40, 5],t:'弱点命中で70%でハンティングマーク。武器切替後最初の命中でマーク。非超越者に命中で弱点DMG+25%（10秒、最大4、武器切替で半分）。非超越者を弱点で撃破後、攻撃力+15%（20秒）。',note:'弱点70%でハンティングマーク。命中で弱点DMG+25%（最大4）。弱点撃破で攻撃力+15%。',a:[G('gun')]},
     {id:'panther',type:'スナイパー',name:'AWM - ブラックパンサー',b:AWM,s:[1663,40,5],t:'2秒照準でウェポンバースト（CD10秒）。照準時間で攻撃力上昇（最大+40%）。ウェポンバースト発動後、弱点DMGが上がる重装の力3スタック（射撃ごとに1減少）。',note:'しっかり照準すると攻撃力+40%（攻撃力欄に足す）。',a:[G('gun')]},
@@ -813,8 +815,8 @@ body.pro .card.pro-only{display:block!important}
   const fmt=n=>Math.round(n).toLocaleString('ja-JP');
   const KEY='oh-damagelab-v1';
   const RM=matchMedia('(prefers-reduced-motion: reduce)');
-  const numIds=['atk','psi','gunDmg','critRate','critDmg','wsDmg','target','status','elem','kwFinal','kwWs','kwCrit','wsRate','stacks','hits','finalDmg','devGun','devWs','devKw','quest','part'];
-  const selIds=['mark','affin','ammo'];
+  const numIds=['zkParts','atk','psi','gunDmg','critRate','critDmg','wsDmg','target','status','elem','kwFinal','kwWs','kwCrit','wsRate','stacks','hits','finalDmg','devGun','devWs','devKw','quest','part'];
+  const selIds=['zkPrison','mark','affin','ammo'];
   const AMMO=[[0,'銅弾','基本'],[8,'銅芯弾','+8%'],[15,'徹甲弾','+15%']];
   const KWK=['spread','bounce','surge','frost','burn','bomber'];
   const kwVals={spread:0,bounce:0,surge:0,frost:0,burn:0,bomber:0};
@@ -1247,7 +1249,7 @@ body.pro .card.pro-only{display:block!important}
     else n.add('psi');
     if(K.base==='psi'||a.k==='special'){n.add('status');n.add('elem')}
     if(canCrit(a))n.add('crit');
-  });return n}
+  }); if(w.id==='zekkyo')n.add('zk'); return n}
   function elemName(w){for(const a of w.a){const K=KINDS[a.k]; if(K.el)return K.el} if(/ショック|天雷|パワーサージ/.test(w.t||''))return 'ショック'; if(/ブレイズ|火傷/.test(w.t||''))return 'ブレイズ'; if(/フロスト/.test(w.t||''))return 'フロスト'; return ''}
   function renderForm(){
     const w=W(wid), n=needs(w);
@@ -1263,7 +1265,7 @@ body.pro .card.pro-only{display:block!important}
   const hasWs=a=>['gun','spread','bounce','special'].includes(a.k);
   const coefOf=a=>a.coef!=null?a.coef:(KINDS[a.k].coef||100);
   const stacksOf=(v,a)=>a.stacks!=null?a.stacks:Math.max(1,Math.round(v.stacks));
-  const hitsOf=(v,a)=>(a.k==='spread'||a.k==='bounce')?Math.max(1,Math.round(a.hits!=null?a.hits:v.hits)):1;
+  const hitsOf=(v,a)=>a.zk?Math.max(1,Math.round(v.zkParts||1))*(v.zkPrison||1):(a.k==='spread'||a.k==='bounce')?Math.max(1,Math.round(a.hits!=null?a.hits:v.hits)):1;
   function kwOf(v,a){const k=a.kwOf||a.k; return (v.kw[k]||0)+(a.kwAdd||0)}
   function dmg(v,a,h){
     const k=a.k, ws=h.ws, cr=h.cr;
