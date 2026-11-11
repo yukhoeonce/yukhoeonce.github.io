@@ -1230,7 +1230,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
   }
   let opener=null;
   function openPicker(){opener=document.activeElement; $('picker').hidden=false; renderPicker(); requestAnimationFrame(()=>requestAnimationFrame(()=>$('picker').classList.add('open')));
-    setTimeout(()=>{const cur=$('wlist').querySelector('.tiles [aria-pressed="true"]'); if(cur)cur.scrollIntoView({block:'center'}); if(matchMedia('(hover:hover)').matches)$('q').focus()},60)}
+    setTimeout(()=>{const cur=$('wlist').querySelector('.tiles [aria-pressed="true"]'); if(cur)cur.scrollIntoView({block:'center'}); if((matchMedia('(hover:hover) and (pointer:fine)').matches&&!navigator.maxTouchPoints))$('q').focus()},60)}
   function closePicker(){const p=$('picker'); if(p.hidden)return; p.classList.remove('open'); setTimeout(()=>{p.hidden=true},RM.matches?0:260); if(opener&&opener.focus)opener.focus()}
 
 
@@ -1799,7 +1799,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
     if(lay==='cur'&&same(old,MS.try[id])){if(MS.cur[id])MS.try[id]=[...MS.cur[id]]; else delete MS.try[id]}}
   $('modList').addEventListener('click',e=>{const t=e.target.closest('button'); if(!t)return; const k=t.dataset.k;
     if(t.dataset.slot){choose=null; editing=t.dataset.slot; lay=t.dataset.w||(MS.cur[editing]?'try':'cur'); renderModList(); const f=$('modList').querySelector('[data-act="back"]'); f&&f.focus(); $('modList').scrollTop=0; return}
-    if(t.dataset.act==='choose'){choose=t.dataset.c; renderModList(); $('modList').scrollTop=0; const q=$('chq')||$('modList').querySelector('.ctiles [aria-pressed="true"]')||$('modList').querySelector('[data-act="unchoose"]'); q&&q.focus({preventScroll:true}); return}
+    if(t.dataset.act==='choose'){choose=t.dataset.c; renderModList(); $('modList').scrollTop=0; const q=((matchMedia('(hover:hover) and (pointer:fine)').matches&&!navigator.maxTouchPoints)&&$('chq'))||$('modList').querySelector('.ctiles [aria-pressed="true"]')||$('modList').querySelector('[data-act="unchoose"]'); q&&q.focus({preventScroll:true}); return}
     if(t.dataset.act==='unchoose'){const c=choose; choose=null; renderModList(); const f=$('modList').querySelector(`[data-k="c-${c}"]`); f&&f.focus(); return}
     if(t.dataset.act==='back'){const id=editing, w=lay; editing=null; choose=null; renderModList(); const f=$('modList').querySelector(`[data-k="s-${id}-${w}"]`); f&&f.focus(); return}
     if(k&&(k.startsWith('as-')||k.startsWith('an-')||k.startsWith('ak-'))){const v=k.slice(3), w=lay;
