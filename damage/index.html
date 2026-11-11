@@ -227,6 +227,7 @@ select.btn option{background:var(--surface);color:var(--ink)}
 .shot.wait .sh{--c:var(--wait);--cs:var(--wait-soft)}
 .shot .sh span{display:block;font-size:13px;font-weight:700;color:var(--ink-2)}
 .shot .sh b{display:block;font-family:var(--f-num);font-weight:700;font-size:clamp(34px,4vw,48px);line-height:1.05;color:var(--c);font-variant-numeric:tabular-nums}
+.shot .sh{min-width:0;overflow:hidden}.shot .sh b.long{font-size:clamp(26px,3vw,38px)}
 .shot .sh.mag{background:var(--field)}
 .shot .sh.mag b{color:var(--ink)}
 .shot-n{grid-column:1/-1;margin:0;font-size:13px;color:var(--ink-2);line-height:1.6}
@@ -606,7 +607,7 @@ body.pro .card.pro-only{display:block!important}
           <div class="f" data-need="crit"><label for="critRate">クリティカル確率</label><div class="in"><input id="critRate" type="number" step="any" inputmode="decimal"><span class="u">%</span></div></div>
           <div class="f" data-need="crit"><label for="critDmg">クリティカルDMG</label><div class="in"><input id="critDmg" type="number" step="any" inputmode="decimal"><span class="u">%</span></div></div>
           <div class="f" data-need="ws"><label for="wsDmg">弱点DMG</label><div class="in"><input id="wsDmg" type="number" step="any" inputmode="decimal"><span class="u">%</span></div></div>
-          <div class="f" data-need="zk"><label for="zkParts">当てた部位の数（絶響）</label><div class="in"><input id="zkParts" type="number" step="1" min="1" max="12" inputmode="numeric" value="5"></div><span class="hint">その敵に当てたことのある部位。頭だけなら2前後、いろんな所に当てるほど増える（ダミーは最大10前後）。牢獄ヘルメットを③の装備で選ぶと2回発動で計算</span></div>
+          <div class="f" data-need="zk"><label for="zkParts">当てた部位の数（絶響）</label><div class="in"><input id="zkParts" type="number" step="1" min="1" max="12" inputmode="numeric" value="2"></div><span class="hint">その敵に当てたことのある部位。頭だけなら2前後、いろんな所に当てるほど増える（ダミーは最大10前後）。牢獄ヘルメットを③の装備で選ぶと2回発動で計算</span></div>
           <div class="f" data-need="status"><label for="status">状態異常DMG増加</label><div class="in"><input id="status" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div></div>
           <div class="f" data-need="elem"><label for="elem" id="elemLbl">エレメントDMG増加</label><div class="in"><input id="elem" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div></div>
           </div>
@@ -1352,7 +1353,7 @@ body.pro .card.pro-only{display:block!important}
     if(w.type==='ショットガン'){el.className='shot';el.innerHTML=`<p class="shot-n">ショットガンは1発に何粒も入るので、1発・1マガジンの合計はまだ出せません。下の内訳は1粒あたりの数字です。</p>`;return null}
     const r=shotOf(v,w); if(!r){el.innerHTML='';return null}
     el.className='shot '+(r.wait?'wait':'atk');
-    el.innerHTML=`<div class="sh"><span>1発（追撃込み）</span><b>${fmt(r.tot)}</b></div><div class="sh mag"><span>1マガジン${r.mag?`（${r.mag}発）`:''}で</span><b>${r.mag?fmt(r.magTot):'—'}</b></div>
+    el.innerHTML=`<div class="sh"><span>1発（追撃込み）</span><b>${fmt(r.tot)}</b></div><div class="sh mag"><span>1マガジン${r.mag?`（${r.mag}発）`:''}で</span><b class="${r.mag&&r.magTot>=1e6?'long':''}">${r.mag?fmt(r.magTot):'—'}</b></div>
       <p class="shot-n">${r.parts.join(' ＋ ')}<span class="small">${r.zkNote}クリ率${Math.round(r.c*100)}%・弱点に当たる割合${Math.round(r.sr*100)}%で平均した目安です${pro?'':'（割合はプロで変えられます）'}。${r.skip.length?`含まない: ${r.skip.join('・')}（時間で入る・条件つきのため）。`:''}${r.wait?'確認待ちの攻撃を含みます。':''}${r.hid.length?`確認待ちの追撃（${r.hid.join('・')}）は入れていません。プロにすると予想値込みになります。`:''}発動率は武器特性の文章から計算しています。</span></p>`;
     return r}
 
