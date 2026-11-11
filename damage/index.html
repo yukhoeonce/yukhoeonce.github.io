@@ -606,8 +606,7 @@ body.pro .card.pro-only{display:block!important}
           <div class="f" data-need="crit"><label for="critRate">クリティカル確率</label><div class="in"><input id="critRate" type="number" step="any" inputmode="decimal"><span class="u">%</span></div></div>
           <div class="f" data-need="crit"><label for="critDmg">クリティカルDMG</label><div class="in"><input id="critDmg" type="number" step="any" inputmode="decimal"><span class="u">%</span></div></div>
           <div class="f" data-need="ws"><label for="wsDmg">弱点DMG</label><div class="in"><input id="wsDmg" type="number" step="any" inputmode="decimal"><span class="u">%</span></div></div>
-          <div class="f" data-need="zk"><label for="zkParts">当てた部位の数（絶響）</label><div class="in"><input id="zkParts" type="number" step="1" min="1" max="12" inputmode="numeric" value="5"></div><span class="hint">その敵に当てたことのある部位。戦いが長いほど増える（ダミーは最大10前後）</span></div>
-          <div class="f" data-need="zk"><label for="zkPrison">牢獄ヘルメット</label><div class="in"><select id="zkPrison"><option value="2">あり（スプレッド2回発動）</option><option value="1">なし</option></select></div></div>
+          <div class="f" data-need="zk"><label for="zkParts">当てた部位の数（絶響）</label><div class="in"><input id="zkParts" type="number" step="1" min="1" max="12" inputmode="numeric" value="5"></div><span class="hint">その敵に当てたことのある部位。戦いが長いほど増える（ダミーは最大10前後）。牢獄ヘルメットを③の装備で選ぶと2回発動で計算</span></div>
           <div class="f" data-need="status"><label for="status">状態異常DMG増加</label><div class="in"><input id="status" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div></div>
           <div class="f" data-need="elem"><label for="elem" id="elemLbl">エレメントDMG増加</label><div class="in"><input id="elem" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div></div>
           </div>
@@ -816,7 +815,7 @@ body.pro .card.pro-only{display:block!important}
   const KEY='oh-damagelab-v1';
   const RM=matchMedia('(prefers-reduced-motion: reduce)');
   const numIds=['zkParts','atk','psi','gunDmg','critRate','critDmg','wsDmg','target','status','elem','kwFinal','kwWs','kwCrit','wsRate','stacks','hits','finalDmg','devGun','devWs','devKw','quest','part'];
-  const selIds=['zkPrison','mark','affin','ammo'];
+  const selIds=['mark','affin','ammo'];
   const AMMO=[[0,'銅弾','基本'],[8,'銅芯弾','+8%'],[15,'徹甲弾','+15%']];
   const KWK=['spread','bounce','surge','frost','burn','bomber'];
   const kwVals={spread:0,bounce:0,surge:0,frost:0,burn:0,bomber:0};
@@ -1243,7 +1242,7 @@ body.pro .card.pro-only{display:block!important}
   function closeMods(){const p=$('mods'); if(p.hidden)return; p.classList.remove('open'); setTimeout(()=>{p.hidden=true},RM.matches?0:260); if(mOpener&&mOpener.focus)mOpener.focus()}
 
   /* ---- 入力 ---- */
-  function read(noMod){const v={};numIds.forEach(i=>{const n=parseFloat($(i).value);v[i]=isFinite(n)?n:0});selIds.forEach(i=>v[i]=parseFloat($(i).value)||0);v.kw={...kwVals};return noMod?v:applyMods(v)}
+  function read(noMod){const v={};numIds.forEach(i=>{const n=parseFloat($(i).value);v[i]=isFinite(n)?n:0});selIds.forEach(i=>v[i]=parseFloat($(i).value)||0);v.kw={...kwVals};v.zkPrison=((noMod?MS.cur.$key:keyPick('try'))==='kPrison')?2:1;return noMod?v:applyMods(v)}
   function needs(w){const n=new Set(['any']);shownAttacks(w).forEach(a=>{const K=KINDS[a.k];
     if(K.base==='atk'){n.add('atk'); if(a.k!=='aoe'){n.add('crit');n.add('ws')} if(a.k!=='special')n.add('gun')}
     else n.add('psi');
