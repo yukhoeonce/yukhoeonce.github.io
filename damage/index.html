@@ -1011,7 +1011,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
       <p class="point" id="pNote"></p>
       <details class="trait"><summary>ゲーム内の武器特性を読む</summary><p id="pTrait"></p></details>
       <div class="fine">
-        <p>ゲーム内のダミーで、実弾・クリ・弱点、スプレッドガン、バウンス、パワーサージ、フロストボルテックス、火傷（最大スタックまで）を測り、式と一致しました。表示は四捨五入です。<b>確認待ち</b>の攻撃（不安定爆弾・特殊弾・武器固有の範囲ダメージなど）はまだ確かめていない予想の式で、初心者モードでは表示しません。近接武器は未検証のため載せていません。</p>
+        <p>ゲーム内のダミーで、実弾・クリ・弱点、スプレッドガン、バウンス、パワーサージ、フロストボルテックス、火傷（最大スタックまで）、不安定爆弾を測り、式と一致しました。表示は四捨五入です。不安定爆弾はダミーで式より約1割低く出たので×0.9で計算していて、1回ごとに±5%ほどばらつきます。<b>確認待ち</b>の攻撃（爆弾の特殊な派生・特殊弾・武器固有の範囲ダメージなど）はまだ確かめていない予想の式で、初心者モードでは表示しません。近接武器は未検証のため載せていません。</p>
         <p>非公式のファンツールです。© NetEase / Starry Studio</p>
       </div>
     </section>
@@ -1088,11 +1088,11 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
     bomber:{name:'不安定爆弾',base:'psi',coef:120,kw:'不安定爆弾DMG',el:'バースト'},
     weapon:{name:'武器固有エレメント',base:'psi'}
   };
-  const VERIFIED=new Set(['gun','spread','bounce','surge','frost','burn']);
+  const VERIFIED=new Set(['gun','spread','bounce','surge','frost','burn','bomber']);
   const G=(k,o)=>Object.assign({k},o||{});
   const DE=[6,60,25],RV=[4,65,25],GL=[8,55,28],DB=[10,25,30],DP=[8,20,28],AA=[8,15,27],MP7=[8,50,30],MP5=[8,55,30],VEC=[10,45,30],P90=[8,30,45],TEC=[10,45,30],AKM=[6,55,30],SCAR=[6,60,27],M4=[6,60,27],AUG=[10,60,25],MG4=[8,35,30],RPD=[10,40,30],QBJ=[5,55,30],M700=[2,90,24],AWM=[2,95,26],M82=[2,80,30],SKS=[5,50,40],MK14=[5,50,40],BOW=[2,70,28];
   const WEAPONS=[
-    {id:'greatwhite',type:'ハンドガン',name:'デザートイーグル - ホホジロザメ',b:DE,s:[939, 190, 9],t:'3回命中で不安定爆弾。クリ命中は2回命中扱い。クリ命中時30%で不安定爆弾。不安定爆弾のクリ能力を解放、爆弾のクリ率+35%（キャラのクリ率に加算）。',note:'銃器3回命中で不安定爆弾。クリは2回分で、あふれた分は次に持ち越し（クリが続けば3発で2回発動）。これとは別に実弾クリ時30%で追加の不安定爆弾。爆弾はクリ可能で、+35%は爆弾だけのクリ率（実弾には乗らない）。2025年11月の調整で今の形に（旧：4回命中＋弱点で強化）。',a:[G('gun'),G('bomber',{elemCrit:1,critAdd:35})]},
+    {id:'greatwhite',type:'ハンドガン',name:'デザートイーグル - ホホジロザメ',b:DE,s:[939, 190, 9],t:'3回命中で不安定爆弾。クリ命中は2回命中扱い。クリ命中時30%で不安定爆弾。不安定爆弾のクリ能力を解放、爆弾のクリ率+35%（キャラのクリ率に加算）。',note:'銃器3回命中で不安定爆弾。クリは2回分で、あふれた分は次に持ち越し（クリが続けば3発で2回発動）。これとは別に実弾クリ時30%で追加の不安定爆弾。爆弾はクリ可能で、+35%は爆弾だけのクリ率（実弾には乗らない）。2025年11月の調整で今の形に（旧：4回命中＋弱点で強化）。ダミー実測（超感覚強度295）で爆弾は平均505・クリ約627（クリDMG25%どおり）、1回ごとに±5%ほどばらつく。',a:[G('gun'),G('bomber',{elemCrit:1,critAdd:35,ok:1})]},
     {id:'blueflame',type:'ハンドガン',name:'デザートイーグル - ブルーフレイム',b:DE,s:[826, 190, 8],t:'命中時60%でハンティングマーク。マーク状態の対象に命中すると80%でマークが15m内の別の敵1名に拡散、対象がいなければ銃器DMG+25%（10秒）。マーク状態の敵の弱点に命中で攻撃力+3%（10秒、最大3）。',note:'60%でハンティングマーク。マーク中の敵の弱点で攻撃力+3%（最大3）。',a:[G('gun')]},
     {id:'de',type:'ハンドガン',name:'デザートイーグル（特性なし）',b:DE,s:[599,190,7],t:'特性なし。',note:'実弾だけの武器。',a:[G('gun')]},
     {id:'farewell',type:'ハンドガン',name:'リボルバー - 別れのお礼',b:RV,s:[1093, 145, 5],t:'命中時45%でラピッドガン（弱点命中なら100%）、弱点DMG+40%。発動で予備弾から1発補充。射撃は50%で追加1発消費し、その命中時の攻撃力+100%。外れたら次のリロードで+1発（最大5）。',note:'45%（弱点100%）でラピッドガン。50%で弾を2発消費し、その1発は攻撃力+100%（攻撃力欄を2倍にして計算）。',a:[G('gun')]},
@@ -1624,6 +1624,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
     const c=canCrit(a)&&cr?1+P(v.critDmg)+P(kwC)+(a.critFromWs?P(v.wsDmg):0):1;
     let d=v.psi*coef*c*(1+P(v.status))*(1+P(v.elem))*(1+P(v.target))*allBase;
     if(k!=='weapon') d*=(1+P(kwOf(v,a)))*(a.noKwFinal?1:(1+P(kwF)))*(1+P(v.devKw));
+    if(k==='bomber') d*=0.9;
     return d;
   }
   function critP(v,a){if(!canCrit(a))return 0; if(a.forceCrit)return 1; return Math.min(1,Math.max(0,P(v.critRate+(a.critAdd||0))))}
@@ -1643,6 +1644,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
     let s=`超感覚強度 ${v.psi} ×${co} ${m(v.status)}(状態異常) ${m(v.elem)}(エレメント) ${m(v.target)}(対象)`;
     if(k!=='weapon') s+=` ${m(kwOf(v,a))}(${KINDS[k].kw}${a.kwAdd?` +${a.kwAdd}%込み`:''})`+(v.kwFinal||a.kwFinalAdd?` ${m(v.kwFinal+(a.kwFinalAdd||0))}(係数)`:'');
     if(canCrit(a)) s+=` ×(1+クリ)(クリ時)`;
+    if(k==='bomber') s+=' ×0.9(実測補正)';
     return s+all;
   }
 
@@ -2023,6 +2025,4 @@ body.pro .kp-hd .kp-nav{border:1px solid #b89a6c;box-shadow:none;border-radius:4
   document.addEventListener('keydown',e=>{if(cur&&e.key==='Escape')close()});
 })();
 </script>
-
-</body>
-</html>
+</body></html>
