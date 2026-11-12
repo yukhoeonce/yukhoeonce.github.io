@@ -236,7 +236,7 @@ footer b{color:var(--ink)}
 
 <script>
 /* ================= データ =================
-   src: off=公式お知らせ, db=ゲームデータDB（oncehuman.th.gl/ja）, web=日本語の攻略記事, en=英語の攻略記事
+   src: off=公式お知らせ, db=ゲームデータDB, web=日本語の攻略記事, en=英語の攻略記事
    rows: [見出し, 本文]  items: [素材名, 数]  pts: 箇条書き  links: 関連項目のid */
 const CATS = [
   { id:"basic",  name:"基本",       short:"基本",   en:"Basics",      c:"#3b82c4" },
@@ -258,7 +258,7 @@ const D = [
   links:["flow","temp","v2","onyx"], src:["off","web"] },
 { id:"flow", cat:"basic", name:"基本の進め方", sum:"まず寒さ対策をそろえて東の雪原から始め、西の火山へ行く前に暑さ対策も用意する。後半はサーバー全体でエクスターミネーターと極端な天候に立ち向かう。",
   pts:["メインクエストを進めて基本の設備を開放する","寒冷耐性のあるトップス・ボトムス、寒さ用の料理や高温石を用意する","余燼の浜辺（火山）へ行く前に酷暑耐性もそろえる","領地にヒーター・クーラーを置いて拠点の温度を整える","極端な天候が始まったらエントロピーターミナル（更新版）に参加し、みんなでエクスターミネーターを倒す"],
-  note:"順番はゲーム神殿の攻略記事（2026年9月）の整理による。",
+  note:"順番は攻略記事（2026年9月）の整理による。",
   links:["temp","fur","stone","heater","terminal"], src:["web"] },
 { id:"v2", cat:"basic", name:"更新版（白銀の荒野 2.0）", alias:"更新テスト・アップデートテスト", sum:"2025年6月5日から「更新テスト」タグ付きで登場した最適化版。温度制御塔・極端な天候・エンディングのルールが変わり、エントロピーターミナルが追加された。",
   rows:[["開始","2025年6月5日（バージョン1.6.2）。以後に増える白銀の荒野サーバーはすべて更新版"],["温度制御塔","領地の中に建てる大型施設。権限を共有して効果を分け合う（共有できる範囲には限りがある）。置いたあとも動かせる"],["極端な天候","シナリオの進行とともに各エリアへ広がる。早く解決しないと周りのエリアへ温度の影響が広がる"],["新施設","エントロピーターミナル（エントロピーコアで天候レベルを下げる・エクスターミネーターを呼んで倒す）"],["エンディング","極端な天候を打ち消せた回数で変わる"],["そのまま","クエスト・ダンジョン・パブリックイベントは従来どおり"]],
@@ -306,7 +306,7 @@ const D = [
   links:["temp","wet","stone"], src:["off","web"] },
 { id:"stone", cat:"gear", name:"恒温石・高温石・低温石", sum:"バッグに入れておくだけで耐性が上がる石。恒温石を作ってから、高温石（寒さ用）か低温石（暑さ用）に作り替える。",
   rows:[["開放","ミーム 採集 →「極地探索-I」"],["作る場所","小型作業台"],["高温石","恒温石＋石炭など。寒冷耐性+10"],["低温石","恒温石＋氷10 または コールドクリスタル鉱石5。酷暑・燃焼耐性+10"],["持続","作ってから1時間。過ぎると恒温石に戻るので作り直す"]],
-  note:"素材と数値は攻略記事（らくハレ・はまっちゲームズ・BaskMedia）。高温石は公式のお知らせでも紹介されている。",
+  note:"素材と数値は攻略記事より。高温石は公式のお知らせでも紹介されている。",
   links:["fur","food","lantern"], src:["off","web"] },
 { id:"torch", cat:"gear", name:"トーチ・フローズンノーザンパイク", sum:"手に持つと周りの温度を変える近接武器。トーチは温かく、フローズンノーザンパイクは涼しくなる。攻撃した相手の温度も上下させる。",
   rows:[["トーチ","持つと約5℃上がる（攻略記事）"],["フローズンノーザンパイク","持つと約5℃下がる（攻略記事）"]],
@@ -350,7 +350,7 @@ const D = [
 { id:"melt", cat:"build", name:"温度で強くなる専用ミーム", alias:"エントロピー成分分析・熱エネルギー発散", sum:"白銀の荒野の専用ミームには、周りの温度が高いほど産出や電力が増えるものがある。",
   rows:[["エントロピー成分分析（溶解炉）","電気ファーネスでエントロピーを作るとき製作速度-30%。30℃を超えると5℃ごとに産出+1、最大+10"],["熱エネルギー発散（発電機）","周りが20℃を超えると1℃ごとに電力+0.2%、60℃を超えると1℃ごとに+0.5%、最大+40%"]],
   pts:["溶鉱炉は木炭やインゴットを作っている間だけ周りを温めるようになった（攻略記事）","温度で産出が増えるプラントボックスもあるらしい（未確認）"],
-  note:"数値はらくハレの攻略メモ（2024年10月）より。",
+  note:"数値は攻略メモ（2024年10月）より。",
   links:["entropy","icepump","heater"], src:["web"] },
 
 /* ---------- エクスターミネーター・ダンジョン ---------- */
@@ -419,12 +419,7 @@ function card(d, i){
 }
 const legend = `<div class="legend">情報のもと: ${Object.entries(SRC).map(([k, v]) => `<span class="chip ${k}">${v}</span>`).join("")} ゲーム内で確認したものではありません。</div>`;
 const flow = `<ol class="flow">${D.filter(d => d.cat === "stage").map((d, i) => `<li data-id="${d.id}" role="button" tabindex="0"><b>0${i + 1}</b><span>${esc(d.name.replace(/^ステージ\d/, "").replace(/[「」]/g, ""))}</span><small>${esc((d.rows[0] || ["",""])[1])}</small></li>`).join("")}</ol>`;
-const sources = `<section class="group sources"><div class="ghead" style="--c:#3b82c4"><i></i>情報源</div>
-  <ul>
-  <li>公式: <a href="https://www.oncehuman.game/jp/news/update/20241016/40792_1187312.html" target="_blank" rel="noopener">バージョン1.3アップデートのお知らせ</a>／<a href="https://www.oncehuman.game/jp/news/devBlog/20241017/40793_1187706.html" target="_blank" rel="noopener">雪国生存マニュアル</a>／<a href="https://www.oncehuman.game/jp/news/update/20241022/40792_1188396.html" target="_blank" rel="noopener">温度制御塔システムFAQ</a>／<a href="https://www.oncehuman.game/jp/news/update/20250603/40792_1238303.html" target="_blank" rel="noopener">6月5日 V1.6.2（白銀の荒野 アップデートテスト）</a>／<a href="https://www.oncehuman.game/jp/news/devBlog/20260914/40793_1313807.html" target="_blank" rel="noopener">シナリオ永続サーバー統合説明</a></li>
-  <li>攻略記事: <a href="https://kirisamehare.com/once-human_memo/" target="_blank" rel="noopener">らくハレ 白銀の荒野メモ</a>／<a href="https://hamatti-games.com/oh-silver-heat-prevention/" target="_blank" rel="noopener">はまっちゲームズ 暑さ対策</a>／<a href="https://baskmedia.jp/heat-cold-resistance/" target="_blank" rel="noopener">BaskMedia 寒さと暑さ</a>／<a href="https://game-shinden.com/once-human-way-of-winter/" target="_blank" rel="noopener">ゲーム神殿（現行仕様）</a>／<a href="https://gamebiz.jp/news/394266" target="_blank" rel="noopener">gamebiz</a></li>
-  <li>英語の記事: <a href="https://game8.co/games/Once-Human/archives/481842" target="_blank" rel="noopener">Game8 Thermal Tower</a>／<a href="https://www.gnlmagazine.com/article/comprehensive-guide-to-thermal-towers-in-once-humans-way-of-winter" target="_blank" rel="noopener">GNL Magazine Thermal Towers</a></li>
-  </ul></section>`;
+const sources = "";
 
 function render(animate){
   const q = norm($("#q").value.trim());
