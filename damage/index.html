@@ -911,6 +911,42 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
 
 </style>
 
+<style>
+/* ===== MODおすすめ（見本） ===== */
+.optbtn{margin-top:10px}
+.opt{position:fixed;inset:0;z-index:60;background:var(--scrim);display:grid;place-items:center;padding:16px max(16px,env(safe-area-inset-right,0px)) 16px max(16px,env(safe-area-inset-left,0px))}
+.opt[hidden]{display:none}
+.opt-box{width:min(760px,100%);max-height:calc(100dvh - 32px);overflow:auto;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:18px 18px 22px}
+.opt-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.opt-h h3{margin:0;font-family:var(--f-pop);font-weight:400;font-size:20px}
+.opt-h .x{margin-left:auto;flex:none;white-space:nowrap;min-width:5em;writing-mode:horizontal-tb}
+.opt p.lead{margin:4px 0 14px;color:var(--ink-2);font-size:14px;line-height:1.7}
+.opt h4{margin:18px 0 8px;font-family:var(--f-pop);font-weight:400;font-size:15px}
+.opt-add{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;align-items:end}
+.opt-add label{display:grid;gap:4px;font-size:12px;color:var(--muted)}
+.opt-add input,.opt-add select{font:inherit;font-size:15px;padding:9px 10px;border:2px solid var(--line);border-radius:10px;background:var(--field);color:var(--ink);min-width:0}
+.opt .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.opt-bag{display:grid;gap:6px;margin-top:10px}
+.opt-bag .it{display:flex;align-items:center;gap:10px;padding:8px 10px;border:2px solid var(--line);border-radius:12px;background:var(--field);font-size:14px}
+.opt-bag .it .sl{font-family:var(--f-num);font-size:12px;padding:2px 8px;border-radius:99px;background:var(--ink);color:var(--surface);flex:none}
+.opt-bag .it .nm{flex:1;min-width:0}
+.opt-bag .it .nm small{color:var(--muted)}
+.opt-bag .it button{flex:none;border:0;background:none;color:var(--muted);font:inherit;font-size:13px;cursor:pointer;text-decoration:underline}
+.opt-bag .empty{color:var(--muted);font-size:14px;padding:8px 2px}
+.opt-warn{margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--wait-soft);color:var(--ink);font-size:13px;line-height:1.6;border:2px solid var(--wait)}
+.opt-res{margin-top:14px}
+.opt-res .sum{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;padding:14px 16px;border-radius:14px;background:var(--res-bg);color:var(--res-ink)}
+.opt-res .sum b{font-family:var(--f-num);font-size:34px;font-weight:400;color:var(--res-ok)}
+.opt-res .sum b.zero{color:var(--res-ink)}
+.opt-res .sum span{font-size:13px;color:var(--res-mut)}
+.opt-res table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
+.opt-res td{padding:8px 6px;border-bottom:1px dashed var(--line);vertical-align:top}
+.opt-res td:first-child{white-space:nowrap;color:var(--muted);font-size:12px;padding-top:10px}
+.opt-res tr.chg td:last-child{color:var(--atk);font-weight:700}
+.opt-res td small,.opt-res td .small{color:var(--muted);font-weight:400}
+@media (max-width:520px){.opt-res td:nth-child(2){display:none}}
+</style>
+
 
 </head>
 <body>
@@ -971,6 +1007,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
         <div class="step-h"><span class="no">3</span><h3>いまのMODと比べる</h3><span class="aside">なくても計算できます</span></div>
         <p class="small">2の数字には、いま付けているMODの分がもう入っています。ここでは「別のMODに替えたら何%変わるか」だけを出します。</p>
         <button type="button" class="btn modbtn" id="modOpen" aria-haspopup="dialog">装備画面をひらく<em>付け替えたら何%変わる？</em></button>
+        <button type="button" class="btn modbtn optbtn" id="optOpen" aria-haspopup="dialog">MODおすすめ<em>武器に合う一番いい付け方を自動で探す</em></button>
         <div class="modsum" id="modSum"></div>
         <button type="button" class="btn primary tab-next" data-go="r">結果を見る →</button>
       </section>
@@ -1077,6 +1114,36 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
       <button type="button" class="btn primary" id="modDone">計算にもどる</button>
     </div>
     <p class="small" style="margin:0">サブ効果は図鑑で確認済み（数値＝Lv5の値×レベル÷5）。条件つきのメイン効果は「条件を満たす」をONにすると最大値で計算します。「閃光」はLv17＋閃光効果。射撃速度・マガジンなど火力の式に入らない効果は計算していません。</p>
+  </div>
+</div>
+
+<div class="opt" id="opt" hidden role="dialog" aria-modal="true" aria-labelledby="optH">
+  <div class="opt-box">
+    <div class="opt-h"><h3 id="optH">MODおすすめ</h3><button type="button" class="btn x" id="optX">閉じる</button></div>
+    <p class="lead">いま選んでいる武器・攻撃で、<b>一番ダメージが上がるMODの付け方</b>を探します。</p>
+    <div class="opt-add" style="margin-bottom:6px"><label>武器<b id="oWpn" style="font-size:15px;color:var(--ink);padding:9px 0"></b></label><label>どの攻撃のダメージを上げる？<select id="oAtk"></select></label></div>
+    <h4>戦い方（武器に合わせて自動で選んであるよ。変えるとすぐ探し直す）</h4>
+    <p class="lead" style="margin-bottom:8px">オーメンやラッシュアワーみたいな「条件つき」のMODは、条件をONにしないと弱く見えます。ふだんの戦い方に合うものを押してね。</p>
+    <div class="cats mcond" id="oCond" aria-label="戦い方"></div>
+    <div class="opt-add" style="margin-top:8px;max-width:240px"><label>ふだん敵との距離（m）<input id="oDist" type="number" min="0" step="1" inputmode="numeric"></label></div>
+    <div id="oWarn"></div>
+    <h4>理想の付け方</h4>
+    <p class="lead">ゲームにある全部のMOD（Lv17）から一番いい組み合わせを出します。持っているか・狙うかの目安に。</p>
+    <div class="row" hidden><button type="button" class="btn primary" id="oIdeal">理想の付け方を探す</button></div>
+    <div class="opt-res" id="oResI"></div>
+    <div hidden>
+    <h4>持っているMODから探す（迷っているものだけでOK）</h4>
+    <div class="opt-add">
+      <label>部位<select id="oSlot"></select></label>
+      <label>拡張要素<select id="oExt"></select></label>
+      <label>メイン効果<select id="oMain"></select></label>
+      <label>レベル<select id="oLv"></select></label>
+    </div>
+    <div class="row"><button type="button" class="btn primary" id="oAdd">＋ 追加</button><button type="button" class="btn" id="oDemo">ためしに見本のMODを入れる</button><button type="button" class="btn" id="oClear">全部消す</button></div>
+    <div class="opt-bag" id="oBag"></div>
+            <div class="row"><button type="button" class="btn primary" id="oRun">入れたMODから探す</button></div>
+    <div class="opt-res" id="oRes"></div>
+    </div>
   </div>
 </div>
 
@@ -1860,6 +1927,81 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
   const goStage=()=>$('stage').scrollIntoView({behavior:RM.matches?'auto':'smooth',block:'start'});
   $('dock').addEventListener('click',goStage);
   $('dock').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();goStage()}});
+  /* ===== MODおすすめ（見本） ===== */
+  const KWX={kBurn:'burn',kFrost:'frost',kSurge:'surge',kBomb:'bomber',kMark:'mark',kWB:'wburst',kSpread:'spread',kBounce:'bounce',kRapid:'rapid'};
+  const KWM={mMark:'mark',mBombSolo:'bomber',mRapid:'rapid',mIce:'frost',mBurn:'burn',mDelay:'bomber',mBounce:'bounce',mMark3:'mark',mCold:'frost',mSurge:'surge',mTarget:'spread',mDeep:'burn',mWB:'wburst',mWB2:'wburst',mKirin:'surge',mPrecB:'bounce',mFrag:'spread',mGale:'rapid'};
+  WGROUPS.forEach(g=>g[2].forEach(k=>{KWM[k]=g[1]}));
+  const okPair=(x,m)=>{const a=m&&KWM[m], b=x&&KWX[x]; if(a&&x&&a!==b)return false; if(b&&m&&a!==b)return false; return true};
+  const OCN={hp:'HPを低く保つ',hpHi:'HPを高く保つ',ws:'弱点にずっと当てる（蝶の使者など）',late:'マガジン後半も撃ち切る',reload:'リロード直後に撃つ',swap:'武器を切り替えて撃つ',back:'背面から撃つ',shield:'シールド40%以上',low:'自分より低い敵',mark:'マーク中の敵を撃つ',air:'空中で撃つ',safe:'被弾しない',far:'敵に近づかれない',kill:'近くで倒し続ける',stam:'スタミナを使う',other:'その他の条件も満たす'};
+  const MCG={rush:'hp',advers:'hp',elemCtl:'hpHi',steady:'hpHi',precAtk:'ws',chase:'late',ammoE:'late',buddha:'reload',sente:'reload',muchu:'reload',symph:'swap',cover:'safe',highV:'far',front:'kill',lastS:'stam'};
+  let OC={hp:1,ws:1,mark:1}; try{OC=JSON.parse(localStorage.getItem(KEY+'-ocond')||'null')||OC}catch(e){} if(!('mark' in OC))OC.mark=1;
+  const saveOC=()=>{try{localStorage.setItem(KEY+'-ocond',JSON.stringify(OC))}catch(e){}};
+  const mOn=m=>KWM[m]?1:OC[MCG[m]||'other'];
+  function oModStats(pick){const o={}; if(!pick)return o; const L=Math.min(17,pick[1]||17), sl=subLv(L), M=MAINS[pick[2]];
+    if(M){const add=x=>{for(const k in x)o[k]=(o[k]||0)+x[k]}; if(M.a)add(M.a); if(M.c&&mOn(pick[2]))add(M.c); if(M.s&&pick[1]===18)add(M.s); if(M.noWs)o.noWs=1}
+    if(!MODX[pick[0]])return o;
+    MODX[pick[0]].s.forEach((d,i)=>{const [k,b,e,c]=d, f=sl[i]/5; let val;
+      if(c==='dist'){const dd=+MS.dist; val=dd<=15?b*f+(e||0)*f*Math.min(1,Math.max(0,(15-dd)/10)):0}
+      else val=b*f+(c&&(c in OCN?OC[c]:MS.cond[c])?(e||0)*f:0);
+      o[k]=(o[k]||0)+val});
+    return o}
+  const OFIX={frost:{weapon:'wIceCore'},bounce:{mask:'mPrecB'}};
+  const WKW=w=>{const K=Object.values(KWX); return [...wKeys(w)].find(k=>K.includes(k))||''};
+  const OKEY=KEY+'-bag'; let BAG=[]; try{BAG=JSON.parse(localStorage.getItem(OKEY)||'[]')||[]}catch(e){BAG=[]}
+  const saveBag=()=>{try{localStorage.setItem(OKEY,JSON.stringify(BAG))}catch(e){}};
+  const SLOTN=Object.fromEntries(SLOTS.map(([id,nm])=>[id,nm]));
+  const pickOf=b=>[b.x||'',b.l||17,b.m||''];
+  function oFillSel(){const s=$('oSlot').value||'weapon', sl=SLOTS.find(x=>x[0]===s);
+    $('oExt').innerHTML='<option value="">なし</option>'+sl[2].map(k=>`<option value="${k}">${MODX[k].n}</option>`).join('');
+    $('oMain').innerHTML='<option value="">なし</option>'+(MAINOF[s]||[]).map(k=>`<option value="${k}">${MAINS[k].n}</option>`).join('')}
+  $('oSlot').innerHTML=SLOTS.map(([id,nm])=>`<option value="${id}">${nm}</option>`).join('');
+  $('oLv').innerHTML=Array.from({length:17},(_,i)=>17-i).map(l=>`<option value="${l}">Lv${l}</option>`).join('')+'<option value="18">閃光</option>';
+  function oFillMain(){const s=$('oSlot').value, x=$('oExt').value, cur=$('oMain').value; $('oMain').innerHTML='<option value="">なし</option>'+(MAINOF[s]||[]).filter(k=>okPair(x,k)).map(k=>`<option value="${k}"${k===cur?' selected':''}>${MAINS[k].n}</option>`).join('')}
+  oFillSel(); $('oSlot').addEventListener('change',oFillSel); $('oExt').addEventListener('change',oFillMain);
+  function oRenderBag(){const el=$('oBag'); if(!BAG.length){el.innerHTML='<div class="empty">まだありません。上で選んで「追加」を押してください。</div>';return}
+    const ord=SLOTS.map(x=>x[0]); const L=BAG.map((b,i)=>[b,i]).sort((p,q)=>ord.indexOf(p[0].s)-ord.indexOf(q[0].s));
+    el.innerHTML=L.map(([b,i])=>`<div class="it"><span class="sl">${SLOTN[b.s]}</span><span class="nm">${pickName(pickOf(b))}</span><button type="button" data-del="${i}">消す</button></div>`).join('')}
+  $('oAdd').addEventListener('click',()=>{const b={s:$('oSlot').value,x:$('oExt').value,m:$('oMain').value,l:+$('oLv').value}; if(!b.x&&!b.m)return; BAG.push(b); saveBag(); oRenderBag(); $('oRes').innerHTML=''});
+  $('oBag').addEventListener('click',e=>{const d=e.target.closest('[data-del]'); if(!d)return; BAG.splice(+d.dataset.del,1); saveBag(); oRenderBag(); $('oRes').innerHTML=''});
+  $('oClear').addEventListener('click',()=>{BAG=[]; saveBag(); oRenderBag(); $('oRes').innerHTML=''});
+  $('oDemo').addEventListener('click',()=>{const D=[['weapon','kBomb','',17],['weapon','psi','',15],['helmet','psi','abHunt',17],['helmet','burst','lucky',15],['mask','kBomb','mBombSolo',17],['mask','psi','',14],['top','psi','',17],['top','burst','',16],['bottom','psi','abAmp',13],['bottom','prec','',15],['shoes','psi','',14],['shoes','normal','',17],['glove','psi','',15],['glove','burst','',12]];
+    D.forEach(([s,x,m,l])=>{if(x&&!MODX[x])x=''; if(m&&!(MAINS[m]&&MAINS[m].slot===s))m=''; if(x||m)BAG.push({s,x,m,l})}); saveBag(); oRenderBag(); $('oRes').innerHTML=''});
+  function oStats(set){const o={}; let nw=0; SLOTS.forEach(([id])=>{const s=oModStats(set[id]); if(s.noWs)nw=1; delete s.noWs; for(const k in s)o[k]=(o[k]||0)+s[k]}); o.noWs=nw; return o}
+  function oApply(base,d){const v={...base,kw:{...base.kw}}; v.gunDmg+=d.gun||0; v.critDmg+=d.critDmg||0; v.wsDmg+=d.ws||0; v.status+=d.status||0; v.elem+=d.elem||0; v.target+=d.target||0; v.kwWs+=d.kwWs||0; v.kwCrit+=d.kwCrit||0; KWK.forEach(k=>{v.kw[k]+=d['kw.'+k]||0}); v.critRate+=d.critRate||0; v.kwFinal+=d.kwFinal||0; if(d.atkP)v.atk*=1+P(d.atkP); if(d.mark&&v.mark)v.mark+=d.mark; if(d.artBomb)v.kw.bomber+=d.artBomb*Math.max(0,v.critRate)*0.5; if(d.noWs){v.wsDmg=0;v.kwWs=0} return v}
+  function oRun(ideal){const w=W(wid), a=w.a[sel]||w.a[0], wk=WKW(w), base=read(true), _m=(wk==='mark'&&OC.mark!==0&&!base.mark)?(base.mark=8):0, _ws=OC.ws&&hasWs(a)?(base.wsRate=100):0, C=oStats(MS.cur);
+    const val=set=>{const S=oStats(set), d={}; for(const k in S)if(k!=='noWs')d[k]=(S[k]||0)-(C[k]||0); for(const k in C)if(k!=='noWs'&&!(k in S))d[k]=-(C[k]||0); if(S.noWs&&!C.noWs)d.noWs=1; const v=oApply(base,d); return expected(v,a)*hitsOf(v,a)};
+    const cand=SLOTS.map(([id,,xs])=>{const L=[MS.cur[id]||null]; const add=p=>{if(!L.some(q=>q&&same(q,p)))L.push(p)}; if(ideal){const ms=['',...(MAINOF[id]||[])]; ['',...xs].forEach(x=>ms.forEach(m=>{if((x||m)&&okPair(x,m)&&!(OFIX[wk]&&OFIX[wk][id]&&m!==OFIX[wk][id])&&(!KWX[x]||KWX[x]===wk)&&(!KWM[m]||KWM[m]===wk))add([x,17,m])}))} else BAG.filter(b=>b.s===id).forEach(b=>add(pickOf(b))); return [id,L]});
+    const total=cand.reduce((n,[,L])=>n*L.length,1); const now=val(MS.cur); let best={...MS.cur}, bv=now;
+    if(!ideal&&total<=200000){const idx=cand.map(()=>0); for(let t=0;t<total;t++){let r=t; const set={}; cand.forEach(([id,L],i)=>{const j=r%L.length; r=Math.floor(r/L.length); if(L[j])set[id]=L[j]}); const x=val(set); if(x>bv+1e-9){bv=x;best=set}}}
+    else{const climb=start=>{let cur={...start}; for(let round=0;round<8;round++){let moved=false; cand.forEach(([id,L])=>{let bx=val(cur), bp=cur[id]; L.forEach(p=>{const s={...cur}; if(p)s[id]=p; else delete s[id]; const x=val(s); if(x>bx+1e-9){bx=x;bp=p}}); if(bp!==cur[id]){if(bp)cur[id]=bp; else delete cur[id]; moved=true}}); if(!moved)break} return cur};
+      const starts=[{...MS.cur},{}]; const exts=new Set(); cand.forEach(([,L])=>L.forEach(p=>{if(p&&p[0])exts.add(p[0])}));
+      exts.forEach(x=>{const st={}; cand.forEach(([id,L])=>{const q=L.find(p=>p&&p[0]===x); if(q)st[id]=q}); starts.push(st)});
+      starts.forEach(st=>{const c=climb(st), x=val(c); if(x>bv+1e-9){bv=x;best=c}})}
+    const free={}; SLOTS.forEach(([id])=>{const p=best[id]; if(!p)return; const s={...best}; delete s[id]; if(val(s)>=bv-1e-6*bv){free[id]='all';return} if(p[2]){const t={...best}; t[id]=[p[0],p[1],'']; if(val(t)>=bv-1e-6*bv)free[id]='main'}});
+    return {a,now,bv,best,total,free}}
+
+  function oWarn(){const n=SLOTS.filter(([id])=>MS.cur[id]).length; $('oWarn').innerHTML=n?'':'<div class="opt-warn">3の装備画面で「いま付けているMOD」が入っていません。今の装備がわからないと、2のステータスから正しく引き算できないので、先に入れておくと正確になります（入れなくても「今は何も付けていない」として探します）。</div>'}
+  function oShow(el,ideal){const r=oRun(ideal), cn=id=>{const p=r.best[id], M=p&&MAINS[p[2]]; return M&&M.c&&M.t&&mOn(p[2])?` <small>（条件：${M.t}）</small>`:''}, fx=id=>{const p=r.best[id], f=OFIX[WKW(W(wid))]; return p&&f&&f[id]===p[2]?' <small>（みんな使う定番）</small>':''}, fr=id=>fx(id)?fx(id)+cn(id)+' <small>（効果はまだ計算に入っていません）</small>'.repeat(+!!(MAINS[r.best[id][2]]||{}).etc):cn(id)+(r.free[id]==='all'?' <small>← 火力には関係なし（好きなものでOK）</small>':(r.free[id]==='main'||(r.best[id]&&!r.best[id][2]))?' <small>← メイン効果は火力に関係なし（好みでOK）</small>':''), g=r.now>0?(r.bv/r.now-1)*100:0; window.__optBest=r.best;
+    const rows=SLOTS.map(([id,nm])=>{const a=MS.cur[id], b=r.best[id], chg=!same(a,b); return `<tr class="${chg?'chg':''}"><td>${nm}</td><td>${pickName(a)}</td><td>${chg?'→ '+pickName(b)+fr(id):'<small>そのまま</small>'}</td></tr>`}).join('');
+    const hasCur=SLOTS.some(([id])=>MS.cur[id]); if(!hasCur){el.innerHTML=`<div class="sum"><span>「${label(r.a)}」でダメージが一番上がる付け方</span></div><table>${SLOTS.map(([id,nm])=>`<tr class="chg"><td>${nm}</td><td colspan="2">${r.best[id]?pickName(r.best[id])+fr(id):'<small>なし</small>'}</td></tr>`).join('')}</table><p class="lead" style="margin-top:10px">今の装備（3の装備画面の「いま」）を入れると、今より何%上がるかも出せます。条件つきの効果は、上の「戦い方」で選んだ条件で計算しています。</p><div class="row"><button type="button" class="btn primary" data-try="1">この付け方を装備画面で試す</button></div>`; return}
+    el.innerHTML=`<div class="sum"><span>「${label(r.a)}」の1回のダメージ（平均）</span><b class="${g<0.05?'zero':''}">${g<0.05?'±0%':'+'+g.toFixed(1)+'%'}</b><span>${fmt(r.now)} → ${fmt(r.bv)}・${ideal?'全部のMODから':r.total.toLocaleString()+'通りを比較'}</span></div>`+(g<0.05?'<p class="lead">今の付け方が一番でした！</p>':`<table>${rows}</table><div class="row"><button type="button" class="btn primary" data-try="1">この付け方を装備画面で試す</button></div>`)}
+  $('oRun').addEventListener('click',()=>{if(!BAG.length){$('oRes').innerHTML='<div class="opt-warn">先に持っているMODを入れてください。</div>';return} oShow($('oRes'),false)});
+  $('oIdeal').addEventListener('click',()=>oShow($('oResI'),true));
+  $('opt').addEventListener('click',e=>{if(!e.target.closest('[data-try]'))return; const b=window.__optBest||{}; SLOTS.forEach(([id])=>{if(b[id])MS.try[id]=[...b[id]]; else delete MS.try[id]}); saveMods(); closeOpt(); renderCond(); rerender(); openMods()});
+  $('oDist').addEventListener('input',e=>{const n=parseFloat(e.target.value); MS.dist=isFinite(n)?n:15; saveMods(); rerender(); $('oRes').innerHTML=''; oAuto()});
+  function oCondFill(){$('oDist').value=MS.dist;$('oCond').innerHTML=Object.keys(OCN).map(c=>`<button type="button" data-c="${c}" aria-pressed="${!!OC[c]}">${OCN[c]}</button>`).join('')}
+  $('oCond').addEventListener('click',e=>{const b=e.target.closest('button[data-c]'); if(!b)return; const ck=b.dataset.c; OC[ck]=OC[ck]?0:1; const opp={hp:'hpHi',hpHi:'hp'}[ck]; if(opp&&OC[ck])OC[opp]=0; $('oCond').querySelectorAll('button[data-c]').forEach(x=>x.setAttribute('aria-pressed',!!OC[x.dataset.c])); saveOC(); $('oRes').innerHTML=''; oAuto()});
+  let oT=0; function oAuto(){$('oResI').innerHTML='<p class="lead">探しています…</p>'; clearTimeout(oT); oT=setTimeout(()=>oShow($('oResI'),true),30)}
+  function oPreset(w){const k=WKW(w); OC={hp:1,ws:1,mark:k==='mark'?1:0,_w:w.id}; saveOC()}
+  let oOpener=null;
+  function oAtkFill(){const w=W(wid), sh=shownAttacks(w); $('oWpn').textContent=w.name; $('oAtk').innerHTML=sh.map(x=>{const i=w.a.indexOf(x); return `<option value="${i}"${i===sel?' selected':''}>${label(x)}</option>`}).join(''); if(!sh.includes(w.a[sel])&&sh.length){sel=w.a.indexOf(sh[0])}}
+  $('oAtk').addEventListener('change',()=>{sel=+$('oAtk').value; $('oRes').innerHTML=''; rerender(); oAuto()});
+  function openOpt(){oOpener=document.activeElement; const w=W(wid); if(OC._w!==w.id){oPreset(w); const sh=shownAttacks(w), kw=sh.find(x=>x.k!=='gun'); if(kw){sel=w.a.indexOf(kw); rerender()}} oRenderBag(); oWarn(); oAtkFill(); oCondFill(); $('oRes').innerHTML=''; oAuto(); $('opt').hidden=false; $('optX').focus()}
+  function closeOpt(){$('opt').hidden=true; if(oOpener&&oOpener.focus)oOpener.focus()}
+  $('optOpen').addEventListener('click',openOpt); $('optX').addEventListener('click',closeOpt);
+  $('opt').addEventListener('click',e=>{if(e.target===$('opt'))closeOpt()});
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('opt').hidden)closeOpt()});
+
   render();
   if('IntersectionObserver' in window){
     const io=new IntersectionObserver(es=>es.forEach(en=>$('dock').classList.toggle('show',!en.isIntersecting)),{threshold:0});
