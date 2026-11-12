@@ -155,7 +155,8 @@ body[data-hot="silver"] .aura i[data-id="silver"],body[data-hot="manibus"] .aura
 .tool{display:flex;align-items:center;gap:14px;padding:16px 18px;border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--ink);text-decoration:none;transition:transform .25s var(--ease),border-color .25s}
 .tool:hover{transform:translateY(-2px);border-color:var(--ink-2)}
 .tool:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
-.tool .ic{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--surface-2);font-size:22px}
+.tool .ic{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--surface-2);color:var(--ink-2)}
+.tool .ic svg{width:24px;height:24px}
 .tool b{display:block;font-size:16px}
 .tool span{display:block;font-size:13px;color:var(--muted);margin-top:2px}
 .tool .go{margin-left:auto;flex:none;color:var(--muted);font-size:18px}
@@ -228,7 +229,7 @@ footer a{color:inherit}
 <section class="tools gut" aria-labelledby="tools-h">
   <div class="inner">
     <h2 id="tools-h">便利ツール</h2>
-    <a class="tool" href="damage/"><span class="ic" aria-hidden="true">🎯</span><div><b>ダメージラボ</b><span>武器とステータスを入れると、1発・1マガジンのダメージやMODを付け替えたときの変化がわかる計算ツール</span></div><span class="go" aria-hidden="true">→</span></a>
+    <a class="tool" href="damage/"><span class="ic" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="16" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 2v7M16 23v7M2 16h7M23 16h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><div><b>ダメージラボ</b><span>武器とステータスを入れると、1発・1マガジンのダメージやMODを付け替えたときの変化がわかる計算ツール</span></div><span class="go" aria-hidden="true">→</span></a>
   </div>
 </section>
 
