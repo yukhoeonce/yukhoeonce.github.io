@@ -1614,6 +1614,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
   const stacksOf=(v,a)=>a.stacks!=null?a.stacks:Math.max(1,Math.round(v.stacks));
   const hitsOf=(v,a)=>a.zk?(v.zkPrison||1):(a.k==='spread'||a.k==='bounce')?Math.max(1,Math.round(a.hits!=null?a.hits:v.hits)):1;
   function kwOf(v,a){const k=a.kwOf||a.k; return (v.kw[k]||0)+(a.kwAdd||0)}
+  const magOfW=(v,w)=>w.a.some(a=>a.magThrow!=null)&&v.mag>0?Math.round(v.mag):(w.s&&typeof w.s[2]==='number'?w.s[2]:0);
   const magCoef=(v,a)=>120*Math.min(480,50+18*Math.max(1,Math.round(v.mag||1)))/100*(1+0.1*a.magThrow);
   function dmg(v,a,h){
     if(a.magThrow!=null)a={...a,coef:magCoef(v,a)};
@@ -1693,7 +1694,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
       const n=f(v,rpm,c,sr), h=hitsOf(v,a), e=expected(o?{...v,...o,kw:v.kw}:v,a)*h*n; tot+=e; if(!isOk(a))wait=true;
       parts.push(`${label(a)} ${fmt(e)}（${pct(n)}で発動${h>1?`×${h}回`:''}）`)});
     const skip=w.a.filter((a,i)=>!used.has(i)&&(pro||isOk(a))).map(label);
-    const mag=w.s&&typeof w.s[2]==='number'?w.s[2]:0; let magTot=tot*mag, zkNote='';
+    const mag=magOfW(v,w); let magTot=tot*mag, zkNote='';
     const za=w.a.find(a=>a.zk);
     if(za&&mag){const A=v.zkPrison||1, pr=.4+.6*sr, eb=expected(v,g), es=expected(v,za); let st=0; magTot=0; const hs=[];
       for(let i=0;i<mag;i++){const last=i===mag-1, sf=Math.floor(st+1e-9), act=A*(1+(last&&sf>=3?sf:0)), h=act*(1+sf), m=last?1+.05*sf:1;
@@ -1762,7 +1763,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
   function renderPro(v){
     const w=W(wid);
     const g=w.a.find(a=>a.k==='gun'); const rpm=w.s&&typeof w.s[1]==='number'?w.s[1]:0;
-    $('dps').innerHTML=g&&rpm?`<div class="spec"><b>${fmt(expected(v,g)*rpm/60)}</b><span>毎秒ダメージ</span></div><div class="spec"><b>${rpm}</b><span>発/分</span></div>`+(w.s[2]?`<div class="spec"><b>${fmt(expected(v,g)*w.s[2])}</b><span>1マガジン（${w.s[2]}発）</span></div>`:''):'<div class="spec"><span>この武器は対象外です</span></div>';
+    $('dps').innerHTML=g&&rpm?`<div class="spec"><b>${fmt(expected(v,g)*rpm/60)}</b><span>毎秒ダメージ</span></div><div class="spec"><b>${rpm}</b><span>発/分</span></div>`+(magOfW(v,w)?`<div class="spec"><b>${fmt(expected(v,g)*magOfW(v,w))}</b><span>1マガジン（${magOfW(v,w)}発）</span></div>`:''):'<div class="spec"><span>この武器は対象外です</span></div>';
     const gs=$('gainAtk');
     const opts=w.a.map((a,i)=>`<option value="${i}">${label(a)}${isOk(a)?'':'（確認待ち）'}</option>`).join('');
     if(gs.dataset.w!==w.id){gs.innerHTML=opts;gs.dataset.w=w.id;gs.value=String(sel)}
