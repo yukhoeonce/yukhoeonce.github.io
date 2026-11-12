@@ -256,6 +256,7 @@ select.btn option{background:var(--surface);color:var(--ink)}
 details.trait{margin-top:12px;font-size:14px;border-top:1px solid var(--line);padding-top:10px}
 details.trait summary{cursor:pointer;color:var(--ink);font-weight:700;font-size:13.5px}
 details.trait p{margin:6px 0 0;color:var(--ink-2);line-height:1.75}
+.chlog{margin-top:20px;padding-block:14px 24px;color:var(--muted);font-size:12px;line-height:1.7}.chlog summary{cursor:pointer;font-weight:700;color:var(--ink-2);font-size:13px}.chlog ol{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}.chlog time{font-family:var(--f-num);font-weight:700;color:var(--ink-2)}.chlog ul{margin:2px 0 0;padding-left:1.3em}
 .fine{color:var(--muted);font-size:12px;line-height:1.75;margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
 .fine p{margin:0 0 6px}
 .fine a{color:var(--ink-2)}
@@ -1088,6 +1089,8 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
     </section>
   </aside>
 </div>
+
+<footer class="wrap chlog" id="chlog"><details open><summary>更新履歴</summary><ol><li><time>11/13</time><ul><li>防具セットの部位数を、セット一覧の上で変えられるように</li><li>MODおすすめ（武器を選ぶと理想のMODの付け方を自動で表示）を追加</li><li>精密バウンス（マスク）の効果を計算に追加</li><li>P90の範囲ダメージを実測で確認（弱点DMGが乗る）</li><li>危険物の投げに単独爆破が乗らないよう修正（実測）</li></ul></li><li><time>11/12</time><ul><li>レトロかわいいデザインに変更（プロモードは喫茶店風）</li><li>装備画面を「いまの装備／試す装備」の比較表に作り直し</li><li>防具セット（複数選択可）と重要な防具を追加</li><li>絶響のスプレッド回数を残響の数で計算、牢獄ヘルメットに対応</li><li>危険物・不安定爆弾・エコー追撃を実測で確認済みに</li><li>マガジン容量の入力を追加</li><li>タッチ端末で数字を押すとテンキーが出るように</li></ul></li><li><time>11/11</time><ul><li>武器MODの選択画面をキーワード別に分けた</li></ul></li><li><time>11/10</time><ul><li>武器MOD・防具MODを図鑑に合わせて全部追加</li><li>弾の種類（銅弾・銅芯弾・徹甲弾）の選択を追加</li><li>武器の画像を追加</li></ul></li><li><time>11/08</time><ul><li>装備画面（MODの付け替え比較）と、メイン効果・閃光の選択を追加</li><li>明るく見やすいレイアウトに変更</li></ul></li><li><time>11/07</time><ul><li>ダメージラボを公開（初心者／プロ切り替え）</li></ul></li></ol></details></footer>
 
 <nav class="tabbar" id="tabbar" aria-label="画面の切り替え"><button type="button" data-t="w"><b>1</b>武器</button><button type="button" data-t="s"><b>2</b>ステータス</button><button type="button" data-t="m"><b>3</b>MOD</button><button type="button" data-t="r"><b>=</b>結果</button></nav>
 <div class="dock" id="dock" role="button" tabindex="0" aria-label="結果を見る"><span id="dockL"></span><b id="dockV"></b></div>
