@@ -418,7 +418,7 @@ body.pro .card.pro-only{display:block!important}
 .cnote{margin:12px 0 0}
 .setbox{display:flex;flex-direction:column;gap:6px;border:1px solid var(--line-2);border-radius:10px;padding:10px 12px}
 .setbh{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}.setbh b{font-size:15px}
-.ptot{margin:0;font-weight:700}.ptot.over{color:var(--down)}
+.pcbox{display:flex;flex-direction:column;gap:8px;border:2px solid var(--line-2);border-radius:10px;padding:10px 12px;background:var(--field)}.pcbox .eqt{margin:0}.pcrow{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}.pcrow b{font-size:15px;min-width:6em}.ptot{margin:0;font-weight:700}.ptot.over{color:var(--down)}
 .tiers{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px;font-size:13px}
 .tiers li{display:flex;gap:8px;align-items:flex-start;color:var(--muted);background:var(--field);border-radius:8px;padding:6px 10px}
 .tiers li.on{color:var(--ink)}
@@ -1603,10 +1603,11 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
     if(isSet){const L=setsOf(w), on=new Map(L.map(x=>[x[0],x[1]||4])), tot=piecesOf(w), hasKey=!!(keyPick(w)&&AKEYS[keyPick(w)]), cap=hasKey?5:6;
       let g=''; if(w==='try')g+=tile('as-__same',setSame(),'同じ（付け替えない）');
       g+=tile('as-',w==='cur'?!L.length:(!setSame()&&!L.length),'セットなし');
-      h+=`<div class="ctiles">${g}</div><div class="eqt">セット（いくつでも選べます。クライシスランド3＋ダークスカル2 など）</div><div class="ctiles stl">`+Object.entries(ASETS).map(([k,S])=>{const c=(S.c||[]).some(Boolean)||(S.a||[]).some(Boolean); return tile('as-'+k,on.has(k),(on.has(k)?'✓ ':'')+S.n,on.has(k)?on.get(k)+'部位':(c?'火力アップあり':'火力アップなし'))}).join('')+`</div>`;
-      if(L.length)h+=`<p class="small ptot${tot>cap?' over':''}">合計 ${tot}部位／防具は${cap}部位まで${hasKey?'（重要な防具で1部位使用）':''}${tot>cap?' — 多すぎます':''}</p>`;
+      h+=`<div class="ctiles">${g}</div>`;
+      if(L.length){h+=`<div class="pcbox"><div class="eqt">選んだセットの部位数（ここで変えられます）</div>`+L.map(([id,np0])=>{const np=np0||4; return `<div class="pcrow"><b>${ASETS[id].n}</b><div class="chips lv">${[1,2,3,4].map(n=>chip('an-'+id+'-'+n,np===n,n+'部位')).join('')}</div></div>`}).join('')+`<p class="small ptot${tot>cap?' over':''}">合計 ${tot}部位／防具は${cap}部位まで${hasKey?'（重要な防具で1部位使用）':''}${tot>cap?' — 多すぎます':''}</p></div>`}
+      h+=`<div class="eqt">セット（いくつでも選べます。クライシスランド3＋ダークスカル2 など）</div><div class="ctiles stl">`+Object.entries(ASETS).map(([k,S])=>{const c=(S.c||[]).some(Boolean)||(S.a||[]).some(Boolean); return tile('as-'+k,on.has(k),(on.has(k)?'✓ ':'')+S.n,on.has(k)?on.get(k)+'部位':(c?'火力アップあり':'火力アップなし'))}).join('')+`</div>`;
       L.forEach(([id,np0])=>{const S=ASETS[id], np=np0||4;
-        h+=`<section class="setbox"><div class="setbh"><b>${S.n}</b><div class="chips lv">${[1,2,3,4].map(n=>chip('an-'+id+'-'+n,np===n,n+'部位')).join('')}</div></div>`;
+        h+=`<section class="setbox"><div class="setbh"><b>${S.n}</b><span class="small">${np}部位の効果</span></div>`;
         h+=`<ol class="tiers">${S.t.map((x,i)=>{const a=(S.a||[])[i], c=(S.c||[])[i]; const fx=[a?fxText(a,true):'',c?'条件：'+fxText(c,true):''].filter(Boolean).join(' / '); return `<li class="${i<np?'on':''}"><span class="tn">${i+1}</span><span>${x}${fx?`<em>${fx}</em>`:''}</span></li>`}).join('')}</ol>`;
         if(S.ct)h+=`<p class="small">条件：${S.ct}（「セット・重要防具の条件を満たす」がONのとき計算に入ります）</p>`;
         h+=`</section>`})}
