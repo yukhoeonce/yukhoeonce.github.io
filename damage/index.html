@@ -1427,7 +1427,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
     mWB:{n:'万夫不当',slot:'mask',c:{atkP:15},t:'重装状態'},
     mWB2:{n:'軽型火砲',slot:'mask',c:{atkP:15},t:'バースト内の重装状態'},
     mKirin:{n:'麒麟雷鳴',slot:'mask',etc:'サージ20回で天雷 超感覚強度200%（未計算）'},
-    mPrecB:{n:'精密バウンス',slot:'mask',etc:'6回後の1発だけ係数+125%（未計算）'},
+    mPrecB:{n:'精密バウンス',slot:'mask',note:'バウンス6回ごとに、次の1発のバウンス全部が係数×2.25（実測）。平均に換算して計算'},
     mFrag:{n:'炸裂破片',slot:'mask',etc:'20回目が爆発スプレッド（未計算）'},
     mGale:{n:'疾風迅雷',slot:'mask',etc:'ラピッドガン+5スタック・射撃速度'},
     // 武器
@@ -1557,7 +1557,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
   function fxText(o,only){const nw=o.noWs; o={...o}; delete o.noWs; const ks=Object.keys(o).filter(k=>Math.abs(o[k])>=0.05); if(!ks.length&&!nw)return ''; if(nw)return (ks.length?fxText(o,only)+' ':'')+'弱点DMGなし';
     const a=ks.filter(k=>CALC.includes(k)).map(k=>k==='artBomb'?(o[k]>0?'クリ率で爆弾DMG↑':'クリ率で爆弾DMG↑なし'):`${SN[k]}${sgn(o[k])}`), b=ks.filter(k=>!CALC.includes(k)).map(k=>`${SN[k]}${sgn(o[k])}`);
     return a.join(' ')+(b.length&&!only?` <s>${b.join(' ')}</s>`:'')}
-  function applyMods(v){const d=modDelta(); v.gunDmg+=d.gun||0; v.critDmg+=d.critDmg||0; v.wsDmg+=d.ws||0; v.status+=d.status||0; v.elem+=d.elem||0; v.target+=d.target||0; v.kwWs+=d.kwWs||0; v.kwCrit+=d.kwCrit||0; KWK.forEach(k=>{v.kw[k]+=d['kw.'+k]||0}); v.critRate+=d.critRate||0; v.kwFinal+=d.kwFinal||0; if(d.atkP){v.atk*=1+P(d.atkP);} if(d.mark&&v.mark)v.mark+=d.mark; if(d.artBomb)v.kw.bomber+=d.artBomb*Math.max(0,v.critRate)*0.5; if(d.noWs){v.wsDmg=0; v.kwWs=0} return v}
+  function applyMods(v){const d=modDelta(); v.precB=MS.try.mask&&MS.try.mask[2]==='mPrecB'?1:0; v.gunDmg+=d.gun||0; v.critDmg+=d.critDmg||0; v.wsDmg+=d.ws||0; v.status+=d.status||0; v.elem+=d.elem||0; v.target+=d.target||0; v.kwWs+=d.kwWs||0; v.kwCrit+=d.kwCrit||0; KWK.forEach(k=>{v.kw[k]+=d['kw.'+k]||0}); v.critRate+=d.critRate||0; v.kwFinal+=d.kwFinal||0; if(d.atkP){v.atk*=1+P(d.atkP);} if(d.mark&&v.mark)v.mark+=d.mark; if(d.artBomb)v.kw.bomber+=d.artBomb*Math.max(0,v.critRate)*0.5; if(d.noWs){v.wsDmg=0; v.kwWs=0} return v}
   function modGain(){const w=W(wid), a=w.a[sel]||w.a[0], b=expected(read(true),a), m=expected(read(),a); return {a,g:b>0?(m/b-1)*100:0}}
   const SCODE={weapon:'WPN',helmet:'HEAD',top:'TOP',bottom:'LEG',shoes:'FOOT',glove:'HAND',mask:'MASK'};
   let lay='try', editing=null, choose=null;
@@ -1689,6 +1689,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
   function kwOf(v,a){const k=a.kwOf||a.k; return (v.kw[k]||0)+(a.kwAdd||0)}
   const magOfW=(v,w)=>w.a.some(a=>a.magThrow!=null)&&v.mag>0?Math.round(v.mag):(w.s&&typeof w.s[2]==='number'?w.s[2]:0);
   const magCoef=(v,a)=>120*Math.min(480,50+18*Math.max(1,Math.round(v.mag||1)))/100*(a.magSum||1+0.1*a.magThrow);
+  const precBMul=(v,a)=>{if(!v.precB||a.k!=='bounce')return 1; const hh=Math.max(1,hitsOf(v,a)); return 1+1.25/(Math.ceil(6/hh)+1)};
   function dmg(v,a,h){
     if(a.magThrow!=null)a={...a,coef:magCoef(v,a)};
     const k=a.k, ws=h.ws, cr=h.cr;
@@ -1696,7 +1697,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
     const kwF=v.kwFinal+(a.kwFinalAdd||0), kwC=v.kwCrit+(a.kwCritAdd||0);
     if(k==='gun') return v.atk*(1+P(v.gunDmg))*(1+(ws?P(v.wsDmg):0)+(cr?P(v.critDmg):0))*(1+P(v.target))*(1+P(v.devGun))*(ws?1+P(v.devWs):1)*allBase*(1+P(v.affin));
     if(k==='aoe') return v.atk*P(coefOf(a))*(1+P(v.gunDmg))*(1+P(v.target))*allBase*(1+P(v.affin));
-    if(k==='spread'||k==='bounce') return v.atk*P(coefOf(a))*(1+P(v.gunDmg))*(1+(ws?P(v.wsDmg)+P(v.kwWs):0)+(cr?P(v.critDmg)+P(kwC):0))*(1+P(v.target))*(1+P(kwOf(v,a)))*(1+P(kwF))*allBase*(1+P(v.affin));
+    if(k==='spread'||k==='bounce') return v.atk*P(coefOf(a))*precBMul(v,a)*(1+P(v.gunDmg))*(1+(ws?P(v.wsDmg)+P(v.kwWs):0)+(cr?P(v.critDmg)+P(kwC):0))*(1+P(v.target))*(1+P(kwOf(v,a)))*(1+P(kwF))*allBase*(1+P(v.affin));
     if(k==='special') return v.atk*P(coefOf(a))*(1+(ws?P(v.wsDmg):0)+(cr?P(v.critDmg):0))*(1+P(v.status))*(1+P(v.elem))*(1+P(v.target))*(1+P(kwOf(v,a)))*allBase;
     const coef=k==='burn'?0.12*stacksOf(v,a):P(coefOf(a));
     const c=canCrit(a)&&cr?1+P(v.critDmg)+P(kwC)+(a.critFromWs?P(v.wsDmg):0):1;
@@ -1973,7 +1974,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
   function oStats(set){const o={}; let nw=0; SLOTS.forEach(([id])=>{const s=oModStats(set[id]); if(s.noWs)nw=1; delete s.noWs; for(const k in s)o[k]=(o[k]||0)+s[k]}); o.noWs=nw; return o}
   function oApply(base,d){const v={...base,kw:{...base.kw}}; v.gunDmg+=d.gun||0; v.critDmg+=d.critDmg||0; v.wsDmg+=d.ws||0; v.status+=d.status||0; v.elem+=d.elem||0; v.target+=d.target||0; v.kwWs+=d.kwWs||0; v.kwCrit+=d.kwCrit||0; KWK.forEach(k=>{v.kw[k]+=d['kw.'+k]||0}); v.critRate+=d.critRate||0; v.kwFinal+=d.kwFinal||0; if(d.atkP)v.atk*=1+P(d.atkP); if(d.mark&&v.mark)v.mark+=d.mark; if(d.artBomb)v.kw.bomber+=d.artBomb*Math.max(0,v.critRate)*0.5; if(d.noWs){v.wsDmg=0;v.kwWs=0} return v}
   function oRun(ideal){const w=W(wid), a=w.a[sel]||w.a[0], wk=WKW(w), base=read(true), _m=(wk==='mark'&&OC.mark!==0&&!base.mark)?(base.mark=8):0, _ws=OC.ws&&hasWs(a)?(base.wsRate=100):0, C=oStats(MS.cur);
-    const val=set=>{const S=oStats(set), d={}; for(const k in S)if(k!=='noWs')d[k]=(S[k]||0)-(C[k]||0); for(const k in C)if(k!=='noWs'&&!(k in S))d[k]=-(C[k]||0); if(S.noWs&&!C.noWs)d.noWs=1; const v=oApply(base,d); return expected(v,a)*hitsOf(v,a)};
+    const val=set=>{const S=oStats(set), d={}; for(const k in S)if(k!=='noWs')d[k]=(S[k]||0)-(C[k]||0); for(const k in C)if(k!=='noWs'&&!(k in S))d[k]=-(C[k]||0); if(S.noWs&&!C.noWs)d.noWs=1; const v=oApply(base,d); v.precB=set.mask&&set.mask[2]==='mPrecB'?1:0; return expected(v,a)*hitsOf(v,a)};
     const cand=SLOTS.map(([id,,xs])=>{const L=[MS.cur[id]||null]; const add=p=>{if(!L.some(q=>q&&same(q,p)))L.push(p)}; if(ideal){const ms=['',...(MAINOF[id]||[])]; ['',...xs].forEach(x=>ms.forEach(m=>{if((x||m)&&okPair(x,m)&&!(OFIX[wk]&&OFIX[wk][id]&&m!==OFIX[wk][id])&&!(OC.hp&&(id==='helmet'||id==='top')&&x!=='omen'&&x!=='omenP')&&(!KWX[x]||KWX[x]===wk)&&(!KWM[m]||KWM[m]===wk))add([x,17,m])}))} else BAG.filter(b=>b.s===id).forEach(b=>add(pickOf(b))); return [id,L]});
     const total=cand.reduce((n,[,L])=>n*L.length,1); const now=val(MS.cur); let best={...MS.cur}, bv=now;
     if(!ideal&&total<=200000){const idx=cand.map(()=>0); for(let t=0;t<total;t++){let r=t; const set={}; cand.forEach(([id,L],i)=>{const j=r%L.length; r=Math.floor(r/L.length); if(L[j])set[id]=L[j]}); const x=val(set); if(x>bv+1e-9){bv=x;best=set}}}
