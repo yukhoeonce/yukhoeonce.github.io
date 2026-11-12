@@ -945,6 +945,8 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
 .opt-res tr.chg td:last-child{color:var(--atk);font-weight:700}
 .opt-res td small,.opt-res td .small{color:var(--muted);font-weight:400}
 @media (max-width:520px){.opt-res td:nth-child(2){display:none}}
+.optnote{margin:6px 2px 0;font-size:12px;color:var(--muted);line-height:1.6}
+.opt p.opt-note{margin:-8px 0 14px;font-size:12px;color:var(--muted)}
 </style>
 
 
@@ -1008,6 +1010,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
         <p class="small">2の数字には、いま付けているMODの分がもう入っています。ここでは「別のMODに替えたら何%変わるか」だけを出します。</p>
         <button type="button" class="btn modbtn" id="modOpen" aria-haspopup="dialog">装備画面をひらく<em>付け替えたら何%変わる？</em></button>
         <button type="button" class="btn modbtn optbtn" id="optOpen" aria-haspopup="dialog">MODおすすめ<em>武器に合う一番いい付け方を自動で探す</em></button>
+        <p class="optnote">※MODおすすめは計算上の目安だよ。信用しすぎないで、定番や使い心地も見て決めてね！</p>
         <div class="modsum" id="modSum"></div>
         <button type="button" class="btn primary tab-next" data-go="r">結果を見る →</button>
       </section>
@@ -1121,6 +1124,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
   <div class="opt-box">
     <div class="opt-h"><h3 id="optH">MODおすすめ</h3><button type="button" class="btn x" id="optX">閉じる</button></div>
     <p class="lead">いま選んでいる武器・攻撃で、<b>一番ダメージが上がるMODの付け方</b>を探します。</p>
+    <p class="opt-note">※あくまで計算上の目安です。まだ計算に入っていない効果もあるので、信用しすぎないでね。</p>
     <div class="opt-add" style="margin-bottom:6px"><label>武器<b id="oWpn" style="font-size:15px;color:var(--ink);padding:9px 0"></b></label><label>どの攻撃のダメージを上げる？<select id="oAtk"></select></label></div>
     <h4>戦い方（武器に合わせて自動で選んであるよ。変えるとすぐ探し直す）</h4>
     <p class="lead" style="margin-bottom:8px">オーメンやラッシュアワーみたいな「条件つき」のMODは、条件をONにしないと弱く見えます。ふだんの戦い方に合うものを押してね。</p>
