@@ -1191,7 +1191,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
     {id:'bluetiger',type:'サブマシンガン',name:'MP5 - ブルータイガー',b:MP5,s:[184,750,30],t:'命中時25%でバウンス。バウンスDMG+60%。',note:'25%でバウンス。バウンスDMG+60%（バウンスDMG欄に足す）。',a:[G('gun'),G('bounce')]},
     {id:'lws',type:'サブマシンガン',name:'ベクター - リトルホワイトシャーク',b:VEC,s:[167, 1000, 30],t:'命中で不安定爆弾（CD0.9秒、超越者40%）。爆弾の遅延+0.2秒。不安定爆弾を付与された敵に命中するたびに、その爆弾の最終DMG+20%。遅延が0.1秒増えるごとにDMG係数+15%。',note:'命中で不安定爆弾（CD0.9秒）。遅延+0.2秒で係数+30%（ここでは+30%で計算）。爆弾待ち中の命中ごとに最終DMG+20%（最終DMG欄で足す）。',a:[G('gun'),G('bomber',{kwFinalAdd:30})]},
     {id:'icyrain',type:'サブマシンガン',name:'ベクター - アイシーレイン',b:VEC,s:[149, 1000, 30],t:'クリ命中時30%でフロストボルテックス。生成時に弾丸を20%自動リロード。フロストボルテックスのDMG係数+30。',note:'クリ時30%でフロストボルテックス。係数+30%。発動でマガジン20%リロード。',a:[G('gun'),G('frost',{kwFinalAdd:30})]},
-    {id:'p90',type:'サブマシンガン',name:'P-90 - シンクロホログラフ',b:P90,s:[171, 900, 50],t:'命中時20%でハンティングマーク。11回命中でAOE（半径10m、攻撃力800%の銃器DMG、超越者30%）。マーク対象にAOEが命中で弾薬3%装填（1回最大15%）。マーク状態の対象にクリ率+20%。',note:'20%でハンティングマーク。11回命中ごとに半径10mへ攻撃力800%の銃器ダメージ。マーク対象へのクリ率+20%。',a:[G('gun'),G('aoe',{coef:800,label:'AOE（11回命中ごと）'})]},
+    {id:'p90',type:'サブマシンガン',name:'P-90 - シンクロホログラフ',b:P90,s:[171, 900, 50],t:'命中時20%でハンティングマーク。11回命中でAOE（半径10m、攻撃力800%の銃器DMG、超越者30%）。マーク対象にAOEが命中で弾薬3%装填（1回最大15%）。マーク状態の対象にクリ率+20%。',note:'20%でハンティングマーク。11回命中ごとに半径10mへ攻撃力800%の銃器ダメージ。マーク対象へのクリ率+20%。AOEは弱点に当たると弱点DMGが乗る（2026-11-13 実測：攻撃力171・弱点30%＋マーク弱点9.6%・マーク中で2124）。',a:[G('gun'),G('aoe',{coef:800,label:'AOE（11回命中ごと）',ok:1})]},
     {id:'tec9',type:'サブマシンガン',name:'TEC9 - 追加ルール',b:TEC,s:[449, 450, 30],t:'命中でウェポンバースト（間隔10秒）。デビエーションスキル使用後、弾丸が攻撃力120%のエレメント状態異常DMG（エレメントはデビエーション依存）。空マガジンでリロードすると25%分の異常エネルギー回復（最大20Pt）。ウェポンバースト中クリ率+15%。',note:'デビエーションスキル後に属性弾（攻撃力120%×状態異常×エレメント×キーワード×(弱点+クリ)）。キーワード最終DMG・係数は乗らない。ウェポンバースト中クリ率+15%。',a:[G('gun'),G('special',{coef:120,label:'属性弾'})]},
     {id:'abyss',type:'ライフル',name:'AKM - アビスアイ',b:AKM,s:[285, 600, 50],t:'命中でフロストボルテックス（CD7秒、超越者30%）。命中でCD0.5秒短縮。ボルテックス内の非超越者に命中すると自分のボルテックスの最終DMG+5%（最大10）。フロストDMG+30%、ボルテックスのダメージ頻度+100%。',note:'命中でフロストボルテックス（CD7秒）。ボルテックス内命中で最終DMG+5%（最大10、最終DMG欄で足す）。フロストDMG+30%はステ画面に含まれる。',a:[G('gun'),G('frost')]},
     {id:'furious',type:'ライフル',name:'AKM - フューリアス',b:AKM,s:[249, 600, 40],t:'7回命中で火傷。最大スタック付与後、火傷DMG+15%（8秒）。火傷スタック上限+2。',note:'7回命中ごとに火傷1スタック。49発で最大7スタックになり、火傷DMG+15%が足される（計算に組み込み済み）。ゲームで確認済み: 5スタック248、7スタック397。',a:[G('gun'),G('burn',{stacks:7,kwAdd:15,label:'火傷（最大7スタック）'})]},
@@ -1682,7 +1682,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
 
   /* ---- 式 ---- */
   function canCrit(a){if(['gun','spread','bounce','special'].includes(a.k))return true; return (a.k==='surge'||a.k==='bomber')&&!!(a.elemCrit||a.forceCrit)}
-  const hasWs=a=>['gun','spread','bounce','special'].includes(a.k);
+  const hasWs=a=>['gun','spread','bounce','special','aoe'].includes(a.k);
   const coefOf=a=>a.coef!=null?a.coef:(KINDS[a.k].coef||100);
   const stacksOf=(v,a)=>a.stacks!=null?a.stacks:Math.max(1,Math.round(v.stacks));
   const hitsOf=(v,a)=>a.zk?(v.zkPrison||1):(a.k==='spread'||a.k==='bounce')?Math.max(1,Math.round(a.hits!=null?a.hits:v.hits)):1;
@@ -1696,7 +1696,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
     const allBase=(1+P(v.mark))*(1+P(v.finalDmg))*(1+P(v.quest))*(1+P(v.part));
     const kwF=v.kwFinal+(a.kwFinalAdd||0), kwC=v.kwCrit+(a.kwCritAdd||0);
     if(k==='gun') return v.atk*(1+P(v.gunDmg))*(1+(ws?P(v.wsDmg):0)+(cr?P(v.critDmg):0))*(1+P(v.target))*(1+P(v.devGun))*(ws?1+P(v.devWs):1)*allBase*(1+P(v.affin));
-    if(k==='aoe') return v.atk*P(coefOf(a))*(1+P(v.gunDmg))*(1+P(v.target))*allBase*(1+P(v.affin));
+    if(k==='aoe') return v.atk*P(coefOf(a))*(1+P(v.gunDmg))*(1+(ws?P(v.wsDmg):0))*(1+P(v.target))*allBase*(1+P(v.affin));
     if(k==='spread'||k==='bounce') return v.atk*P(coefOf(a))*precBMul(v,a)*(1+P(v.gunDmg))*(1+(ws?P(v.wsDmg)+P(v.kwWs):0)+(cr?P(v.critDmg)+P(kwC):0))*(1+P(v.target))*(1+P(kwOf(v,a)))*(1+P(kwF))*allBase*(1+P(v.affin));
     if(k==='special') return v.atk*P(coefOf(a))*(1+(ws?P(v.wsDmg):0)+(cr?P(v.critDmg):0))*(1+P(v.status))*(1+P(v.elem))*(1+P(v.target))*(1+P(kwOf(v,a)))*allBase;
     const coef=k==='burn'?0.12*stacksOf(v,a):P(coefOf(a));
@@ -1717,7 +1717,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
     const all=(v.mark?` ${m(v.mark)}(マーク)`:'')+(v.finalDmg?` ${m(v.finalDmg)}(最終)`:'')+(v.quest?` ${m(v.quest)}(異変)`:'')+(v.part?` ${m(v.part)}(部位)`:'');
     const af=v.affin?` ${m(v.affin)}(相性)`:'';
     if(k==='gun') return `攻撃力 ${v.atk} ${m(v.gunDmg)}(銃器) ×(1+弱点${v.wsDmg}%+クリ${v.critDmg}%) ${m(v.target)}(対象)`+(v.devGun?` ${m(v.devGun)}(デビ)`:'')+all+af;
-    if(k==='aoe') return `攻撃力 ${v.atk} ×${cf}% ${m(v.gunDmg)}(銃器) ${m(v.target)}(対象)${all}${af}`;
+    if(k==='aoe') return `攻撃力 ${v.atk} ×${cf}% ${m(v.gunDmg)}(銃器) ×(1+弱点${v.wsDmg}%)※弱点に当たったとき ${m(v.target)}(対象)${all}${af}`;
     if(k==='spread'||k==='bounce') return `攻撃力 ${v.atk} ×${cf}% ${m(v.gunDmg)}(銃器) ×(1+弱点${v.wsDmg+v.kwWs}%+クリ${v.critDmg+v.kwCrit+(a.kwCritAdd||0)}%) ${m(v.target)}(対象) ${m(kwOf(v,a))}(${KINDS[k].kw})`+(v.kwFinal||a.kwFinalAdd?` ${m(v.kwFinal+(a.kwFinalAdd||0))}(係数)`:'')+all+af;
     if(k==='special') return `攻撃力 ${v.atk} ×${cf}% ×(1+弱点+クリ) ${m(v.status)}(状態異常) ${m(v.elem)}(エレメント) ${m(v.target)}(対象) ${m(kwOf(v,a))}(KW)${all}`;
     const co=k==='burn'?`12%×${stacksOf(v,a)}スタック`:`${cf}%`;
