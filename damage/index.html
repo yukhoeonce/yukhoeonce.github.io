@@ -955,6 +955,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
           <div class="f" data-need="ws"><label for="wsDmg">弱点DMG</label><div class="in"><input id="wsDmg" type="number" step="any" inputmode="decimal"><span class="u">%</span></div></div>
           <div class="f" data-need="status"><label for="status">状態異常DMG増加</label><div class="in"><input id="status" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div></div>
           <div class="f" data-need="elem"><label for="elem" id="elemLbl">エレメントDMG増加</label><div class="in"><input id="elem" type="number" step="any" inputmode="decimal" value="0"><span class="u">%</span></div></div>
+          <div class="f" data-need="mag"><label for="mag">マガジン容量</label><div class="in"><input id="mag" type="number" step="1" min="1" inputmode="numeric" value="13"><span class="u">発</span></div><span class="hint">投擲リロードに使う弾数</span></div>
           </div>
           <div class="row"><span class="small" style="flex:1 1 220px">武器を選ぶと設計図の値が入ります。星やレベルで変わるので、自分の画面の数字に直してください。対象DMGは、対通常・対ボスなど狙う敵に当てはまる分の合計です。</span><button type="button" class="btn" id="fillBp">設計図の値に戻す</button></div>
         </div>
@@ -1098,7 +1099,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
     {id:'farewell',type:'ハンドガン',name:'リボルバー - 別れのお礼',b:RV,s:[1093, 145, 5],t:'命中時45%でラピッドガン（弱点命中なら100%）、弱点DMG+40%。発動で予備弾から1発補充。射撃は50%で追加1発消費し、その命中時の攻撃力+100%。外れたら次のリロードで+1発（最大5）。',note:'45%（弱点100%）でラピッドガン。50%で弾を2発消費し、その1発は攻撃力+100%（攻撃力欄を2倍にして計算）。',a:[G('gun')]},
     {id:'hammerhead',type:'ハンドガン',name:'リボルバー - ハンマーヘッド',b:RV,s:[894, 145, 5],t:'命中時40%（弱点90%）でパワーサージ。パワーサージ状態の敵に命中すると、周囲のパワーサージ状態の敵全員に超感覚強度80%のショックDMG（メイン対象150%、プレイヤー100%）。ショックDMG4回ごとに1発自動装填。',note:'弱点90%・他40%でパワーサージ。パワーサージ異常の敵に当てると連鎖ショック（メイン150%・周囲80%、パワーサージDMGは乗らない）。',a:[G('gun'),G('surge'),G('weapon',{coef:150,label:'連鎖ショック（メイン対象）'})]},
     {id:'hunter500',type:'ハンドガン',name:'リボルバー - ハンター500',b:RV,s:[796,145,5],t:'命中時30%でラピッドガン。発動で銃器DMG+30%（3秒）。',note:'ラピッドガン中は銃器DMG+30%（銃器DMG欄に足す）。',a:[G('gun')]},
-    {id:'hazard',type:'ハンドガン',name:'グロック - 危険物',b:GL,s:[438, 410, 13],t:'命中時20%で不安定爆弾が発動。リロードはいつでも武器投げになる。全弾消費で半径3mに不安定爆弾DMG（超感覚強度50%＋消費弾×18%、最大480%、超越者28%）。投げた後75%で消費弾の75%、25%で25%を回復。不安定爆弾DMGを与えると係数と範囲+10%（10秒、最大5）。',note:'命中時20%で不安定爆弾。リロードは常に武器投げ（爆弾の発動は不要、ユッケ確認）。投擲リロードは超感覚強度×(50%+消費弾×18%、上限480%)で、不安定爆弾DMG・係数は乗るが単独爆破などのMODは乗らない。マガジンは素で13発（防具MODで増える）。ダミー実測で投擲は不安定爆弾120%×(50%+弾×18%)。16発で120%×338%＝係数405.6%、超感覚強度295で1910（ばらつきなし、×0.9もなし）。連続で投げると+10%ずつ増える（足し算、2回目2100・3回目2291・4回目2482、最大5スタックで+50%）。',a:[G('gun'),G('bomber'),G('bomber',{coef:340.8,label:'投擲リロード（13発）',ok:1,noAdj:1}),G('bomber',{coef:511.2,label:'投擲リロード（13発・5スタック）',ok:1,noAdj:1}),G('bomber',{coef:405.6,label:'投擲リロード（16発・MODでマガジン+3）',ok:1,noAdj:1})]},
+    {id:'hazard',type:'ハンドガン',name:'グロック - 危険物',b:GL,s:[438, 410, 13],t:'命中時20%で不安定爆弾が発動。リロードはいつでも武器投げになる。全弾消費で半径3mに不安定爆弾DMG（超感覚強度50%＋消費弾×18%、最大480%、超越者28%）。投げた後75%で消費弾の75%、25%で25%を回復。不安定爆弾DMGを与えると係数と範囲+10%（10秒、最大5）。',note:'命中時20%で不安定爆弾。リロードは常に武器投げ（爆弾の発動は不要、ユッケ確認）。投擲リロードは超感覚強度×(50%+消費弾×18%、上限480%)で、不安定爆弾DMG・係数は乗るが単独爆破などのMODは乗らない。マガジンは素で13発（防具MODで増える）。ダミー実測で投擲は不安定爆弾120%×(50%+弾×18%)。16発で120%×338%＝係数405.6%、超感覚強度295で1910（ばらつきなし、×0.9もなし）。連続で投げると+10%ずつ増える（足し算、2回目2100・3回目2291・4回目2482、最大5スタックで+50%）。',a:[G('gun'),G('bomber'),G('bomber',{magThrow:0,label:'投擲リロード（全弾）',ok:1,noAdj:1}),G('bomber',{magThrow:5,label:'投擲リロード（全弾・5スタック）',ok:1,noAdj:1})]},
     {id:'gravel',type:'ハンドガン',name:'グロック - 砂利',b:GL,s:[313, 410, 13],t:'命中時30%（弱点65%）でスプレッドガン。発動時に命中部位を除外しない。弱点DMG+15%。',note:'弱点65%・他30%でスプレッドガン。同じ部位に飛ぶことがある。弱点DMG+15%。',a:[G('gun'),G('spread')]},
     {id:'doom',type:'ショットガン',name:'猟銃 - 悪運宣告',b:DB,s:[434, 180, 2],t:'命中時30%（8m以内80%）でハンティングマーク。全弾がマーク状態の非超越者に命中で攻撃力+12%・リロード効率+8%（15秒、最大3）。マーク付与後DMG無効+5%（8秒、最大4）。マーク状態の対象にクリ率+30%。',note:'攻撃力は1ペレット分（×6発）。8m以内80%でマーク。マーク中の敵に全弾命中で攻撃力+12%（最大3）、クリ率+30%。',a:[G('gun')]},
     {id:'doublefury',type:'ショットガン',name:'猟銃 - ダブルフューリー',b:DB,s:[325, 180, 2],t:'マガジン最後の弾が命中で火傷1スタック、全弾命中なら追加1スタック。全弾命中4回で自身が特殊火傷（HPが減る、攻撃力+20%・被DMG+10%、8秒）。火傷の敵に全弾命中で50%で1発装填。',note:'攻撃力は1ペレット分（×6発）。最後の弾で火傷。全弾命中4回で攻撃力+20%。',a:[G('gun'),G('burn')]},
@@ -1160,7 +1161,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
   const fmt=n=>Math.round(n).toLocaleString('ja-JP');
   const KEY='oh-damagelab-v1';
   const RM=matchMedia('(prefers-reduced-motion: reduce)');
-  const numIds=['atk','psi','gunDmg','critRate','critDmg','wsDmg','target','status','elem','kwFinal','kwWs','kwCrit','wsRate','stacks','hits','finalDmg','devGun','devWs','devKw','quest','part'];
+  const numIds=['atk','psi','gunDmg','critRate','critDmg','wsDmg','target','status','elem','kwFinal','kwWs','kwCrit','wsRate','stacks','hits','mag','finalDmg','devGun','devWs','devKw','quest','part'];
   const selIds=['mark','affin','ammo'];
   const AMMO=[[0,'銅弾','基本'],[8,'銅芯弾','+8%'],[15,'徹甲弾','+15%']];
   const KWK=['spread','bounce','surge','frost','burn','bomber'];
@@ -1176,7 +1177,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
   }catch(e){}
 
   function renderAmmo(){const a=+$('ammo').value||0; $('ammoB').innerHTML=AMMO.map(([v,n,t])=>`<button type="button" data-a="${v}" aria-pressed="${v===a}"><b>${n}</b><small>${t}</small></button>`).join(''); $('ammoN').textContent=a?`攻撃力と超感覚強度が+${a}%になる弾です（シールドへのDMGは計算に入れていません）。弾を切り替えると、下の攻撃力と超感覚強度も自動で直します。`:'弾によって攻撃力と超感覚強度が上がります。いま撃っている弾を選んでください。'}
-  function fillBlueprint(){const w=W(wid); if(w.s&&typeof w.s[0]==='number')$('atk').value=Math.round(w.s[0]*(1+(+$('ammo').value||0)/100)); if(w.b){$('critRate').value=w.b[0];$('wsDmg').value=w.b[1];$('critDmg').value=w.b[2]}}
+  function fillBlueprint(){const w=W(wid); if(w.s&&typeof w.s[0]==='number')$('atk').value=Math.round(w.s[0]*(1+(+$('ammo').value||0)/100)); if(w.b){$('critRate').value=w.b[0];$('wsDmg').value=w.b[1];$('critDmg').value=w.b[2]} if(w.s&&w.s[2])$('mag').value=w.s[2]}
   if(!$('atk').value) fillBlueprint();
   renderAmmo();
   $('ammoB').addEventListener('click',e=>{const b=e.target.closest('button[data-a]'); if(!b)return; const o=+$('ammo').value||0, n=+b.dataset.a; if(o===n)return; ['atk','psi'].forEach(i=>{const x=parseFloat($(i).value); if(isFinite(x))$(i).value=Math.round(x/(1+o/100)*(1+n/100))}); $('ammo').value=n; renderAmmo(); rerender()});
@@ -1594,6 +1595,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
     else n.add('psi');
     if(K.base==='psi'||a.k==='special'){n.add('status');n.add('elem')}
     if(canCrit(a))n.add('crit');
+    if(a.magThrow!=null)n.add('mag');
   });return n}
   function elemName(w){for(const a of w.a){const K=KINDS[a.k]; if(K.el)return K.el} if(/ショック|天雷|パワーサージ/.test(w.t||''))return 'ショック'; if(/ブレイズ|火傷/.test(w.t||''))return 'ブレイズ'; if(/フロスト/.test(w.t||''))return 'フロスト'; return ''}
   function renderForm(){
@@ -1612,7 +1614,9 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
   const stacksOf=(v,a)=>a.stacks!=null?a.stacks:Math.max(1,Math.round(v.stacks));
   const hitsOf=(v,a)=>a.zk?(v.zkPrison||1):(a.k==='spread'||a.k==='bounce')?Math.max(1,Math.round(a.hits!=null?a.hits:v.hits)):1;
   function kwOf(v,a){const k=a.kwOf||a.k; return (v.kw[k]||0)+(a.kwAdd||0)}
+  const magCoef=(v,a)=>120*Math.min(480,50+18*Math.max(1,Math.round(v.mag||1)))/100*(1+0.1*a.magThrow);
   function dmg(v,a,h){
+    if(a.magThrow!=null)a={...a,coef:magCoef(v,a)};
     const k=a.k, ws=h.ws, cr=h.cr;
     const allBase=(1+P(v.mark))*(1+P(v.finalDmg))*(1+P(v.quest))*(1+P(v.part));
     const kwF=v.kwFinal+(a.kwFinalAdd||0), kwC=v.kwCrit+(a.kwCritAdd||0);
@@ -1633,6 +1637,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
   const label=a=>a.label||KINDS[a.k].name;
   const keyOf=(w,i)=>w.id+':'+i;
   function formula(v,a){
+    if(a.magThrow!=null)a={...a,coef:Math.round(magCoef(v,a)*10)/10};
     const m=x=>'×'+(1+P(x)).toFixed(3).replace(/0+$/,'').replace(/\.$/,''), k=a.k, cf=coefOf(a);
     const all=(v.mark?` ${m(v.mark)}(マーク)`:'')+(v.finalDmg?` ${m(v.finalDmg)}(最終)`:'')+(v.quest?` ${m(v.quest)}(異変)`:'')+(v.part?` ${m(v.part)}(部位)`:'');
     const af=v.affin?` ${m(v.affin)}(相性)`:'';
