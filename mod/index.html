@@ -281,7 +281,7 @@ main,footer.site,.ticker{position:relative;z-index:1}
 .ticker{overflow:hidden;border-bottom:2px solid var(--line);background:var(--lemon);white-space:nowrap}
 .ticker div{display:inline-block;padding:4px 0;font-family:var(--f-dot);font-size:14px;color:var(--on-pop);animation:tick 26s linear infinite}
 @keyframes tick{to{transform:translateX(-50%)}}
-.card{border-radius:18px;box-shadow:5px 5px 0 var(--sh);animation:pop .55s cubic-bezier(.3,1.6,.5,1) both;position:relative}
+.card{border-radius:18px;box-shadow:5px 5px 0 var(--sh);animation:pop .55s cubic-bezier(.3,1.6,.5,1) backwards;position:relative}
 .paths .card:nth-child(2){animation-delay:.08s}.paths .card:nth-child(3){animation-delay:.16s}.paths .card:nth-child(4){animation-delay:.24s}
 @keyframes pop{from{opacity:0;transform:translateY(18px) scale(.94) rotate(-1deg)}}
 .les::after,.quiz::after,.rig::after{content:"";position:absolute;top:-12px;right:22px;width:70px;height:22px;background:repeating-linear-gradient(45deg,var(--pink) 0 8px,#ffd1df 8px 16px);border:2px solid var(--line);transform:rotate(4deg);border-radius:4px;opacity:.9}
@@ -296,7 +296,7 @@ main,footer.site,.ticker{position:relative;z-index:1}
 @keyframes bob{50%{transform:translateY(-3px) rotate(-6deg)}}
 .lvtabs button[aria-pressed="true"] b,.tabs a[aria-current="page"]{animation:wig 3s ease-in-out infinite;display:inline-block}
 @keyframes wig{0%,86%,100%{transform:rotate(0)}90%{transform:rotate(-6deg)}95%{transform:rotate(6deg)}}
-.les .body>*{animation:pop .45s cubic-bezier(.3,1.6,.5,1) both}
+.les .body>*{animation:pop .45s cubic-bezier(.3,1.6,.5,1) backwards}
 .les .body>*:nth-child(2){animation-delay:.04s}.les .body>*:nth-child(3){animation-delay:.08s}.les .body>*:nth-child(4){animation-delay:.12s}.les .body>*:nth-child(5){animation-delay:.16s}.les .body>*:nth-child(n+6){animation-delay:.2s}
 .les h3{display:flex;align-items:center;gap:8px}
 .les h3::before{content:"";width:10px;height:10px;background:var(--pink);border:2px solid var(--line);flex:none}
@@ -329,7 +329,7 @@ main,footer.site,.ticker{position:relative;z-index:1}
 .sheet .box{border-width:3px;box-shadow:8px 8px 0 var(--sh);animation:pop .45s cubic-bezier(.3,1.6,.5,1)}
 .sheet .x{background:var(--pink);box-shadow:3px 3px 0 var(--sh);transition:transform .15s}
 .sheet .x:hover{transform:rotate(90deg)}
-.word{animation:pop .45s cubic-bezier(.3,1.6,.5,1) both}
+.word{animation:pop .45s cubic-bezier(.3,1.6,.5,1) backwards}
 .word:hover{transform:translate(-2px,-2px) rotate(-.3deg);box-shadow:5px 5px 0 var(--sh)}
 @media (max-width:820px){
   .hero{grid-template-columns:minmax(0,1fr)}
