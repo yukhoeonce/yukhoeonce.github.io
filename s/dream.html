@@ -233,7 +233,7 @@ footer b{color:var(--ink)}
 
 <script>
 /* ================= データ =================
-   src: off=公式お知らせ, db=ゲームデータDB（oncehuman.th.gl/ja）, web=日本語の攻略記事, en=英語の攻略記事
+   src: off=公式お知らせ, db=ゲームデータDB, web=日本語の攻略記事, en=英語の攻略記事
    rows: [見出し, 本文]  items: [素材名, 数]  pts: 箇条書き  links: 関連項目のid */
 const CATS = [
   { id:"basic",  name:"基本",     en:"Basics",     c:"#8b5cf6" },
@@ -453,13 +453,7 @@ function card(d, i){
 }
 const legend = `<div class="legend">情報のもと: ${Object.entries(SRC).map(([k, v]) => `<span class="chip ${k}">${v}</span>`).join("")} ゲーム内で確認したものではありません。</div>`;
 const flow = `<ol class="flow">${D.filter(d => d.cat === "stage").map((d, i) => `<li data-id="${d.id}" role="button" tabindex="0"><b>0${i + 1}</b><span>${esc(d.name.replace(/^ステージ\d/, "").replace(/[「」]/g, ""))}</span><small>${esc((d.rows[0] || ["",""])[1])}</small></li>`).join("")}</ol>`;
-const sources = `<section class="group sources"><div class="ghead" style="--c:#8b5cf6"><i></i>情報源</div>
-  <ul>
-  <li>公式: <a href="https://www.oncehuman.game/jp/news/update/20250702/40792_1244571.html" target="_blank" rel="noopener">7月3日 V2.0アップデートのお知らせ</a>／<a href="https://www.oncehuman.game/jp/news/update/20250630/40792_1244000.html" target="_blank" rel="noopener">V2.0先行情報・永い夢 正式リリース前紹介</a>／<a href="https://www.oncehuman.game/jp/news/devBlog/20260914/40793_1313807.html" target="_blank" rel="noopener">シナリオ永続サーバー統合説明</a></li>
-  <li>ゲームDB: <a href="https://oncehuman.th.gl/ja/db" target="_blank" rel="noopener">oncehuman.th.gl（日本語）</a></li>
-  <li>攻略記事: <a href="https://note.com/pi_no_pi_co/n/n1fd68a2e6d1f" target="_blank" rel="noopener">ピノ「永い夢」基本ガイド（note）</a>／<a href="https://signyamo.blog/once_dream/" target="_blank" rel="noopener">しぐにゃもブログ</a>／<a href="https://game-shinden.com/once-human-endless-dream/" target="_blank" rel="noopener">ゲーム神殿</a>／<a href="https://gamerch.com/oncehuman-database/931085" target="_blank" rel="noopener">Gamerch シナリオチャレンジ</a></li>
-  <li>英語の記事: <a href="https://allthings.how/once-human-how-to-build-and-activate-the-dream-door/" target="_blank" rel="noopener">allthings.how（Dream Door）</a></li>
-  </ul></section>`;
+const sources = "";
 
 function render(animate){
   const q = norm($("#q").value.trim());

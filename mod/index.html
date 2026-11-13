@@ -1,0 +1,1054 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ワンスヒューマン MOD講座｜初心者から上級者まで学べるMODの考え方（非公式）</title>
+<link rel="canonical" href="https://yukhoeonce.github.io/mod/">
+<meta name="description" content="ワンスヒューマン（Once Human）のMODを初級・中級・上級のレッスンと2択クイズで学べる非公式講座。メイン効果・拡張要素・レベルの見方、部位ごとの役割、キーワードの合わせ方、ダメージの式まで。">
+<meta name="theme-color" content="#fff4dc">
+<meta name="apple-mobile-web-app-title" content="MOD講座">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:title" content="ワンスヒューマン MOD講座">
+<meta property="og:description" content="MODの考え方を初級・中級・上級のレッスンとクイズで学べる講座（非公式）">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yukhoeonce.github.io/mod/">
+<meta name="twitter:card" content="summary">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Mochiy+Pop+One&family=M+PLUS+Rounded+1c:wght@500;700;800&display=swap">
+<style>
+/* レイアウト: 上にカセット風の見出し＋タブ、中身は1列のノート。レッスンは左に目次（狭い画面では上）。 */
+:root,:root[data-theme]{
+  color-scheme:light;
+  --bg:#fff4dc; --surface:#fffdf6; --field:#fff1e4; --ink:#3b2340; --ink-2:#5e4466; --muted:#8d7590; --line:#3b2340;
+  --atk:#e8517a; --atk-soft:#ffe1ea; --psi:#1f8f87; --psi-soft:#d9f6ef; --def:#6a58c9; --def-soft:#ebe5ff;
+  --ok:#3f9a4e; --ok-soft:#e2f6e0; --ng:#d8344f; --ng-soft:#ffe3e7; --wait:#b07800; --wait-soft:#fff2c4;
+  --pink:#ff9fbd; --mint:#9be8d4; --lemon:#ffe27a; --lilac:#c9b3ff; --sky:#9fd6ff; --on-pop:#3b2340;
+  --dot:rgba(59,35,64,.13); --scrim:rgba(59,35,64,.45);
+  --shadow:4px 4px 0 var(--sh);
+  --f-body:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Yu Gothic",sans-serif;
+  --f-pop:"Mochiy Pop One","M PLUS Rounded 1c",sans-serif;
+  --f-dot:"DotGothic16","M PLUS Rounded 1c",monospace;
+}
+
+*{box-sizing:border-box}
+body{word-break:keep-all;overflow-wrap:anywhere;line-break:strict;background-color:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.75;
+  background-image:radial-gradient(circle at 1px 1px,var(--dot) 1.4px,transparent 1.6px);background-size:22px 22px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:var(--atk)}
+:focus-visible{outline:3px solid var(--atk);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-pop);font-weight:400;text-wrap:balance;line-height:1.4;margin:0}
+p{margin:0}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1040px;margin:0 auto}
+
+/* ===== ヘッダー ===== */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:3px solid var(--line);box-shadow:0 4px 0 var(--band)}
+.top .wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-block:10px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);margin-right:auto}
+.brand .cas{width:40px;height:28px;border:2.5px solid var(--line);border-radius:6px;background:var(--lemon);position:relative;flex:none}
+.brand .cas::before,.brand .cas::after{content:"";position:absolute;top:8px;width:8px;height:8px;border-radius:50%;border:2.5px solid var(--on-pop);background:var(--surface)}
+.brand .cas::before{left:6px}.brand .cas::after{right:6px}
+.brand b{font-family:var(--f-pop);font-weight:400;font-size:19px;letter-spacing:.04em}
+.brand small{display:block;font-family:var(--f-dot);font-size:11px;color:var(--muted);letter-spacing:.12em;line-height:1.2}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs a{font-weight:800;font-size:14px;text-decoration:none;color:var(--ink);padding:6px 14px;border:2px solid var(--line);border-radius:999px;background:var(--surface);box-shadow:2px 2px 0 var(--sh);transition:transform .12s}
+.tabs a[aria-current="page"]{background:var(--pink);color:var(--on-pop)}
+.tabs a:active{transform:translate(2px,2px);box-shadow:none}
+
+main{padding-block:24px 48px}
+.view[hidden]{display:none}
+
+/* ===== 共通パーツ ===== */
+.card{background:var(--surface);border:2.5px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.eyebrow{font-family:var(--f-dot);font-size:13px;letter-spacing:.14em;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:800;padding:10px 18px;border:2.5px solid var(--line);border-radius:999px;background:var(--lemon);color:var(--on-pop);box-shadow:3px 3px 0 var(--sh);text-decoration:none;transition:transform .12s}
+.btn:active{transform:translate(3px,3px);box-shadow:none}
+.btn.sub{background:var(--surface);color:var(--ink)}
+.btn.pink{background:var(--pink)}
+.t{border:0;background:none;padding:0;font-weight:800;color:var(--ink);text-decoration:underline dotted var(--atk) 2px;text-underline-offset:4px}
+.chip{display:inline-block;font-size:13px;font-weight:800;padding:1px 10px;border-radius:999px;border:2px solid var(--line);white-space:nowrap;line-height:1.6}
+.c-atk{background:var(--atk-soft);color:var(--atk);border-color:var(--atk)}
+.c-psi{background:var(--psi-soft);color:var(--psi);border-color:var(--psi)}
+.c-def{background:var(--def-soft);color:var(--def);border-color:var(--def)}
+.c-kw{background:var(--wait-soft);color:var(--wait);border-color:var(--wait)}
+.note{border:2px dashed var(--line);border-radius:12px;padding:12px 14px;background:var(--field);font-size:15px}
+.note b{font-family:var(--f-pop);font-weight:400}
+
+/* ===== ホーム ===== */
+.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:center}
+.hero h1{font-size:clamp(28px,5vw,44px);margin-block:6px 12px}
+.hero h1 em{font-style:normal;background:linear-gradient(transparent 62%,var(--hl) 62%);color:var(--ink)}
+.hero p.lead{font-size:17px;color:var(--ink-2);max-width:32em}
+.hero .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.prog{display:flex;align-items:center;gap:10px;margin-top:16px;font-family:var(--f-dot);font-size:14px;color:var(--muted)}
+.prog .bar{flex:1;max-width:220px;height:14px;border:2px solid var(--line);border-radius:999px;background:var(--surface);overflow:hidden}
+.prog .bar i{display:block;height:100%;background:var(--mint);width:0;transition:width .4s}
+
+/* 7つの枠 */
+.rig{padding:18px;position:relative}
+.rig .lab{font-family:var(--f-dot);font-size:13px;color:var(--muted);text-align:center;margin-bottom:8px}
+.rig-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+.rig-col{display:flex;flex-direction:column;gap:10px}
+.slot{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:8px 10px;border:2px solid var(--line);border-radius:12px;background:var(--field);box-shadow:2px 2px 0 var(--sh);min-width:0;transition:transform .12s}
+.slot:hover{transform:translateY(-2px)}
+.slot b{font-size:14px}
+.slot span{font-size:12px;color:var(--ink-2);line-height:1.4}
+.slot.w{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:center;gap:10px;background:var(--lemon);color:var(--on-pop)}
+.slot.w span{color:var(--on-pop)}
+.fig{width:96px;height:auto;display:block}
+.fig .p{fill:var(--figc)}.fig .k{fill:#f6cba8}.fig .g{fill:var(--lemon)}.fig .s{fill:var(--pink)}.fig .m{fill:var(--mint)}
+
+.paths{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:36px}
+.path{padding:18px;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink);transition:transform .12s}
+.path:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--sh)}
+.path h3{font-size:18px}
+.path p{font-size:14px;color:var(--ink-2)}
+.path .eyebrow{display:flex;justify-content:space-between}
+
+/* ===== レッスン ===== */
+.lesson{display:grid;grid-template-columns:240px minmax(0,1fr);gap:24px;align-items:start}
+.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);padding:10px;display:flex;flex-direction:column;gap:4px}
+.toc button{display:flex;gap:10px;align-items:center;text-align:left;padding:8px 10px;border:2px solid transparent;border-radius:10px;background:none;font-weight:700;font-size:14px;line-height:1.4}
+.toc button .n{flex:none;width:28px;height:28px;display:grid;place-items:center;border:2px solid var(--line);border-radius:50%;font-family:var(--f-dot);font-size:14px;background:var(--surface)}
+.toc button.done .n{background:var(--mint);color:var(--on-pop)}
+.toc button[aria-current="step"]{border-color:var(--line);background:var(--field)}
+.toc button[aria-current="step"] .n{background:var(--pink);color:var(--on-pop)}
+.les{padding:24px clamp(16px,4vw,36px) 28px;min-width:0}
+.les h2{font-size:clamp(22px,3.4vw,30px);margin-block:4px 14px}
+.les .body{display:flex;flex-direction:column;gap:16px;max-width:42em}
+.les .body > p{font-size:16.5px}
+.les .foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:28px;padding-top:18px;border-top:2.5px dashed var(--line)}
+.les h3{font-size:17px;margin-top:6px}
+
+/* MODカードの見本 */
+.modcard{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 14px;align-items:center;padding:14px 16px;border:2.5px solid var(--line);border-radius:14px;background:var(--field)}
+.modcard .ic{grid-row:span 2;width:54px;height:54px;border:2.5px solid var(--line);border-radius:12px;background:var(--lemon);display:grid;place-items:center;font-family:var(--f-dot);font-size:22px;color:var(--on-pop)}
+.modcard .nm{font-weight:800;font-size:18px}
+.modcard .lv{grid-row:span 2;font-family:var(--f-dot);font-size:22px;border:2px solid var(--line);border-radius:8px;padding:2px 8px;background:var(--surface)}
+.modcard .ex{font-size:14px;color:var(--ink-2)}
+.parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.part{padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface)}
+.part .k{font-family:var(--f-dot);font-size:13px;color:var(--muted)}
+.part b{display:block;font-size:16px}
+.part p{font-size:14px;color:var(--ink-2)}
+
+.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.role{padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface);display:flex;flex-direction:column;gap:4px}
+.role .chip{align-self:flex-start}
+.role b{font-size:16px}
+.role p{font-size:14px;color:var(--ink-2)}
+
+details.dex{border:2px solid var(--line);border-radius:12px;background:var(--surface)}
+details.dex+details.dex{margin-top:8px}
+details.dex summary{cursor:pointer;padding:10px 14px;font-weight:800;list-style:none;display:flex;justify-content:space-between;gap:8px}
+details.dex summary::after{content:"＋";font-family:var(--f-dot)}
+details.dex[open] summary::after{content:"－"}
+details.dex summary::-webkit-details-marker{display:none}
+.dexlist{padding:0 14px 12px;display:flex;flex-direction:column;gap:6px}
+.dexrow{display:grid;grid-template-columns:minmax(0,11em) minmax(0,1fr);gap:4px 12px;font-size:14px;padding-top:6px;border-top:1.5px dashed var(--muted)}
+.dexrow b{font-weight:800}
+.dexrow span{color:var(--ink-2)}
+.kwgroup{padding-top:6px;border-top:1.5px dashed var(--muted);font-size:14px}
+.kwgroup b{display:inline-block;margin-right:6px}
+
+.types{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.type{padding:16px;border:2.5px solid var(--line);border-radius:14px;display:flex;flex-direction:column;gap:8px}
+.type.a{background:var(--atk-soft)}.type.p{background:var(--psi-soft)}
+.type h3{font-size:18px;margin:0}
+.type.a h3{color:var(--atk)}.type.p h3{color:var(--psi)}
+.type ul{margin:0;padding-left:1.2em;font-size:14.5px}
+.formula{font-family:var(--f-dot);font-size:15px;line-height:2;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface);overflow-x:auto;white-space:nowrap}
+.formula .g{display:inline-block;padding:0 6px;border-radius:6px;margin:0 2px}
+.formula .g1{background:var(--atk-soft)}.formula .g2{background:var(--wait-soft)}.formula .g3{background:var(--psi-soft)}
+
+/* 足し算デモ */
+.demo{padding:16px;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);display:flex;flex-direction:column;gap:12px}
+.demo .q{font-weight:800}
+.demo .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.demo .opts button{padding:12px;border:2.5px solid var(--line);border-radius:12px;background:var(--field);text-align:left;box-shadow:2px 2px 0 var(--sh)}
+.demo .opts button[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop)}
+.demo .opts small{display:block;font-size:13px;color:inherit;opacity:.8}
+.demo .res{font-size:15px;min-height:3.5em}
+.demo .res b{font-family:var(--f-dot);font-size:20px}
+.meter{display:grid;grid-template-columns:7em minmax(0,1fr) 4.5em;gap:8px;align-items:center;font-size:14px}
+.meter .bar{height:16px;border:2px solid var(--line);border-radius:999px;background:var(--field);overflow:hidden}
+.meter .bar i{display:block;height:100%;background:var(--pink);transition:width .4s}
+.meter .v{font-family:var(--f-dot);text-align:right;font-variant-numeric:tabular-nums}
+
+/* 戦い方チェック */
+.style{padding:16px;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);display:flex;flex-direction:column;gap:12px}
+.seg{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg > span{font-weight:800;font-size:14px;min-width:5.5em}
+.seg button{padding:6px 14px;border:2px solid var(--line);border-radius:999px;background:var(--field);font-weight:700;font-size:14px}
+.seg button[aria-pressed="true"]{background:var(--mint);color:var(--on-pop)}
+.fit{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.fit > div{padding:10px 12px;border-radius:12px;border:2px solid var(--line);font-size:14px}
+.fit .yes{background:var(--ok-soft)}.fit .no{background:var(--ng-soft)}
+.fit h4{margin:0 0 4px;font-size:14px}
+.fit .yes h4{color:var(--ok)}.fit .no h4{color:var(--ng)}
+.fit ul{margin:0;padding-left:1.1em}
+
+.xtab{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
+.xtab th,.xtab td{border-bottom:1.5px dashed var(--muted);padding:8px 6px;text-align:left;vertical-align:top}
+.xtab th{font-family:var(--f-dot);font-weight:400;color:var(--muted);font-size:13px}
+.scroll{overflow-x:auto}
+
+.rules{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none;counter-reset:r}
+.rules li{counter-increment:r;display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:start;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface)}
+.rules li::before{content:counter(r);width:32px;height:32px;display:grid;place-items:center;border:2px solid var(--line);border-radius:50%;background:var(--lemon);color:var(--on-pop);font-family:var(--f-dot);font-size:16px}
+.practice{padding:18px;border:2.5px solid var(--line);border-radius:14px;background:var(--lilac);color:var(--on-pop);display:flex;flex-direction:column;gap:10px}
+.practice ol{margin:0;padding-left:1.3em}
+.practice .btn{align-self:flex-start;background:var(--surface);color:var(--ink)}
+
+.lvtabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.lvtabs button{display:flex;flex-direction:column;align-items:flex-start;gap:0;padding:10px 14px;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:3px 3px 0 var(--sh);text-align:left}
+.lvtabs button b{font-family:var(--f-pop);font-weight:400;font-size:18px}
+.lvtabs button small{font-size:12.5px;color:var(--ink-2)}
+.lvtabs button[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop)}
+.lvtabs button[aria-pressed="true"] small{color:var(--on-pop)}
+.num{width:100%;padding:6px 10px;border:2px solid var(--line);border-radius:10px;background:var(--field);font:inherit;font-family:var(--f-dot);font-size:16px;color:var(--ink)}
+.meter input[type=range]{width:100%;accent-color:var(--atk)}
+/* ===== クイズ ===== */
+.quiz{max-width:720px;margin:0 auto;padding:24px clamp(16px,4vw,32px)}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.dots{display:flex;gap:5px;flex-wrap:wrap}
+.dots i{width:14px;height:14px;border:2px solid var(--line);border-radius:4px;background:var(--surface)}
+.dots i.ok{background:var(--mint)}.dots i.ng{background:var(--pink)}.dots i.now{background:var(--lemon)}
+.qtext{font-family:var(--f-pop);font-size:clamp(19px,3vw,23px);line-height:1.6;margin-block:18px 6px}
+.qsit{font-size:14.5px;color:var(--ink-2);margin-bottom:16px}
+.qopts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.qopts button{min-height:84px;padding:14px;border:2.5px solid var(--line);border-radius:14px;background:var(--field);box-shadow:3px 3px 0 var(--sh);font-weight:800;font-size:17px;line-height:1.4;transition:transform .12s}
+.qopts button:not(:disabled):active{transform:translate(3px,3px);box-shadow:none}
+.qopts button.right{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.qopts button.wrong{background:var(--ng-soft);border-color:var(--ng);color:var(--ng)}
+.qopts button:disabled{cursor:default}
+.qopts button small{display:block;font-size:12px;font-weight:700;opacity:.8;margin-top:2px}
+.qexp{margin-top:16px;padding:14px;border:2px dashed var(--line);border-radius:12px;background:var(--surface)}
+.qexp .big{font-family:var(--f-pop);font-size:20px}
+.qexp .big.ok{color:var(--ok)}.qexp .big.ng{color:var(--ng)}
+.qexp p{font-size:15px;margin-top:4px}
+.qnext{display:flex;justify-content:flex-end;margin-top:14px}
+.qend{text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px;padding-block:12px}
+.qend .score{font-family:var(--f-dot);font-size:56px;line-height:1}
+.qend .score small{font-size:22px}
+
+/* ===== 用語集 ===== */
+.words-head{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px}
+.words-head h2{font-size:26px;margin-right:auto}
+.search{flex:1 1 240px;max-width:360px;padding:10px 14px;border:2.5px solid var(--line);border-radius:999px;background:var(--surface);font:inherit;color:var(--ink)}
+.cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.cats button{padding:4px 12px;border:2px solid var(--line);border-radius:999px;background:var(--surface);font-weight:700;font-size:14px}
+.cats button[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop)}
+.wlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.word{padding:14px 16px;display:flex;flex-direction:column;gap:6px;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:3px 3px 0 var(--sh);scroll-margin-top:120px}
+.word.flash{animation:flash 1.2s}
+@keyframes flash{0%,40%{background:var(--lemon)}}
+.word header{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.word b{font-size:17px}
+.word p{font-size:14.5px;color:var(--ink-2)}
+.empty{color:var(--muted);padding:20px 0}
+
+/* 用語のポップアップ */
+.sheet{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;justify-content:center;background:var(--scrim);padding:16px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.sheet[hidden]{display:none}
+.sheet .box{width:min(520px,100%);padding:18px 20px;display:flex;flex-direction:column;gap:8px;animation:up .2s ease-out}
+@keyframes up{from{transform:translateY(20px);opacity:.6}}
+.sheet .box header{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.sheet .box b{font-family:var(--f-pop);font-weight:400;font-size:20px}
+.sheet .x{width:36px;height:36px;border:2px solid var(--line);border-radius:50%;background:var(--surface);font-weight:800}
+.sheet .box .more{align-self:flex-start;font-size:14px}
+
+footer.site{padding-block:24px 36px;border-top:3px solid var(--line);font-size:13px;color:var(--muted)}
+footer.site .wrap{display:flex;flex-direction:column;gap:4px}
+
+/* ===== ダメージラボのレトロかわいい版に寄せる ===== */
+body{animation:dots 30s linear infinite}
+@keyframes dots{to{background-position:220px 220px}}
+main,footer.site,.ticker{position:relative;z-index:1}
+.rfx{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.rfx i{position:absolute;font-style:normal;font-family:var(--f-pop);opacity:.5;animation:float 9s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-26px) rotate(10deg)}}
+.brand b{font-size:21px;letter-spacing:.06em;background:linear-gradient(90deg,#e8517a,#f29a3b,#2aa39a,#7b5bd6,#e8517a);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:rainbow 6s linear infinite}
+@keyframes rainbow{to{background-position:300% 0}}
+.brand .cas::before,.brand .cas::after{border-style:dashed;animation:spin 3s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ticker{overflow:hidden;border-bottom:2px solid var(--line);background:var(--lemon);white-space:nowrap}
+.ticker div{display:inline-block;padding:4px 0;font-family:var(--f-dot);font-size:14px;color:var(--on-pop);animation:tick 26s linear infinite}
+@keyframes tick{to{transform:translateX(-50%)}}
+.card{border-radius:18px;box-shadow:5px 5px 0 var(--sh);animation:pop .55s cubic-bezier(.3,1.6,.5,1) both;position:relative}
+.paths .card:nth-child(2){animation-delay:.08s}.paths .card:nth-child(3){animation-delay:.16s}.paths .card:nth-child(4){animation-delay:.24s}
+@keyframes pop{from{opacity:0;transform:translateY(18px) scale(.94) rotate(-1deg)}}
+.les::after,.quiz::after,.rig::after{content:"";position:absolute;top:-12px;right:22px;width:70px;height:22px;background:repeating-linear-gradient(45deg,var(--pink) 0 8px,#ffd1df 8px 16px);border:2px solid var(--line);transform:rotate(4deg);border-radius:4px;opacity:.9}
+.rig::after{background:repeating-linear-gradient(45deg,var(--mint) 0 8px,#d4f7ec 8px 16px);transform:rotate(-5deg);left:22px;right:auto}
+.les h2,.qtext{letter-spacing:.03em}
+.btn,.tabs a,.slot,.lvtabs button,.qopts button,.demo .opts button,.seg button,.cats button{transition:transform .12s,box-shadow .12s,background .2s}
+.btn:hover,.tabs a:hover,.lvtabs button:hover,.qopts button:not(:disabled):hover,.demo .opts button:hover{transform:translate(-1px,-1px)}
+.btn:active,.lvtabs button:active,.demo .opts button:active,.slot:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--sh)}
+.path:hover{transform:translate(-2px,-2px) rotate(-.4deg)}
+.toc button[aria-current="step"] .n,.rules li::before{animation:bob 2.4s ease-in-out infinite}
+.rules li:nth-child(2)::before{animation-delay:-.4s}.rules li:nth-child(3)::before{animation-delay:-.8s}.rules li:nth-child(4)::before{animation-delay:-1.2s}.rules li:nth-child(5)::before{animation-delay:-1.6s}.rules li:nth-child(6)::before{animation-delay:-2s}
+@keyframes bob{50%{transform:translateY(-3px) rotate(-6deg)}}
+.lvtabs button[aria-pressed="true"] b,.tabs a[aria-current="page"]{animation:wig 3s ease-in-out infinite;display:inline-block}
+@keyframes wig{0%,86%,100%{transform:rotate(0)}90%{transform:rotate(-6deg)}95%{transform:rotate(6deg)}}
+.les .body>*{animation:pop .45s cubic-bezier(.3,1.6,.5,1) both}
+.les .body>*:nth-child(2){animation-delay:.04s}.les .body>*:nth-child(3){animation-delay:.08s}.les .body>*:nth-child(4){animation-delay:.12s}.les .body>*:nth-child(5){animation-delay:.16s}.les .body>*:nth-child(n+6){animation-delay:.2s}
+.les h3{display:flex;align-items:center;gap:8px}
+.les h3::before{content:"";width:10px;height:10px;background:var(--pink);border:2px solid var(--line);flex:none}
+.les h3::after{content:"";flex:1;border-top:2px dotted rgba(59,35,64,.3)}
+/* 部位のドット絵アイコン */
+.slot{flex-direction:row;align-items:center;gap:10px}
+.slot .ic{flex:none;width:30px;height:30px;display:grid;place-items:center;border:2.5px solid var(--line);border-radius:10px;box-shadow:2px 2px 0 var(--sh);transition:transform .2s}
+.slot .ic svg{width:18px;height:18px;display:block}
+.slot{gap:8px;padding:8px}
+.slot .tx span{font-size:11.5px}
+.slot:hover .ic{transform:rotate(-8deg) scale(1.08)}
+.slot .tx{display:flex;flex-direction:column;min-width:0}
+.slot.w .ic{background:var(--surface)!important}
+/* クイズ：ゲーム機の画面 */
+.screen{position:relative;overflow:hidden;width:min(360px,100%);padding:18px 16px 14px;border:3px solid var(--line);border-radius:16px;box-shadow:4px 4px 0 var(--sh);background:#2c1f45;background-image:radial-gradient(ellipse at 50% 0%,rgba(201,179,255,.25),transparent 70%);color:#fff4dc}
+.screen::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 2px,transparent 2px 4px)}
+.screen::after{content:"▶";position:absolute;right:14px;top:10px;font-size:12px;color:var(--lemon);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.screen .lab2{font-family:var(--f-dot);font-size:13px;color:#c9b8e0;letter-spacing:.2em}
+.qend .screen .score{color:var(--lemon);text-shadow:3px 3px 0 #e8517a,0 0 16px rgba(255,226,122,.5);animation:boing .5s cubic-bezier(.3,1.8,.5,1)}
+.qend .screen .score small{color:#fff4dc;text-shadow:none}
+@keyframes boing{0%{transform:scale(.6) translateY(6px)}60%{transform:scale(1.12)}100%{transform:none}}
+.qexp .big{display:inline-block;animation:boing .5s cubic-bezier(.3,1.8,.5,1)}
+.qopts button.right{animation:boing .45s cubic-bezier(.3,1.8,.5,1)}
+.qopts button.wrong{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.dots i.now{animation:bob 1.2s ease-in-out infinite}
+.spark{position:fixed;pointer-events:none;z-index:99;font-size:16px;animation:spark .8s ease-out forwards}
+@keyframes spark{from{opacity:1;transform:translate(0,0) scale(1)}to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.4) rotate(180deg)}}
+.sheet .box{border-width:3px;box-shadow:8px 8px 0 var(--sh);animation:pop .45s cubic-bezier(.3,1.6,.5,1)}
+.sheet .x{background:var(--pink);box-shadow:3px 3px 0 var(--sh);transition:transform .15s}
+.sheet .x:hover{transform:rotate(90deg)}
+.word{animation:pop .45s cubic-bezier(.3,1.6,.5,1) both}
+.word:hover{transform:translate(-2px,-2px) rotate(-.3deg);box-shadow:5px 5px 0 var(--sh)}
+@media (max-width:820px){
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .lesson{grid-template-columns:minmax(0,1fr)}
+  .toc{position:static;flex-direction:row;overflow-x:auto;padding:8px}
+  .toc button{flex:none}
+  .toc button .t2{display:none}
+  .toc button[aria-current="step"] .t2{display:inline}
+}
+@media (max-width:480px){
+  .lvtabs small .d{display:none}
+  .lvtabs button{padding:8px 12px}
+  .qopts{grid-template-columns:1fr}
+  .dexrow{grid-template-columns:minmax(0,1fr)}
+  .brand b{font-size:17px}
+  .tabs a{padding:5px 11px;font-size:13px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top gut">
+  <div class="wrap">
+    <a class="brand" href="#home"><span class="cas" aria-hidden="true"></span><span><b>MOD講座</b><small>ONCE HUMAN · 初級から上級まで</small></span></a>
+    <nav class="tabs" aria-label="ページ">
+      <a href="#home" data-v="home">はじめに</a>
+      <a href="#lesson" data-v="lesson">レッスン</a>
+      <a href="#quiz" data-v="quiz">クイズ</a>
+      <a href="#words" data-v="words">用語集</a>
+    </nav>
+  </div>
+</header>
+
+<main class="gut">
+  <div class="wrap">
+
+  <!-- ===== はじめに ===== -->
+  <section class="view" id="v-home">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">ONCE HUMAN MOD GUIDE</p>
+        <h1>MODって、<em>どれを付ければいいの？</em></h1>
+        <p class="lead">ワンスヒューマンのMODを、初級・中級・上級の3つのレベルでまとめた講座だよ。読んで、クイズで確かめて、最後はダメージラボで実際に試してみよう。</p>
+        <div class="acts">
+          <a class="btn pink" href="#lesson" id="startBtn">初級からはじめる</a>
+          <a class="btn sub" href="#quiz">いきなりクイズ</a>
+        </div>
+        <div class="prog"><span id="progTxt">初級 0/6</span><span class="bar"><i id="progBar"></i></span></div>
+      </div>
+      <div class="card rig">
+        <p class="lab">MODを付けられる場所は 7つ（押すと説明へ）</p>
+        <div class="rig-grid">
+          <div class="rig-col">
+            <button class="slot" data-go="2"><b>ヘルメット</b><span>条件つきの火力</span></button>
+            <button class="slot" data-go="2"><b>トップス</b><span>守り</span></button>
+            <button class="slot" data-go="2"><b>グローブ</b><span>いつでも効く火力</span></button>
+          </div>
+          <svg class="fig" viewBox="0 0 16 26" aria-hidden="true" shape-rendering="crispEdges">
+            <rect fill="#3b2a24" x="5" y="1" width="6" height="2"/><rect fill="#3b2a24" x="4" y="2" width="1" height="3"/><rect fill="#3b2a24" x="11" y="2" width="1" height="3"/>
+            <rect fill="#f2c7a5" x="5" y="3" width="6" height="6"/><rect fill="#3b2a24" x="5" y="3" width="6" height="1"/>
+            <rect fill="#3b2340" x="6" y="5" width="1" height="1"/><rect fill="#3b2340" x="9" y="5" width="1" height="1"/><rect fill="#d99a85" x="7" y="7" width="2" height="1"/>
+            <rect fill="#f2c7a5" x="7" y="9" width="2" height="1"/>
+            <rect fill="#5d7ea3" x="4" y="10" width="8" height="7"/><rect fill="#5d7ea3" x="2" y="10" width="2" height="6"/><rect fill="#5d7ea3" x="12" y="10" width="2" height="6"/>
+            <rect fill="#e9e4da" x="7" y="10" width="2" height="7"/>
+            <rect fill="#f2c7a5" x="2" y="16" width="2" height="2"/><rect fill="#f2c7a5" x="12" y="16" width="2" height="2"/>
+            <rect fill="#3d4766" x="4" y="17" width="8" height="2"/><rect fill="#3d4766" x="4" y="19" width="3" height="4"/><rect fill="#3d4766" x="9" y="19" width="3" height="4"/>
+            <rect fill="#4a3a33" x="3" y="23" width="4" height="2"/><rect fill="#4a3a33" x="9" y="23" width="4" height="2"/>
+          </svg>
+          <div class="rig-col">
+            <button class="slot" data-go="2"><b>マスク</b><span>キーワード専用</span></button>
+            <button class="slot" data-go="2"><b>ボトムス</b><span>条件つきの火力</span></button>
+            <button class="slot" data-go="2"><b>靴</b><span>銃器・状態異常</span></button>
+          </div>
+          <button class="slot w" data-go="2"><b>武器</b><span>武器のキーワードを強くする</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="paths">
+      <a class="card path" href="#lesson"><span class="eyebrow"><span>LESSON</span><span>初級・中級・上級</span></span><h3>3つのレベルのレッスン</h3><p>初級でMODの見方と基本、中級で組み合わせと相性、上級でダメージの式と計算まで。</p></a>
+      <a class="card path" href="#quiz"><span class="eyebrow"><span>QUIZ</span><span>3レベル・各12問</span></span><h3>2択クイズ</h3><p>初級・中級・上級ごとに12問。答えると解説で答え合わせできるよ。</p></a>
+      <a class="card path" href="#words"><span class="eyebrow"><span>WORDS</span><span id="wcount">—</span></span><h3>用語集</h3><p>クリDMG、状態異常、拡張要素…わからない言葉はここで調べられるよ。</p></a>
+      <a class="card path" href="https://yukhoeonce.github.io/damage/" target="_blank" rel="noopener"><span class="eyebrow"><span>PRACTICE</span><span>別サイト ↗</span></span><h3>ダメージラボで練習</h3><p>武器を選ぶと「MODおすすめ」が理想の付け方を出してくれるよ。</p></a>
+    </div>
+  </section>
+
+  <!-- ===== レッスン ===== -->
+  <section class="view" id="v-lesson" hidden>
+    <div class="lvtabs" id="lvtabs" role="group" aria-label="レベル"></div>
+    <div class="lesson">
+      <nav class="card toc" id="toc" aria-label="レッスンの目次"></nav>
+      <article class="card les" id="les" aria-live="polite"></article>
+    </div>
+  </section>
+
+  <!-- ===== クイズ ===== -->
+  <section class="view" id="v-quiz" hidden>
+    <div class="card quiz" id="quiz"></div>
+  </section>
+
+  <!-- ===== 用語集 ===== -->
+  <section class="view" id="v-words" hidden>
+    <div class="words-head">
+      <h2>用語集</h2>
+      <input class="search" id="wq" type="search" placeholder="ことばで探す（例：クリ）" aria-label="用語を探す">
+    </div>
+    <div class="cats" id="wcats"></div>
+    <div class="wlist" id="wlist"></div>
+  </section>
+
+  </div>
+</main>
+
+<div class="sheet" id="sheet" hidden>
+  <div class="card box" role="dialog" aria-modal="true" aria-labelledby="sheetT">
+    <header><b id="sheetT"></b><button class="x" id="sheetX" aria-label="閉じる">×</button></header>
+    <p id="sheetD"></p>
+    <a href="#words" class="more" id="sheetMore">用語集で見る →</a>
+  </div>
+</div>
+
+<footer class="site gut">
+  <div class="wrap">
+    <span>非公式のファンサイトです。ゲームの名称・内容の権利は © NetEase / Starry Studio に帰属します。</span>
+    <span>数字や効果はアップデートで変わることがあります。いちばん新しい内容はゲーム内の表示を見てね。</span>
+    <span><a href="https://yukhoeonce.github.io/">OnceHumanシナリオガイド</a> ・ <a href="https://yukhoeonce.github.io/damage/">ダメージラボ</a></span>
+  </div>
+</footer>
+
+<div class="rfx" aria-hidden="true"></div>
+<script>
+(()=>{
+  const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cols=['#ff9fbd','#9be8d4','#ffe27a','#c9b3ff','#9fd6ff'];
+  const fx=document.querySelector('.rfx');
+  if(!RM)['★','✦','●','♪','◆','★','▲','✦','●','♪','◆','★'].forEach((t,i)=>{const e=document.createElement('i');e.textContent=t;
+    e.style.left=(5+i*8.1)%96+'%';e.style.top=(8+(i*37)%84)+'%';e.style.color=cols[i%5];
+    e.style.fontSize=(18+(i*7)%26)+'px';e.style.animationDelay=(-i*0.8)+'s';e.style.animationDuration=(7+i%5)+'s';fx.appendChild(e)});
+  const top=document.querySelector('.top');
+  if(top){const tk=document.createElement('div');tk.className='ticker';tk.setAttribute('aria-hidden','true');
+    const s='★ MOD講座 ✦ 武器とマスクはキーワードにそろえよう ✦ 同じカッコは足し算 ♪ 条件は戦い方に合わせて ✿ ダミーで確かめてね ';
+    tk.innerHTML='<div>'+s.repeat(6)+'</div>';top.after(tk)}
+  // 部位のドット絵アイコン（ダメージラボと同じ）
+  const P={WPN:['........','......##','.....##.','....##..','#..##...','.###....','..##....','.#.#....'],
+    HEAD:['..####..','.######.','########','##....##','#......#','#......#','........','........'],
+    MASK:['........','.######.','##.##.##','########','#.#..#.#','.######.','..#..#..','........'],
+    TOP:['.##..##.','########','########','.######.','.######.','.######.','.######.','........'],
+    HAND:['.#.#.#..','.#.#.#..','.#####.#','.######.','.#####..','..####..','..####..','........'],
+    LEG:['.######.','.######.','.###.##.','.##..##.','.##..##.','.##..##.','.##..##.','........'],
+    FOOT:['........','..##....','..##....','..##....','..####..','..#####.','.######.','........']};
+  const C={WPN:'#ff9fbd',HEAD:'#9be8d4',MASK:'#c9b3ff',TOP:'#ffe27a',HAND:'#9fd6ff',LEG:'#ffc79a',FOOT:'#b9eda1'};
+  const K={'武器':'WPN','ヘルメット':'HEAD','マスク':'MASK','トップス':'TOP','グローブ':'HAND','ボトムス':'LEG','靴':'FOOT'};
+  const svg=k=>{let r='';P[k].forEach((row,y)=>[...row].forEach((c,x)=>{if(c==='#')r+=`<rect x="${x}" y="${y}" width="1.02" height="1.02"/>`}));
+    return `<svg viewBox="0 0 8 8" fill="#3b2340" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`};
+  document.querySelectorAll('.slot').forEach(b=>{const n=b.querySelector('b');const k=K[n&&n.textContent.trim()];if(!k)return;
+    const tx=document.createElement('span');tx.className='tx';while(b.firstChild)tx.appendChild(b.firstChild);
+    const ic=document.createElement('span');ic.className='ic';ic.style.background=C[k];ic.innerHTML=svg(k);b.append(ic,tx)});
+  // せいかいのキラキラ
+  window.sparkle=el=>{if(RM||!el)return;const r=el.getBoundingClientRect();
+    for(let k=0;k<10;k++){const s=document.createElement('span');s.className='spark';s.textContent=['✦','★','◆','✧'][k%4];
+      s.style.left=(r.left+r.width*Math.random())+'px';s.style.top=(r.top+r.height*.5)+'px';s.style.color=cols[k%5];
+      s.style.setProperty('--dx',(Math.random()*90-45)+'px');s.style.setProperty('--dy',(-30-Math.random()*60)+'px');
+      document.body.appendChild(s);setTimeout(()=>s.remove(),850)}};
+})();
+</script>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const KEY='modstudy-v1';
+let st={done:[],step:1,best:null};
+try{const v=JSON.parse(localStorage.getItem(KEY)||'null'); if(v&&typeof v==='object') st=Object.assign(st,v);}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+
+/* ===== 用語 ===== */
+const CATN={stat:'ステータス',mod:'MODのしくみ',kw:'キーワード',play:'戦い方'};
+const WORDS=[
+ ['攻撃力','stat','銃の弾（実弾）のダメージの元になる数字。ステータス画面に出ているよ。スプレッドガンとバウンスもこの数字から計算される。'],
+ ['超感覚強度','stat','火傷・フロスト・パワーサージ・不安定爆弾など、状態異常ダメージの元になる数字。'],
+ ['銃器DMG','stat','銃の弾のダメージを上げる%。攻撃力タイプの武器でいちばん基本になるステータス。'],
+ ['クリ率','stat','クリティカル（会心）が出る確率。'],
+ ['クリDMG','stat','クリティカルが出たときにダメージがどれだけ増えるかの%。クリ率が低いと出番が少ない。'],
+ ['弱点DMG','stat','頭などの弱点に当てたときに増えるダメージの%。弱点に当ててクリも出たときは、弱点DMGとクリDMGが足し算になる。'],
+ ['状態異常DMG','stat','状態異常（火傷・フロスト・パワーサージ・不安定爆弾など）のダメージを上げる%。'],
+ ['エレメントDMG','stat','火・氷・電気などの属性ダメージを上げる%。状態異常DMGとは別の枠なので、両方上げると掛け算で伸びる。'],
+ ['全モンスター','stat','敵の種類（通常・エリート・ボス）へのダメージを上げる%。実弾にも状態異常にも乗るよ。MODの拡張要素によく付いている。'],
+ ['最終DMG','stat','ほかの%とは別に、最後に掛け算される枠。マスクのキーワードMODに多い。'],
+ ['メイン効果','mod','MODの名前の部分。「銃器強化」「着実な努力」など、どの部位のMODかで選べる中身が決まっている。'],
+ ['拡張要素','mod','MODの名前の横の＜＞の部分。いくつかのおまけステータスがセットで付く。「爆裂」「異能」「オーメン」など。'],
+ ['レベル','mod','MODの右上の数字。拡張要素の4つのステータスのレベルを足した数で、最大はLv17（5・5・5・2）。高いほど拡張要素の数字が大きい。'],
+ ['閃光','mod','MODを強化した特別な状態。メイン効果に小さなおまけ（例：銃器DMG+2%）が付く。'],
+ ['異能','mod','拡張要素の名前に「異能」が付くと、エレメントDMGや状態異常DMGが上がるタイプになる。超感覚タイプの武器向け。'],
+ ['オーメン','mod','HPが低いほど強くなる拡張要素。ヘルメットとトップスにだけ付く。HPを低く保つ戦い方向け。'],
+ ['キーワード','kw','武器の特性の種類。火傷・フロストボルテックス・パワーサージ・不安定爆弾・スプレッドガン・バウンス・ハンティングマーク・ラピッドガン・ウェポンバーストがある。'],
+ ['キーワードDMG','kw','「火傷DMG」「スプレッドDMG」のように、そのキーワードの攻撃だけを上げる%。武器とマスクのMODで上げることが多い。'],
+ ['実弾','kw','銃から出る、ふつうの弾のダメージ。攻撃力×銃器DMG×(弱点・クリ)で決まる。'],
+ ['火傷','kw','敵を燃やして、続けてダメージを与える状態異常。スタックが増えるほど痛くなる。超感覚タイプ。'],
+ ['フロストボルテックス','kw','氷の渦を作って、中の敵にダメージを与える状態異常。超感覚タイプ。'],
+ ['パワーサージ','kw','電撃のダメージを与える状態異常。超感覚タイプ。'],
+ ['不安定爆弾','kw','敵に爆弾を付けて爆発させる状態異常。超感覚タイプ。'],
+ ['スプレッドガン','kw','当たった敵の別の部位にもダメージが広がる。攻撃力から計算されるので、クリや弱点も効く。'],
+ ['バウンス','kw','弾が跳ねて近くの敵にも当たる。攻撃力から計算されるので、クリや弱点も効く。'],
+ ['ハンティングマーク','kw','敵に印を付けて、その敵へのダメージを上げる。攻撃力タイプ。'],
+ ['ラピッドガン','kw','条件で発動する強化状態。効果は武器ごとに違う（攻撃力アップや装填など）。攻撃力タイプ。'],
+ ['ウェポンバースト','kw','武器の切り替えなどで発動する強化状態。発動中に武器ごとの強化が乗る。攻撃力タイプ。'],
+ ['空リロード','play','マガジンの弾を撃ち切ってからリロードすること。これが条件になっているMODがある（オーバーリロード、クリティカルライジングなど）。'],
+ ['スタック','play','効果が重なっていく回数。「最大3スタック」なら3回まで重なる。'],
+ ['マガジン','play','1回のリロードで撃てる弾の数。「マガジン後半」はマガジンの残りが半分を切ったあと。']
+];
+const WMAP=Object.fromEntries(WORDS.map(w=>[w[0],w]));
+const T=(w,label)=>`<button class="t" data-t="${w}">${label||w}</button>`;
+
+/* ===== MOD図鑑ミニ ===== */
+const DEX={
+ 'ヘルメット':[['戦いのシンフォニー','銃器DMG・射撃速度','武器を切り替えた直後（だんだん減る）'],['エレメント操作','エレメントDMG','いつでも＋HP90%超でさらに'],['火力追撃','射撃速度→銃器DMG','マガジンの前半は射撃速度、後半は銃器DMG'],['ラッキープレイヤー','クリ率・クリDMG','そのかわり弱点DMGが出なくなる'],['熟練の技','エレメントDMG','空リロードのあと'],['先手必勝','クリ率・クリDMG','リロードしてすぐ'],['異常専門家','状態異常DMG・射撃速度','いつでも（射程が短くなる）'],['精密攻撃','弱点DMG','弱点に当て続けると重なる'],['スピードスロー','射撃速度','投てき物を使ったあと'],['オーバーリロード','マガジン容量','空リロードのとき']],
+ 'トップス':[['ハードシールド','被ダメ軽減','シールドがあるとき'],['異常免疫','状態異常を解除','HPが減ったとき'],['キープガード','シールド','戦闘の前にためておく'],['優位対決','被ダメ軽減','戦闘の前にためておく'],['ヘッドガード','弱点への被ダメ軽減','いつでも＋HPが高いとさらに'],['正面衝突','被ダメ軽減','近くに敵がいるとき'],['九死に一生','被ダメ軽減・回復','HPがかなり減ったとき'],['優勢維持','HP回復','シールドが多いときに撃破'],['クイックリターン','移動速度・弾の補充','治療注射を使ったとき'],['ヒール＆プロテクト','被ダメ軽減','治療注射を使ったとき']],
+ 'グローブ':[['銃器強化','銃器DMG','いつでも'],['弱点強化','弱点DMG','いつでも'],['クリティカル強化','クリ率','いつでも'],['クリティカルDMG強化','クリ率・クリDMG','いつでも'],['エレメント強化','エレメントDMG','いつでも'],['異常強化','状態異常DMG','いつでも'],['近接攻撃強化','近接DMG','いつでも（銃には効かない）'],['生命強化','最大HP','いつでも'],['砲台強化','設置した施設のダメージ','いつでも']],
+ 'ボトムス':[['矢の名手','弱点DMG','敵から離れるほど'],['アモイーター','銃器DMG','マガジンの弾が減るほど'],['仏の顔も三度まで','弱点DMG','リロード後の最初の数発'],['クリティカルフィーバー','クリDMG','クリを出すたびに重なる（リロードで消える）'],['クリティカルライジング','クリDMG','空リロードのたびに重なる'],['再補給','銃器・状態異常DMG','敵を倒したあと'],['異常増幅','状態異常DMG','空リロードのたびに重なる'],['精密チャージ','エレメントDMG','前のマガジンで弱点に当てた割合'],['エレメントの共鳴','エレメントDMG','前のマガジンでエレメントDMGを出した回数'],['精密装填','弾の補充','遠くから弱点に当てたとき'],['白兵戦','近接DMG','いつでも（銃には効かない）']],
+ '靴':[['着実な努力','銃器・状態異常DMG','いつでも＋HP90%以上でさらに'],['逆境の戦意','銃器・状態異常DMG','いつでも＋条件でさらに重なる'],['最後の力','銃器・状態異常DMG','いつでも＋スタミナが減るほど'],['ラッシュアワー','銃器・状態異常DMG','HPが減るほど'],['高見の見物','銃器・状態異常DMG','近く（7m以内）に敵がいないとき'],['前線突破','銃器・状態異常DMG','近くの敵を倒したあと'],['援護作戦','銃器・状態異常DMG','しばらくダメージを受けないでいると'],['戦場の収穫','弾の補充','2体倒すたび']]
+};
+const DEXKW={
+ 'マスク':[['火傷','重度熱傷・深層爆発'],['フロスト','フロスト創造物・コールドウェーブ'],['パワーサージ','初回感電・麒麟雷鳴'],['不安定爆弾','単独爆破・遅延爆発'],['スプレッドガン','ターゲティングブレイク・炸裂破片'],['バウンス','精密バウンス・昇竜のバウンス'],['マーク','全面指名手配・全員指名手配'],['ラピッドガン','ブラストラピッドガン・疾風迅雷'],['ウェポンバースト','万夫不当・軽型火砲']],
+ '武器':[['火傷','フレイムレゾナンス・ワイルドバーニング・残り火・フレイムガード'],['フロスト','氷核エンハンス・クライオブラスト・フロストブレイク・フロストガード'],['パワーサージ','トランジェントオーバーロード・パワーサージ増幅・高頻度パワーサージ・パワーサージ拡散'],['不安定爆弾','爆弾チャージ・エクスプロージョンアート・爆弾戦利品・猛撃爆弾'],['スプレッドガン','オールクラッシュ・シールド貫通弾頭・爆裂弾頭・スプレッドガン戦利品'],['バウンス','チェーンバウンス・多重バウンス・ハイエネルギーバウンス・高頻度バウンス'],['マーク','マーク増幅・マーク拡散・回復マーク・ハンターガード'],['ラピッドガン','継続ラピッドガン・アキュレイトシューター・カウボーイ'],['ウェポンバースト','エンドバースト・コンティニューバースト・ポータブルバースト']]
+};
+const dexHTML=()=>Object.entries(DEX).map(([k,rows])=>`<details class="dex"><summary>${k}のメイン効果（${rows.length}）</summary><div class="dexlist">${rows.map(r=>`<div class="dexrow"><b>${r[0]}</b><span>${r[1]}が上がる ／ ${r[2]}</span></div>`).join('')}</div></details>`).join('')
+ +Object.entries(DEXKW).map(([k,rows])=>`<details class="dex"><summary>${k}のメイン効果（キーワード別）</summary><div class="dexlist">${rows.map(r=>`<div class="kwgroup"><b>${r[0]}</b>${r[1]}</div>`).join('')}</div></details>`).join('');
+
+/* ===== レッスン ===== */
+const LES=[
+{t:'MODってなに？',h:()=>`
+ <p>MODは装備に付ける<b>強化パーツ</b>だよ。<b>武器1つ</b>と<b>防具6部位</b>（ヘルメット・マスク・トップス・グローブ・ボトムス・靴）、ぜんぶで<b>7か所</b>に1つずつ付けられる。</p>
+ <h3>MODは3つのパーツでできている</h3>
+ <div class="modcard" aria-label="MODの見本"><span class="ic">M</span><span class="nm">銃器強化</span><span class="lv">Lv17</span><span class="ex">＜爆裂＞ クリDMG ／ 銃器DMG ／ …</span></div>
+ <div class="parts">
+  <div class="part"><span class="k">① 名前</span><b>${T('メイン効果')}</b><p>MODのいちばん大事な効果。部位ごとに選べるものが決まっている。</p></div>
+  <div class="part"><span class="k">② 名前の横の＜＞</span><b>${T('拡張要素')}</b><p>おまけのステータスのセット。「爆裂」「異能」などの種類がある。</p></div>
+  <div class="part"><span class="k">③ 右上の数字</span><b>${T('レベル')}</b><p>高いほど拡張要素の数字が大きい。</p></div>
+ </div>
+ <p>さらに${T('閃光')}したMODは、メイン効果に小さなおまけが付くよ。</p>
+ <div class="note"><b>ポイント</b>　MOD選びは「メイン効果を決める → 拡張要素を合わせる → レベルの高いものを使う」の順に考えるとラク。</div>`},
+{t:'7つの部位の役割',h:()=>`
+ <p>部位によって、付けられるメイン効果の<b>得意分野</b>がちがう。まずはざっくり覚えよう。</p>
+ <div class="roles">
+  <div class="role"><span class="chip c-kw">キーワード</span><b>武器</b><p>武器の特性（${T('キーワード')}）を強くする。武器のキーワードと同じものを選ぶ。</p></div>
+  <div class="role"><span class="chip c-kw">キーワード</span><b>マスク</b><p>こちらもキーワード専用。武器とそろえる。</p></div>
+  <div class="role"><span class="chip c-atk">火力</span><b>ヘルメット</b><p>「リロード後」「HPが高いとき」みたいな条件つきの火力が多い。</p></div>
+  <div class="role"><span class="chip c-atk">火力</span><b>グローブ</b><p>いつでも効く火力。いちばんわかりやすい部位。</p></div>
+  <div class="role"><span class="chip c-atk">火力</span><b>ボトムス</b><p>弱点・クリ・エレメントの条件つき火力。</p></div>
+  <div class="role"><span class="chip c-atk">火力</span><b>靴</b><p>銃器DMGと状態異常DMGを一緒に上げるものが多い。</p></div>
+  <div class="role"><span class="chip c-def">守り</span><b>トップス</b><p>ほとんどが守りの効果。火力にはほぼ関係ないので好みでOK。</p></div>
+ </div>
+ <h3>部位ごとのメイン効果ミニ図鑑</h3>
+ <p style="font-size:14.5px;color:var(--ink-2)">数字はアップデートで変わりやすいので、ここでは「何が上がるか」と「いつ効くか」だけ。</p>
+ <div>${dexHTML()}</div>`},
+{t:'武器のタイプを知ろう',h:()=>`
+ <p>MOD選びでいちばん大事なのは、<b>自分の武器のダメージがどこから出ているか</b>を知ること。大きく分けて2タイプあるよ。</p>
+ <div class="types">
+  <div class="type a"><h3>攻撃力タイプ</h3><p style="font-size:14.5px">元になる数字は${T('攻撃力')}。</p>
+   <ul><li>キーワード：${T('ハンティングマーク','マーク')}・${T('ラピッドガン')}・${T('ウェポンバースト')}・${T('スプレッドガン')}・${T('バウンス')}・特性なし</li>
+   <li>効くもの：${T('銃器DMG')}・${T('クリ率')}・${T('クリDMG')}・${T('弱点DMG')}</li></ul></div>
+  <div class="type p"><h3>超感覚タイプ</h3><p style="font-size:14.5px">元になる数字は${T('超感覚強度')}。</p>
+   <ul><li>キーワード：${T('火傷')}・${T('フロストボルテックス','フロスト')}・${T('パワーサージ')}・${T('不安定爆弾')}</li>
+   <li>効くもの：${T('状態異常DMG')}・${T('エレメントDMG')}・そのキーワードのDMG</li></ul></div>
+ </div>
+ <p>${T('全モンスター')}は、どちらのタイプにも効く便利なステータスだよ。</p>
+ <div class="note"><b>見分け方</b>　武器の特性の説明に「超感覚強度の○%」と書いてあれば超感覚タイプ。書いていなければ攻撃力タイプと考えてOK。</div>
+ <div class="note"><b>ちょっと注意</b>　超感覚タイプの武器でも、ふつうの弾（${T('実弾')}）は攻撃力から出ている。でも多くの場合、ダメージの主役は状態異常のほうだよ。</div>`},
+{t:'足し算と掛け算',h:()=>`
+ <p>同じ「+30%」でも、<b>どこに足すか</b>で伸び方がちがう。ここがわかると一気に上級者っぽくなれる！</p>
+ <h3>実弾のダメージの式（ざっくり版）</h3>
+ <div class="scroll"><div class="formula">ダメージ ＝ 攻撃力 × <span class="g g1">(1＋銃器DMG)</span> × <span class="g g2">(1＋弱点DMG＋クリDMG)</span> × <span class="g g3">(1＋全モンスター)</span></div></div>
+ <p><b>同じカッコの中は足し算</b>、<b>カッコどうしは掛け算</b>。だから、もうたくさん入っているカッコにさらに足すより、<b>まだ少ないカッコに足すほうが伸びやすい</b>んだ。弱点とクリが同じカッコ（足し算）なのも覚えておこう。</p>
+ <div class="demo">
+  <p class="q">やってみよう：銃器DMGはもう +50%、全モンスターは 0%。+30% をどっちに足す？</p>
+  <div class="opts">
+   <button id="dmA" aria-pressed="false">銃器DMGに +30%<small>1.5 → 1.8</small></button>
+   <button id="dmB" aria-pressed="false">全モンスターに +30%<small>1.0 → 1.3</small></button>
+  </div>
+  <div class="meter"><span>いま</span><span class="bar"><i id="mb0" style="width:50%"></i></span><span class="v">×1.50</span></div>
+  <div class="meter"><span>足したあと</span><span class="bar"><i id="mb1" style="width:50%"></i></span><span class="v" id="mv1">?</span></div>
+  <p class="res" id="dmRes">ボタンを押すと結果が出るよ。（たとえ話の数字です）</p>
+ </div>
+ <div class="note"><b>状態異常の場合</b>　状態異常DMG・エレメントDMG・キーワードDMG・全モンスターは、それぞれ別のカッコ（掛け算）。いろいろな種類をバランスよく上げると伸びやすいよ。</div>`},
+{t:'条件をチェック',h:()=>`
+ <p>MODには「HPが高いとき」「リロードのあと」みたいな<b>条件つき</b>のものがたくさんある。条件を満たさないと効かないので、<b>自分の戦い方に合うか</b>を見てから付けよう。</p>
+ <div class="note"><b>よくある失敗</b>　「HP90%以上で強い」MOD（着実な努力）と、「HPが低いほど強い」MOD（${T('オーメン')}・ラッシュアワー）を一緒に付けると、どちらかが効かなくなっちゃう。</div>
+ <div class="style">
+  <p style="font-weight:800">戦い方を選ぶと、合うMODと合わないMODが出るよ</p>
+  <div class="seg" id="sgHp"><span>HPは…</span><button data-v="hi" aria-pressed="true">高く保つ</button><button data-v="lo" aria-pressed="false">低く保つ</button></div>
+  <div class="seg" id="sgDist"><span>距離は…</span><button data-v="near" aria-pressed="false">近くで戦う</button><button data-v="far" aria-pressed="true">離れて撃つ</button></div>
+  <div class="fit" id="fitOut"></div>
+ </div>
+ <h3>ほかによく出てくる条件</h3>
+ <div class="scroll"><table class="xtab"><thead><tr><th>条件</th><th>例</th><th>こんな人向け</th></tr></thead><tbody>
+  <tr><td>リロードのあと</td><td>先手必勝・仏の顔も三度まで</td><td>こまめにリロードする</td></tr>
+  <tr><td>${T('空リロード')}のたび</td><td>クリティカルライジング・異常増幅・熟練の技</td><td>マガジンを撃ち切ってからリロードする</td></tr>
+  <tr><td>武器の切り替え</td><td>戦いのシンフォニー</td><td>2丁をよく持ち替える</td></tr>
+  <tr><td>弱点に当てる</td><td>精密攻撃・仏の顔も三度まで</td><td>頭をしっかり狙える</td></tr>
+  <tr><td>敵を倒したあと</td><td>再補給・前線突破</td><td>ザコ敵がたくさんいる場所</td></tr>
+ </tbody></table></div>`},
+{t:'拡張要素の選び方',h:()=>`
+ <p>メイン効果が決まったら、次は${T('拡張要素')}（名前の横の＜＞）。基本のルールは3つだけ！</p>
+ <ol class="rules">
+  <li><div><b>攻撃力タイプなら「爆裂」や「精密」</b><br><span style="font-size:14.5px;color:var(--ink-2)">爆裂はクリDMGと銃器DMG、精密は弱点DMGと銃器DMGが上がる。</span></div></li>
+  <li><div><b>超感覚タイプなら「異能」の付くもの</b><br><span style="font-size:14.5px;color:var(--ink-2)">「異能」「オーメン異能」など、名前に${T('異能')}が付くとエレメントDMG・状態異常DMGが上がる。</span></div></li>
+  <li><div><b>武器とマスクはキーワードをそろえる</b><br><span style="font-size:14.5px;color:var(--ink-2)">武器とマスクには「火傷」「バウンス」みたいなキーワードの拡張要素がある。武器のキーワードと同じものを選ぼう。</span></div></li>
+ </ol>
+ <h3>条件つきの拡張要素（部位限定）</h3>
+ <div class="scroll"><table class="xtab"><thead><tr><th>拡張要素</th><th>強くなる条件</th><th>付く部位</th></tr></thead><tbody>
+  <tr><td>オーメン</td><td>HPが低いとき</td><td>ヘルメット・トップス</td></tr>
+  <tr><td>月の加護</td><td>シールドがあるとき</td><td>ヘルメット・グローブ</td></tr>
+  <tr><td>虚実</td><td>武器を切り替えたあと</td><td>トップス・靴</td></tr>
+  <tr><td>ファントム</td><td>敵の背中から撃つ</td><td>トップス・靴</td></tr>
+  <tr><td>墜落した星</td><td>自分より低い位置の敵</td><td>ボトムス・靴</td></tr>
+  <tr><td>エアロ</td><td>空中で撃つ</td><td>ボトムス・グローブ</td></tr>
+  <tr><td>共振</td><td>スタックがたまったとき</td><td>ボトムス・グローブ</td></tr>
+ </tbody></table></div>
+ <p style="font-size:14.5px;color:var(--ink-2)">どれも「異能」版があって、そっちは超感覚タイプ向け。条件の考え方はステップ5と同じだよ。</p>`},
+];
+const FINAL=()=>`
+ <h3>まとめ：はじめての人の4つの決まりごと</h3>
+ <ol class="rules">
+  <li><div><b>まず武器のタイプを見る</b>（攻撃力タイプ？超感覚タイプ？）</div></li>
+  <li><div><b>武器とマスクはキーワードを武器にそろえる</b></div></li>
+  <li><div><b>グローブ・靴など、いつでも効くもので土台を作る</b></div></li>
+  <li><div><b>条件つきMODは、自分の戦い方に合うものだけ</b></div></li>
+ </ol>
+ <div class="practice">
+  <b style="font-family:var(--f-pop);font-weight:400;font-size:19px">練習しよう：ダメージラボのMODおすすめ</b>
+  <ol><li>ダメージラボを開いて、自分の武器を選ぶ</li><li>「3 MOD」の下の「MODおすすめ」を押す</li><li>出てきた付け方を、この講座のルールで見直してみよう</li></ol>
+  <a class="btn" href="https://yukhoeonce.github.io/damage/" target="_blank" rel="noopener">ダメージラボを開く ↗</a>
+ </div>`;
+
+/* ===== 中級 ===== */
+const SUB='style="font-size:14.5px;color:var(--ink-2)"';
+const MID=[
+{t:'MODのレベルを読む',h:()=>`
+ <p>初級では「レベルが高いほど強い」とだけ覚えたけど、中身はもう少しくわしく決まっているよ。</p>
+ <div class="parts">
+  <div class="part"><span class="k">しくみ</span><b>拡張要素は4つのステータス</b><p>1つの拡張要素には、決まった4つのステータスがセットで付いている。</p></div>
+  <div class="part"><span class="k">しくみ</span><b>レベル＝4つの合計</b><p>MODのレベルは、4つのステータスそれぞれのレベルを足した数。最大はLv17。</p></div>
+  <div class="part"><span class="k">しくみ</span><b>Lv17は 5・5・5・2</b><p>1つ目から順番にレベルが上がる。4つ目だけ最大2までで、多くは「全モンスター」。</p></div>
+ </div>
+ <div class="scroll"><table class="xtab"><thead><tr><th>MODのレベル</th><th>4つの内わけ</th><th>どんな感じ？</th></tr></thead><tbody>
+  <tr><td>Lv4</td><td>1・1・1・1</td><td>全部ちょっとずつ</td></tr>
+  <tr><td>Lv8</td><td>2・2・2・2</td><td>まだ半分以下</td></tr>
+  <tr><td>Lv12</td><td>4・3・3・2</td><td>1つ目から育っていく</td></tr>
+  <tr><td>Lv15</td><td>5・4・4・2</td><td>ほぼ完成</td></tr>
+  <tr><td>Lv17</td><td>5・5・5・2</td><td>最大</td></tr>
+ </tbody></table></div>
+ <p>ステータスの数字は<b>レベルにぴったり比例</b>する。たとえばLv5で+15%のステータスなら、Lv3だと+9%。</p>
+ <div class="note"><b>ポイント</b>　1つ目のステータスから順に育つので、拡張要素の<b>1つ目に何が入っているか</b>がいちばん大事。たとえば「爆裂」は1つ目がクリDMGだよ。</div>`},
+{t:'キーワード別の組み合わせ',h:()=>`
+ <p>武器とマスクはキーワードにそろえる、と初級で習ったね。ここでは<b>キーワードごとによく使われる組み合わせ</b>を見てみよう。</p>
+ <div class="scroll"><table class="xtab"><thead><tr><th>キーワード</th><th>武器MODの例</th><th>マスクの例</th><th>伸ばしたいステータス</th></tr></thead><tbody>
+  <tr><td><span class="chip c-psi">火傷</span></td><td>フレイムレゾナンス・ワイルドバーニング</td><td>重度熱傷・深層爆発</td><td>状態異常・エレメント・火傷DMG</td></tr>
+  <tr><td><span class="chip c-psi">フロスト</span></td><td><b>氷核エンハンス</b>（定番）・クライオブラスト</td><td>フロスト創造物・コールドウェーブ</td><td>状態異常・エレメント・フロストDMG</td></tr>
+  <tr><td><span class="chip c-psi">パワーサージ</span></td><td>トランジェントオーバーロード・パワーサージ増幅</td><td>初回感電・麒麟雷鳴</td><td>状態異常・エレメント・サージDMG</td></tr>
+  <tr><td><span class="chip c-psi">不安定爆弾</span></td><td>爆弾チャージ・エクスプロージョンアート</td><td>単独爆破・遅延爆発</td><td>状態異常・エレメント・爆弾DMG</td></tr>
+  <tr><td><span class="chip c-atk">スプレッド</span></td><td>オールクラッシュ・シールド貫通弾頭</td><td>ターゲティングブレイク・炸裂破片</td><td>スプレッドDMG・クリ・弱点</td></tr>
+  <tr><td><span class="chip c-atk">バウンス</span></td><td>チェーンバウンス・多重バウンス</td><td><b>精密バウンス</b>（定番）・昇竜のバウンス</td><td>バウンスDMG・クリ・弱点</td></tr>
+  <tr><td><span class="chip c-atk">マーク</span></td><td>マーク増幅</td><td>全面指名手配・全員指名手配</td><td>銃器DMG・クリ</td></tr>
+  <tr><td><span class="chip c-atk">ラピッドガン</span></td><td>継続ラピッドガン・アキュレイトシューター</td><td>ブラストラピッドガン・疾風迅雷</td><td>銃器DMG・クリ・弱点</td></tr>
+  <tr><td><span class="chip c-atk">ウェポンバースト</span></td><td>エンドバースト</td><td>万夫不当・軽型火砲</td><td>銃器DMG・攻撃力</td></tr>
+ </tbody></table></div>
+ <div class="note"><b>注意</b>　キーワード専用のMODは、<b>武器のキーワードが合うときだけ</b>効く。たとえば単独爆破は不安定爆弾にしか効かないので、スプレッドガンの武器に付けても意味がないよ。</div>
+ <p ${SUB}>同じキーワードでも武器ごとに一番いい組み合わせは変わる。武器ごとの答えはダメージラボの「MODおすすめ」で確かめよう。</p>`},
+{t:'武器と条件の相性',h:()=>`
+ <p>条件つきMODは「条件を満たしている<b>時間の長さ</b>」で強さが変わる。同じMODでも、<b>武器のマガジンや撃ち方</b>によって効く時間がちがうんだ。</p>
+ <div class="types">
+  <div class="type a"><h3>マガジンが少ない武器</h3><p style="font-size:14.5px">スナイパー・ショットガン・リボルバーなど</p>
+   <ul><li>リロードした直後の効果が、マガジンの多くの弾に乗る</li><li>向いている：仏の顔も三度まで・先手必勝</li></ul></div>
+  <div class="type p"><h3>マガジンが多い武器</h3><p style="font-size:14.5px">サブマシンガン・ライトマシンガンなど</p>
+   <ul><li>撃ち続けるほど重なる効果が育ちやすい</li><li>向いている：アモイーター・クリティカルフィーバー・精密攻撃</li></ul></div>
+ </div>
+ <div class="scroll"><table class="xtab"><thead><tr><th>撃ち方のクセ</th><th>合うMODの例</th></tr></thead><tbody>
+  <tr><td>マガジンを撃ち切ってからリロードする</td><td>クリティカルライジング・異常増幅・熟練の技・オーバーリロード</td></tr>
+  <tr><td>弾が残っていてもこまめにリロードする</td><td>先手必勝・仏の顔も三度まで（空リロード系は効きにくい）</td></tr>
+  <tr><td>2丁をよく持ち替える</td><td>戦いのシンフォニー・拡張要素の虚実</td></tr>
+  <tr><td>ザコ敵をどんどん倒す</td><td>再補給・前線突破・戦場の収穫</td></tr>
+ </tbody></table></div>
+ <div class="note"><b>考え方</b>　「その条件、戦闘中の何割くらい満たせてる？」と自分に聞いてみよう。半分しか満たせないなら、効果も半分くらいと考えるとちょうどいい。</div>`},
+{t:'クリ率とクリDMGのバランス',h:()=>`
+ <p>クリDMGは<b>クリが出たときだけ</b>効く。だからクリ率が低いと、クリDMGをいくら上げてもあまり伸びないんだ。</p>
+ <p>平均すると、クリで増えるダメージは<b>だいたい「クリ率 × クリDMG」</b>（弱点に当たっていないとき）。</p>
+ <div class="demo">
+  <p class="q">動かしてみよう：クリで平均どれくらい増える？</p>
+  <label class="meter" for="crR"><span>クリ率</span><input id="crR" type="range" min="0" max="100" step="5" value="20"><span class="v" id="crRv">20%</span></label>
+  <label class="meter" for="crD"><span>クリDMG</span><input id="crD" type="range" min="0" max="200" step="10" value="60"><span class="v" id="crDv">60%</span></label>
+  <p class="res" id="crRes"></p>
+ </div>
+ <div class="note"><b>ポイント</b>　クリ率もクリDMGも上がるMOD（クリティカルDMG強化・先手必勝など）は、両方を一緒に伸ばせるので効率がいい。逆にクリ率が低いうちは、クリDMGだけのMODより銃器DMGや弱点DMGのほうが伸びることが多いよ。</div>`},
+{t:'弱点を狙える？狙えない？',h:()=>`
+ <p>弱点DMGとクリDMGは<b>同じカッコ（足し算）</b>だったね。どっちを伸ばすかは「弱点にどれくらい当てられるか」で決めよう。</p>
+ <div class="types">
+  <div class="type a"><h3>弱点をよく狙える</h3>
+   <ul><li>弱点強化（グローブ）・精密攻撃（ヘルメット）</li><li>矢の名手・仏の顔も三度まで（ボトムス）</li><li>拡張要素は「精密」（弱点DMGが1つ目）</li></ul></div>
+  <div class="type p"><h3>弱点をあまり狙えない</h3>
+   <ul><li>クリティカル強化・クリティカルDMG強化（グローブ）</li><li>ラッキープレイヤー（弱点DMGをあきらめてクリを伸ばす）</li><li>拡張要素は「爆裂」（クリDMGが1つ目）</li></ul></div>
+ </div>
+ <div class="note"><b>ラッキープレイヤーの落とし穴</b>　弱点DMGが出なくなるので、弱点にずっと当てられる構成（スキルで弱点に当たりやすくなるデビエーションを使うなど）とは相性が悪いよ。</div>`},
+{t:'防具とMODの組み合わせ',h:()=>`
+ <p>火力はMODだけで決まるわけじゃない。<b>防具そのもの</b>にも効果があって、MODと組み合わせて考えるよ。</p>
+ <div class="parts">
+  <div class="part"><span class="k">防具の効果①</span><b>セット効果</b><p>同じシリーズの防具を何部位か着ると発動する効果。</p></div>
+  <div class="part"><span class="k">防具の効果②</span><b>金防具の主要効果</b><p>キーワード専用の強い効果を持つ金防具がある。同じ主要効果は1つしか効かない。</p></div>
+ </div>
+ <h3>キーワード専用の金防具の例</h3>
+ <div class="scroll"><table class="xtab"><thead><tr><th>キーワード</th><th>防具の例</th></tr></thead><tbody>
+  <tr><td>スプレッドガン</td><td>気密ヘルメット・牢獄ヘルメット・ベレー帽</td></tr>
+  <tr><td>パワーサージ</td><td>カゲロウゴーグル・ガスマスクフード・黄色塗料マスク</td></tr>
+  <tr><td>不安定爆弾</td><td>ウィンドフード・ハゲワシシャーマントップス・ブラスト戦術トップス</td></tr>
+  <tr><td>フロスト</td><td>隠密行者シャツ・防毒フード・フロスト戦術ベスト</td></tr>
+ </tbody></table></div>
+ <div class="note"><b>ポイント</b>　防具もMODと同じで「武器のキーワードにそろえる」が基本。ダメージラボでは防具セットと重要な防具も選べるので、MODと一緒に試してみよう。</div>`},
+];
+const MIDFIN=()=>`
+ <h3>まとめ：中級の4つのチェック</h3>
+ <ol class="rules">
+  <li><div><b>拡張要素は1つ目のステータスを見る</b></div></li>
+  <li><div><b>キーワード専用MODは、キーワードが合うときだけ効く</b></div></li>
+  <li><div><b>条件つきMODは「満たせる時間の長さ」で考える</b></div></li>
+  <li><div><b>クリ率が低いうちはクリDMGより別の枠</b></div></li>
+ </ol>`+PRACTICE('プロモードに切り替えると、くわしい倍率やDPSも見られるよ');
+
+/* ===== 上級 ===== */
+const ADV=[
+{t:'ダメージの式をくわしく',h:()=>`
+ <p>ゲーム内で実際に測って確かめた式をまとめたよ。ここがわかると、どのMODがどれだけ効くか自分で計算できる。</p>
+ <h3>攻撃力から出るダメージ</h3>
+ <div class="scroll"><div class="formula">実弾 ＝ 攻撃力 × <span class="g g1">(1＋銃器DMG)</span> × <span class="g g2">(1＋弱点DMG＋クリDMG)</span> × <span class="g g3">(1＋全モンスター)</span></div></div>
+ <div class="scroll"><div class="formula">スプレッド ＝ 攻撃力 × 60% × <span class="g g3">(1＋スプレッドDMG)</span> × <span class="g g3">(1＋全モンスター)</span> × <span class="g g2">(1＋弱点＋クリ)</span></div></div>
+ <div class="scroll"><div class="formula">バウンス ＝ 攻撃力 × 40% × <span class="g g3">(1＋バウンスDMG)</span> × <span class="g g3">(1＋全モンスター)</span> × <span class="g g2">(1＋弱点＋クリ)</span></div></div>
+ <h3>超感覚強度から出るダメージ</h3>
+ <div class="scroll"><div class="formula">状態異常 ＝ 超感覚強度 × 係数 × <span class="g g1">(1＋状態異常DMG)</span> × <span class="g g2">(1＋エレメントDMG)</span> × <span class="g g3">(1＋全モンスター)</span> × (1＋キーワードDMG) × (1＋キーワード最終DMG)</div></div>
+ <div class="scroll"><table class="xtab"><thead><tr><th>攻撃</th><th>係数（超感覚強度の何%）</th></tr></thead><tbody>
+  <tr><td>火傷</td><td>12% × スタック数</td></tr>
+  <tr><td>フロストボルテックス（渦）</td><td>50%</td></tr>
+  <tr><td>パワーサージ</td><td>50%</td></tr>
+  <tr><td>不安定爆弾</td><td>120%</td></tr>
+ </tbody></table></div>
+ <div class="note"><b>メモ</b>　ゲームの表示は四捨五入。武器固有の追加攻撃（天雷やアイスランスなど）は係数が武器ごとにちがうよ。</div>`},
+{t:'どの枠を伸ばすか計算する',h:()=>`
+ <p>同じ+10%でも、伸び方は<b>そのカッコに今いくつ入っているか</b>で決まる。伸び率は <b>10 ÷ (100＋今の%)</b> で計算できるよ。</p>
+ <div class="demo">
+  <p class="q">自分のステータス画面の数字を入れてみよう（初めは例の数字）</p>
+  <label class="meter" for="bkG"><span>銃器DMG</span><input id="bkG" type="number" inputmode="decimal" value="60" min="0" class="num"><span class="v">%</span></label>
+  <label class="meter" for="bkW"><span>弱点＋クリ</span><input id="bkW" type="number" inputmode="decimal" value="80" min="0" class="num"><span class="v">%</span></label>
+  <label class="meter" for="bkT"><span>全モンスター</span><input id="bkT" type="number" inputmode="decimal" value="10" min="0" class="num"><span class="v">%</span></label>
+  <div id="bkOut" style="display:flex;flex-direction:column;gap:8px"></div>
+ </div>
+ <p ${SUB}>「弱点＋クリ」は弱点に当てたときの弱点DMG、クリが出たときのクリDMGを足した数。クリ率が低いなら、クリDMGは小さめに入れるとちょうどいい。</p>
+ <div class="note"><b>ポイント</b>　いちばん伸び率が高いカッコに足すのが正解。MODを付け替えるときは「何%上がるか」より「どのカッコに入るか」を見よう。</div>`},
+{t:'条件つきMODを数字にする',h:()=>`
+ <p>条件つきMODの強さは、ざっくり<b>「効果 × 効いている割合」</b>で数字にできるよ。</p>
+ <div class="scroll"><table class="xtab"><thead><tr><th>例</th><th>効果</th><th>効いている割合</th><th>平均するとだいたい</th></tr></thead><tbody>
+  <tr><td>マガジン後半だけ効く</td><td>銃器DMG +30%</td><td>弾の半分</td><td>+15%くらい</td></tr>
+  <tr><td>戦闘の8割で満たせる</td><td>銃器DMG +20%</td><td>8割</td><td>+16%くらい</td></tr>
+  <tr><td>いつでも効く</td><td>銃器DMG +15%</td><td>全部</td><td>+15%</td></tr>
+ </tbody></table></div>
+ <p ${SUB}>表はたとえ話の数字だよ。</p>
+ <p>こうして並べると、<b>条件つきの大きい数字</b>と<b>いつでも効く小さい数字</b>が、実はあまり変わらないこともある。条件を満たしにくい戦い方なら、いつでも効くほうが強いんだ。</p>
+ <div class="note"><b>回数で効くタイプ</b>　「6回ごとに1回強くなる」みたいなMODは、平均に直して考える。たとえば精密バウンスは、6回跳ねるごとに次の1発のバウンスが係数2.25倍になる（実測）。ダメージラボではこれを平均に直して計算しているよ。</div>`},
+{t:'実測でわかったこと',h:()=>`
+ <p>ゲーム内のダミーで測って確かめた、ちょっとマニアックなルールだよ。</p>
+ <ol class="rules">
+  <li><div><b>弱点DMGとクリDMGは足し算</b><br><span ${SUB}>頭にクリが出たときは (1＋弱点＋クリ)。掛け算ではない。</span></div></li>
+  <li><div><b>スプレッドやバウンスの弱点・クリも足し算</b><br><span ${SUB}>「スプレッド弱点DMG」「バウンスクリDMG」は、元の弱点DMG・クリDMGにそのまま足される。</span></div></li>
+  <li><div><b>全モンスターは実弾にも状態異常にも乗る</b><br><span ${SUB}>どのタイプの武器でも無駄にならない。</span></div></li>
+  <li><div><b>状態異常DMGは武器固有の追加攻撃にも乗る</b><br><span ${SUB}>たとえばパワーサージ武器の天雷にも状態異常DMGが効いた。</span></div></li>
+  <li><div><b>キーワード専用の効果は、そのキーワードにしか乗らない</b><br><span ${SUB}>単独爆破は不安定爆弾だけ。ほかの攻撃には効かない。</span></div></li>
+  <li><div><b>同じ種類の上乗せは、たいてい足し算</b><br><span ${SUB}>MOD本体とサブの「パワーサージDMG」は足し算でステータス画面に出る。火傷の最大スタック時のボーナスも火傷DMGに足し算だった。</span></div></li>
+ </ol>`},
+{t:'自分で確かめる方法',h:()=>`
+ <p>MODの効き方は、ダミーを撃てば自分で確かめられるよ。コツをまとめたよ。</p>
+ <ol class="rules">
+  <li><div><b>1回に変えるのは1つだけ</b><br><span ${SUB}>MODを1つだけ付け替えて、ダメージの差を見る。いくつも変えると原因がわからなくなる。</span></div></li>
+  <li><div><b>ステータス画面の数字を使う</b><br><span ${SUB}>MODの説明文より、ステータス画面に出ている数字のほうが正確。料理の効果なども込みで出る。</span></div></li>
+  <li><div><b>弾の種類をそろえる</b><br><span ${SUB}>途中で弾が変わると攻撃力が変わって、数字がずれる。</span></div></li>
+  <li><div><b>ダミーの合計表示の差で読む</b><br><span ${SUB}>1発ずつの数字が見にくいときは、合計がいくつ増えたかで計算する。</span></div></li>
+  <li><div><b>計算と1ずれても気にしない</b><br><span ${SUB}>ゲームは四捨五入で、表示されている数字自体も丸められているから。</span></div></li>
+ </ol>`},
+];
+const ADVFIN=()=>`
+ <h3>まとめ</h3>
+ <p>上級まで読めたらもう立派なMOD研究家！あとは自分の武器で計算して、ダミーで確かめてみよう。</p>`+PRACTICE('プロモードなら、式・期待値・DPS・「どれを伸ばす」まで見られるよ');
+
+function PRACTICE(tip){return `
+ <div class="practice">
+  <b style="font-family:var(--f-pop);font-weight:400;font-size:19px">練習しよう：ダメージラボ</b>
+  <ol><li>ダメージラボを開いて、自分の武器を選ぶ</li><li>「3 MOD」の下の「MODおすすめ」を押す</li><li>${tip}</li></ol>
+  <a class="btn" href="https://yukhoeonce.github.io/damage/" target="_blank" rel="noopener">ダメージラボを開く ↗</a>
+ </div>`;}
+
+const LV={b:{n:'初級',sub:'はじめての人',les:LES,fin:FINAL},m:{n:'中級',sub:'もっと強くしたい',les:MID,fin:MIDFIN},a:{n:'上級',sub:'数字で考えたい',les:ADV,fin:ADVFIN}};
+/* 古い保存データを新しい形に */
+if(!st.dn){st.dn={b:(st.done||[]).filter(x=>x>=1&&x<=LES.length),m:[],a:[]};}
+if(!st.sp){st.sp={b:st.step||1,m:1,a:1};}
+if(!LV[st.lv]) st.lv='b';
+const N=LES.length;
+const cur=()=>LV[st.lv];
+function renderToc(){
+  const L=cur(), dn=st.dn[st.lv], sp=st.sp[st.lv];
+  $('#lvtabs').innerHTML=Object.entries(LV).map(([k,v])=>`<button data-lv="${k}" aria-pressed="${st.lv===k}"><b>${v.n}</b><small><span class="d">${v.sub}・</span>${st.dn[k].length}/${v.les.length}</small></button>`).join('');
+  $('#toc').innerHTML=L.les.map((l,i)=>`<button data-s="${i+1}" class="${dn.includes(i+1)?'done':''}" ${sp===i+1?'aria-current="step"':''}><span class="n">${dn.includes(i+1)?'✓':i+1}</span><span class="t2">${l.t}</span></button>`).join('');
+}
+function renderLesson(scroll){
+  const L=cur(), n=L.les.length, i=Math.min(Math.max(st.sp[st.lv],1),n), l=L.les[i-1];
+  const isDone=st.dn[st.lv].includes(i);
+  const nextLv=st.lv==='b'?'m':st.lv==='m'?'a':null;
+  const last=st.lv==='b'?`<button class="btn pink" data-fin="1">${isDone?'クイズで確かめる →':'わかった！クイズへ →'}</button>`
+    :nextLv?`<button class="btn pink" data-fin="${nextLv}">わかった！${LV[nextLv].n}へ →</button>`:`<button class="btn pink" data-fin="end">わかった！上級クイズへ →</button>`;
+  $('#les').innerHTML=`<p class="eyebrow">${L.n} · STEP ${i} / ${n}</p><h2>${l.t}</h2><div class="body">${l.h()}${i===n?L.fin():''}</div>
+   <div class="foot">${i>1?`<button class="btn sub" data-nav="${i-1}">← もどる</button>`:'<span></span>'}
+   ${i<n?`<button class="btn pink" data-next="${i}">${isDone?'次へ →':'わかった！次へ →'}</button>`:last}</div>`;
+  renderToc(); bindLesson(); phrase($('#les'));
+  if(scroll){const top=$('#v-lesson').getBoundingClientRect().top+scrollY-90; if(scrollY>top) scrollTo({top,behavior:'smooth'});}
+}
+function markDone(i){const d=st.dn[st.lv]; if(!d.includes(i)) d.push(i); save(); renderProg();}
+function goStep(i){st.sp[st.lv]=i; save(); renderLesson(true);}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button,a'); if(!b) return;
+  if(b.dataset.qlv){newQuiz(b.dataset.qlv);}
+  else if(b.dataset.lv){st.lv=b.dataset.lv; save(); renderLesson(false);}
+  else if(b.dataset.s) goStep(+b.dataset.s);
+  else if(b.dataset.nav) goStep(+b.dataset.nav);
+  else if(b.dataset.next){markDone(+b.dataset.next); goStep(+b.dataset.next+1);}
+  else if(b.dataset.fin){markDone(cur().les.length); const f=b.dataset.fin;
+    if(f==='1'||f==='end'){newQuiz(st.lv); location.hash='quiz';} else if(LV[f]){st.lv=f; save(); renderLesson(true);} else {renderLesson(false);} }
+  else if(b.dataset.go){st.lv='b'; st.sp.b=+b.dataset.go; save(); location.hash='lesson'; renderLesson(false);}
+  else if(b.dataset.lvgo){st.lv=b.dataset.lvgo; save(); location.hash='lesson'; renderLesson(false);}
+  else if(b.dataset.t) openTerm(b.dataset.t);
+});
+
+/* 日本語の改行：言葉の切れ目（ひらがな→漢字・カタカナ、句読点のあと）でだけ折り返す */
+const isH=c=>c>='ぁ'&&c<='ゟ';
+const AFTER='、。）」』！？…・：';
+const BEFORE='（「『';
+function phrase(root){
+  if(!root) return;
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement.closest('.formula,script,style,input,.np')?NodeFilter.FILTER_REJECT:(n.nodeValue.length>3?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP)});
+  const nodes=[]; while(w.nextNode()) nodes.push(w.currentNode);
+  for(const n of nodes){
+    const s=n.nodeValue; const parts=[]; let last=0;
+    for(let i=0;i<s.length-1;i++){
+      const a=s[i], b=s[i+1];
+      const brk=(AFTER.includes(a)&&!AFTER.includes(b))||(BEFORE.includes(b)&&!BEFORE.includes(a))||(isH(a)&&!isH(b)&&!AFTER.includes(b)&&b!=='ー'&&!/[\s]/.test(b));
+      if(brk){parts.push(s.slice(last,i+1)); last=i+1;}
+    }
+    if(!parts.length) continue;
+    parts.push(s.slice(last));
+    const f=document.createDocumentFragment();
+    parts.forEach((p,k)=>{if(k) f.appendChild(document.createElement('wbr')); f.appendChild(document.createTextNode(p));});
+    n.parentNode.replaceChild(f,n);
+  }
+}
+
+function bindLesson(){
+  const A=$('#dmA'),B=$('#dmB');
+  if(A){const set=w=>{A.setAttribute('aria-pressed',w==='a');B.setAttribute('aria-pressed',w==='b');
+      const v=w==='a'?1.8:1.95; $('#mb1').style.width=(v/2*100*0.666)+'%'; $('#mb0').style.width=(1.5/2*100*0.666)+'%'; $('#mv1').textContent='×'+v.toFixed(2);
+      $('#dmRes').innerHTML=w==='a'?`1.5 → 1.8 で <b>+20%</b> の伸び。すでに大きいカッコに足したので、30%が薄まっちゃった。`:`1.5 × 1.3 ＝ 1.95 で <b>+30%</b> の伸び！ 空っぽのカッコに足したので、そのまま30%伸びた。`; phrase($('#dmRes'));};
+    A.onclick=()=>set('a'); B.onclick=()=>set('b');
+    $('#mb0').style.width=(1.5/2*100*0.666)+'%'; $('#mb1').style.width=(1.5/2*100*0.666)+'%';}
+  const hp=$('#sgHp'),ds=$('#sgDist');
+  if(hp){
+    const seg=el=>el.querySelectorAll('button').forEach(b=>b.onclick=()=>{el.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b)); fit();});
+    seg(hp);seg(ds);fit();
+  }
+  const cr=$('#crR');
+  if(cr){const up=()=>{const r=+cr.value, d=+$('#crD').value; $('#crRv').textContent=r+'%'; $('#crDv').textContent=d+'%';
+      const ev=r*d/100;
+      $('#crRes').innerHTML=`平均すると <b>+${ev.toFixed(1)}%</b>（${r}% × ${d}%）。`+(r<30&&d>=80?'クリ率が低いので、クリDMGが大きくても伸びは小さめ。':r>=50?'クリ率が高いので、クリDMGがよく効く状態！':'クリ率とクリDMGを一緒に上げると伸びやすいよ。'); phrase($('#crRes'));};
+    cr.oninput=up; $('#crD').oninput=up; up();}
+  const g=$('#bkG');
+  if(g){const up=()=>{const v=[['銃器DMG',+$('#bkG').value||0],['弱点＋クリ',+$('#bkW').value||0],['全モンスター',+$('#bkT').value||0]].map(([n,x])=>[n,10/(100+x)*100]);
+      const mx=Math.max(...v.map(x=>x[1]));
+      $('#bkOut').innerHTML=`<p style="font-weight:800;font-size:14px">それぞれに +10% 足すと、ダメージは…</p>`+v.map(([n,p])=>`<div class="meter"><span>${n}</span><span class="bar"><i style="width:${p/mx*90}%;${p===mx?'background:var(--mint)':''}"></i></span><span class="v">+${p.toFixed(1)}%</span></div>`).join('')
+        +`<p class="res">いちばん伸びるのは <b style="font-family:var(--f-pop);font-size:17px">${v.find(x=>x[1]===mx)[0]}</b>。</p>`;};
+    ['#bkG','#bkW','#bkT'].forEach(s=>$(s).oninput=up); up();}
+}
+
+function fit(){
+  const hp=$('#sgHp [aria-pressed="true"]').dataset.v, d=$('#sgDist [aria-pressed="true"]').dataset.v;
+  const yes=[],no=[];
+  if(hp==='hi'){yes.push('着実な努力（靴）','エレメント操作（ヘルメット）の追加分');no.push('オーメン・オーメン異能','ラッシュアワー（靴）');}
+  else{yes.push('オーメン・オーメン異能（ヘルメット・トップス）','ラッシュアワー（靴）');no.push('着実な努力の追加分','エレメント操作の追加分');}
+  if(d==='far'){yes.push('高見の見物（靴）','矢の名手（ボトムス）');no.push('前線突破（靴）');}
+  else{yes.push('前線突破（靴）');no.push('高見の見物（靴）','矢の名手（ボトムス）');}
+  $('#fitOut').innerHTML=`<div class="yes"><h4>◎ 合う</h4><ul>${yes.map(x=>`<li>${x}</li>`).join('')}</ul></div><div class="no"><h4>✕ 効きにくい</h4><ul>${no.map(x=>`<li>${x}</li>`).join('')}</ul></div>`; phrase($('#fitOut'));
+}
+
+/* ===== クイズ ===== */
+const QS=[
+ {q:'火傷の武器を使っているよ。マスクのMODはどっち？',a:['重度熱傷','全面指名手配'],c:0,e:'重度熱傷は火傷専用のマスク。全面指名手配はハンティングマーク用なので、マークが付かない武器では効かないよ。'},
+ {q:'パワーサージの武器。拡張要素はどっちがいい？',a:['爆裂','異能'],c:1,e:'パワーサージは超感覚タイプ。エレメントDMGと状態異常DMGが上がる「異能」が合うよ。爆裂は攻撃力タイプ向け。'},
+ {q:'HPをわざと低く保って戦う人。ヘルメットの拡張要素は？',a:['オーメン','月の加護'],c:0,e:'オーメンはHPが低いほど強くなる拡張要素。月の加護はシールドがあるときに強くなるので条件がちがうよ。'},
+ {q:'ずっと敵の近くで戦う人の靴はどっち？',a:['高見の見物','前線突破'],c:1,e:'高見の見物は「近く（7m以内）に敵がいない」ときに効くから、近くで戦うと発動しない。前線突破は近くの敵を倒すと効くよ。'},
+ {q:'ラッキープレイヤー（ヘルメット）を付けると、弱点DMGはどうなる？',a:['出なくなる','2倍になる'],c:0,e:'クリ率とクリDMGが上がるかわりに、弱点DMGを与えられなくなる。頭を狙うのが得意な人には向かないよ。'},
+ {q:'トップスのMODは、主に何のための部位？',a:['火力を上げる','守りを固める'],c:1,e:'トップスのメイン効果はほとんどが守り（被ダメ軽減・シールド・回復）。火力にはほぼ関係ないので好みでOK。'},
+ {q:'銃器DMGがもう +60% ある。次の +20% を足すならどっちが伸びやすい？',a:['さらに銃器DMG','全モンスター'],c:1,e:'同じカッコは足し算なので、たくさん入っている銃器DMGに足すと薄まる。まだ少ない全モンスター（別のカッコ＝掛け算）のほうが伸びやすいよ。'},
+ {q:'バウンスの武器。武器MODのメイン効果はどっち？',a:['チェーンバウンス','オールクラッシュ'],c:0,e:'チェーンバウンスはバウンス用。オールクラッシュはスプレッドガン用だよ。武器MODは武器のキーワードにそろえよう。'},
+ {q:'スプレッドガンの武器。マスクはどっち？',a:['昇竜のバウンス','ターゲティングブレイク'],c:1,e:'ターゲティングブレイクはスプレッドガン用のマスク。昇竜のバウンスはバウンス用。'},
+ {q:'遠くから頭を狙うスナイパー。ボトムスはどっち？',a:['矢の名手','白兵戦'],c:0,e:'矢の名手は敵から離れるほど弱点DMGが上がる。白兵戦は近接DMG用で、銃のダメージには効かないよ。'},
+ {q:'弱点に当てて、しかもクリも出た！弱点DMGとクリDMGは…？',a:['足し算','掛け算'],c:0,e:'弱点DMGとクリDMGは同じカッコの中なので足し算。(1＋弱点DMG＋クリDMG) で計算されるよ。'},
+ {q:'「HP90%以上でさらに強い」着実な努力を付けた。一緒に付けると相性が悪いのは？',a:['オーメン','爆裂'],c:0,e:'オーメンはHPが低いほど強いので、HPを高く保ちたい着実な努力とは条件がぶつかる。爆裂は条件なしで効くよ。'},
+];
+const MQ=[
+ {q:'MODがLv17のとき、拡張要素の4つのステータスのレベルの内わけは？',a:['5・5・5・2','4・4・4・5'],c:0,e:'1つ目から順番に育って、1〜3つ目は最大5、4つ目だけ最大2。合計17だよ。'},
+ {q:'拡張要素の4つのステータスで、いちばん先に育つのは？',a:['1つ目','4つ目'],c:0,e:'レベルは1つ目→2つ目→3つ目→4つ目の順に1つずつ上がる。だから1つ目に何が入っているかが大事。'},
+ {q:'Lv5で+15%になるステータス。Lv3だといくつ？',a:['+9%','+12%'],c:0,e:'数字はレベルにぴったり比例するよ。15 × 3 ÷ 5 ＝ 9。'},
+ {q:'単独爆破（不安定爆弾用のマスク）を、スプレッドガンの武器に付けると？',a:['効かない','少しだけ効く'],c:0,e:'キーワード専用のMODは、武器のキーワードが合うときだけ効く。スプレッドガンには乗らないよ。'},
+ {q:'フロストの武器。武器MODの定番はどっち？',a:['氷核エンハンス','チェーンバウンス'],c:0,e:'氷核エンハンスはフロストの定番。チェーンバウンスはバウンス用だよ。'},
+ {q:'バウンスの武器。マスクの定番はどっち？',a:['精密バウンス','初回感電'],c:0,e:'精密バウンスはバウンス武器でほとんどの人が使う定番。初回感電はパワーサージ用。'},
+ {q:'マガジンが少ないスナイパー。ボトムスに合いやすいのは？',a:['仏の顔も三度まで','アモイーター'],c:0,e:'仏の顔も三度まではリロード後の最初の数発が強くなる。マガジンが少ないと、その数発が全体の多くをしめるよ。アモイーターは弾が減るほど育つので、マガジンが多い武器向け。'},
+ {q:'マガジンが多いライトマシンガンで撃ち続ける人。ボトムスは？',a:['アモイーター','仏の顔も三度まで'],c:0,e:'アモイーターはマガジンの弾が減るほど銃器DMGが上がる。たくさん撃てる武器ほど育ちやすいよ。'},
+ {q:'弾が残っていても、こまめにリロードする人。向いていないのは？',a:['クリティカルライジング','先手必勝'],c:0,e:'クリティカルライジングは空リロード（撃ち切ってからのリロード）のたびに重なるので、こまめにリロードすると育たない。先手必勝はリロード直後に効くので相性がいい。'},
+ {q:'クリ率10%・銃器DMG+50%の人。伸びが大きいのは？',a:['クリDMG +30%','銃器DMG +15%'],c:1,e:'クリDMG +30%は平均すると 10% × 30% ＝ 約+3%。銃器DMG +15%は 15 ÷ 150 ＝ +10%。クリ率が低いうちはクリDMGはあまり伸びないよ。'},
+ {q:'弱点をあまり狙えない人。拡張要素はどっちが合う？',a:['爆裂','精密'],c:0,e:'爆裂は1つ目がクリDMG、精密は1つ目が弱点DMG。弱点に当てられないなら爆裂のほうがムダが少ないよ。'},
+ {q:'同じ主要効果を持つ金防具を2つ着たら？',a:['1つ分しか効かない','2倍効く'],c:0,e:'同じ主要効果は1つしか有効にならない。2つ着ても重ならないよ。'},
+];
+const AQ=[
+ {q:'スプレッドガンのダメージの元は、攻撃力の何%？',a:['60%','40%'],c:0,e:'スプレッドガンは攻撃力の60%。バウンスは40%だよ。'},
+ {q:'バウンスのダメージの元は、攻撃力の何%？',a:['40%','60%'],c:0,e:'バウンスは攻撃力の40%。そこにバウンスDMG・全モンスター・弱点＋クリが掛かる。'},
+ {q:'不安定爆弾の係数は、超感覚強度の何%？',a:['120%','50%'],c:0,e:'不安定爆弾は120%。50%はパワーサージとフロストボルテックス（渦）だよ。'},
+ {q:'火傷が5スタックのとき、係数は超感覚強度の何%？',a:['60%','12%'],c:0,e:'火傷は1スタック12%。5スタックなら 12 × 5 ＝ 60%。'},
+ {q:'銃器DMGがすでに+100%。さらに+10%足すと、ダメージは何%伸びる？',a:['+5%','+10%'],c:0,e:'伸び率は 10 ÷ (100＋100) ＝ 5%。たくさん入っている枠ほど薄まるよ。'},
+ {q:'銃器DMG+60%・全モンスター+10%。+10%を足すならどっち？',a:['全モンスター','銃器DMG'],c:0,e:'全モンスターは 10 ÷ 110 ＝ 約+9.1%、銃器DMGは 10 ÷ 160 ＝ 約+6.3%。少ない枠のほうが伸びる。'},
+ {q:'マガジンの後半だけ銃器DMG+30%。平均するとだいたい？',a:['+15%くらい','+30%くらい'],c:0,e:'効いているのは弾の半分くらいなので、平均すると30%の半分くらい。条件つきMODは「効果 × 効いている割合」で考えよう。'},
+ {q:'「スプレッド弱点DMG」は、元の弱点DMGと…',a:['足し算','掛け算'],c:0,e:'実測で、スプレッドやバウンスの弱点・クリDMGは、元の弱点DMG・クリDMGに足し算されることがわかっているよ。'},
+ {q:'パワーサージ武器の天雷（武器固有の追加攻撃）に、状態異常DMGは？',a:['乗る','乗らない'],c:0,e:'実測で、状態異常DMGは天雷のような武器固有の追加攻撃にも乗ったよ。'},
+ {q:'全モンスターは、パワーサージのダメージに…',a:['乗る','乗らない'],c:0,e:'全モンスターは実弾にも状態異常にも乗る。どのタイプの武器でもムダにならないステータスだよ。'},
+ {q:'ダミーでMODの効き方を確かめたい。1回に変えるMODは？',a:['1つだけ','全部いっぺんに'],c:0,e:'1つだけ変えれば、ダメージの差がそのMODのぶんだとわかる。いくつも変えると原因がわからなくなるよ。'},
+ {q:'計算した数字とゲームの表示が1だけずれた。原因はたぶん？',a:['数字の丸め','式がまちがい'],c:0,e:'ゲームは四捨五入で、ステータス画面の数字も丸めて表示されている。1くらいのズレは気にしなくて大丈夫。'},
+];
+const QB={b:QS,m:MQ,a:AQ};
+if(!st.qb){st.qb={b:st.best??null,m:null,a:null};}
+let qz=null;
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+function newQuiz(lv){lv=lv||(qz&&qz.lv)||st.qlv||'b'; st.qlv=lv; save(); const Q=QB[lv]; qz={lv,order:shuffle(Q.map((_,i)=>i)),i:0,res:[],answered:false,flip:Q.map(()=>Math.random()<.5)};renderQuiz();}
+const qTabs=()=>`<div class="lvtabs">${Object.entries(LV).map(([k,v])=>`<button data-qlv="${k}" aria-pressed="${qz.lv===k}"><b>${v.n}</b><small>${QB[k].length}問${st.qb[k]!=null?'・ベスト '+st.qb[k]:''}</small></button>`).join('')}</div>`;
+function renderQuiz(){
+  if(!qz) newQuiz();
+  const el=$('#quiz');
+  const dots=`<div class="dots">${qz.order.map((_,k)=>`<i class="${k<qz.res.length?(qz.res[k]?'ok':'ng'):(k===qz.i?'now':'')}"></i>`).join('')}</div>`;
+  if(qz.i>=qz.order.length){
+    const sc=qz.res.filter(Boolean).length, tot=qz.order.length;
+    if(st.qb[qz.lv]==null||sc>st.qb[qz.lv]){st.qb[qz.lv]=sc;save();}
+    const msg=sc===tot?'満点！もうMOD博士だね。':sc>=9?'すごい！ほとんどわかってる。':sc>=6?'いい感じ！まちがえたところをレッスンで見直そう。':'まずはレッスンを読んでから、もう一回やってみよう。';
+    el.innerHTML=qTabs()+`<div class="qhead"><span class="eyebrow">RESULT</span>${dots}</div><div class="qend"><div class="screen"><p class="lab2">SCORE</p><div class="score">${sc}<small> / ${tot}</small></div></div><p style="font-family:var(--f-pop);font-size:19px">${msg}</p><p style="font-size:14px;color:var(--muted)">${LV[qz.lv].n}のベスト：${st.qb[qz.lv]} / ${tot}</p><div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn pink" id="qAgain">もう一回</button><a class="btn sub" href="#lesson">レッスンを見る</a><a class="btn sub" href="https://yukhoeonce.github.io/damage/" target="_blank" rel="noopener">ダメージラボで試す ↗</a></div></div>`;
+    $('#qAgain').onclick=()=>newQuiz(qz.lv); return;
+  }
+  const qi=qz.order[qz.i], Q=QB[qz.lv][qi], fl=qz.flip[qi];
+  const idx=fl?[1,0]:[0,1];
+  el.innerHTML=qTabs()+`<div class="qhead"><span class="eyebrow">${LV[qz.lv].n} · Q${qz.i+1} / ${qz.order.length}</span>${dots}</div>
+   <p class="qtext">${Q.q}</p><p class="qsit">2つのうち、合うほうを選んでね。</p>
+   <div class="qopts">${idx.map(k=>`<button data-k="${k}">${Q.a[k]}</button>`).join('')}</div><div id="qx"></div>`; phrase(el);
+  el.querySelectorAll('.qopts button').forEach(b=>b.onclick=()=>{
+    if(qz.answered) return; qz.answered=true;
+    const k=+b.dataset.k, ok=k===Q.c; qz.res.push(ok);
+    el.querySelectorAll('.qopts button').forEach(x=>{x.disabled=true; if(+x.dataset.k===Q.c) x.classList.add('right'); else if(x===b) x.classList.add('wrong');});
+    $('#qx').innerHTML=`<div class="qexp"><p class="big ${ok?'ok':'ng'}">${ok?'せいかい！':'ざんねん…'}</p><p>${Q.e}</p></div><div class="qnext"><button class="btn pink" id="qNext">${qz.i+1<qz.order.length?'次の問題 →':'結果を見る →'}</button></div>`;
+    phrase($('#qx')); if(ok&&window.sparkle) sparkle(b); $('#qNext').onclick=()=>{qz.i++;qz.answered=false;renderQuiz();};
+    $('#qNext').focus({preventScroll:true});
+  });
+}
+
+/* ===== 用語集 ===== */
+let wcat='all';
+function renderWords(){
+  $('#wcats').innerHTML=[['all','すべて'],...Object.entries(CATN)].map(([k,v])=>`<button data-c="${k}" aria-pressed="${wcat===k}">${v}</button>`).join('');
+  $$('#wcats button').forEach(b=>b.onclick=()=>{wcat=b.dataset.c;renderWords();});
+  const q=$('#wq').value.trim();
+  const list=WORDS.filter(w=>(wcat==='all'||w[1]===wcat)&&(!q||w[0].includes(q)||w[2].includes(q)));
+  $('#wlist').innerHTML=list.length?list.map(w=>`<article class="word" id="w-${w[0]}"><header><b>${w[0]}</b><span class="chip ${w[1]==='stat'?'c-atk':w[1]==='kw'?'c-kw':w[1]==='mod'?'c-psi':'c-def'}">${CATN[w[1]]}</span></header><p>${w[2]}</p></article>`).join(''):`<p class="empty">「${q.replace(/[<>&]/g,'')}」に当てはまる言葉はまだないよ。</p>`; phrase($('#wlist'));
+}
+$('#wq').addEventListener('input',renderWords);
+$('#wcount').textContent=WORDS.length+'語';
+
+/* 用語ポップアップ */
+let lastFocus=null;
+function openTerm(t){
+  const w=WMAP[t]; if(!w) return; lastFocus=document.activeElement;
+  $('#sheetT').textContent=w[0]; $('#sheetD').textContent=w[2]; $('#sheetMore').dataset.w=w[0];
+  phrase($('#sheetD')); $('#sheet').hidden=false; $('#sheetX').focus();
+}
+const closeTerm=()=>{$('#sheet').hidden=true; if(lastFocus) lastFocus.focus({preventScroll:true});};
+$('#sheetX').onclick=closeTerm;
+$('#sheet').addEventListener('click',e=>{if(e.target.id==='sheet') closeTerm();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#sheet').hidden) closeTerm();});
+$('#sheetMore').addEventListener('click',e=>{
+  e.preventDefault(); const t=e.currentTarget.dataset.w; $('#sheet').hidden=true;
+  wcat='all'; $('#wq').value=''; location.hash='words'; renderWords();
+  setTimeout(()=>{const c=document.getElementById('w-'+t); if(c){c.scrollIntoView({behavior:'smooth',block:'center'}); c.classList.add('flash'); setTimeout(()=>c.classList.remove('flash'),1300);}},60);
+});
+
+/* ===== 進み具合・ページ切り替え ===== */
+function renderProg(){
+  const n=st.dn.b.length;
+  $('#progTxt').textContent=`初級 ${n}/${N}・中級 ${st.dn.m.length}/${MID.length}・上級 ${st.dn.a.length}/${ADV.length}`+(st.qb.b!=null||st.qb.m!=null||st.qb.a!=null?`　クイズのベスト ${['b','m','a'].map(k=>LV[k].n+' '+(st.qb[k]??'-')).join('・')}`:'');
+  const all=N+MID.length+ADV.length; $('#progBar').style.width=((n+st.dn.m.length+st.dn.a.length)/all*100)+'%';
+  $('#startBtn').textContent=n===0?'初級からはじめる':'つづきから';
+}
+const VIEWS=['home','lesson','quiz','words'];
+function route(){
+  let v=location.hash.slice(1); if(!VIEWS.includes(v)) v='home';
+  VIEWS.forEach(k=>{$('#v-'+k).hidden=k!==v;});
+  $$('.tabs a').forEach(a=>a.toggleAttribute('aria-current',a.dataset.v===v)); $$('.tabs a').forEach(a=>{if(a.dataset.v===v)a.setAttribute('aria-current','page')});
+  if(v==='lesson') renderLesson(false);
+  if(v==='quiz') renderQuiz();
+  if(v==='words') renderWords();
+  if(v==='home') renderProg();
+  phrase($('#v-'+v)); window.scrollTo(0,0);
+}
+$('#startBtn').addEventListener('click',()=>{for(const k of ['b','m','a']){const L=LV[k].les.length, d=st.dn[k]; if(d.length<L){st.lv=k; for(let i=1;i<=L;i++){if(!d.includes(i)){st.sp[k]=i;break;}} break;}} save();});
+addEventListener('hashchange',route);
+renderProg(); route();
+})();
+</script>
+
+</body>
+</html>
