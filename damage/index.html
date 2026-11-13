@@ -257,6 +257,7 @@ details.trait{margin-top:12px;font-size:14px;border-top:1px solid var(--line);pa
 details.trait summary{cursor:pointer;color:var(--ink);font-weight:700;font-size:13.5px}
 details.trait p{margin:6px 0 0;color:var(--ink-2);line-height:1.75}
 .chlog{margin-top:20px;padding-block:14px 24px;color:var(--muted);font-size:12px;line-height:1.7}.chlog summary{cursor:pointer;font-weight:700;color:var(--ink-2);font-size:13px}.chlog ol{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}.chlog time{font-family:var(--f-num);font-weight:700;color:var(--ink-2)}.chlog ul{margin:2px 0 0;padding-left:1.3em}
+.intro{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;background:rgba(30,20,40,.55);padding:16px}.introbox{background:var(--surface);color:var(--ink);border:2px solid var(--line-2);border-radius:16px;max-width:420px;width:100%;padding:20px;display:flex;flex-direction:column;gap:10px}.introbox h3{margin:0;font-size:20px}.introbox p{margin:0;line-height:1.7}.introbox .btn{align-self:flex-end}
 .fine{color:var(--muted);font-size:12px;line-height:1.75;margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
 .fine p{margin:0 0 6px}
 .fine a{color:var(--ink-2)}
@@ -1107,7 +1108,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
   </aside>
 </div>
 
-<footer class="wrap chlog" id="chlog"><details open><summary>更新履歴</summary><ol><li><time>11/13</time><ul><li>スマホで武器を選ぶ画面がいつも2列になるように</li><li>スマホでMODおすすめの理想の付け方が空白になる不具合を修正</li><li>スマホの装備画面を見やすく（上の結果を小さく、条件と内訳はボタンで開く、カードは名前だけ）</li><li>MODおすすめ：エレメント系の武器（フロスト・火傷・サージ・爆弾）ではエレメントの共鳴を最大で計算</li><li>MODおすすめ：異常増幅は「リロード直後に撃つ」をONにすると候補に入るように</li><li>MODおすすめ：フロスト金武器の定番を反映（アビスアイ＝クライオブラスト＋コールドウェーブ、パスファインダー・天外来客・静寂の帰途＝マスクはフロスト創造物）</li><li>キーワード専用のメイン効果（単独爆破など）は、その武器のキーワードのときだけ計算に入れるよう修正</li><li>防具セットの部位数を、セット一覧の上で変えられるように</li><li>MODおすすめ（武器を選ぶと理想のMODの付け方を自動で表示）を追加</li><li>精密バウンス（マスク）の効果を計算に追加</li><li>P90の範囲ダメージを実測で確認（弱点DMGが乗る）</li><li>危険物の投げに単独爆破が乗らないよう修正（実測）</li></ul></li><li><time>11/12</time><ul><li>レトロかわいいデザインに変更（プロモードは喫茶店風）</li><li>装備画面を「いまの装備／試す装備」の比較表に作り直し</li><li>防具セット（複数選択可）と重要な防具を追加</li><li>絶響のスプレッド回数を残響の数で計算、牢獄ヘルメットに対応</li><li>危険物・不安定爆弾・エコー追撃を実測で確認済みに</li><li>マガジン容量の入力を追加</li><li>タッチ端末で数字を押すとテンキーが出るように</li></ul></li><li><time>11/11</time><ul><li>武器MODの選択画面をキーワード別に分けた</li></ul></li><li><time>11/10</time><ul><li>武器MOD・防具MODを図鑑に合わせて全部追加</li><li>弾の種類（銅弾・銅芯弾・徹甲弾）の選択を追加</li><li>武器の画像を追加</li></ul></li><li><time>11/08</time><ul><li>装備画面（MODの付け替え比較）と、メイン効果・閃光の選択を追加</li><li>明るく見やすいレイアウトに変更</li></ul></li><li><time>11/07</time><ul><li>ダメージラボを公開（初心者／プロ切り替え）</li></ul></li></ol></details></footer>
+<footer class="wrap chlog" id="chlog"><details open><summary>更新履歴</summary><ol><li><time>11/13</time><ul><li>スマホで武器を選ぶ画面がいつも2列になるように</li><li>スマホでMODおすすめの理想の付け方が空白になる不具合を修正</li><li>スマホの装備画面を見やすく（上の結果を小さく、条件と内訳はボタンで開く、カードは名前だけ）</li><li>初めて開いたときだけ「開発中です」のお知らせを出すように</li><li>MODおすすめ：エレメント系の武器（フロスト・火傷・サージ・爆弾）ではエレメントの共鳴を最大で計算</li><li>MODおすすめ：異常増幅は「リロード直後に撃つ」をONにすると候補に入るように</li><li>MODおすすめ：フロスト金武器の定番を反映（アビスアイ＝クライオブラスト＋コールドウェーブ、パスファインダー・天外来客・静寂の帰途＝マスクはフロスト創造物）</li><li>キーワード専用のメイン効果（単独爆破など）は、その武器のキーワードのときだけ計算に入れるよう修正</li><li>防具セットの部位数を、セット一覧の上で変えられるように</li><li>MODおすすめ（武器を選ぶと理想のMODの付け方を自動で表示）を追加</li><li>精密バウンス（マスク）の効果を計算に追加</li><li>P90の範囲ダメージを実測で確認（弱点DMGが乗る）</li><li>危険物の投げに単独爆破が乗らないよう修正（実測）</li></ul></li><li><time>11/12</time><ul><li>レトロかわいいデザインに変更（プロモードは喫茶店風）</li><li>装備画面を「いまの装備／試す装備」の比較表に作り直し</li><li>防具セット（複数選択可）と重要な防具を追加</li><li>絶響のスプレッド回数を残響の数で計算、牢獄ヘルメットに対応</li><li>危険物・不安定爆弾・エコー追撃を実測で確認済みに</li><li>マガジン容量の入力を追加</li><li>タッチ端末で数字を押すとテンキーが出るように</li></ul></li><li><time>11/11</time><ul><li>武器MODの選択画面をキーワード別に分けた</li></ul></li><li><time>11/10</time><ul><li>武器MOD・防具MODを図鑑に合わせて全部追加</li><li>弾の種類（銅弾・銅芯弾・徹甲弾）の選択を追加</li><li>武器の画像を追加</li></ul></li><li><time>11/08</time><ul><li>装備画面（MODの付け替え比較）と、メイン効果・閃光の選択を追加</li><li>明るく見やすいレイアウトに変更</li></ul></li><li><time>11/07</time><ul><li>ダメージラボを公開（初心者／プロ切り替え）</li></ul></li></ol></details></footer>
 
 <nav class="tabbar" id="tabbar" aria-label="画面の切り替え"><button type="button" data-t="w"><b>1</b>武器</button><button type="button" data-t="s"><b>2</b>ステータス</button><button type="button" data-t="m"><b>3</b>MOD</button><button type="button" data-t="r"><b>=</b>結果</button></nav>
 <div class="dock" id="dock" role="button" tabindex="0" aria-label="結果を見る"><span id="dockL"></span><b id="dockV"></b></div>
@@ -1140,6 +1141,14 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
   </div>
 </div>
 
+<div class="intro" id="intro" hidden role="dialog" aria-modal="true" aria-labelledby="introH">
+  <div class="introbox">
+    <h3 id="introH">ようこそ！</h3>
+    <p>ダメージラボはまだ<b>開発中</b>のファンツールです。計算はゲーム内で確かめながら少しずつ直しているので、数字はあくまで目安として見てください。</p>
+    <p class="small">確かめていない攻撃は初心者モードでは出していません。更新内容は画面の一番下の「更新履歴」で見られます。</p>
+    <button type="button" class="btn primary" id="introOk">わかった！</button>
+  </div>
+</div>
 <div class="opt" id="opt" hidden role="dialog" aria-modal="true" aria-labelledby="optH">
   <div class="opt-box">
     <div class="opt-h"><h3 id="optH">MODおすすめ</h3><button type="button" class="btn x" id="optX">閉じる</button></div>
@@ -1956,6 +1965,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
   const goStage=()=>$('stage').scrollIntoView({behavior:RM.matches?'auto':'smooth',block:'start'});
   $('dock').addEventListener('click',goStage);
   $('dock').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();goStage()}});
+  (()=>{let seen=false; try{seen=!!localStorage.getItem(KEY+'-intro')}catch(e){} if(seen)return; const d=$('intro'); d.hidden=false; $('introOk').focus(); $('introOk').addEventListener('click',()=>{d.hidden=true; try{localStorage.setItem(KEY+'-intro','1')}catch(e){}})})();
   /* ===== MODおすすめ（見本） ===== */
   const KWX={kBurn:'burn',kFrost:'frost',kSurge:'surge',kBomb:'bomber',kMark:'mark',kWB:'wburst',kSpread:'spread',kBounce:'bounce',kRapid:'rapid'};
   const KWM={mMark:'mark',mBombSolo:'bomber',mRapid:'rapid',mIce:'frost',mBurn:'burn',mDelay:'bomber',mBounce:'bounce',mMark3:'mark',mCold:'frost',mSurge:'surge',mTarget:'spread',mDeep:'burn',mWB:'wburst',mWB2:'wburst',mKirin:'surge',mPrecB:'bounce',mFrag:'spread',mGale:'rapid'};
