@@ -303,6 +303,7 @@ h3::before{content:"";width:10px;height:10px;background:var(--pink);border:2px s
       <div class="box step"><h2><span class="no">1</span>武器</h2><button type="button" class="pick wpick unset" id="pW"></button></div>
       <div class="box step"><h2><span class="no">2</span>防具</h2><p class="sub">セット防具の名前か、主要防具を部位ごとに選んでね。主要防具は1つだけ。</p><div class="slots" id="pA"></div><p class="setsum" id="setsum"></p></div>
       <div class="box step"><h2><span class="no">3</span>MOD（メイン効果）</h2><p class="sub">部位ごとに付けているMODを選んでね。</p><div class="slots" id="pM"></div></div>
+      <label class="note" id="admPostWrap" hidden style="display:flex;gap:8px;align-items:center;cursor:pointer"><input type="checkbox" id="admPost"> <span><b>管理者として投稿</b>（回数制限なし・同じ武器でも上書きせず毎回追加。合言葉は「管理」タブで入れたもの）</span></label>
       <div class="submit"><button type="button" class="btn pink" id="send">この装備を投稿する</button><button type="button" class="btn sub" id="reset">選び直す</button><span class="msg" id="msg" role="status"></span></div>
       <p class="note">この端末からは<b>武器ごとに1つ</b>だけ投稿できるよ。同じ武器でもう一度投稿すると上書きになる。投稿は名前なしで、誰が投稿したかは表示されないよ。</p>
       <div id="mineWrap" hidden><h3>この端末から投稿した装備</h3><div class="mine" id="mine"></div></div>
@@ -388,6 +389,10 @@ const Store={
   async post(b){
     if(!LIVE){const all=ls.get(DEMO_KEY,[]),dev=devId(),i=all.findIndex(p=>p.dev===dev&&p.weapon===b.weapon);const row={...b,dev,updated_at:new Date().toISOString()};if(i>=0)all[i]=row;else all.push(row);ls.set(DEMO_KEY,all);return i>=0?'updated':'new'}
     const a={p_dev:devId(),p_weapon:b.weapon};[...ACOL,...MCOL].forEach(c=>a['p_'+c]=b[c]||null);return rpc('post_build',a);
+  },
+  async adminPost(b,pass){
+    if(!LIVE){const all=ls.get(DEMO_KEY,[]);all.push({...b,dev:'admin-'+Date.now()+Math.random(),updated_at:new Date().toISOString()});ls.set(DEMO_KEY,all);return 'new'}
+    const a={p_pass:pass,p_weapon:b.weapon};[...ACOL,...MCOL].forEach(c=>a['p_'+c]=b[c]||null);return rpc('admin_post_build',a);
   },
   async delMine(w){
     if(!LIVE){const dev=devId();ls.set(DEMO_KEY,ls.get(DEMO_KEY,[]).filter(p=>!(p.dev===dev&&p.weapon===w)));return true}
@@ -522,13 +527,16 @@ async function send(){
   if(!cur.weapon){m.className='msg ng';m.textContent='武器を選んでね';return}
   if(filled(cur)<4){m.className='msg ng';m.textContent='防具とMODを合わせて4つ以上選んでね';return}
   if(cntKeys(cur)>1){m.className='msg ng';m.textContent='主要防具は1つだけにしてね';return}
+  const adm=!$('admPostWrap').hidden&&$('admPost').checked;
+  let pass='';if(adm){pass=$('aPass').value;if(!pass)try{pass=sessionStorage.getItem('bs_pass')||''}catch(e){}if(!pass&&LIVE){m.className='msg ng';m.textContent='「管理」タブで合言葉を入れてね';return}}
   const btn=$('send');btn.disabled=true;m.textContent='送信中…';
   try{
+    if(adm){await Store.adminPost(cur,pass);try{sessionStorage.setItem('bs_pass',pass)}catch(e){}m.className='msg ok';m.textContent='管理者として追加したよ（このまま続けて投稿できるよ）';sparks($('send'));loadCounts();btn.disabled=false;return}
     const r=await Store.post(cur);
     const mine=ls.get('bs_mine',{});mine[cur.weapon]={...cur};ls.set('bs_mine',mine);
     m.className='msg ok';m.textContent=r==='updated'?'上書きしたよ！ありがとう':'投稿できたよ！ありがとう';sparks($('send'));
     renderMine();loadCounts();
-  }catch(e){m.className='msg ng';m.textContent=e.message}
+  }catch(e){m.className='msg ng';m.textContent=/admin_post_build/.test(e.message)?'管理者投稿の準備がまだみたい（Supabaseで admin-post.sql を実行してね）':e.message}
   btn.disabled=false;
 }
 function renderMine(){
@@ -543,7 +551,7 @@ async function delMine(id,btn){
 
 // ===== 管理 =====
 function initAdmin(){
-  $('admTab').hidden=false;
+  $('admTab').hidden=false;$('admPostWrap').hidden=false;
   $('aW').innerHTML=W.map(w=>`<option value="${w.id}">${esc(w.name)}</option>`).join('');
   try{$('aPass').value=sessionStorage.getItem('bs_pass')||''}catch(e){}
 }
