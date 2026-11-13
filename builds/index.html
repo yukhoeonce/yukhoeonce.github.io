@@ -35,7 +35,7 @@
   --k-spread:#d4621c; --k-frost:#1a7fa5; --k-surge:#6f45c6; --k-burn:#c8322b; --k-bounce:#26864f; --k-mark:#946c00; --k-bomber:#b8376f; --k-rapid:#2d62c4; --k-wburst:#6b5a2a;
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;overflow-y:scroll;scrollbar-gutter:stable}
 body{margin:0;word-break:keep-all;overflow-wrap:anywhere;line-break:strict;background-color:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.7;
   background-image:radial-gradient(circle at 1px 1px,var(--dot) 1.4px,transparent 1.6px);background-size:22px 22px}
 button{font:inherit;color:inherit;cursor:pointer}
@@ -89,7 +89,8 @@ main{padding-block:22px 40px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
 .card{display:flex;flex-direction:column;gap:6px;text-align:left;border:2.5px solid var(--line);background:var(--surface);border-radius:14px;padding:10px;box-shadow:3px 3px 0 var(--sh);min-width:0}
 .card .img{height:76px;display:flex;align-items:center;justify-content:center;background:var(--field);border-radius:10px;border:2px solid var(--line)}
-.card .img img{max-height:66px;max-width:92%;object-fit:contain}
+.card .img,.hero .img,.tile.w .wi{overflow:hidden}
+.card .img img,.hero .img img,.tile.w img{display:block;width:100%;height:100%;max-width:100%;object-fit:contain}
 .base{font-size:12px;color:var(--muted);font-weight:700}
 .tname{font-weight:700;font-size:16px;line-height:1.35}
 .row{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap}
@@ -105,7 +106,6 @@ main{padding-block:22px 40px}
 .sheet-head .t{font-weight:700;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .hero{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:18px;align-items:center;margin:18px 0}
 .hero .img{background:var(--field);border:2.5px solid var(--line);border-radius:14px;height:124px;display:flex;align-items:center;justify-content:center}
-.hero .img img{max-height:110px;max-width:92%;object-fit:contain}
 .hero h2{font-size:clamp(22px,4vw,30px);margin:2px 0 6px}
 .meta{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;color:var(--muted);font-size:14px;font-weight:700}
 .hero .btn{margin-top:12px}
@@ -150,7 +150,7 @@ details.more[open] summary{margin-bottom:6px}
 .pick.key{background:#fff0d0}
 .pick.bad{border-color:var(--ng);background:var(--ng-soft)}
 .wpick{flex-direction:row;align-items:center;gap:12px;width:100%;min-height:72px}
-.wpick img{height:52px;max-width:120px;object-fit:contain}
+.wpick img{display:block;height:52px;width:120px;max-width:40%;object-fit:contain;flex:none}
 .setsum{margin-top:10px;font-size:14px;color:var(--ink-2)}
 .submit{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .msg{font-weight:700;font-size:15px}
@@ -175,7 +175,6 @@ details.more[open] summary{margin-bottom:6px}
 .tile[aria-pressed="true"]{background:var(--lemon)}
 .tile.w{gap:4px;padding:6px}
 .tile.w .wi{width:100%;height:64px;display:flex;align-items:center;justify-content:center;background:var(--field);border-radius:7px;overflow:hidden}
-.tile.w img{max-width:100%;max-height:60px;object-fit:contain}
 .tile.w .wt{padding:0 4px;word-break:normal;line-break:auto}
 .tile.w b{display:block;font-size:15px;line-height:1.3}
 .tile.clear{background:var(--field)}
@@ -187,18 +186,77 @@ details.more[open] summary{margin-bottom:6px}
 .adm input,.adm select{font:inherit;padding:6px 10px;border:2px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);max-width:100%}
 
 .sites{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:32px}
+.top-sites{margin:0 0 18px}
+.sites a:hover{background:var(--lemon)}
 .sites span{font-size:13px;font-weight:700;color:var(--muted);margin-right:2px}
 .sites a{font-weight:700;font-size:14px;color:var(--ink);text-decoration:none;padding:4px 14px;border:2px solid var(--line);border-radius:999px;background:var(--surface);box-shadow:2px 2px 0 var(--sh)}
-.brand .home{color:var(--muted);text-decoration:none}
-.brand .home:hover{color:var(--accent);text-decoration:underline}
 footer{margin-top:14px;color:var(--muted);font-size:13px;border-top:2px dashed var(--line);padding-top:12px}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));translate:-50% 0;z-index:80;background:var(--ink);color:var(--bg);font-weight:700;padding:10px 18px;border-radius:999px;max-width:calc(100% - 32px);text-align:center}
+
+/* ===== MOD講座と同じレトロかわいい動き（PCでは背景を止めて文字のぼやけを防ぐ。アニメは backwards で終わったら消える） ===== */
+body{animation:dots 30s linear infinite}
+@keyframes dots{to{background-position:220px 220px}}
+main,.ticker{position:relative;z-index:1}
+.rfx{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.rfx i{position:absolute;font-style:normal;font-family:var(--f-pop);opacity:.5;animation:float 9s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-26px) rotate(10deg)}}
+.brand b{font-size:21px;letter-spacing:.06em;background:linear-gradient(90deg,#e8517a,#f29a3b,#2aa39a,#7b5bd6,#e8517a);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:rainbow 6s linear infinite}
+@keyframes rainbow{to{background-position:300% 0}}
+.brand .cas::before,.brand .cas::after{border-style:dashed;animation:spin 3s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ticker{overflow:hidden;border-bottom:2px solid var(--line);background:var(--lemon);white-space:nowrap}
+.ticker div{display:inline-block;padding:4px 0;font-family:var(--f-dot);font-size:14px;color:var(--on-pop);animation:tick 30s linear infinite}
+@keyframes tick{to{transform:translateX(-50%)}}
+@keyframes pop{from{opacity:0;transform:translateY(16px) scale(.95) rotate(-1deg)}}
+@keyframes grow{from{width:0}}
+@keyframes boing{0%{transform:scale(.6) translateY(6px)}60%{transform:scale(1.1)}100%{transform:none}}
+@keyframes wig{0%,86%,100%{transform:rotate(0)}90%{transform:rotate(-6deg)}95%{transform:rotate(6deg)}}
+@keyframes bob{50%{transform:translateY(-3px) rotate(-6deg)}}
+@keyframes spark{from{opacity:1;transform:translate(0,0) scale(1)}to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.4) rotate(180deg)}}
+.card{animation:pop .5s cubic-bezier(.3,1.6,.5,1) backwards;animation-delay:calc(var(--i,0) * 30ms);transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translate(-2px,-2px) rotate(-.5deg);box-shadow:5px 5px 0 var(--sh)}
+.card:hover .img img{transform:scale(1.06) rotate(-2deg)}
+.card .img img{transition:transform .25s}
+.panel,.best .b,.step,.hero,.sheet .note{animation:pop .45s cubic-bezier(.3,1.6,.5,1) backwards}
+.best .b:nth-child(2){animation-delay:.04s}.best .b:nth-child(3){animation-delay:.08s}.best .b:nth-child(4){animation-delay:.12s}.best .b:nth-child(5){animation-delay:.16s}.best .b:nth-child(n+6){animation-delay:.2s}
+.cols .panel:nth-child(2){animation-delay:.05s}.cols .panel:nth-child(3){animation-delay:.1s}.cols .panel:nth-child(n+4){animation-delay:.15s}
+.form .step:nth-child(2){animation-delay:.06s}.form .step:nth-child(3){animation-delay:.12s}
+.opt .bar span{animation:grow .8s cubic-bezier(.2,.8,.3,1) backwards;animation-delay:.25s}
+.step,.hero{position:relative}
+.step::after,.hero .img::after{content:"";position:absolute;top:-12px;right:22px;width:70px;height:22px;background:repeating-linear-gradient(45deg,var(--pink) 0 8px,#ffd1df 8px 16px);border:2px solid var(--line);transform:rotate(4deg);border-radius:4px;opacity:.9}
+.form .step:nth-child(2)::after{background:repeating-linear-gradient(45deg,var(--mint) 0 8px,#d4f7ec 8px 16px);transform:rotate(-5deg);left:22px;right:auto}
+.form .step:nth-child(3)::after{background:repeating-linear-gradient(45deg,var(--lemon) 0 8px,#fff3bf 8px 16px)}
+.hero .img{position:relative;overflow:visible}
+.hero .img img{border-radius:11px}
+.hero .img::after{right:auto;left:16px;transform:rotate(-6deg);background:repeating-linear-gradient(45deg,var(--sky) 0 8px,#d9efff 8px 16px)}
+.tabs button[aria-current="page"]{animation:wig 3s ease-in-out infinite}
+.btn,.tabs button,.pick,.tile,.chip,.sites a{transition:transform .12s,box-shadow .12s,background .2s}
+.btn:hover,.tabs button:hover,.pick:hover,.sites a:hover{transform:translate(-1px,-1px)}
+.tile:hover{transform:translateY(-2px)}
+.step h2 .no{animation:bob 2.4s ease-in-out infinite;display:inline-block}
+.form .step:nth-child(2) h2 .no{animation-delay:-.6s}.form .step:nth-child(3) h2 .no{animation-delay:-1.2s}
+h3{position:relative}
+h3::before{content:"";width:10px;height:10px;background:var(--pink);border:2px solid var(--line);flex:none;align-self:center}
+.intro h1{letter-spacing:.03em}
+.intro h1 em{font-style:normal;background:linear-gradient(transparent 62%,var(--lemon) 62%)}
+.dlg .in{animation:pop .3s cubic-bezier(.3,1.6,.5,1)}
+.sheet{animation:pop .3s ease-out}
+.toast{animation:boing .4s cubic-bezier(.3,1.8,.5,1)}
+.msg.ok{display:inline-block;animation:boing .45s cubic-bezier(.3,1.8,.5,1)}
+.spark{position:fixed;pointer-events:none;z-index:99;font-size:16px;animation:spark .8s ease-out forwards}
+.pick{flex-direction:row;align-items:center;gap:10px}
+.pick .ic{flex:none;width:30px;height:30px;display:grid;place-items:center;border:2.5px solid var(--line);border-radius:10px;box-shadow:2px 2px 0 var(--sh);transition:transform .2s}
+.pick .ic svg{width:18px;height:18px;display:block}
+.pick:hover .ic{transform:rotate(-8deg) scale(1.08)}
+.pick .tx{display:flex;flex-direction:column;min-width:0}
+@media (hover:hover) and (pointer:fine){body{animation:none}.rfx i{animation:none}.tabs button[aria-current="page"]{animation:none}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 @media (max-width:640px){.hero{grid-template-columns:1fr}.hero .img{height:96px}.cols{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.card .img{height:58px}.card .img img{max-height:50px}.tname{font-size:15px}.slots{grid-template-columns:repeat(2,minmax(0,1fr))}.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
 <header class="top gut"><div class="wrap">
-  <div class="brand"><span class="cas" aria-hidden="true"></span><div><small><a class="home" href="https://yukhoeonce.github.io/">← シナリオガイドへ</a></small><b>みんなの装備</b></div></div>
+  <div class="brand"><span class="cas" aria-hidden="true"></span><div><small>ONCE HUMAN 非公式</small><b>みんなの装備</b></div></div>
   <nav class="tabs" aria-label="ページ切り替え">
     <button type="button" data-v="look" aria-current="page">武器を見る</button>
     <button type="button" data-v="post">投稿する</button>
@@ -207,17 +265,18 @@ footer{margin-top:14px;color:var(--muted);font-size:13px;border-top:2px dashed v
 </div></header>
 
 <main class="gut"><div class="wrap">
+  <nav class="sites top-sites" aria-label="ほかのページ"><span>ほかのページ</span><a href="https://yukhoeonce.github.io/">シナリオガイド</a><a href="https://yukhoeonce.github.io/damage/">ダメージラボ</a><a href="https://yukhoeonce.github.io/mod/">MOD講座</a></nav>
   <div class="note demo" id="demo" hidden><b>お試しモード</b>：まだ保存先につながっていないので、投稿はこの端末の中だけに保存されるよ。<button type="button" class="btn small sub" id="demoSeed">見本の投稿を入れてみる</button> <button type="button" class="btn small sub" id="demoClear">お試しデータを消す</button></div>
 
   <section id="v-look">
-    <div class="intro"><div><h1>武器ごとの みんなの装備</h1><p>武器を押すと、その武器を使っている人の防具とMODが、多い順に％で出るよ。</p></div><span class="total" id="total"></span></div>
+    <div class="intro"><div><h1>武器ごとの <em>みんなの装備</em></h1><p>武器を押すと、その武器を使っている人の防具とMODが、多い順に％で出るよ。</p></div><span class="total" id="total"></span></div>
     <div class="filters" id="filters" role="group" aria-label="武器の種類で絞る"></div>
     <div class="search"><input type="search" id="q" placeholder="武器の名前でさがす" aria-label="武器の名前でさがす"></div>
     <div class="grid" id="grid"></div>
   </section>
 
   <section id="v-post" hidden>
-    <div class="intro"><div><h1>自分の装備を投稿する</h1><p>一覧から選ぶだけ。拡張要素は入れなくてOK。わからない部位は空けておいても大丈夫（4つ以上は選んでね）。</p></div></div>
+    <div class="intro"><div><h1>自分の装備を <em>投稿する</em></h1><p>一覧から選ぶだけ。拡張要素は入れなくてOK。わからない部位は空けておいても大丈夫（4つ以上は選んでね）。</p></div></div>
     <div class="form">
       <div class="box step"><h2><span class="no">1</span>武器</h2><button type="button" class="pick wpick unset" id="pW"></button></div>
       <div class="box step"><h2><span class="no">2</span>防具</h2><p class="sub">セット防具の名前か、主要防具を部位ごとに選んでね。主要防具は1つだけ。</p><div class="slots" id="pA"></div><p class="setsum" id="setsum"></p></div>
@@ -322,7 +381,7 @@ function renderFilters(){$('filters').innerHTML=TYPES.map(t=>`<button class="chi
 function renderGrid(){
   const qq=q.trim();
   const list=W.filter(w=>(filt==='すべて'||w.type===filt)&&(!qq||w.name.includes(qq))).map((w,i)=>[w,i]).sort((a,b)=>(counts[b[0].id]||0)-(counts[a[0].id]||0)||a[1]-b[1]).map(x=>x[0]);
-  $('grid').innerHTML=list.length?list.map(w=>{const [b,t]=split(w.name),c=counts[w.id]||0;return `<button class="card" type="button" data-id="${w.id}">
+  $('grid').innerHTML=list.length?list.map((w,i)=>{const [b,t]=split(w.name),c=counts[w.id]||0;return `<button class="card" type="button" data-id="${w.id}" style="--i:${Math.min(i,18)}">
     <div class="img">${IMG[w.id]?`<img src="${IMG[w.id]}" alt="" loading="lazy">`:''}</div>
     <div><div class="base">${esc(b||w.type)}</div><div class="tname">${esc(t)}</div></div>
     <div class="row">${w.kw.map(kwTag).join(' ')||'<span></span>'}<span class="cnt${c?'':' zero'}">${c?`投稿 ${c}件`:'まだなし'}</span></div></button>`}).join(''):'<div class="empty-msg">見つからなかったよ</div>';
@@ -397,8 +456,8 @@ function renderForm(){
   const w=WBY[cur.weapon];
   $('pW').className='pick wpick '+(w?'set':'unset');
   $('pW').innerHTML=w?`${IMG[w.id]?`<img src="${IMG[w.id]}" alt="">`:''}<span><span class="sl">${esc(w.type)}</span><br><span class="v">${esc(w.name)}</span> ${w.kw.map(kwTag).join(' ')}</span>`:'<span><span class="sl">武器</span><br><span class="v">タップして選ぶ</span></span>';
-  $('pA').innerHTML=AS.map(([s,l])=>{const v=cur['a_'+s],bad=w&&mismatch(w.id,'a_'+s,v);return `<button type="button" class="pick ${v?(KEYBY[v]?'key':'set'):'unset'}${bad?' bad':''}" data-slot="a_${s}"><span class="sl">${l}${KEYBY[v]?'・主要防具':''}</span><span class="v">${v?esc(aName(v)):'タップして選ぶ'}</span></button>`}).join('');
-  $('pM').innerHTML=MS.map(([s,l])=>{const v=cur['m_'+s],bad=w&&mismatch(w.id,'m_'+s,v);return `<button type="button" class="pick ${v?'set':'unset'}${bad?' bad':''}" data-slot="m_${s}"><span class="sl">${l}</span><span class="v">${v?esc(mName(v)):'タップして選ぶ'}</span></button>`}).join('');
+  $('pA').innerHTML=AS.map(([s,l])=>{const v=cur['a_'+s],bad=w&&mismatch(w.id,'a_'+s,v);return `<button type="button" class="pick ${v?(KEYBY[v]?'key':'set'):'unset'}${bad?' bad':''}" data-slot="a_${s}">${pix(s)}<span class="tx"><span class="sl">${l}${KEYBY[v]?'・主要防具':''}</span><span class="v">${v?esc(aName(v)):'タップして選ぶ'}</span></span></button>`}).join('');
+  $('pM').innerHTML=MS.map(([s,l])=>{const v=cur['m_'+s],bad=w&&mismatch(w.id,'m_'+s,v);return `<button type="button" class="pick ${v?'set':'unset'}${bad?' bad':''}" data-slot="m_${s}">${pix(s)}<span class="tx"><span class="sl">${l}</span><span class="v">${v?esc(mName(v)):'タップして選ぶ'}</span></span></button>`}).join('');
   const sc=setCombo(cur).combo;$('setsum').textContent=sc?'セット効果：'+sc:'';
   ls.set('bs_draft',cur);
 }
@@ -445,7 +504,7 @@ async function send(){
   try{
     const r=await Store.post(cur);
     const mine=ls.get('bs_mine',{});mine[cur.weapon]={...cur};ls.set('bs_mine',mine);
-    m.className='msg ok';m.textContent=r==='updated'?'上書きしたよ！ありがとう':'投稿できたよ！ありがとう';
+    m.className='msg ok';m.textContent=r==='updated'?'上書きしたよ！ありがとう':'投稿できたよ！ありがとう';sparks($('send'));
     renderMine();loadCounts();
   }catch(e){m.className='msg ng';m.textContent=e.message}
   btn.disabled=false;
@@ -530,6 +589,31 @@ document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(!$('dlg').
 cur=ls.get('bs_draft',{weapon:''});if(cur.weapon&&!WBY[cur.weapon])cur={weapon:''};
 $('demo').hidden=LIVE;
 if(/[?&]admin\b/.test(location.search))initAdmin();
+
+// ===== レトロな飾り（MOD講座と同じ） =====
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const PIX={weapon:['........','......##','.....##.','....##..','#..##...','.###....','..##....','.#.#....'],
+  helmet:['..####..','.######.','########','##....##','#......#','#......#','........','........'],
+  mask:['........','.######.','##.##.##','########','#.#..#.#','.######.','..#..#..','........'],
+  top:['.##..##.','########','########','.######.','.######.','.######.','.######.','........'],
+  glove:['.#.#.#..','.#.#.#..','.#####.#','.######.','.#####..','..####..','..####..','........'],
+  bottom:['.######.','.######.','.###.##.','.##..##.','.##..##.','.##..##.','.##..##.','........'],
+  shoes:['........','..##....','..##....','..##....','..####..','..#####.','.######.','........']};
+const PIXC={weapon:'#ff9fbd',helmet:'#9be8d4',mask:'#c9b3ff',top:'#ffe27a',glove:'#9fd6ff',bottom:'#ffc79a',shoes:'#b9eda1'};
+const PIXSVG={};for(const k in PIX){let r='';PIX[k].forEach((row,y)=>[...row].forEach((c,x)=>{if(c==='#')r+=`<rect x="${x}" y="${y}" width="1.02" height="1.02"/>`}));PIXSVG[k]=`<span class="ic" style="background:${PIXC[k]}" aria-hidden="true"><svg viewBox="0 0 8 8" fill="#3b2340" shape-rendering="crispEdges">${r}</svg></span>`}
+function pix(s){return PIXSVG[s]||''}
+function sparks(el){if(RM||!el)return;const r=el.getBoundingClientRect(),cols=['#ff9fbd','#9be8d4','#ffe27a','#c9b3ff','#9fd6ff'];
+  for(let i=0;i<12;i++){const e=document.createElement('span');e.className='spark';e.textContent=['★','✦','●'][i%3];e.style.color=cols[i%5];
+    e.style.left=(r.left+r.width/2)+'px';e.style.top=(r.top+r.height/2)+'px';const a=i/12*Math.PI*2;e.style.setProperty('--dx',Math.cos(a)*70+'px');e.style.setProperty('--dy',Math.sin(a)*50+'px');
+    document.body.appendChild(e);setTimeout(()=>e.remove(),900)}}
+(()=>{const fx=document.createElement('div');fx.className='rfx';fx.setAttribute('aria-hidden','true');document.body.prepend(fx);
+  const cols=['#ff9fbd','#9be8d4','#ffe27a','#c9b3ff','#9fd6ff'];
+  if(!RM)['★','✦','●','♪','◆','★','▲','✦','●','♪','◆','★'].forEach((t,i)=>{const e=document.createElement('i');e.textContent=t;
+    e.style.left=(5+i*8.1)%96+'%';e.style.top=(8+(i*37)%84)+'%';e.style.color=cols[i%5];
+    e.style.fontSize=(18+(i*7)%26)+'px';e.style.animationDelay=(-i*0.8)+'s';e.style.animationDuration=(7+i%5)+'s';fx.appendChild(e)});
+  const tk=document.createElement('div');tk.className='ticker';tk.setAttribute('aria-hidden','true');
+  const t='★ みんなの装備 ✦ 武器を押すと人気の防具とMODが％で出るよ ♪ 自分の装備も選ぶだけで投稿できる ◆ 1武器につき1構成まで ✦ ';
+  tk.innerHTML='<div>'+t.repeat(6)+'</div>';document.querySelector('.top').after(tk)})();
 renderFilters();renderGrid();loadCounts();
 const hm=location.hash.match(/^#w=([\w]+)/);if(hm)openW(hm[1]);
 </script>
