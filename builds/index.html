@@ -253,6 +253,24 @@ h3::before{content:"";width:10px;height:10px;background:var(--pink);border:2px s
 .pick .ic svg{width:18px;height:18px;display:block}
 .pick:hover .ic{transform:rotate(-8deg) scale(1.08)}
 .pick .tx{display:flex;flex-direction:column;min-width:0}
+
+.panel h4{align-items:center}
+.panel h4 .pt{display:flex;align-items:center;gap:8px}
+.panel h4 .ic{width:26px;height:26px;border-width:2px;border-radius:8px;box-shadow:1.5px 1.5px 0 var(--sh);display:grid;place-items:center;flex:none}
+.panel h4 .ic svg{width:15px;height:15px;display:block}
+@media (max-width:640px){
+  .cols{gap:8px}
+  .panel{padding:9px 12px;border-width:2px;border-radius:12px}
+  .panel h4{margin-bottom:4px;font-size:14px}
+  .opt{margin-bottom:5px;gap:1px 8px}
+  .opt .nm,.opt .pc{font-size:14px}
+  .opt .bar{height:6px;border-width:1px}
+  details.more{font-size:13px;margin-top:2px}
+  h3{margin:20px 0 8px;font-size:17px}
+  .best{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+  .best .b{padding:6px 10px}
+  .best .v{font-size:14px}
+}
 @media (hover:hover) and (pointer:fine){body{animation:none}.rfx i{animation:none}.tabs button[aria-current="page"]{animation:none}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 @media (max-width:640px){.hero{grid-template-columns:1fr}.hero .img{height:96px}.cols{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.card .img{height:58px}.card .img img{max-height:50px}.tname{font-size:15px}.slots{grid-template-columns:repeat(2,minmax(0,1fr))}.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -398,11 +416,11 @@ function tally(rows,w,col){ // → {n, list:[[id,c]], nope:[[id,c]]}
 const pct=(c,n)=>n?Math.round(c/n*100):0;
 function optRows(t,nameOf){
   if(!t.n&&!t.nope.length)return '<div class="nodata">まだ投稿がないよ</div>';
-  const main=t.list.filter(([,c])=>pct(c,t.n)>=3||t.list.length<=3), rest=t.list.filter(x=>!main.includes(x));
+  const main=t.list.filter(([,c],i)=>i<3&&(pct(c,t.n)>=3||t.list.length<=3)), rest=t.list.filter(x=>!main.includes(x));
   const row=([v,c],cls='')=>`<div class="opt ${cls}"><span class="nm">${esc(nameOf(v))}</span><span class="pc">${cls?c+'件':pct(c,t.n)+'%'}</span><div class="bar"><span style="width:${cls?0:pct(c,t.n)}%"></span></div></div>`;
   let h=main.map(x=>row(x)).join('');
-  if(rest.length)h+=`<details class="more"><summary>その他（3%未満）${rest.length}種</summary>${rest.map(x=>row(x)).join('')}</details>`;
-  if(t.nope.length)h+=`<details class="more"><summary>武器に合わないので数えていないもの</summary>${t.nope.map(x=>row(x,'nope')).join('')}</details>`;
+  if(rest.length)h+=`<details class="more"><summary>ほか ${rest.length}種</summary>${rest.map(x=>row(x)).join('')}</details>`;
+  if(t.nope.length)h+=`<details class="more"><summary>武器に合わない（数えてない）${t.nope.length}種</summary>${t.nope.map(x=>row(x,'nope')).join('')}</details>`;
   return h;
 }
 function setCombo(r){ // 例: セイビアー3＋ローンウルフ2
@@ -428,8 +446,8 @@ async function openW(id){
   const best=[...MS.map(([s,l])=>['m_'+s,l+'MOD',mName]),].map(([c,l,nm])=>{const t=T[c];if(!t.n)return `<div class="b none"><div class="sl">${l}</div><div class="v">まだなし</div></div>`;const [v,cnt]=t.list[0];return `<div class="b"><div class="sl">${l}</div><div class="v">${esc(nm(v))}</div><div class="n">${pct(cnt,t.n)}%</div></div>`}).join('');
   const comboT={n:nc,list:[...combos.entries()].sort((a,b)=>b[1]-a[1]),nope:[]};
   const keyT={n:nk,list:[...keys.entries()].sort((a,b)=>b[1]-a[1]),nope:[]};
-  const aPanels=AS.map(([s,l])=>`<div class="panel"><h4>${l}<small>${T['a_'+s].n}件中</small></h4>${optRows(T['a_'+s],aName)}</div>`).join('');
-  const mPanels=MS.map(([s,l])=>`<div class="panel"><h4>${l}<small>${T['m_'+s].n}件中</small></h4>${optRows(T['m_'+s],mName)}</div>`).join('');
+  const aPanels=AS.map(([s,l])=>`<div class="panel"><h4><span class="pt">${pix(s)}${l}</span><small>${T['a_'+s].n}件中</small></h4>${optRows(T['a_'+s],aName)}</div>`).join('');
+  const mPanels=MS.map(([s,l])=>`<div class="panel"><h4><span class="pt">${pix(s)}${l}</span><small>${T['m_'+s].n}件中</small></h4>${optRows(T['m_'+s],mName)}</div>`).join('');
   $('sBody').innerHTML=`
   <div class="hero"><div class="img">${IMG[id]?`<img src="${IMG[id]}" alt="${esc(w.name)}">`:''}</div>
     <div><div class="base">${esc(base||w.type)}</div><h2>${esc(tn)}</h2>
@@ -446,7 +464,7 @@ async function openW(id){
   <div class="cols">${mPanels}</div>`:`<div class="note" style="margin-top:10px">この武器はまだ投稿がないよ。最初の1人になってみる？</div>`}
   <ul class="hint">
     <li>％は「その部位を入れた投稿」のうち何件で使われているか。</li>
-    <li>3%未満のものは「その他」にまとめてるよ。</li>
+    <li>各部位は上位3つまで表示。それ以外（3%未満も）は「ほか○種」を押すと見られるよ。</li>
     <li>武器のキーワード（${w.kw.length?w.kw.map(k=>esc(D.KWN[k])).join('・'):'なし'}）と合わない主要防具・MODは数えていないよ。${skipped?`合わないものが2つ以上入っていた投稿（${skipped}件）は丸ごと除外してる。`:''}</li>
   </ul>`;
   $('back').focus();
