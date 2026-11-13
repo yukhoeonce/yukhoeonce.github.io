@@ -24,7 +24,7 @@
 /* レイアウト: 上にカセット風の見出し＋タブ、中身は1列のノート。レッスンは左に目次（狭い画面では上）。 */
 :root,:root[data-theme]{
   color-scheme:light;
-  --bg:#fff4dc; --surface:#fffdf6; --field:#fff1e4; --ink:#3b2340; --ink-2:#5e4466; --muted:#8d7590; --line:#3b2340;
+  --bg:#fff4dc; --surface:#fffdf6; --field:#fff1e4; --ink:#3b2340; --ink-2:#4a3352; --muted:#6c5570; --line:#3b2340;
   --atk:#e8517a; --atk-soft:#ffe1ea; --psi:#1f8f87; --psi-soft:#d9f6ef; --def:#6a58c9; --def-soft:#ebe5ff;
   --ok:#3f9a4e; --ok-soft:#e2f6e0; --ng:#d8344f; --ng-soft:#ffe3e7; --wait:#b07800; --wait-soft:#fff2c4;
   --pink:#ff9fbd; --mint:#9be8d4; --lemon:#ffe27a; --lilac:#c9b3ff; --sky:#9fd6ff; --on-pop:#3b2340;
@@ -55,7 +55,7 @@ p{margin:0}
 .brand .cas::before,.brand .cas::after{content:"";position:absolute;top:8px;width:8px;height:8px;border-radius:50%;border:2.5px solid var(--on-pop);background:var(--surface)}
 .brand .cas::before{left:6px}.brand .cas::after{right:6px}
 .brand b{font-family:var(--f-pop);font-weight:400;font-size:19px;letter-spacing:.04em}
-.brand small{display:block;font-family:var(--f-dot);font-size:11px;color:var(--muted);letter-spacing:.12em;line-height:1.2}
+.brand small{display:block;font-weight:700;font-size:11px;color:var(--muted);letter-spacing:.12em;line-height:1.2}
 .tabs{display:flex;gap:6px;flex-wrap:wrap}
 .tabs a{font-weight:800;font-size:14px;text-decoration:none;color:var(--ink);padding:6px 14px;border:2px solid var(--line);border-radius:999px;background:var(--surface);box-shadow:2px 2px 0 var(--sh);transition:transform .12s}
 .tabs a[aria-current="page"]{background:var(--pink);color:var(--on-pop)}
@@ -86,13 +86,13 @@ main{padding-block:24px 48px}
 .hero h1 em{font-style:normal;background:linear-gradient(transparent 62%,var(--hl) 62%);color:var(--ink)}
 .hero p.lead{font-size:17px;color:var(--ink-2);max-width:32em}
 .hero .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-.prog{display:flex;align-items:center;gap:10px;margin-top:16px;font-family:var(--f-dot);font-size:14px;color:var(--muted)}
+.prog{display:flex;align-items:center;gap:10px;margin-top:16px;font-weight:700;font-size:14px;color:var(--muted)}
 .prog .bar{flex:1;max-width:220px;height:14px;border:2px solid var(--line);border-radius:999px;background:var(--surface);overflow:hidden}
 .prog .bar i{display:block;height:100%;background:var(--mint);width:0;transition:width .4s}
 
 /* 7つの枠 */
 .rig{padding:18px;position:relative}
-.rig .lab{font-family:var(--f-dot);font-size:13px;color:var(--muted);text-align:center;margin-bottom:8px}
+.rig .lab{font-weight:700;font-size:13px;color:var(--muted);text-align:center;margin-bottom:8px}
 .rig-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
 .rig-col{display:flex;flex-direction:column;gap:10px}
 .slot{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:8px 10px;border:2px solid var(--line);border-radius:12px;background:var(--field);box-shadow:2px 2px 0 var(--sh);min-width:0;transition:transform .12s}
@@ -134,7 +134,7 @@ main{padding-block:24px 48px}
 .modcard .ex{font-size:14px;color:var(--ink-2)}
 .parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
 .part{padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface)}
-.part .k{font-family:var(--f-dot);font-size:13px;color:var(--muted)}
+.part .k{font-weight:700;font-size:13px;color:var(--muted)}
 .part b{display:block;font-size:16px}
 .part p{font-size:14px;color:var(--ink-2)}
 
@@ -173,13 +173,13 @@ details.dex summary::-webkit-details-marker{display:none}
 .demo .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
 .demo .opts button{padding:12px;border:2.5px solid var(--line);border-radius:12px;background:var(--field);text-align:left;box-shadow:2px 2px 0 var(--sh)}
 .demo .opts button[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop)}
-.demo .opts small{display:block;font-size:13px;color:inherit;opacity:.8}
+.demo .opts small{display:block;font-size:13px;color:var(--ink-2);font-weight:700}
 .demo .res{font-size:15px;min-height:3.5em}
-.demo .res b{font-family:var(--f-dot);font-size:20px}
+.demo .res b{font-size:19px;font-weight:700}
 .meter{display:grid;grid-template-columns:7em minmax(0,1fr) 4.5em;gap:8px;align-items:center;font-size:14px}
 .meter .bar{height:16px;border:2px solid var(--line);border-radius:999px;background:var(--field);overflow:hidden}
 .meter .bar i{display:block;height:100%;background:var(--pink);transition:width .4s}
-.meter .v{font-family:var(--f-dot);text-align:right;font-variant-numeric:tabular-nums}
+.meter .v{font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
 
 /* 戦い方チェック */
 .style{padding:16px;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);display:flex;flex-direction:column;gap:12px}
@@ -195,8 +195,8 @@ details.dex summary::-webkit-details-marker{display:none}
 .fit ul{margin:0;padding-left:1.1em}
 
 .xtab{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
-.xtab th,.xtab td{border-bottom:1.5px dashed var(--muted);padding:8px 6px;text-align:left;vertical-align:top}
-.xtab th{font-family:var(--f-dot);font-weight:400;color:var(--muted);font-size:13px}
+.xtab th,.xtab td{color:var(--ink);border-bottom:1.5px dashed var(--muted);padding:8px 6px;text-align:left;vertical-align:top}
+.xtab th{font-weight:700;color:var(--ink-2);font-size:13px}
 .scroll{overflow-x:auto}
 
 .rules{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none;counter-reset:r}
@@ -212,7 +212,7 @@ details.dex summary::-webkit-details-marker{display:none}
 .lvtabs button small{font-size:12.5px;color:var(--ink-2)}
 .lvtabs button[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop)}
 .lvtabs button[aria-pressed="true"] small{color:var(--on-pop)}
-.num{width:100%;padding:6px 10px;border:2px solid var(--line);border-radius:10px;background:var(--field);font:inherit;font-family:var(--f-dot);font-size:16px;color:var(--ink)}
+.num{width:100%;padding:6px 10px;border:2px solid var(--line);border-radius:10px;background:var(--field);font:inherit;font-weight:700;font-size:16px;color:var(--ink)}
 .meter input[type=range]{width:100%;accent-color:var(--atk)}
 /* ===== クイズ ===== */
 .quiz{max-width:720px;margin:0 auto;padding:24px clamp(16px,4vw,32px)}
@@ -228,7 +228,7 @@ details.dex summary::-webkit-details-marker{display:none}
 .qopts button.right{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
 .qopts button.wrong{background:var(--ng-soft);border-color:var(--ng);color:var(--ng)}
 .qopts button:disabled{cursor:default}
-.qopts button small{display:block;font-size:12px;font-weight:700;opacity:.8;margin-top:2px}
+.qopts button small{display:block;font-size:12px;font-weight:700;color:var(--ink-2);margin-top:2px}
 .qexp{margin-top:16px;padding:14px;border:2px dashed var(--line);border-radius:12px;background:var(--surface)}
 .qexp .big{font-family:var(--f-pop);font-size:20px}
 .qexp .big.ok{color:var(--ok)}.qexp .big.ng{color:var(--ng)}
@@ -301,6 +301,8 @@ main,footer.site,.ticker{position:relative;z-index:1}
 .les h3{display:flex;align-items:center;gap:8px}
 .les h3::before{content:"";width:10px;height:10px;background:var(--pink);border:2px solid var(--line);flex:none}
 .les h3::after{content:"";flex:1;border-top:2px dotted rgba(59,35,64,.3)}
+/* PC: 背景の動きで文字の重なりレイヤーができて文字がぼやけるので、マウス操作の画面では背景を止める */
+@media (hover:hover) and (pointer:fine){body{animation:none}.rfx i{animation:none}}
 /* 部位のドット絵アイコン */
 .slot{flex-direction:row;align-items:center;gap:10px}
 .slot .ic{flex:none;width:30px;height:30px;display:grid;place-items:center;border:2.5px solid var(--line);border-radius:10px;box-shadow:2px 2px 0 var(--sh);transition:transform .2s}
