@@ -186,14 +186,19 @@ details.more[open] summary{margin-bottom:6px}
 .adm .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
 .adm input,.adm select{font:inherit;padding:6px 10px;border:2px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);max-width:100%}
 
-footer{margin-top:32px;color:var(--muted);font-size:13px;border-top:2px dashed var(--line);padding-top:12px}
+.sites{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:32px}
+.sites span{font-size:13px;font-weight:700;color:var(--muted);margin-right:2px}
+.sites a{font-weight:700;font-size:14px;color:var(--ink);text-decoration:none;padding:4px 14px;border:2px solid var(--line);border-radius:999px;background:var(--surface);box-shadow:2px 2px 0 var(--sh)}
+.brand .home{color:var(--muted);text-decoration:none}
+.brand .home:hover{color:var(--accent);text-decoration:underline}
+footer{margin-top:14px;color:var(--muted);font-size:13px;border-top:2px dashed var(--line);padding-top:12px}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));translate:-50% 0;z-index:80;background:var(--ink);color:var(--bg);font-weight:700;padding:10px 18px;border-radius:999px;max-width:calc(100% - 32px);text-align:center}
 @media (max-width:640px){.hero{grid-template-columns:1fr}.hero .img{height:96px}.cols{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.card .img{height:58px}.card .img img{max-height:50px}.tname{font-size:15px}.slots{grid-template-columns:repeat(2,minmax(0,1fr))}.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
 <header class="top gut"><div class="wrap">
-  <div class="brand"><span class="cas" aria-hidden="true"></span><div><small>ONCE HUMAN 非公式</small><b>みんなの装備</b></div></div>
+  <div class="brand"><span class="cas" aria-hidden="true"></span><div><small><a class="home" href="https://yukhoeonce.github.io/">← シナリオガイドへ</a></small><b>みんなの装備</b></div></div>
   <nav class="tabs" aria-label="ページ切り替え">
     <button type="button" data-v="look" aria-current="page">武器を見る</button>
     <button type="button" data-v="post">投稿する</button>
@@ -233,6 +238,7 @@ footer{margin-top:32px;color:var(--muted);font-size:13px;border-top:2px dashed v
     <div id="aList" style="margin-top:14px"></div>
   </section>
 
+  <nav class="sites" aria-label="ほかのページ"><span>ほかのページ</span><a href="https://yukhoeonce.github.io/">シナリオガイド</a><a href="https://yukhoeonce.github.io/damage/">ダメージラボ</a><a href="https://yukhoeonce.github.io/mod/">MOD講座</a></nav>
   <footer>非公式のファンサイトです。© NetEase / Starry Studio　｜　％は投稿をもとにした目安だよ。</footer>
 </div></main>
 
