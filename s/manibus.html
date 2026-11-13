@@ -236,7 +236,7 @@ footer b{color:var(--ink)}
 
 <script>
 /* ================= データ =================
-   src: off=公式お知らせ, db=ゲームデータDB（oncehuman.th.gl/ja）, web=日本語の攻略記事, en=英語の攻略記事
+   src: off=公式お知らせ, db=ゲームデータDB, web=日本語の攻略記事, en=英語の攻略記事
    rows: [見出し, 本文]  items: [素材名, 数]  pts: 箇条書き  links: 関連項目のid */
 const CATS = [
   { id:"basic",  name:"基本",       short:"基本",   en:"Basics",      c:"#9b3a5a" },
@@ -260,7 +260,7 @@ const D = [
   links:["job","stn","anomaly","doom"], src:["off","en"] },
 { id:"flow", cat:"basic", name:"基本の進め方", sum:"メインクエストを進めながら拠点の設備をそろえ、地域が変わるたびに武器と防具を作り直す。ステージ2から根源の戦いに参加でき、後半はMODやビルドを仕上げて高い難易度に挑む。",
   pts:["序盤はメインクエストと拠点の設備（分解作業台・作業台・調理・保管箱・水と食料）を優先する","テレポートタワーは見つけたらすぐ開放しておく","新しい地域に入ったら、武器だけでなく防具も今の地域に合うものに作り直す","ステージ2から根源の戦い（NORMAL/HARD）に参加できる。最初は他の人が始めた戦いに合流するのが楽","後半は武器・防具・MOD・校正・デビエーションを組み合わせてビルドを仕上げる"],
-  note:"進め方はゲーム神殿の攻略記事（2026年9月）の整理による。",
+  note:"進め方は攻略記事（2026年9月）の整理による。",
   links:["map","base","pw","st2"], src:["web"] },
 { id:"job", cat:"basic", name:"ジョブ（通常版のみ）", alias:"職業・クラス", sum:"通常のマニブスでは、チュートリアルのあとにジョブを選べる。マニブス（初心者）にはジョブがない。",
   pts:["ジョブはシェフ・テイマーなど。選ばない「自由人」もある（英語の記事）","初心者版から始めた人は、次のシナリオに移ったときに初めてジョブを選ぶことになる（英語の記事）"],
@@ -392,12 +392,7 @@ function card(d, i){
 }
 const legend = `<div class="legend">情報のもと: ${Object.entries(SRC).map(([k, v]) => `<span class="chip ${k}">${v}</span>`).join("")} ゲーム内で確認したものではありません。</div>`;
 const flow = `<ol class="flow">${D.filter(d => d.cat === "stage" && d.id !== "stn").map((d, i) => `<li data-id="${d.id}" role="button" tabindex="0"><b>0${i + 1}</b><span>${esc(d.name.replace(/^ステージ\d/, "").replace(/[「」]/g, ""))}</span><small>${esc((d.rows[0] || ["",""])[1])}</small></li>`).join("")}</ol>`;
-const sources = `<section class="group sources"><div class="ghead" style="--c:#9b3a5a"><i></i>情報源</div>
-  <ul>
-  <li>公式: <a href="https://www.oncehuman.game/jp/news/update/20250321/40792_1221190.html" target="_blank" rel="noopener">シナリオステージ調整の予告（2025年3月）</a>／<a href="https://www.oncehuman.game/jp/news/update/20250813/40792_1253599.html" target="_blank" rel="noopener">V2.1.1（休息期間の短縮）</a>／<a href="https://www.oncehuman.game/jp/news/update/20251223/40792_1278160.html" target="_blank" rel="noopener">V2.2.4（シナリオチャレンジ）</a>／<a href="https://www.oncehuman.game/jp/news/devBlog/20240725/40793_1169794.html" target="_blank" rel="noopener">Dev Talk 根源の戦い</a>／<a href="https://www.oncehuman.game/jp/news/devBlog/20260525/40793_1301447.html" target="_blank" rel="noopener">異常現象ワールドとNORMALワールド</a>／<a href="https://www.oncehuman.game/jp/news/devBlog/20260522/40793_1301330.html" target="_blank" rel="noopener">異常現象の輪S4</a>／<a href="https://www.oncehuman.game/jp/news/update/20260709/40792_1307155.html" target="_blank" rel="noopener">V3.0.1（名前の変更）</a>／<a href="https://www.oncehuman.game/jp/news/update/20260820/40792_1311773.html" target="_blank" rel="noopener">コンソール版FAQ</a>／<a href="https://www.oncehuman.game/jp/news/update/20260824/40792_1312054.html" target="_blank" rel="noopener">サーバー開放のお知らせ（2026年8月）</a>／<a href="https://www.oncehuman.game/jp/news/update/20260824/40792_1312016.html" target="_blank" rel="noopener">V3.0.4</a>／<a href="https://www.oncehuman.game/jp/news/devBlog/20260914/40793_1313807.html" target="_blank" rel="noopener">シナリオ永続サーバー統合説明</a>／<a href="https://www.oncehuman.game/jp/news/update/20261021/40792_1317217.html" target="_blank" rel="noopener">超越者ホットライン vol.11</a></li>
-  <li>攻略記事: <a href="https://game-shinden.com/once-human-manibus/" target="_blank" rel="noopener">ゲーム神殿 マニブス</a>／<a href="https://game-shinden.com/once-human-prime-war/" target="_blank" rel="noopener">ゲーム神殿 根源の戦い</a>／<a href="https://gamerch.com/oncehuman/918382" target="_blank" rel="noopener">Gamerch シナリオのおすすめ</a></li>
-  <li>英語の記事: <a href="https://oncehumanguide.com/manibus/" target="_blank" rel="noopener">Once Human Guide Manibus</a>／<a href="https://oncehumanguide.com/manibus/novice-vs-normal/" target="_blank" rel="noopener">Novice vs normal</a></li>
-  </ul></section>`;
+const sources = "";
 
 function render(animate){
   const q = norm($("#q").value.trim());
