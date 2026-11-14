@@ -22,7 +22,7 @@
 <meta name="twitter:image" content="https://yukhoeonce.github.io/builds/ogp.png?v=1">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Mochiy+Pop+One&family=BIZ+UDPGothic:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Dela+Gothic+One&family=Mochiy+Pop+One&family=BIZ+UDPGothic:wght@400;700&display=swap">
 <style>
 /* レイアウト: 上にバー＋タブ。「武器を見る」＝武器の棚 → 押すと全画面の集計シート。「投稿する」＝武器→防具6部位→MOD7部位をタップで選ぶ1列フォーム。
    PCで文字がぼやけないよう、本文の下で動くアニメは置かない（押したときの transform だけ） */
@@ -94,6 +94,9 @@ main{padding-block:22px 40px}
 .xmode{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
 .xl{display:grid;gap:8px}.xl .r{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center;border:2px solid var(--line);border-radius:12px;padding:8px 12px;background:var(--surface)}
 .xl .r .s{font-size:13px;color:var(--muted)}.xl .r .x{font-weight:700;font-size:17px}.xl .ic{width:30px;height:30px;display:grid;place-items:center;border:2.5px solid var(--line);border-radius:10px;box-shadow:2px 2px 0 var(--sh)}.xl .ic svg{width:18px;height:18px;display:block}
+.cardimg{width:100%;height:auto;display:block;border:2.5px solid var(--line);border-radius:12px;box-shadow:3px 3px 0 var(--sh)}
+.cardacts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.cardacts{align-items:center}.cdz{display:flex;gap:5px;margin-left:auto}.cdz .chip{padding:6px 9px;font-size:13px}
 .chip{border:2px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 12px;font-size:14px;font-weight:700}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
 .search{display:flex;gap:8px;align-items:center;margin-bottom:14px}
@@ -314,7 +317,7 @@ h3::before{content:"";width:10px;height:10px;background:var(--pink);border:2px s
       <div class="box step"><h2><span class="no">2</span><span data-en="Armor">防具</span></h2><p class="sub" data-en="For each slot, pick the armor set or a key gear piece. Only one key gear.">セット防具の名前か、主要防具を部位ごとに選んでね。主要防具は1つだけ。</p><div class="slots" id="pA"></div><p class="setsum" id="setsum"></p></div>
       <div class="box step"><h2><span class="no">3</span><span data-en="Mods (main effect)">MOD（メイン効果）</span></h2><p class="sub" data-en="Pick the mod on each slot.">部位ごとに付けているMODを選んでね。</p><div class="slots" id="pM"></div></div>
       <label class="note" id="admPostWrap" hidden style="display:flex;gap:8px;align-items:center;cursor:pointer"><input type="checkbox" id="admPost"> <span><b>管理者として投稿</b>（回数制限なし・同じ武器でも上書きせず毎回追加。合言葉は「管理」タブで入れたもの）</span></label>
-      <div class="submit"><button type="button" class="btn pink" id="send" data-en="Post this build">この装備を投稿する</button><button type="button" class="btn sub" id="reset" data-en="Clear">選び直す</button><span class="msg" id="msg" role="status"></span></div>
+      <div class="submit"><button type="button" class="btn" id="mkCard">ビルドカードを作る</button><button type="button" class="btn pink" id="send" data-en="Post this build">この装備を投稿する</button><button type="button" class="btn sub" id="reset" data-en="Clear">選び直す</button><span class="msg" id="msg" role="status"></span></div>
       <p class="note" data-en="You can post <b>one build per weapon</b> from this device. Posting the same weapon again replaces it. Posts are anonymous.">この端末からは<b>武器ごとに1つ</b>だけ投稿できるよ。同じ武器でもう一度投稿すると上書きになる。投稿は名前なしで、誰が投稿したかは表示されないよ。</p>
       <div id="mineWrap" hidden><h3 data-en="Builds posted from this device">この端末から投稿した装備</h3><div class="mine" id="mine"></div></div>
     </div>
@@ -402,6 +405,167 @@ function showRec(id){
   const rows=MS.map(([s,l])=>{const x=(r[s]||[])[0];return `<div class="r">${pix(s)}<span><span class="s">${esc(l)}</span><br><span class="x">${x?esc(xName(x)):T('好きなものでOK','Any')}</span></span></div>`}).join('');
   const same=`<p class="note" style="margin:0 0 10px;font-size:14px">${nchg?T(`初心者向けと上級者向けで <b>${nchg}か所</b> ちがうよ（印のついた部位）。`,`<b>${nchg}</b> slot(s) differ between Beginner and Advanced (marked).`):T('この武器は、初心者向けも上級者向けも同じおすすめだよ（弱点に当てるかどうかで変わらない武器）。','Same suggestion for Beginner and Advanced on this weapon.')}</p>`;
   openDlg(T('おすすめの拡張要素','Recommended mod types'),`<p style="margin:0 0 8px;font-weight:700">${esc(wName(w))}</p>${modes}<p class="sub" style="margin:0 0 10px">${T('ダメージラボの計算で、この武器のダメージが一番伸びる拡張要素だよ（投稿の集計ではなく計算結果）。','Mod types that raise this weapon’s damage the most, by Damage Lab’s calculation (not from posts).')}</p><div class="xl">${rows}</div><ul class="hint" style="margin-top:12px"><li>${recMode==='easy'?T('初心者向け：イベント外で手に入る拡張要素（通常・生存・爆裂・精密・異能、武器のキーワード）だけで計算。HPを低く保つ前提もなし。','Beginner: only mod types you can get outside events (General, Survival, Violent, Precision, Deviant Energy, weapon keyword). No low-HP assumption.'):T('上級者向け：オーメン・エアロ・墜落した星などのイベントMODも使って計算。「HPを低く保つ」前提。','Advanced: includes event mod types (Lunar, Aero, Downstar…). Assumes you keep HP low.')}</li><li>${T('どちらも異常現象（蝶の使者など）の効果は入れていないよ。','Neither includes Deviation effects (e.g. Butterfly’s Emissary).')}</li><li>${T('自分の数字で計算したいときは、ダメージラボの「MODおすすめ」を使ってね。','To calculate with your own stats, use “Mod suggestions” in Damage Lab.')}</li></ul><p style="margin-top:12px"><a class="btn small" href="https://yukhoeonce.github.io/damage/" target="_blank" rel="noopener">${T('ダメージラボを開く','Open Damage Lab')}</a></p>`);
+}
+// ===== ビルドカード（canvasで画像を作る）=====
+let cardDesign=1;
+async function makeCard(dz){if(typeof dz==='number')cardDesign=dz;
+  const w=WBY[cur.weapon];const m=$('msg');m.className='msg';
+  if(!w){m.className='msg ng';m.textContent=T('先に武器を選んでね','Choose a weapon first');return}
+  const allTxt=[wName(w),tName(w.type),setCombo(cur).combo,aName(setCombo(cur).key),...MS.map(([s,l])=>l+(cur['m_'+s]?mName(cur['m_'+s]):'')),...w.kw.map(kwN),'防具主要防具MODメイン効果みんなの装備非公式ファンサイトセットなし永久保存版特集ISSUE―★♪✦／＋0123456789ONCEHUMANBUILDCARD'].join('');
+  try{await Promise.all(['700 40px "BIZ UDPGothic"','40px "BIZ UDPGothic"','40px "Mochiy Pop One"','40px "DotGothic16"','40px "Dela Gothic One"'].map(f=>document.fonts.load(f,allTxt)))}catch(e){}
+  const W0=1200,H0=675,c=document.createElement('canvas');c.width=W0*2;c.height=H0*2;const g=c.getContext('2d');g.scale(2,2);
+  const POP='"Mochiy Pop One","BIZ UDPGothic",sans-serif',HVY='"Dela Gothic One","BIZ UDPGothic",sans-serif',BODY='"BIZ UDPGothic",sans-serif',DOT='"DotGothic16",monospace';
+  const rr=(x,y,w,h,r)=>{g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()};
+  const fit=(t,font,size,max)=>{let z=size;g.font=font.replace('$',z);while(g.measureText(t).width>max&&z>10){z-=1;g.font=font.replace('$',z)}return z};
+  const wimg=async()=>{if(!IMG[w.id])return null;const im=new Image();im.src=IMG[w.id];try{await im.decode()}catch(e){}return im.naturalWidth?im:null};
+  if(cardDesign===1){
+  // ===== レトロかわいい版 =====
+  const C={bg:'#fff4dc',paper:'#fffdf6',ink:'#3b2340',pink:'#ff9fbd',hot:'#ff5c93',mint:'#9be8d4',lemon:'#ffe27a',lav:'#c9b3ff',sky:'#9fd6ff',peach:'#ffc79a'};
+  const box=(x,y,w,h,r,fill,sh=7,lw=4)=>{rr(x+sh,y+sh,w,h,r);g.fillStyle=C.ink;g.fill();rr(x,y,w,h,r);g.fillStyle=fill;g.fill();g.lineWidth=lw;g.strokeStyle=C.ink;g.stroke()};
+  const star=(cx,cy,R,r,n,fill,rot=0)=>{g.beginPath();for(let i=0;i<n*2;i++){const a=rot+Math.PI*i/n,rad=i%2?r:R;g.lineTo(cx+Math.cos(a)*rad,cy+Math.sin(a)*rad)}g.closePath();g.fillStyle=fill;g.fill();g.lineWidth=4;g.strokeStyle=C.ink;g.stroke()};
+  const tape=(x,y,w,h,rot,col)=>{g.save();g.translate(x,y);g.rotate(rot);g.globalAlpha=.85;g.fillStyle=col;g.fillRect(-w/2,-h/2,w,h);g.globalAlpha=.35;g.fillStyle='#fff';for(let i=-w/2;i<w/2;i+=14)g.fillRect(i,-h/2,6,h);g.restore()};
+  // 背景：クリーム＋水玉
+  g.fillStyle=C.bg;g.fillRect(0,0,W0,H0);
+  g.fillStyle='rgba(59,35,64,.09)';for(let y=14;y<H0;y+=22)for(let x=(y/22%2)*11+8;x<W0;x+=22){g.beginPath();g.arc(x,y,2.2,0,7);g.fill()}
+  // 集中線（迫力）
+  g.save();g.translate(300,168);for(let i=0;i<36;i++){g.rotate(Math.PI*2/36);g.beginPath();g.moveTo(0,-8);g.lineTo(900,-26);g.lineTo(900,26);g.closePath();g.fillStyle=i%2?'rgba(255,226,122,.55)':'rgba(255,159,189,.30)';g.fill()}g.restore();
+  // 上の流れる帯
+  // 左：武器（大きなスターバーストの上）
+  star(300,168,205,160,14,C.pink,0.1);
+  star(300,168,172,136,14,C.lemon,0.32);
+  g.fillStyle=C.lemon;g.fillRect(0,0,W0,40);g.fillStyle=C.ink;g.fillRect(0,40,W0,4);
+  g.font='18px '+DOT;g.fillStyle=C.ink;const tk='★ ONCE HUMAN BUILD CARD ✦ '+T('みんなの装備','COMMUNITY BUILDS')+' ♪ ';let tx=12;while(tx<W0){g.fillText(tk,tx,27);tx+=g.measureText(tk).width}
+  const X=48,Y=84,BW=520;
+  if(IMG[w.id]){const im=new Image();im.src=IMG[w.id];await im.decode().catch(()=>{});if(im.naturalWidth){box(X+20,Y-6,BW-40,190,18,C.paper,8,4);const sc=Math.min((BW-70)/im.naturalWidth,166/im.naturalHeight);const iw=im.naturalWidth*sc,ih=im.naturalHeight*sc;g.save();rr(X+22,Y-4,BW-44,186,16);g.clip();g.drawImage(im,X+20+(BW-40-iw)/2,Y-6+(190-ih)/2,iw,ih);g.restore();rr(X+20,Y-6,BW-40,190,18);g.lineWidth=4;g.strokeStyle=C.ink;g.stroke()}}
+  tape(X+80,Y-2,120,30,-0.18,C.sky);tape(X+BW-70,Y+186,110,28,0.14,C.mint);
+  // 武器名（太フチ＋影の迫力文字）
+  const [base,tn]=split(wName(w));
+  const lab=(base||tName(w.type))+' ／ '+tName(w.type);g.font='700 20px '+BODY;const lw2=g.measureText(lab).width+28;box(X,Y+212,lw2,34,17,C.mint,4,3);g.fillStyle=C.ink;g.fillText(lab,X+14,Y+236);
+  const z=fit(tn,'$px '+HVY,78,BW+40);g.font=z+'px '+HVY;g.lineJoin='round';const ny=Y+322;
+  g.lineWidth=16;g.strokeStyle=C.ink;g.fillStyle=C.hot;g.strokeText(tn,X+7,ny+7);g.fillText(tn,X+7,ny+7);
+  g.lineWidth=12;g.strokeStyle=C.ink;g.strokeText(tn,X,ny);g.fillStyle='#fff';g.fillText(tn,X,ny);
+  // キーワード
+  let kx=X;const ky=Y+346;g.font='700 18px '+BODY;w.kw.forEach(k=>{const t=kwN(k),tw=g.measureText(t).width+26;box(kx,ky,tw,32,16,C.lemon,3,3);g.fillStyle=C.ink;g.fillText(t,kx+13,ky+23);kx+=tw+12});
+  // 防具
+  const sc=setCombo(cur),ay=Y+(w.kw.length?398:356);
+  box(X,ay,BW,sc.key?100:64,16,C.paper,6,4);
+  g.fillStyle=C.hot;g.font='16px '+POP;g.fillText(T('防具','ARMOR'),X+16,ay+26);
+  g.fillStyle=C.ink;const at=sc.combo||T('セットなし','No set bonus');fit(at,'$px '+HVY,26,BW-100);g.fillText(at,X+80,ay+32);
+  if(sc.key){g.font='700 20px '+BODY;g.fillStyle=C.ink;const kt='★ '+T('主要防具 ','Key gear ')+aName(sc.key);fit(kt,'700 $px '+BODY,21,BW-32);g.fillText(kt,X+16,ay+76)}
+  // 右：MODボード
+  const RX=632,RY=70,RW=W0-RX-40,RH=528;
+  box(RX,RY,RW,RH,22,C.paper,9,4);
+  tape(RX+RW/2,RY+2,150,32,-0.04,C.pink);
+  g.fillStyle=C.ink;g.font='36px '+HVY;g.fillText('MOD',RX+26,RY+56);
+  const mw=g.measureText('MOD').width;g.font='16px '+BODY;g.fillStyle='#7a6684';g.fillText(T('メイン効果','main effects'),RX+40+mw,RY+55);
+  star(RX+RW-44,RY+40,24,11,5,C.lemon,-Math.PI/2);
+  const rowH=64;MS.forEach(([s,l],i)=>{const y=RY+74+i*rowH,v=cur['m_'+s],col=PIXC[s]||C.pink;
+    box(RX+20,y,RW-46,rowH-12,14,v?'#fff':'#f3ecdf',4,3);
+    box(RX+30,y+7,38,38,10,col,2,3);
+    const P=PIX[s]||[];const cs=3.4;g.fillStyle=C.ink;P.forEach((row,yy)=>[...row].forEach((ch,xx)=>{if(ch==='#')g.fillRect(RX+35.5+xx*cs,y+12.5+yy*cs,cs,cs)}));
+    g.fillStyle='#7a6684';g.font='700 14px '+BODY;g.fillText(l,RX+82,y+21);
+    g.fillStyle=v?C.ink:'rgba(59,35,64,.35)';const t=v?mName(v):'―';fit(t,'$px '+HVY,21,RW-140);g.fillText(t,RX+82,y+44)});
+  // 飾り
+  star(600,612,20,9,5,C.mint,-Math.PI/2);star(1160,640,14,6,5,C.pink,-Math.PI/2);
+  g.fillStyle=C.hot;g.font='26px '+POP;g.fillText('♪',590,90);g.fillStyle=C.lav;g.fillText('✦',28,640);
+  // 下の帯
+  g.fillStyle=C.ink;g.fillRect(0,H0-48,W0,4);g.fillStyle=C.pink;g.fillRect(0,H0-44,W0,44);
+  g.fillStyle=C.ink;g.font='20px '+POP;g.fillText(T('みんなの装備','Community Builds'),40,H0-14);
+  g.font='700 18px '+BODY;g.fillText('yukhoeonce.github.io/builds/',250,H0-15);
+  g.textAlign='right';g.font='14px '+BODY;g.fillText(T('非公式ファンサイト ／ © NetEase / Starry Studio','Unofficial fan site / © NetEase / Starry Studio'),W0-40,H0-16);g.textAlign='left';
+  } else if(cardDesign===2){
+  // ===== デザイン2：レトロゲームのステータス画面 =====
+  const C={bg:'#0d0f2e',win:'#16195a',ink:'#ffffff',sub:'#a9b4ff',yel:'#ffe45c',pink:'#ff6fa5',mint:'#6ff0c8',edge:'#8fa0ff'};
+  g.fillStyle=C.bg;g.fillRect(0,0,W0,H0);
+  // 星空のドット
+  for(let i=0;i<140;i++){const x=(i*397)%W0,y=(i*211)%H0;g.fillStyle=i%7?'rgba(255,255,255,.25)':'rgba(255,228,92,.7)';g.fillRect(x,y,i%7?2:4,i%7?2:4)}
+  const win=(x,y,w,h,title)=>{g.fillStyle='rgba(0,0,0,.45)';g.fillRect(x+8,y+8,w,h);g.fillStyle=C.win;g.fillRect(x,y,w,h);
+    g.fillStyle=C.ink;g.fillRect(x,y,w,5);g.fillRect(x,y+h-5,w,5);g.fillRect(x,y,5,h);g.fillRect(x+w-5,y,5,h);
+    g.fillStyle=C.edge;g.fillRect(x+9,y+9,w-18,2);g.fillRect(x+9,y+h-11,w-18,2);g.fillRect(x+9,y+9,2,h-18);g.fillRect(x+w-11,y+9,2,h-18);
+    g.fillStyle=C.bg;[[x,y],[x+w-5,y],[x,y+h-5],[x+w-5,y+h-5]].forEach(([a,b])=>g.fillRect(a,b,5,5));
+    if(title){g.font='20px '+DOT;const tw=g.measureText(title).width+24;g.fillStyle=C.bg;g.fillRect(x+22,y-12,tw,26);g.fillStyle=C.yel;g.fillText(title,x+34,y+8)}};
+  // 見出し
+  g.font='30px '+DOT;g.fillStyle=C.pink;g.fillText('▶ BUILD STATUS',48,58);g.fillStyle=C.sub;g.font='20px '+DOT;g.fillText('ONCE HUMAN',330,57);
+  g.textAlign='right';g.fillStyle=C.mint;g.fillText(new Date().toLocaleDateString('ja-JP'),W0-48,57);g.textAlign='left';
+  // 左：武器ウィンドウ
+  const X=40,BW=560;win(X,84,BW,300,'WEAPON');
+  const im=await wimg();if(im){const sc=Math.min((BW-60)/im.naturalWidth,150/im.naturalHeight),iw=im.naturalWidth*sc,ih=im.naturalHeight*sc;g.imageSmoothingEnabled=false;g.drawImage(im,X+(BW-iw)/2,104+(160-ih)/2,iw,ih);g.imageSmoothingEnabled=true;g.strokeStyle=C.ink;g.lineWidth=3;g.strokeRect(X+(BW-iw)/2-4,104+(160-ih)/2-4,iw+8,ih+8)}
+  const [base,tn]=split(wName(w));
+  const z=fit(tn,'$px '+HVY,50,BW-60);g.font=z+'px '+HVY;g.fillStyle=C.pink;g.fillText(tn,X+34,334);g.fillStyle=C.ink;g.fillText(tn,X+30,330);
+  g.font='20px '+DOT;g.fillStyle=C.sub;g.fillText((base||'')+'  '+tName(w.type)+(w.kw.length?'  ':''),X+30,366);
+  if(w.kw.length){const pre=(base||'')+'  '+tName(w.type)+'  ';const pw=g.measureText(pre).width;g.fillStyle=C.yel;g.fillText('◆'+w.kw.map(kwN).join('・'),X+30+pw,366)}
+  // 防具ウィンドウ
+  const sc=setCombo(cur);win(X,408,BW,sc.key?150:112,'ARMOR');
+  g.font='20px '+DOT;g.fillStyle=C.sub;g.fillText('SET',X+30,456);g.fillStyle=C.yel;const at=sc.combo||T('セットなし','No set bonus');fit(at,'$px '+HVY,28,BW-120);g.fillText(at,X+96,458);
+  if(sc.key){g.font='20px '+DOT;g.fillStyle=C.sub;g.fillText('KEY',X+30,508);g.fillStyle=C.ink;fit(aName(sc.key),'700 $px '+BODY,24,BW-120);g.fillText(aName(sc.key),X+96,510)}
+  // 右：MODウィンドウ
+  const RX=636,RW=W0-RX-40;win(RX,84,RW,500,'MOD');
+  MS.forEach(([s,l],i)=>{const y=118+i*64,v=cur['m_'+s];
+    g.fillStyle=PIXC[s]||C.pink;g.fillRect(RX+30,y+4,40,40);g.fillStyle=C.bg;const P=PIX[s]||[],cs=3.6;P.forEach((row,yy)=>[...row].forEach((ch,xx)=>{if(ch==='#')g.fillRect(RX+35.6+xx*cs,y+9.6+yy*cs,cs,cs)}));
+    g.font='16px '+DOT;g.fillStyle=C.sub;g.fillText(l,RX+86,y+18);
+    g.fillStyle=v?C.ink:'rgba(255,255,255,.3)';const t=v?mName(v):'---';fit(t,'700 $px '+BODY,23,RW-150);g.fillText(t,RX+86,y+44);
+    if(i===0){g.fillStyle=C.yel;g.font='22px '+DOT;g.fillText('▶',RX+RW-46,y+40)}
+    if(i<6){g.fillStyle='rgba(169,180,255,.25)';for(let dx=RX+28;dx<RX+RW-28;dx+=10)g.fillRect(dx,y+56,5,2)}});
+  // 走査線
+  g.fillStyle='rgba(0,0,0,.18)';for(let y=0;y<H0;y+=4)g.fillRect(0,y,W0,2);
+  // 下
+  g.fillStyle=C.yel;g.font='20px '+DOT;g.fillText(T('みんなの装備','COMMUNITY BUILDS'),48,H0-28);g.fillStyle=C.ink;g.fillText('yukhoeonce.github.io/builds/',250,H0-28);
+  g.textAlign='right';g.fillStyle=C.sub;g.font='14px '+BODY;g.fillText(T('非公式ファンサイト ／ © NetEase / Starry Studio','Unofficial fan site / © NetEase / Starry Studio'),W0-48,H0-30);g.textAlign='left';
+  } else {
+  // ===== デザイン3：雑誌の表紙風 =====
+  const C={bg:'#ff4f8b',bg2:'#ff7aa8',ink:'#2b1530',cream:'#fff8e7',yel:'#ffe03a',cyan:'#5ee0ff'};
+  g.fillStyle=C.bg;g.fillRect(0,0,W0,H0);
+  // 網点
+  g.fillStyle='rgba(255,255,255,.13)';for(let y=10;y<H0;y+=18)for(let x=(y/18%2)*9+6;x<W0;x+=18){const r=1.2+2.4*(x/W0);g.beginPath();g.arc(x,y,r,0,7);g.fill()}
+  // 大見出し BUILDS
+  g.font='150px '+HVY;g.textBaseline='alphabetic';
+  g.fillStyle=C.ink;g.fillText('BUILDS',48,178);g.fillStyle=C.cream;g.fillText('BUILDS',40,170);
+  // 右上：号数とバーコード
+  g.textAlign='right';g.fillStyle=C.cream;g.font='22px '+DOT;g.fillText('ONCE HUMAN',W0-40,60);
+  const dt=new Date();g.font='16px '+DOT;g.fillText(dt.getFullYear()+'.'+String(dt.getMonth()+1).padStart(2,'0')+' ISSUE  No.'+String(W.indexOf(w)+1).padStart(3,'0'),W0-40,84);g.textAlign='left';
+  g.fillStyle=C.cream;g.fillRect(W0-190,98,150,56);g.fillStyle=C.ink;{let bx=W0-182;let k=0;while(bx<W0-48){const bw=[1,2,1,3,1,2,2,1][k%8];g.fillRect(bx,104,bw,38);bx+=bw+[2,1,3,1,2][k%5];k++}}
+  g.font='10px '+DOT;g.fillText('4 912345 678904',W0-180,151);
+  // 武器の写真（少し傾けたポラロイド風）
+  const IX=58,IY=196,IW=600,IH=300;
+  g.save();g.translate(IX+IW/2,IY+IH/2);g.rotate(-0.035);
+  g.fillStyle=C.ink;g.fillRect(-IW/2+10,-IH/2+10,IW,IH);g.fillStyle=C.cream;g.fillRect(-IW/2,-IH/2,IW,IH);
+  g.fillStyle='#2a1d3d';g.fillRect(-IW/2+14,-IH/2+14,IW-28,IH-28);
+  const im=await wimg();if(im){const sc=Math.min((IW-40)/im.naturalWidth,(IH-40)/im.naturalHeight),iw=im.naturalWidth*sc,ih=im.naturalHeight*sc;g.save();g.beginPath();g.rect(-IW/2+14,-IH/2+14,IW-28,IH-28);g.clip();g.drawImage(im,-iw/2,-ih/2,iw,ih);g.restore()}
+  g.lineWidth=4;g.strokeStyle=C.ink;g.strokeRect(-IW/2,-IH/2,IW,IH);g.restore();
+  // 丸ステッカー（保存版）
+  {const sx=640,sy=212,R=58;g.beginPath();for(let i=0;i<32;i++){const a=Math.PI*i/16,rad=i%2?R*.84:R;g.lineTo(sx+Math.cos(a)*rad,sy+Math.sin(a)*rad)}g.closePath();g.fillStyle=C.yel;g.fill();g.lineWidth=4;g.strokeStyle=C.ink;g.stroke();
+   g.save();g.translate(sx,sy);g.rotate(0.2);g.textAlign='center';g.fillStyle=C.ink;g.font='17px '+HVY;g.fillText(T('永久','KEEP'),0,-8);g.font='25px '+HVY;g.fillText(T('保存版','THIS!'),0,20);g.restore();g.textAlign='left'}
+  // 武器名（大きく）
+  const [base,tn]=split(wName(w));
+  const z=fit(tn,'$px '+HVY,78,640);g.font=z+'px '+HVY;g.lineJoin='round';
+  g.fillStyle=C.ink;g.fillText(tn,52,592);g.lineWidth=12;g.strokeStyle=C.ink;g.strokeText(tn,46,586);g.fillStyle=C.yel;g.fillText(tn,46,586);
+  // 種類・キーワード
+  let kx=48;const ky=606;const tg=(t,bg,fg)=>{g.font='700 17px '+BODY;const tw=g.measureText(t).width+22;g.fillStyle=C.ink;g.fillRect(kx+3,ky+3,tw,28);g.fillStyle=bg;g.fillRect(kx,ky,tw,28);g.lineWidth=2.5;g.strokeStyle=C.ink;g.strokeRect(kx,ky,tw,28);g.fillStyle=fg;g.fillText(t,kx+11,ky+20);kx+=tw+10};
+  tg((base?base+' ／ ':'')+tName(w.type),C.cream,C.ink);w.kw.forEach(k=>tg(kwN(k),C.cyan,C.ink));
+  // 右：見出し（防具とMOD）
+  const RX=724,RW=W0-RX-40;let y=196;
+  const sc=setCombo(cur);
+  g.fillStyle=C.ink;g.fillRect(RX,y,104,30);g.fillStyle=C.yel;g.font='18px '+HVY;g.fillText(T('特集','FEATURE'),RX+12,y+22);g.fillStyle=C.cream;g.font='18px '+HVY;g.fillText(T('防具','ARMOR'),RX+116,y+23);
+  y+=66;const at=sc.combo||T('セットなし','No set bonus');const az=fit(at,'$px '+HVY,32,RW);g.font=az+'px '+HVY;g.lineWidth=7;g.strokeStyle=C.ink;g.strokeText(at,RX,y);g.fillStyle=C.cream;g.fillText(at,RX,y);
+  if(sc.key){y+=34;const kt='★ '+T('主要防具 ','Key gear ')+aName(sc.key);fit(kt,'$px '+HVY,20,RW);g.lineWidth=5;g.strokeStyle=C.ink;g.strokeText(kt,RX,y);g.fillStyle=C.yel;g.fillText(kt,RX,y)}
+  y+=24;g.fillStyle=C.ink;g.fillRect(RX,y,RW,4);y+=12;
+  g.fillStyle=C.ink;g.fillRect(RX,y,82,28);g.fillStyle=C.cream;g.font='18px '+HVY;g.fillText('MOD',RX+14,y+21);y+=32;
+  const lh=Math.min(40,(612-y)/MS.length);
+  MS.forEach(([s,l],i)=>{const v=cur['m_'+s],yy=y+i*lh+lh*.72;
+    g.fillStyle=C.ink;rr(RX,yy-21,106,28,6);g.fill();
+    g.fillStyle=C.yel;g.font='700 15px '+BODY;g.fillText(String(i+1).padStart(2,'0'),RX+8,yy-1);
+    g.fillStyle=C.cream;fit(l,'700 $px '+BODY,16,66);g.fillText(l,RX+34,yy-1);
+    const t=v?mName(v):'―';fit(t,'$px '+HVY,22,RW-122);g.fillStyle=v?C.cream:'rgba(255,248,231,.5)';g.fillText(t,RX+118,yy+1)});
+  // 下
+  g.fillStyle=C.ink;g.fillRect(0,H0-34,W0,34);
+  g.fillStyle=C.cream;g.font='16px '+POP;g.fillText(T('みんなの装備','Community Builds'),40,H0-11);
+  g.font='700 15px '+BODY;g.fillText('yukhoeonce.github.io/builds/',200,H0-11);
+  g.textAlign='right';g.font='13px '+BODY;g.fillText(T('非公式ファンサイト ／ © NetEase / Starry Studio','Unofficial fan site / © NetEase / Starry Studio'),W0-40,H0-12);g.textAlign='left';
+  }
+  const url=c.toDataURL('image/png');const fn='build-'+w.id+'.png';
+  let canShare=false,file=null;try{const bl=await (await fetch(url)).blob();file=new File([bl],fn,{type:'image/png'});canShare=!!(navigator.canShare&&navigator.canShare({files:[file]}))}catch(e){}
+  openDlg(T('ビルドカード','Build card'),`<img class="cardimg" src="${url}" alt="${esc(wName(w))}"><p class="sub" style="margin-top:8px">${T('スマホは画像を長押しでも保存できるよ。','On phones you can also long-press the image to save it.')}</p><div class="cardacts"><a class="btn pink" href="${url}" download="${fn}">${T('画像を保存','Save image')}</a>${canShare?`<button type="button" class="btn" id="cardShare">${T('共有する','Share')}</button>`:''}<span class="cdz">${[1,2,3].map(n=>`<button type="button" class="chip" data-cdesign="${n}" aria-pressed="${cardDesign===n}">${T('デザイン','Design ')}${n}</button>`).join('')}</span></div>`);
+  if(canShare)$('cardShare').onclick=()=>navigator.share({files:[file],text:T('私の'+wName(w)+'のビルド！ #ワンスヒューマン','My build! #OnceHuman')+' https://yukhoeonce.github.io/builds/'}).catch(()=>{});
 }
 const AS0=D.ASLOT, MS0=D.MSLOT;  // [[id,名前]]
 let AS=AS0, MS=MS0;
@@ -670,6 +834,8 @@ $('dBody').addEventListener('click',e=>{const b=e.target.closest('[data-pick]');
 $('dClose').addEventListener('click',closeDlg);
 $('dlg').addEventListener('click',e=>{if(e.target===$('dlg'))closeDlg()});
 $('send').addEventListener('click',send);
+$('mkCard').addEventListener('click',makeCard);
+$('dBody').addEventListener('click',e=>{const b=e.target.closest('[data-cdesign]');if(b)makeCard(+b.dataset.cdesign)});
 $('reset').addEventListener('click',()=>{cur={weapon:cur.weapon};$('msg').textContent='';renderForm()});
 $('mine').addEventListener('click',e=>{const d=e.target.closest('[data-del]'),ed=e.target.closest('[data-edit]');if(d)delMine(d.dataset.del,d);if(ed){cur={...ls.get('bs_mine',{})[ed.dataset.edit]};renderForm();window.scrollTo(0,0)}});
 $('aLoad').addEventListener('click',adminLoad);
