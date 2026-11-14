@@ -563,9 +563,7 @@ async function makeCard(dz){if(typeof dz==='number')cardDesign=dz;
   g.textAlign='right';g.font='13px '+BODY;g.fillText(T('非公式ファンサイト ／ © NetEase / Starry Studio','Unofficial fan site / © NetEase / Starry Studio'),W0-40,H0-12);g.textAlign='left';
   }
   const url=c.toDataURL('image/png');const fn='build-'+w.id+'.png';
-  let canShare=false,file=null;try{const bl=await (await fetch(url)).blob();file=new File([bl],fn,{type:'image/png'});canShare=!!(navigator.canShare&&navigator.canShare({files:[file]}))}catch(e){}
-  openDlg(T('ビルドカード','Build card'),`<img class="cardimg" src="${url}" alt="${esc(wName(w))}"><p class="sub" style="margin-top:8px">${T('スマホは画像を長押しでも保存できるよ。','On phones you can also long-press the image to save it.')}</p><div class="cardacts"><a class="btn pink" href="${url}" download="${fn}">${T('画像を保存','Save image')}</a>${canShare?`<button type="button" class="btn" id="cardShare">${T('共有する','Share')}</button>`:''}<span class="cdz">${[1,2,3].map(n=>`<button type="button" class="chip" data-cdesign="${n}" aria-pressed="${cardDesign===n}">${T('デザイン','Design ')}${n}</button>`).join('')}</span></div>`);
-  if(canShare)$('cardShare').onclick=()=>navigator.share({files:[file],text:T('私の'+wName(w)+'のビルド！ #ワンスヒューマン','My build! #OnceHuman')+' https://yukhoeonce.github.io/builds/'}).catch(()=>{});
+  openDlg(T('ビルドカード','Build card'),`<img class="cardimg" src="${url}" alt="${esc(wName(w))}"><p class="sub" style="margin-top:8px">${T('スマホは画像を長押しでも保存できるよ。','On phones you can also long-press the image to save it.')}</p><div class="cardacts"><a class="btn pink" href="${url}" download="${fn}">${T('画像を保存','Save image')}</a><span class="cdz">${[1,2,3].map(n=>`<button type="button" class="chip" data-cdesign="${n}" aria-pressed="${cardDesign===n}">${T('デザイン','Design ')}${n}</button>`).join('')}</span></div>`);
 }
 const AS0=D.ASLOT, MS0=D.MSLOT;  // [[id,名前]]
 let AS=AS0, MS=MS0;
