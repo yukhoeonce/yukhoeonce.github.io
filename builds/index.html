@@ -563,7 +563,15 @@ async function makeCard(dz){if(typeof dz==='number')cardDesign=dz;
   g.textAlign='right';g.font='13px '+BODY;g.fillText(T('非公式ファンサイト ／ © NetEase / Starry Studio','Unofficial fan site / © NetEase / Starry Studio'),W0-40,H0-12);g.textAlign='left';
   }
   const url=c.toDataURL('image/png');const fn='build-'+w.id+'.png';
-  openDlg(T('ビルドカード','Build card'),`<img class="cardimg" src="${url}" alt="${esc(wName(w))}"><p class="sub" style="margin-top:8px">${T('スマホは画像を長押しでも保存できるよ。','On phones you can also long-press the image to save it.')}</p><div class="cardacts"><a class="btn pink" href="${url}" download="${fn}">${T('画像を保存','Save image')}</a><span class="cdz">${[1,2,3].map(n=>`<button type="button" class="chip" data-cdesign="${n}" aria-pressed="${cardDesign===n}">${T('デザイン','Design ')}${n}</button>`).join('')}</span></div>`);
+  openDlg(T('ビルドカード','Build card'),`<img class="cardimg" src="${url}" alt="${esc(wName(w))}"><p class="sub" style="margin-top:8px">${T('スマホは画像を長押しでも保存できるよ。','On phones you can also long-press the image to save it.')}</p><div class="cardacts"><button type="button" class="btn pink" id="cardSave">${T('画像を保存','Save image')}</button><span class="cdz">${[1,2,3].map(n=>`<button type="button" class="chip" data-cdesign="${n}" aria-pressed="${cardDesign===n}">${T('デザイン','Design ')}${n}</button>`).join('')}</span></div>`);
+  // iPhone/iPad は download が効かないので共有シート（「画像を保存」がある）を使う。ほかは blob でダウンロード
+  let blob=null,file=null;try{blob=await (await fetch(url)).blob();file=new File([blob],fn,{type:'image/png'})}catch(e){}
+  const ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  $('cardSave').onclick=()=>{
+    if(ios&&file&&navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file]}).catch(()=>{});return}
+    const a=document.createElement('a');a.href=blob?URL.createObjectURL(blob):url;a.download=fn;document.body.appendChild(a);a.click();a.remove();
+    if(blob)setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+  };
 }
 const AS0=D.ASLOT, MS0=D.MSLOT;  // [[id,名前]]
 let AS=AS0, MS=MS0;
