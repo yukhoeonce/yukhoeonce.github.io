@@ -911,6 +911,9 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
 .curtain.go.to-beg{background:#fff4dc}
 @media (prefers-reduced-motion:reduce){.curtain.go{animation:none}}
 
+/* ドット数字を見やすく（2026-11-14） */
+body:not(.pro) .f input{font-size:20px!important;-webkit-text-stroke:.6px currentColor;color:var(--ink)!important;letter-spacing:.04em}
+body:not(.pro) .spec b{-webkit-text-stroke:.4px currentColor}
 </style>
 
 <style>
@@ -975,6 +978,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
 
 </head>
 <body>
+
 <header class="top"><div class="wrap">
   <div class="brand">
     <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="12" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="16" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 1v7M16 24v7M1 16h7M24 16h7" stroke="currentColor" stroke-width="2"/></svg>
@@ -1112,7 +1116,7 @@ body.pro #mods .ctiles.lvt button{background:#fffaf0!important}
   </aside>
 </div>
 
-<footer class="wrap chlog" id="chlog"><details open><summary>更新履歴</summary><ol><li><time>11/14</time><ul><li>重要な防具に「ベレー帽」「ベテランレザージャケット」「BBQグローブ」を追加（ベレー帽はスプレッドの当たる回数+1、ベテランレザージャケットは敵との距離×2%を爆弾ダメージに計算）</li></ul></li><li><time>11/13</time><ul><li>MODの考え方を学べる「MOD講座」へのリンクを追加（MODおすすめの下）</li><li>スマホで武器を選ぶ画面がいつも2列になるように</li><li>スマホでMODおすすめの理想の付け方が空白になる不具合を修正</li><li>スマホの装備画面を見やすく（上の結果を小さく、条件と内訳はボタンで開く、カードは名前だけ）</li><li>初めて開いたときだけ「開発中です」のお知らせを出すように</li><li>MODおすすめ：エレメント系の武器（フロスト・火傷・サージ・爆弾）ではエレメントの共鳴を最大で計算</li><li>MODおすすめ：異常増幅は「リロード直後に撃つ」をONにすると候補に入るように</li><li>MODおすすめ：フロスト金武器の定番を反映（アビスアイ＝クライオブラスト＋コールドウェーブ、パスファインダー・天外来客・静寂の帰途＝マスクはフロスト創造物）</li><li>キーワード専用のメイン効果（単独爆破など）は、その武器のキーワードのときだけ計算に入れるよう修正</li><li>防具セットの部位数を、セット一覧の上で変えられるように</li><li>MODおすすめ（武器を選ぶと理想のMODの付け方を自動で表示）を追加</li><li>精密バウンス（マスク）の効果を計算に追加</li><li>P90の範囲ダメージを実測で確認（弱点DMGが乗る）</li><li>危険物の投げに単独爆破が乗らないよう修正（実測）</li></ul></li><li><time>11/12</time><ul><li>レトロかわいいデザインに変更（プロモードは喫茶店風）</li><li>装備画面を「いまの装備／試す装備」の比較表に作り直し</li><li>防具セット（複数選択可）と重要な防具を追加</li><li>絶響のスプレッド回数を残響の数で計算、牢獄ヘルメットに対応</li><li>危険物・不安定爆弾・エコー追撃を実測で確認済みに</li><li>マガジン容量の入力を追加</li><li>タッチ端末で数字を押すとテンキーが出るように</li></ul></li><li><time>11/11</time><ul><li>武器MODの選択画面をキーワード別に分けた</li></ul></li><li><time>11/10</time><ul><li>武器MOD・防具MODを図鑑に合わせて全部追加</li><li>弾の種類（銅弾・銅芯弾・徹甲弾）の選択を追加</li><li>武器の画像を追加</li></ul></li><li><time>11/08</time><ul><li>装備画面（MODの付け替え比較）と、メイン効果・閃光の選択を追加</li><li>明るく見やすいレイアウトに変更</li></ul></li><li><time>11/07</time><ul><li>ダメージラボを公開（初心者／プロ切り替え）</li></ul></li></ol></details></footer>
+<footer class="wrap chlog" id="chlog"><details open><summary>更新履歴</summary><ol><li><time>11/14</time><ul><li>重要な防具に「ベレー帽」「ベテランレザージャケット」「BBQグローブ」を追加（ベレー帽はスプレッドの当たる回数+1、ベテランレザージャケットは敵との距離×2%を爆弾ダメージに計算）</li><li>入力欄のドット数字を太く・大きくして見やすく</li></ul></li><li><time>11/13</time><ul><li>MODの考え方を学べる「MOD講座」へのリンクを追加（MODおすすめの下）</li><li>スマホで武器を選ぶ画面がいつも2列になるように</li><li>スマホでMODおすすめの理想の付け方が空白になる不具合を修正</li><li>スマホの装備画面を見やすく（上の結果を小さく、条件と内訳はボタンで開く、カードは名前だけ）</li><li>初めて開いたときだけ「開発中です」のお知らせを出すように</li><li>MODおすすめ：エレメント系の武器（フロスト・火傷・サージ・爆弾）ではエレメントの共鳴を最大で計算</li><li>MODおすすめ：異常増幅は「リロード直後に撃つ」をONにすると候補に入るように</li><li>MODおすすめ：フロスト金武器の定番を反映（アビスアイ＝クライオブラスト＋コールドウェーブ、パスファインダー・天外来客・静寂の帰途＝マスクはフロスト創造物）</li><li>キーワード専用のメイン効果（単独爆破など）は、その武器のキーワードのときだけ計算に入れるよう修正</li><li>防具セットの部位数を、セット一覧の上で変えられるように</li><li>MODおすすめ（武器を選ぶと理想のMODの付け方を自動で表示）を追加</li><li>精密バウンス（マスク）の効果を計算に追加</li><li>P90の範囲ダメージを実測で確認（弱点DMGが乗る）</li><li>危険物の投げに単独爆破が乗らないよう修正（実測）</li></ul></li><li><time>11/12</time><ul><li>レトロかわいいデザインに変更（プロモードは喫茶店風）</li><li>装備画面を「いまの装備／試す装備」の比較表に作り直し</li><li>防具セット（複数選択可）と重要な防具を追加</li><li>絶響のスプレッド回数を残響の数で計算、牢獄ヘルメットに対応</li><li>危険物・不安定爆弾・エコー追撃を実測で確認済みに</li><li>マガジン容量の入力を追加</li><li>タッチ端末で数字を押すとテンキーが出るように</li></ul></li><li><time>11/11</time><ul><li>武器MODの選択画面をキーワード別に分けた</li></ul></li><li><time>11/10</time><ul><li>武器MOD・防具MODを図鑑に合わせて全部追加</li><li>弾の種類（銅弾・銅芯弾・徹甲弾）の選択を追加</li><li>武器の画像を追加</li></ul></li><li><time>11/08</time><ul><li>装備画面（MODの付け替え比較）と、メイン効果・閃光の選択を追加</li><li>明るく見やすいレイアウトに変更</li></ul></li><li><time>11/07</time><ul><li>ダメージラボを公開（初心者／プロ切り替え）</li></ul></li></ol></details></footer>
 
 <nav class="tabbar" id="tabbar" aria-label="画面の切り替え"><button type="button" data-t="w"><b>1</b>武器</button><button type="button" data-t="s"><b>2</b>ステータス</button><button type="button" data-t="m"><b>3</b>MOD</button><button type="button" data-t="r"><b>=</b>結果</button></nav>
 <div class="dock" id="dock" role="button" tabindex="0" aria-label="結果を見る"><span id="dockL"></span><b id="dockV"></b></div>
@@ -2227,5 +2231,4 @@ body.pro .kp-hd .kp-nav{border:1px solid #b89a6c;box-shadow:none;border-radius:4
   document.addEventListener('keydown',e=>{if(cur&&e.key==='Escape')close()});
 })();
 </script>
-</body>
-</html>
+</body></html>
