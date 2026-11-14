@@ -518,7 +518,7 @@ async function openW(id){
   <div class="panel"><h4>${T('主要防具','Key gear')}<small>${EL()?'of '+nk:nk+'件中'}</small></h4>${optRows(keyT,x=>x==='(none)'?T('主要防具なし','No key gear'):aName(x))}</div></div>
   <details class="more" style="margin-top:10px"><summary>${T('部位ごとの防具を見る','Armor by slot')}</summary><div class="cols" style="margin-top:8px">${aPanels}</div></details>
   <h3>${T('MOD（メイン効果） <small>棒が長いほど多く使われてる</small>','Mods (main effect) <small>Longer bar = more popular</small>')}</h3>
-  <div class="cols">${mPanels}${recBtn}</div>`:`<div class="note" style="margin-top:10px">${T('この武器はまだ投稿がないよ。最初の1人になってみる？','No builds for this weapon yet. Be the first to post one!')}</div>`}
+  <div class="cols">${mPanels}${recBtn}</div>`:`<div class="note" style="margin-top:10px">${T('この武器はまだ投稿がないよ。最初の1人になってみる？','No builds for this weapon yet. Be the first to post one!')}</div>${recBtn?`<div class="cols" style="margin-top:12px">${recBtn}</div>`:''}`}
   <ul class="hint">${EL()?`
     <li>% = share of posts that filled that slot.</li>
     <li>Each slot shows the top 3. Tap “more” to see the rest (including under 3%).</li>
