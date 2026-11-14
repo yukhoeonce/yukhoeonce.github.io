@@ -267,7 +267,8 @@ details.dex summary::-webkit-details-marker{display:none}
 footer.site{padding-block:24px 36px;border-top:3px solid var(--line);font-size:13px;color:var(--muted)}
 footer.site .wrap{display:flex;flex-direction:column;gap:4px}
 
-.tabs a.back{background:var(--lilac)}
+.tabs a.back{background:var(--lilac);display:inline-flex;align-items:center;gap:6px}
+.tabs a.back svg{width:12px;height:12px;flex:none}
 /* ===== ダメージラボのレトロかわいい版に寄せる ===== */
 body{animation:dots 30s linear infinite}
 @keyframes dots{to{background-position:220px 220px}}
@@ -362,7 +363,7 @@ main,footer.site,.ticker{position:relative;z-index:1}
       <a href="#lesson" data-v="lesson">レッスン</a>
       <a href="#quiz" data-v="quiz">クイズ</a>
       <a href="#words" data-v="words">用語集</a>
-      <a class="back" href="https://yukhoeonce.github.io/">ガイドへ戻る ↩</a>
+      <a class="back" href="https://yukhoeonce.github.io/"><svg viewBox="0 0 8 8" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M3 1h1v1H3zM2 2h1v1H2zM1 3h6v2H1zM2 5h1v1H2zM3 6h1v1H3z"/></svg>ガイドへ戻る</a>
     </nav>
   </div>
 </header>
