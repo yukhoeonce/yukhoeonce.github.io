@@ -113,7 +113,7 @@ main{padding-block:24px 48px}
 .path{padding:18px;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink);transition:transform .12s}
 .path:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--sh)}
 .path h3{font-size:18px}
-.path p{font-size:14px;color:var(--ink-2)}
+.path p{font-size:15px;color:var(--ink-2)}
 .path .eyebrow{display:flex;justify-content:space-between}
 
 /* ===== レッスン ===== */
@@ -136,18 +136,18 @@ main{padding-block:24px 48px}
 .modcard .ic{grid-row:span 2;width:54px;height:54px;border:2.5px solid var(--line);border-radius:12px;background:var(--lemon);display:grid;place-items:center;font-family:var(--f-dot);font-size:22px;color:var(--on-pop)}
 .modcard .nm{font-weight:800;font-size:18px}
 .modcard .lv{grid-row:span 2;font-family:var(--f-dot);font-size:22px;border:2px solid var(--line);border-radius:8px;padding:2px 8px;background:var(--surface)}
-.modcard .ex{font-size:14px;color:var(--ink-2)}
+.modcard .ex{font-size:15px;color:var(--ink-2)}
 .parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
 .part{padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface)}
 .part .k{font-weight:700;font-size:13px;color:var(--muted)}
 .part b{display:block;font-size:16px}
-.part p{font-size:14px;color:var(--ink-2)}
+.part p{font-size:15px;color:var(--ink-2)}
 
 .roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
 .role{padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface);display:flex;flex-direction:column;gap:4px}
 .role .chip{align-self:flex-start}
 .role b{font-size:16px}
-.role p{font-size:14px;color:var(--ink-2)}
+.role p{font-size:15px;color:var(--ink-2)}
 
 details.dex{border:2px solid var(--line);border-radius:12px;background:var(--surface)}
 details.dex+details.dex{margin-top:8px}
@@ -167,7 +167,7 @@ details.dex summary::-webkit-details-marker{display:none}
 .type.a{background:var(--atk-soft)}.type.p{background:var(--psi-soft)}
 .type h3{font-size:18px;margin:0}
 .type.a h3{color:var(--atk)}.type.p h3{color:var(--psi)}
-.type ul{margin:0;padding-left:1.2em;font-size:14.5px}
+.type ul{margin:0;padding-left:1.2em;font-size:16px}
 .formula{font-family:var(--f-body);font-weight:700;font-size:16px;line-height:2;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface);overflow-x:auto;white-space:nowrap}
 .formula .g{display:inline-block;padding:0 6px;border-radius:6px;margin:0 2px}
 .formula .g1{background:var(--atk-soft)}.formula .g2{background:var(--wait-soft)}.formula .g3{background:var(--psi-soft)}
@@ -199,9 +199,10 @@ details.dex summary::-webkit-details-marker{display:none}
 .fit .yes h4{color:var(--ok)}.fit .no h4{color:var(--ng)}
 .fit ul{margin:0;padding-left:1.1em}
 
-.xtab{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
-.xtab th,.xtab td{color:var(--ink);border-bottom:1.5px dashed var(--muted);padding:8px 6px;text-align:left;vertical-align:top}
-.xtab th{font-weight:700;color:var(--ink-2);font-size:13px}
+.xtab{width:100%;border-collapse:collapse;font-size:16px;min-width:520px}
+.xtab td:first-child{font-weight:700}
+.xtab th,.xtab td{color:var(--ink);border-bottom:1.5px dashed var(--muted);padding:10px 8px;text-align:left;vertical-align:top}
+.xtab th{font-weight:700;color:var(--ink-2);font-size:14px}
 .scroll{overflow-x:auto}
 
 .rules{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none;counter-reset:r}
@@ -226,7 +227,7 @@ details.dex summary::-webkit-details-marker{display:none}
 .dots i{width:14px;height:14px;border:2px solid var(--line);border-radius:4px;background:var(--surface)}
 .dots i.ok{background:var(--mint)}.dots i.ng{background:var(--pink)}.dots i.now{background:var(--lemon)}
 .qtext{font-family:var(--f-pop);font-size:clamp(19px,3vw,23px);line-height:1.6;margin-block:18px 6px}
-.qsit{font-size:14.5px;color:var(--ink-2);margin-bottom:16px}
+.qsit{font-size:16px;color:var(--ink-2);margin-bottom:16px}
 .qopts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .qopts button{min-height:84px;padding:14px;border:2.5px solid var(--line);border-radius:14px;background:var(--field);box-shadow:3px 3px 0 var(--sh);font-weight:800;font-size:17px;line-height:1.4;transition:transform .12s}
 .qopts button:not(:disabled):active{transform:translate(3px,3px);box-shadow:none}
@@ -256,7 +257,7 @@ details.dex summary::-webkit-details-marker{display:none}
 @keyframes flash{0%,40%{background:var(--lemon)}}
 .word header{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 .word b{font-size:17px}
-.word p{font-size:14.5px;color:var(--ink-2)}
+.word p{font-size:16px;color:var(--ink-2)}
 .empty{color:var(--muted);padding:20px 0}
 
 /* 用語のポップアップ */
@@ -280,7 +281,7 @@ a.rep{display:inline-block;margin-top:14px;font-size:13px;font-weight:700;color:
 .review{margin-top:22px;display:flex;flex-direction:column;gap:10px;text-align:left}
 .review h3{font-size:18px}
 .rv{padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface)}
-.rv .q{font-weight:700}.rv .a{margin-top:4px;color:var(--ok)}.rv .e{margin-top:4px;font-size:14.5px;color:var(--ink-2)}
+.rv .q{font-weight:700}.rv .a{margin-top:4px;color:var(--ok)}.rv .e{margin-top:4px;font-size:16px;color:var(--ink-2)}
 /* ===== ダメージラボのレトロかわいい版に寄せる ===== */
 body{animation:dots 30s linear infinite}
 @keyframes dots{to{background-position:220px 220px}}
@@ -600,15 +601,15 @@ const LES=[
   <div class="role"><span class="chip c-def">守り</span><b>トップス</b><p>ほとんどが守りの効果。火力にはほぼ関係ないので好みでOK。</p></div>
  </div>
  <h3>部位ごとのメイン効果ミニ図鑑</h3>
- <p style="font-size:14.5px;color:var(--ink-2)">数字はアップデートで変わりやすいので、ここでは「何が上がるか」と「いつ効くか」だけ。</p>
+ <p style="font-size:16px;color:var(--ink-2)">数字はアップデートで変わりやすいので、ここでは「何が上がるか」と「いつ効くか」だけ。</p>
  <div>${dexHTML()}</div>`},
 {t:'武器のタイプを知ろう',h:()=>`
  <p>MOD選びでいちばん大事なのは、<b>自分の武器のダメージがどこから出ているか</b>を知ること。大きく分けて2タイプあるよ。</p>
  <div class="types">
-  <div class="type a"><h3>攻撃力タイプ</h3><p style="font-size:14.5px">元になる数字は${T('攻撃力')}。</p>
+  <div class="type a"><h3>攻撃力タイプ</h3><p style="font-size:16px">元になる数字は${T('攻撃力')}。</p>
    <ul><li>キーワード：${T('ハンティングマーク','マーク')}・${T('ラピッドガン')}・${T('ウェポンバースト')}・${T('スプレッドガン')}・${T('バウンス')}・特性なし</li>
    <li>効くもの：${T('銃器DMG')}・${T('クリ率')}・${T('クリDMG')}・${T('弱点DMG')}</li></ul></div>
-  <div class="type p"><h3>超感覚タイプ</h3><p style="font-size:14.5px">元になる数字は${T('超感覚強度')}。</p>
+  <div class="type p"><h3>超感覚タイプ</h3><p style="font-size:16px">元になる数字は${T('超感覚強度')}。</p>
    <ul><li>キーワード：${T('火傷')}・${T('フロストボルテックス','フロスト')}・${T('パワーサージ')}・${T('不安定爆弾')}</li>
    <li>効くもの：${T('状態異常DMG')}・${T('エレメントDMG')}・そのキーワードのDMG</li></ul></div>
  </div>
@@ -651,9 +652,9 @@ const LES=[
 {t:'拡張要素の選び方',h:()=>`
  <p>メイン効果が決まったら、次は${T('拡張要素')}（名前の横の＜＞）。基本のルールは3つだけ！</p>
  <ol class="rules">
-  <li><div><b>攻撃力タイプなら「爆裂」や「精密」</b><br><span style="font-size:14.5px;color:var(--ink-2)">爆裂はクリDMGと銃器DMG、精密は弱点DMGと銃器DMGが上がる。</span></div></li>
-  <li><div><b>超感覚タイプなら「異能」の付くもの</b><br><span style="font-size:14.5px;color:var(--ink-2)">「異能」「オーメン異能」など、名前に${T('異能')}が付くとエレメントDMG・状態異常DMGが上がる。</span></div></li>
-  <li><div><b>武器とマスクはキーワードをそろえる</b><br><span style="font-size:14.5px;color:var(--ink-2)">武器とマスクには「火傷」「バウンス」みたいなキーワードの拡張要素がある。武器のキーワードと同じものを選ぼう。</span></div></li>
+  <li><div><b>攻撃力タイプなら「爆裂」や「精密」</b><br><span style="font-size:16px;color:var(--ink-2)">爆裂はクリDMGと銃器DMG、精密は弱点DMGと銃器DMGが上がる。</span></div></li>
+  <li><div><b>超感覚タイプなら「異能」の付くもの</b><br><span style="font-size:16px;color:var(--ink-2)">「異能」「オーメン異能」など、名前に${T('異能')}が付くとエレメントDMG・状態異常DMGが上がる。</span></div></li>
+  <li><div><b>武器とマスクはキーワードをそろえる</b><br><span style="font-size:16px;color:var(--ink-2)">武器とマスクには「火傷」「バウンス」みたいなキーワードの拡張要素がある。武器のキーワードと同じものを選ぼう。</span></div></li>
  </ol>
  <h3>条件つきの拡張要素（部位限定）</h3>
  <div class="scroll"><table class="xtab"><thead><tr><th>拡張要素</th><th>強くなる条件</th><th>付く部位</th></tr></thead><tbody>
@@ -665,7 +666,7 @@ const LES=[
   <tr><td>エアロ</td><td>空中で撃つ</td><td>ボトムス・グローブ</td></tr>
   <tr><td>共振</td><td>スタックがたまったとき</td><td>ボトムス・グローブ</td></tr>
  </tbody></table></div>
- <p style="font-size:14.5px;color:var(--ink-2)">どれも「異能」版があって、そっちは超感覚タイプ向け。条件の考え方はステップ5と同じだよ。</p>`},
+ <p style="font-size:16px;color:var(--ink-2)">どれも「異能」版があって、そっちは超感覚タイプ向け。条件の考え方はステップ5と同じだよ。</p>`},
 ];
 const FINAL=()=>`
  <h3>まとめ：はじめての人の4つの決まりごと</h3>
@@ -682,7 +683,7 @@ const FINAL=()=>`
  </div>`;
 
 /* ===== 中級 ===== */
-const SUB='style="font-size:14.5px;color:var(--ink-2)"';
+const SUB='style="font-size:16px;color:var(--ink-2)"';
 const MID=[
 {t:'MODのレベルを読む',h:()=>`
  <p>初級では「レベルが高いほど強い」とだけ覚えたけど、中身はもう少しくわしく決まっているよ。</p>
@@ -718,9 +719,9 @@ const MID=[
 {t:'武器と条件の相性',h:()=>`
  <p>条件つきMODは「条件を満たしている<b>時間の長さ</b>」で強さが変わる。同じMODでも、<b>武器のマガジンや撃ち方</b>によって効く時間がちがうんだ。</p>
  <div class="types">
-  <div class="type a"><h3>マガジンが少ない武器</h3><p style="font-size:14.5px">スナイパー・ショットガン・リボルバーなど</p>
+  <div class="type a"><h3>マガジンが少ない武器</h3><p style="font-size:16px">スナイパー・ショットガン・リボルバーなど</p>
    <ul><li>リロードした直後の効果が、マガジンの多くの弾に乗る</li><li>向いている：仏の顔も三度まで・先手必勝</li></ul></div>
-  <div class="type p"><h3>マガジンが多い武器</h3><p style="font-size:14.5px">サブマシンガン・ライトマシンガンなど</p>
+  <div class="type p"><h3>マガジンが多い武器</h3><p style="font-size:16px">サブマシンガン・ライトマシンガンなど</p>
    <ul><li>撃ち続けるほど重なる効果が育ちやすい</li><li>向いている：アモイーター・クリティカルフィーバー・精密攻撃</li></ul></div>
  </div>
  <div class="scroll"><table class="xtab"><thead><tr><th>撃ち方のクセ</th><th>合うMODの例</th></tr></thead><tbody>
