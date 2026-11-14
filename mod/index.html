@@ -274,6 +274,13 @@ footer.site .wrap{display:flex;flex-direction:column;gap:4px}
 
 .tabs a.back{background:var(--lilac);display:inline-flex;align-items:center;gap:6px}
 .tabs a.back svg{width:16px;height:16px;flex:none;display:block}
+a.rep{display:inline-block;margin-top:14px;font-size:13px;font-weight:700;color:var(--ink-2);text-decoration:underline dotted;text-underline-offset:3px}
+.qexp a.rep{margin-top:6px}
+.btn.xshare{background:#3b2340;color:#fff4dc;margin-top:4px}
+.review{margin-top:22px;display:flex;flex-direction:column;gap:10px;text-align:left}
+.review h3{font-size:18px}
+.rv{padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface)}
+.rv .q{font-weight:700}.rv .a{margin-top:4px;color:var(--ok)}.rv .e{margin-top:4px;font-size:14.5px;color:var(--ink-2)}
 /* ===== ダメージラボのレトロかわいい版に寄せる ===== */
 body{animation:dots 30s linear infinite}
 @keyframes dots{to{background-position:220px 220px}}
@@ -465,6 +472,7 @@ main,footer.site,.ticker{position:relative;z-index:1}
   <div class="wrap">
     <span>非公式のファンサイトです。ゲームの名称・内容の権利は © NetEase / Starry Studio に帰属します。</span>
     <span>数字や効果はアップデートで変わることがあります。いちばん新しい内容はゲーム内の表示を見てね。</span>
+    <span>まちがい・ご意見は X <a href="https://x.com/Yukhoeonce" target="_blank" rel="noopener">@Yukhoeonce</a> まで教えてね。</span>
     <span><a href="https://yukhoeonce.github.io/">OnceHumanシナリオガイド</a> ・ <a href="https://yukhoeonce.github.io/damage/">ダメージラボ</a></span>
   </div>
 </footer>
@@ -853,7 +861,7 @@ function renderLesson(scroll){
   const nextLv=st.lv==='b'?'m':st.lv==='m'?'a':null;
   const last=st.lv==='b'?`<button class="btn pink" data-fin="1">${isDone?'クイズで確かめる →':'わかった！クイズへ →'}</button>`
     :nextLv?`<button class="btn pink" data-fin="${nextLv}">わかった！${LV[nextLv].n}へ →</button>`:`<button class="btn pink" data-fin="end">わかった！上級クイズへ →</button>`;
-  $('#les').innerHTML=`<p class="eyebrow">${L.n} · STEP ${i} / ${n}</p><h2>${l.t}</h2><div class="body">${l.h()}${i===n?L.fin():''}</div>
+  $('#les').innerHTML=`<p class="eyebrow">${L.n} · STEP ${i} / ${n}</p><h2>${l.t}</h2><div class="body">${l.h()}${i===n?L.fin():''}</div><a class="rep" href="${repURL(L.n+'・'+l.t)}" target="_blank" rel="noopener">まちがいを見つけたら Xで教えてね ↗</a>
    <div class="foot">${i>1?`<button class="btn sub" data-nav="${i-1}">← もどる</button>`:'<span></span>'}
    ${i<n?`<button class="btn pink" data-next="${i}">${isDone?'次へ →':'わかった！次へ →'}</button>`:last}</div>`;
   renderToc(); bindLesson(); phrase($('#les'));
@@ -1016,6 +1024,9 @@ const QB={b:QS,m:MQ,a:AQ};
 if(!st.qb){st.qb={b:st.best??null,m:null,a:null};}
 let qz=null;
 const QN=12;
+const XU='https://x.com/intent/post?text=';
+const repURL=t=>XU+encodeURIComponent('@Yukhoeonce MOD講座「'+t+'」で気になったところ：\n');
+const shareURL=(lv,sc,tot)=>XU+encodeURIComponent('ワンスヒューマン MOD講座の'+lv+'クイズで '+sc+' / '+tot+' 点だった！')+'&url='+encodeURIComponent('https://yukhoeonce.github.io/mod/')+'&hashtags='+encodeURIComponent('ワンスヒューマン,OnceHuman');
 const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 function newQuiz(lv){lv=lv||(qz&&qz.lv)||st.qlv||'b'; st.qlv=lv; save(); const Q=QB[lv]; qz={lv,order:shuffle(Q.map((_,i)=>i)).slice(0,QN),i:0,res:[],answered:false,flip:Q.map(()=>Math.random()<.5)};renderQuiz();}
 const qTabs=()=>`<div class="lvtabs">${Object.entries(LV).map(([k,v])=>`<button data-qlv="${k}" aria-pressed="${qz.lv===k}"><b>${v.n}</b><small>${QN}問${st.qb[k]!=null?'・ベスト '+st.qb[k]:''}</small></button>`).join('')}</div>`;
@@ -1026,9 +1037,11 @@ function renderQuiz(){
   if(qz.i>=qz.order.length){
     const sc=qz.res.filter(Boolean).length, tot=qz.order.length;
     if(st.qb[qz.lv]==null||sc>st.qb[qz.lv]){st.qb[qz.lv]=sc;save();}
+    const miss=qz.order.filter((_,k)=>!qz.res[k]).map(qi=>QB[qz.lv][qi]);
+    const rev=miss.length?`<div class="review"><h3>まちがえた問題を見直そう（${miss.length}問）</h3>${miss.map(Q=>`<div class="rv"><p class="q">${Q.q}</p><p class="a">答え：<b>${Q.a[Q.c]}</b></p><p class="e">${Q.e}</p></div>`).join('')}</div>`:'';
     const msg=sc===tot?'満点！もうMOD博士だね。':sc>=9?'すごい！ほとんどわかってる。':sc>=6?'いい感じ！まちがえたところをレッスンで見直そう。':'まずはレッスンを読んでから、もう一回やってみよう。';
-    el.innerHTML=qTabs()+`<div class="qhead"><span class="eyebrow">RESULT</span>${dots}</div><div class="qend"><div class="screen"><p class="lab2">SCORE</p><div class="score">${sc}<small> / ${tot}</small></div></div><p style="font-family:var(--f-pop);font-size:19px">${msg}</p><p style="font-size:14px;color:var(--muted)">${LV[qz.lv].n}のベスト：${st.qb[qz.lv]} / ${tot}</p><div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn pink" id="qAgain">もう一回</button><a class="btn sub" href="#lesson">レッスンを見る</a><a class="btn sub" href="https://yukhoeonce.github.io/damage/" target="_blank" rel="noopener">ダメージラボで試す ↗</a></div></div>`;
-    $('#qAgain').onclick=()=>newQuiz(qz.lv); return;
+    el.innerHTML=qTabs()+`<div class="qhead"><span class="eyebrow">RESULT</span>${dots}</div><div class="qend"><div class="screen"><p class="lab2">SCORE</p><div class="score">${sc}<small> / ${tot}</small></div></div><p style="font-family:var(--f-pop);font-size:19px">${msg}</p><p style="font-size:14px;color:var(--muted)">${LV[qz.lv].n}のベスト：${st.qb[qz.lv]} / ${tot}</p><div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn pink" id="qAgain">もう一回</button><a class="btn sub" href="#lesson">レッスンを見る</a><a class="btn sub" href="https://yukhoeonce.github.io/damage/" target="_blank" rel="noopener">ダメージラボで試す ↗</a></div><a class="btn xshare" href="${shareURL(LV[qz.lv].n,sc,tot)}" target="_blank" rel="noopener">結果をXでシェア ↗</a></div>${rev}`;
+    phrase(el); $('#qAgain').onclick=()=>newQuiz(qz.lv); return;
   }
   const qi=qz.order[qz.i], Q=QB[qz.lv][qi], fl=qz.flip[qi];
   const idx=fl?[1,0]:[0,1];
@@ -1039,7 +1052,7 @@ function renderQuiz(){
     if(qz.answered) return; qz.answered=true;
     const k=+b.dataset.k, ok=k===Q.c; qz.res.push(ok);
     el.querySelectorAll('.qopts button').forEach(x=>{x.disabled=true; if(+x.dataset.k===Q.c) x.classList.add('right'); else if(x===b) x.classList.add('wrong');});
-    $('#qx').innerHTML=`<div class="qexp"><p class="big ${ok?'ok':'ng'}">${ok?'せいかい！':'ざんねん…'}</p><p>${Q.e}</p></div><div class="qnext"><button class="btn pink" id="qNext">${qz.i+1<qz.order.length?'次の問題 →':'結果を見る →'}</button></div>`;
+    $('#qx').innerHTML=`<div class="qexp"><p class="big ${ok?'ok':'ng'}">${ok?'せいかい！':'ざんねん…'}</p><p>${Q.e}</p><a class="rep" href="${repURL('クイズ：'+Q.q)}" target="_blank" rel="noopener">この問題、おかしいかも？ Xで教えて ↗</a></div><div class="qnext"><button class="btn pink" id="qNext">${qz.i+1<qz.order.length?'次の問題 →':'結果を見る →'}</button></div>`;
     phrase($('#qx')); if(ok&&window.sparkle) sparkle(b); $('#qNext').onclick=()=>{qz.i++;qz.answered=false;renderQuiz();};
     $('#qNext').focus({preventScroll:true});
   });
