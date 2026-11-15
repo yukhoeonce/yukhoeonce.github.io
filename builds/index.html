@@ -64,6 +64,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .tabs{display:flex;gap:6px;flex-wrap:wrap}
 .tabs button{font-weight:700;font-size:15px;padding:6px 16px;border:2px solid var(--line);border-radius:999px;background:var(--surface);box-shadow:2px 2px 0 var(--sh)}
 .tabs button[aria-current="page"]{background:var(--lemon)}
+.tabs .fbt{background:var(--pink,#ff9fbd)}
 .lang{font-weight:700;font-size:13px;padding:5px 12px;border:2px solid var(--line);border-radius:999px;background:var(--mint,#9be8d4);box-shadow:2px 2px 0 var(--sh);white-space:nowrap}
 .lang:active{transform:translate(2px,2px);box-shadow:none}
 html[lang="en"] .tile b,html[lang="en"] .card .tname,html[lang="en"] .pick .v{overflow-wrap:anywhere}
@@ -310,6 +311,7 @@ h3::before{content:"";width:10px;height:10px;background:var(--pink);border:2px s
     <button type="button" data-v="look" aria-current="page" data-en="Weapons">武器を見る</button>
     <button type="button" data-v="post" data-en="Post">投稿する</button>
     <button type="button" data-v="admin" id="admTab" hidden>管理</button>
+    <button type="button" id="fbTab" class="fbt" data-en="💡 Feedback">💡 意見</button>
   </nav>
   <button type="button" class="lang" id="lang" lang="en">English</button>
 </div></header>
@@ -949,7 +951,7 @@ $('v-admin').addEventListener('click',e=>{const c=e.target.closest('[data-fdev],
 $('aAll').addEventListener('change',e=>{document.querySelectorAll('.asel').forEach(x=>x.checked=e.target.checked);selCount()});
 $('aList').addEventListener('change',e=>{if(e.target.classList.contains('asel'))selCount()});
 $('demoSeed').addEventListener('click',seedDemo);
-$('fbOpen').addEventListener('click',openFb);
+$('fbOpen').addEventListener('click',openFb);$('fbTab').addEventListener('click',openFb);
 $('dBody').addEventListener('click',e=>{const c=e.target.closest('[data-fbcat]');if(c){fbCat=c.dataset.fbcat;document.querySelectorAll('#fbCat .chip').forEach(b=>b.setAttribute('aria-pressed',String(b===c)));return}
   if(e.target.id==='fbSend')fbSend();if(e.target.id==='fbDone')closeDlg()});
 $('dBody').addEventListener('input',e=>{if(e.target.id==='fbTx')$('fbN').textContent=e.target.value.length+'/300'});
