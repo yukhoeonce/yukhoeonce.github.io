@@ -614,8 +614,8 @@ const FB={
 function openFb(){
   openDlg(T('意見を送る','Send feedback'),`<p style="margin:0 0 8px">${T('どんなこと？','What kind?')}</p>
   <div class="fbcat" id="fbCat">${FBC.map(([k,j,e])=>`<button type="button" class="chip" data-fbcat="${k}" aria-pressed="${k===fbCat}">${T(j,e)}</button>`).join('')}</div>
-  <textarea class="fbta" id="fbTx" maxlength="500" placeholder="${T('例：武器を名前の順に並べ替えたい／〇〇の防具が選べない など','e.g. I want to sort weapons by name / I can\'t find some armor')}"></textarea>
-  <div class="fbmeta"><span>${T('名前やSNSのIDは書かないでね。送った内容は公開されず、管理人だけが見るよ。','Please don\'t include names or SNS IDs. Feedback is private; only the site owner reads it.')}</span><span id="fbN" style="white-space:nowrap">0/500</span></div>
+  <textarea class="fbta" id="fbTx" maxlength="300" placeholder="${T('例：武器を名前の順に並べ替えたい／〇〇の防具が選べない など','e.g. I want to sort weapons by name / I can\'t find some armor')}"></textarea>
+  <div class="fbmeta"><span>${T('名前やSNSのIDは書かないでね。送った内容は公開されず、管理人だけが見るよ。','Please don\'t include names or SNS IDs. Feedback is private; only the site owner reads it.')}</span><span id="fbN" style="white-space:nowrap">0/300</span></div>
   <button type="button" class="btn pink" id="fbSend">${T('送る','Send')}</button> <span class="msg" id="fbMsg" role="status"></span>`);
   $('fbTx').focus();
 }
@@ -657,8 +657,8 @@ function itemKw(col,id){if(!id)return '';if(col.startsWith('a_'))return KEYBY[id
 function mismatch(w,col,id){const k=itemKw(col,id);if(!k)return false;const wk=(WBY[w]||{}).kw||[];return wk.length>0&&!wk.includes(k)}
 
 // ===== 通信 =====
-const ERR_EN={fb_short:'Please write at least 5 characters',fb_long:'Please keep it within 500 characters',bad_device:'Device info looks wrong. Please reload the page',bad_weapon:'No weapon selected',bad_armor:'That armor cannot go in that slot',bad_mod:'That mod cannot go in that slot',two_keys:'Only one key gear, please',too_few:'Pick at least 4',too_many:'Too many posts. Please wait a bit and try again',site_full:'The site reached today\'s post limit. Please come back tomorrow',bad_pass:'Wrong password'};
-const ERR={fb_short:'5文字以上で書いてね',fb_long:'500文字以内にしてね',bad_device:'端末の情報がおかしいみたい。ページを読み込み直してね',bad_weapon:'武器が選べていないみたい',bad_armor:'その部位に付けられない防具が入ってるよ',bad_mod:'その部位に付けられないMODが入ってるよ',two_keys:'主要防具は1つだけにしてね',too_few:'4つ以上選んでね',too_many:'投稿が多すぎるみたい。少し時間をおいてからにしてね',site_full:'今日はサイト全体の投稿が上限に達したよ。明日また来てね',bad_pass:'合言葉がちがうよ'};
+const ERR_EN={fb_short:'Please write at least 5 characters',fb_long:'Please keep it within 300 characters',bad_device:'Device info looks wrong. Please reload the page',bad_weapon:'No weapon selected',bad_armor:'That armor cannot go in that slot',bad_mod:'That mod cannot go in that slot',two_keys:'Only one key gear, please',too_few:'Pick at least 4',too_many:'Too many posts. Please wait a bit and try again',site_full:'The site reached today\'s post limit. Please come back tomorrow',bad_pass:'Wrong password'};
+const ERR={fb_short:'5文字以上で書いてね',fb_long:'300文字以内にしてね',bad_device:'端末の情報がおかしいみたい。ページを読み込み直してね',bad_weapon:'武器が選べていないみたい',bad_armor:'その部位に付けられない防具が入ってるよ',bad_mod:'その部位に付けられないMODが入ってるよ',two_keys:'主要防具は1つだけにしてね',too_few:'4つ以上選んでね',too_many:'投稿が多すぎるみたい。少し時間をおいてからにしてね',site_full:'今日はサイト全体の投稿が上限に達したよ。明日また来てね',bad_pass:'合言葉がちがうよ'};
 async function api(path,opt={}){
   const h={'apikey':CONFIG.key,'Content-Type':'application/json'};
   if(/^eyJ/.test(CONFIG.key))h.Authorization='Bearer '+CONFIG.key;
@@ -951,7 +951,7 @@ $('demoSeed').addEventListener('click',seedDemo);
 $('fbOpen').addEventListener('click',openFb);
 $('dBody').addEventListener('click',e=>{const c=e.target.closest('[data-fbcat]');if(c){fbCat=c.dataset.fbcat;document.querySelectorAll('#fbCat .chip').forEach(b=>b.setAttribute('aria-pressed',String(b===c)));return}
   if(e.target.id==='fbSend')fbSend();if(e.target.id==='fbDone')closeDlg()});
-$('dBody').addEventListener('input',e=>{if(e.target.id==='fbTx')$('fbN').textContent=e.target.value.length+'/500'});
+$('dBody').addEventListener('input',e=>{if(e.target.id==='fbTx')$('fbN').textContent=e.target.value.length+'/300'});
 $('v-admin').addEventListener('click',e=>{const f=e.target.closest('[data-fbf]');if(f){fbF=f.dataset.fbf;renderFb()}const d=e.target.closest('[data-fbdel]');if(d&&armed(d)){FB.del(+d.dataset.fbdel).then(loadFb).catch(er=>{$('fbAMsg').className='msg ng';$('fbAMsg').textContent=er.message})}});
 $('aLoad').addEventListener('click',loadFb);
 $('sBody').addEventListener('click',e=>{const b=e.target.closest('[data-xrec]');if(b)showRec(b.dataset.xrec)});
