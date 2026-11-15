@@ -198,6 +198,13 @@ details.more[open] summary{margin-bottom:6px}
 /* 管理 */
 .adm .it{background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px;font-size:14px}
 .adm .it.hid{opacity:.6}
+.adm .arow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0}.adm .al{font-weight:700;font-size:14px}
+.adm .chip[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.adm .stat{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.adm .stat>div{border:2px solid var(--line);border-radius:10px;padding:6px 10px;background:var(--surface);font-size:13px}.adm .stat b{font-size:18px;display:block}
+.adm .tops{margin-top:8px;font-size:13px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.adm .code{font-family:ui-monospace,monospace;font-weight:700;border:1.5px solid var(--line);border-radius:6px;padding:0 5px;background:var(--surface);cursor:pointer;font-size:13px}
+.adm .abar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--bg,#fff8e7);border:2px solid var(--line);border-radius:12px;padding:8px 10px;margin-top:12px;box-shadow:2px 2px 0 var(--sh)}
+.adm .it{display:grid;grid-template-columns:auto 1fr;gap:4px 10px}.adm .it>input{margin-top:4px;width:18px;height:18px}.adm .it .hd{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}.adm .it details{font-size:13px;margin-top:2px}.adm .it summary{cursor:pointer;color:var(--muted)}
 .adm .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
 .adm input,.adm select{font:inherit;padding:6px 10px;border:2px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);max-width:100%}
 
@@ -324,13 +331,22 @@ h3::before{content:"";width:10px;height:10px;background:var(--pink);border:2px s
   </section>
 
   <section id="v-admin" hidden class="adm">
-    <div class="intro"><div><h1>管理</h1><p>合言葉を入れると、投稿を隠したり消したりできるよ。</p></div></div>
+    <div class="intro"><div><h1>管理</h1><p>合言葉を入れて「読み込む」。時間や端末でしぼって、まとめて隠したり消したりできるよ。</p></div></div>
     <div class="box step">
-      <p><label>合言葉 <input type="password" id="aPass" autocomplete="current-password"></label></p>
-      <p style="margin-top:8px"><label>武器 <select id="aW"></select></label> <button type="button" class="btn small" id="aLoad">投稿を見る</button></p>
+      <p class="arow"><label>合言葉 <input type="password" id="aPass" autocomplete="current-password"></label> <button type="button" class="btn small" id="aLoad">読み込む</button></p>
       <p class="msg" id="aMsg" role="status"></p>
+      <div id="aStats"></div>
     </div>
-    <div id="aList" style="margin-top:14px"></div>
+    <div class="box step" id="aFilt" hidden>
+      <h3>しぼりこみ</h3>
+      <p class="arow"><span class="al">期間</span><button type="button" class="chip" data-range="1">1時間</button><button type="button" class="chip" data-range="6">6時間</button><button type="button" class="chip" data-range="24">24時間</button><button type="button" class="chip" data-range="168">7日</button><button type="button" class="chip" data-range="0">全部</button></p>
+      <p class="arow"><label>から <input type="datetime-local" id="aFrom"></label> <label>まで <input type="datetime-local" id="aTo"></label></p>
+      <p class="arow"><label>武器 <select id="aW"></select></label></p>
+      <p class="arow"><label>端末 <input id="aDev" size="8" placeholder="例 a1e909"></label> <label>回線 <input id="aIp" size="8" placeholder="例 cd1dbf"></label> <label><input type="checkbox" id="aHid"> 非表示だけ</label></p>
+      <p class="arow"><button type="button" class="btn small" id="aSearch">この条件で見る</button> <button type="button" class="btn small sub" id="aClear">条件を消す</button></p>
+    </div>
+    <div class="abar" id="aBar" hidden><label><input type="checkbox" id="aAll"> 全部選ぶ</label><span id="aSel">0件選択</span><button type="button" class="btn small sub" data-bulk="hide">隠す</button><button type="button" class="btn small sub" data-bulk="show">表示に戻す</button><button type="button" class="btn small sub" data-bulk="delete">消す</button></div>
+    <div id="aList" style="margin-top:10px"></div>
   </section>
 
   <nav class="sites" aria-label="ほかのページ"><span data-en="Other pages (Japanese)">ほかのページ</span><a href="https://yukhoeonce.github.io/" data-en="Scenario Guide">シナリオガイド</a><a href="https://yukhoeonce.github.io/damage/" data-en="Damage Lab">ダメージラボ</a><a href="https://yukhoeonce.github.io/mod/" data-en="MOD Course">MOD講座</a></nav>
@@ -619,7 +635,8 @@ const Store={
   },
   async post(b){
     if(!LIVE){const all=ls.get(DEMO_KEY,[]),dev=devId(),i=all.findIndex(p=>p.dev===dev&&p.weapon===b.weapon);const row={...b,dev,updated_at:new Date().toISOString()};if(i>=0)all[i]=row;else all.push(row);ls.set(DEMO_KEY,all);return i>=0?'updated':'new'}
-    const a={p_dev:devId(),p_weapon:b.weapon};[...ACOL,...MCOL].forEach(c=>a['p_'+c]=b[c]||null);return rpc('post_build',a);
+    const a={p_dev:devId(),p_weapon:b.weapon};[...ACOL,...MCOL].forEach(c=>a['p_'+c]=b[c]||null);
+    try{return await rpc('post_build',{...a,p_lang:LANG})}catch(e){if(/p_lang|schema cache/.test(e.message))return rpc('post_build',a);throw e}
   },
   async adminPost(b,pass){
     if(!LIVE){const all=ls.get(DEMO_KEY,[]);all.push({...b,dev:'admin-'+Date.now()+Math.random(),updated_at:new Date().toISOString()});ls.set(DEMO_KEY,all);return 'new'}
@@ -787,27 +804,55 @@ async function delMine(id,btn){
 // ===== 管理 =====
 function initAdmin(){
   $('admTab').hidden=false;$('admPostWrap').hidden=false;
-  $('aW').innerHTML=W.map(w=>`<option value="${w.id}">${esc(w.name)}</option>`).join('');
+  $('aW').innerHTML='<option value="">すべて</option>'+W.map(w=>`<option value="${w.id}">${esc(wName(w))}</option>`).join('');
   try{$('aPass').value=sessionStorage.getItem('bs_pass')||''}catch(e){}
+  setRange(24);
 }
+let aRows=[];
+const dl=d=>{const z=new Date(d.getTime()-d.getTimezoneOffset()*6e4);return z.toISOString().slice(0,16)};
+function setRange(h){document.querySelectorAll('#aFilt [data-range]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.range===h)));$('aFrom').value=h?dl(new Date(Date.now()-h*36e5)):'';$('aTo').value=''}
+const ADM_OLD='新しい管理画面の準備がまだみたい（Supabaseで admin-v2.sql を実行してね）';
+const admErr=e=>/admin_(query|stats|bulk)/.test(e.message)?ADM_OLD:e.message;
 async function adminLoad(){
-  const pass=$('aPass').value, w=$('aW').value, m=$('aMsg');
+  const m=$('aMsg');
   if(!LIVE){m.textContent='お試しモードでは使えないよ（保存先につないでから）';return}
-  try{sessionStorage.setItem('bs_pass',pass)}catch(e){}
+  try{sessionStorage.setItem('bs_pass',$('aPass').value)}catch(e){}
   m.textContent='読み込み中…';
   try{
-    const rows=await rpc('admin_list',{p_pass:pass,p_weapon:w});
-    m.textContent=rows.length+'件';
-    $('aList').innerHTML=rows.map(r=>`<div class="it${r.hidden?' hid':''}"><b>#${r.id}</b>　${new Date(r.updated_at).toLocaleString('ja-JP')}　回線 ${esc(r.ip_short)}${r.hidden?'　<b>（非表示中）</b>':''}
-      <div>防具：${AS.map(([s,l])=>l+' '+esc(aName(r['a_'+s])||'-')).join('／')}</div>
-      <div>MOD：${MS.map(([s,l])=>l+' '+esc(mName(r['m_'+s])||'-')).join('／')}</div>
-      <div class="acts"><button type="button" class="btn small sub" data-act="${r.hidden?'show':'hide'}" data-id="${r.id}">${r.hidden?'表示に戻す':'隠す'}</button><button type="button" class="btn small sub" data-act="delete" data-id="${r.id}">消す</button><button type="button" class="btn small sub" data-act="delete_same_ip" data-id="${r.id}">同じ回線の投稿を全部消す</button></div></div>`).join('')||'<p class="nodata">投稿なし</p>';
-  }catch(e){m.textContent=e.message}
+    const st=await rpc('admin_stats',{p_pass:$('aPass').value});
+    const g=(k,kk)=>{const r=st.find(x=>x.kind===k&&x.k===kk);return r?+r.n:0};
+    const tops=(k,lab)=>{const L=st.filter(x=>x.kind===k);return L.length?`<div class="tops"><b>${lab}</b>${L.map(x=>`<span class="code" data-f${k}="${esc(x.k)}">${esc(x.k)} ×${x.n}</span>`).join('')}</div>`:''};
+    $('aStats').innerHTML=`<div class="stat"><div>日本語の新規（24時間）<b>${g('new','ja')} / 300</b></div><div>英語の新規（24時間）<b>${g('new','en')} / 200</b></div><div>投稿の合計<b>${g('total','all')}</b></div><div>非表示<b>${g('hidden','all')}</b></div></div>`+
+      tops('dev','24時間で3件以上の端末')+tops('ip','24時間で3件以上の回線')+
+      (st.some(x=>x.kind==='dev'||x.kind==='ip')?'<p class="note" style="margin-top:4px">コードを押すと、その端末・回線の投稿だけ表示するよ</p>':'');
+    $('aFilt').hidden=false;
+    await adminSearch();
+  }catch(e){m.textContent=admErr(e)}
 }
-async function adminAct(id,act,btn){
-  if(act.startsWith('delete')&&!armed(btn))return;
-  try{await rpc('admin_set',{p_pass:$('aPass').value,p_id:+id,p_action:act});adminLoad();loadCounts()}catch(e){$('aMsg').textContent=e.message}
+async function adminSearch(){
+  const m=$('aMsg');m.textContent='読み込み中…';
+  const v=id=>$(id).value.trim()||null, t=id=>$(id).value?new Date($(id).value).toISOString():null;
+  try{
+    aRows=await rpc('admin_query',{p_pass:$('aPass').value,p_weapon:v('aW'),p_from:t('aFrom'),p_to:t('aTo'),p_dev:v('aDev'),p_ip:v('aIp'),p_hidden_only:$('aHid').checked,p_limit:500});
+    m.textContent=aRows.length+'件'+(aRows.length>=500?'（多いので新しい500件だけ表示）':'');
+    renderAdm();
+  }catch(e){m.textContent=admErr(e)}
 }
+function renderAdm(){
+  $('aBar').hidden=!aRows.length;$('aAll').checked=false;
+  $('aList').innerHTML=aRows.map(r=>{const w=WBY[r.weapon];return `<div class="it${r.hidden?' hid':''}"><input type="checkbox" class="asel" value="${r.id}" aria-label="#${r.id}を選ぶ"><div>
+    <div class="hd"><b>${esc(w?wName(w):r.weapon)}</b><span>${new Date(r.updated_at).toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</span><span>${r.lang==='en'?'英語':'日本語'}</span><span>端末 <span class="code" data-fdev="${esc(r.dev_short)}">${esc(r.dev_short)}</span></span><span>回線 <span class="code" data-fip="${esc(r.ip_short)}">${esc(r.ip_short)}</span></span>${r.hidden?'<b>（非表示中）</b>':''}<span style="opacity:.6">#${r.id}</span></div>
+    <details><summary>中身を見る</summary><div>防具：${AS.map(([s,l])=>l+' '+esc(aName(r['a_'+s])||'-')).join('／')}</div><div>MOD：${MS.map(([s,l])=>l+' '+esc(mName(r['m_'+s])||'-')).join('／')}</div></details>
+    <div class="acts"><button type="button" class="btn small sub" data-act="${r.hidden?'show':'hide'}" data-id="${r.id}">${r.hidden?'表示に戻す':'隠す'}</button><button type="button" class="btn small sub" data-act="delete" data-id="${r.id}">消す</button></div></div></div>`}).join('')||'<p class="nodata">条件に合う投稿はないよ</p>';
+  selCount();
+}
+function selCount(){const n=document.querySelectorAll('.asel:checked').length;$('aSel').textContent=n+'件選択'}
+async function adminBulk(ids,act,btn){
+  if(!ids.length){$('aMsg').textContent='先にチェックを入れてね';return}
+  if(act==='delete'&&!armed(btn))return;
+  try{const n=await rpc('admin_bulk',{p_pass:$('aPass').value,p_ids:ids,p_action:act});toast(n+'件を'+({hide:'隠した',show:'表示に戻した',delete:'消した'}[act])+'よ');await adminLoad();loadCounts()}catch(e){$('aMsg').textContent=admErr(e)}
+}
+function adminFilter(k,val){$('aDev').value=k==='dev'?val:'';$('aIp').value=k==='ip'?val:'';setRange(0);$('aW').value='';$('aHid').checked=false;adminSearch();$('aFilt').scrollIntoView({behavior:'smooth'})}
 
 // ===== お試しモードの見本 =====
 function seedDemo(){
@@ -848,7 +893,15 @@ $('dBody').addEventListener('click',e=>{const b=e.target.closest('[data-cdesign]
 $('reset').addEventListener('click',()=>{cur={weapon:cur.weapon};$('msg').textContent='';renderForm()});
 $('mine').addEventListener('click',e=>{const d=e.target.closest('[data-del]'),ed=e.target.closest('[data-edit]');if(d)delMine(d.dataset.del,d);if(ed){cur={...ls.get('bs_mine',{})[ed.dataset.edit]};renderForm();window.scrollTo(0,0)}});
 $('aLoad').addEventListener('click',adminLoad);
-$('aList').addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(b)adminAct(b.dataset.id,b.dataset.act,b)});
+$('aSearch').addEventListener('click',adminSearch);
+$('aClear').addEventListener('click',()=>{$('aDev').value='';$('aIp').value='';$('aW').value='';$('aHid').checked=false;setRange(24);adminSearch()});
+$('aFilt').addEventListener('click',e=>{const b=e.target.closest('[data-range]');if(b){setRange(+b.dataset.range);adminSearch()}});
+['aFrom','aTo'].forEach(id=>$(id).addEventListener('change',()=>document.querySelectorAll('#aFilt [data-range]').forEach(b=>b.setAttribute('aria-pressed','false'))));
+$('v-admin').addEventListener('click',e=>{const c=e.target.closest('[data-fdev],[data-fip]');if(c){c.dataset.fdev?adminFilter('dev',c.dataset.fdev):adminFilter('ip',c.dataset.fip);return}
+  const a=e.target.closest('[data-act]');if(a){adminBulk([+a.dataset.id],a.dataset.act,a);return}
+  const b=e.target.closest('[data-bulk]');if(b)adminBulk([...document.querySelectorAll('.asel:checked')].map(x=>+x.value),b.dataset.bulk,b)});
+$('aAll').addEventListener('change',e=>{document.querySelectorAll('.asel').forEach(x=>x.checked=e.target.checked);selCount()});
+$('aList').addEventListener('change',e=>{if(e.target.classList.contains('asel'))selCount()});
 $('demoSeed').addEventListener('click',seedDemo);
 $('sBody').addEventListener('click',e=>{const b=e.target.closest('[data-xrec]');if(b)showRec(b.dataset.xrec)});
 $('dBody').addEventListener('click',e=>{const b=e.target.closest('[data-rmode]');if(!b)return;recMode=b.dataset.rmode;const st=$('dBody').scrollTop;showRec(b.dataset.rw);$('dBody').scrollTop=st});
