@@ -97,6 +97,13 @@ main{padding-block:22px 40px}
 .cardimg{width:100%;height:auto;display:block;border:2.5px solid var(--line);border-radius:12px;box-shadow:3px 3px 0 var(--sh)}
 .cardacts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .cardacts{align-items:center}.cdz{display:flex;gap:5px;margin-left:auto}.cdz .chip{padding:6px 9px;font-size:13px}
+.fbbox{margin:26px 0 6px;background:var(--surface);border:2.5px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:4px 4px 0 var(--sh);display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.fbbox b{font-family:var(--f-pop);font-weight:400;font-size:17px;display:block}.fbbox p{margin:2px 0 0;font-size:14px;color:var(--muted)}
+.fbcat{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 12px}.fbcat .chip[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.fbta{width:100%;box-sizing:border-box;min-height:130px;font:inherit;padding:10px 12px;border:2.5px solid var(--line);border-radius:12px;background:var(--field,var(--surface));color:var(--ink);resize:vertical}
+.fbmeta{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--muted);margin:4px 0 12px}
+.fbl{display:grid;gap:8px;margin-top:8px}.fbl .fi{display:block;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 12px}.fbl .tg{display:inline-block;font-size:12px;font-weight:700;border:1.5px solid var(--line);border-radius:999px;padding:0 8px;margin-right:6px;background:var(--lemon,#ffe27a)}
+.fbl .tx{white-space:pre-wrap;overflow-wrap:anywhere;margin-top:4px;font-size:15px}
 .chip{border:2px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 12px;font-size:14px;font-weight:700}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
 .search{display:flex;gap:8px;align-items:center;margin-bottom:14px}
@@ -347,8 +354,11 @@ h3::before{content:"";width:10px;height:10px;background:var(--pink);border:2px s
     </div>
     <div class="abar" id="aBar" hidden><label><input type="checkbox" id="aAll"> 全部選ぶ</label><span id="aSel">0件選択</span><button type="button" class="btn small sub" data-bulk="hide">隠す</button><button type="button" class="btn small sub" data-bulk="show">表示に戻す</button><button type="button" class="btn small sub" data-bulk="delete">消す</button></div>
     <div id="aList" style="margin-top:10px"></div>
+    <div class="box step" style="margin-top:18px"><h3>届いた意見</h3><p class="note">合言葉を入れて「読み込む」を押すと出るよ（読むだけの合言葉でも見られる。消すのは管理の合言葉だけ）。</p><p class="msg" id="fbAMsg" role="status"></p>
+      <div class="fbcat" id="fbF"></div><div class="fbl" id="fbList"></div></div>
   </section>
 
+  <div class="fbbox"><div><b data-en="Help us improve this site!">サイトをもっと良くしたい！</b><p data-en="Ideas, requests or bugs — anything is welcome.">改善してほしいところ・あったらいいな・不具合など、なんでも送ってね</p></div><button type="button" class="btn pink" id="fbOpen" data-en="Send feedback">💡 意見を送る</button></div>
   <nav class="sites" aria-label="ほかのページ"><span data-en="Other pages (Japanese)">ほかのページ</span><a href="https://yukhoeonce.github.io/" data-en="Scenario Guide">シナリオガイド</a><a href="https://yukhoeonce.github.io/damage/" data-en="Damage Lab">ダメージラボ</a><a href="https://yukhoeonce.github.io/mod/" data-en="MOD Course">MOD講座</a></nav>
   <footer data-en="Unofficial fan site. © NetEase / Starry Studio | Percentages are based on user posts.">非公式のファンサイトです。© NetEase / Starry Studio　｜　％は投稿をもとにした目安だよ。</footer>
 </div></main>
@@ -592,6 +602,41 @@ async function makeCard(dz){if(typeof dz==='number')cardDesign=dz;
     if(blob)setTimeout(()=>URL.revokeObjectURL(a.href),4000);
   };
 }
+const FBC=[['improve','改善してほしい','Improvement'],['idea','あったらいいな','Idea'],['bug','不具合','Bug'],['other','その他','Other']];
+let fbCat='idea', fbF='all';
+let fbRows=[];
+const FB={
+  async send(cat,text){if(!LIVE){const a=ls.get('bs_fb',[]);if(a.filter(x=>Date.now()-x.t<36e5).length>=5)throw new Error(T('送りすぎかも。少し時間をおいてね','Too many. Please wait a bit'));a.unshift({t:Date.now(),cat,text,lang:LANG});ls.set('bs_fb',a);return}
+    return rpc('post_feedback',{p_dev:devId(),p_cat:cat,p_text:text,p_lang:LANG})},
+  async load(){if(!LIVE){fbRows=ls.get('bs_fb',[]).map(x=>({id:x.t,created_at:new Date(x.t).toISOString(),cat:x.cat,body:x.text,lang:x.lang}));return}
+    fbRows=await rpc('fb_list',{p_pass:$('aPass').value,p_limit:1000})},
+  async del(id){if(!LIVE){ls.set('bs_fb',ls.get('bs_fb',[]).filter(x=>x.t!==id));return}return rpc('fb_delete',{p_pass:$('aPass').value,p_ids:[id]})}};
+function openFb(){
+  openDlg(T('意見を送る','Send feedback'),`<p style="margin:0 0 8px">${T('どんなこと？','What kind?')}</p>
+  <div class="fbcat" id="fbCat">${FBC.map(([k,j,e])=>`<button type="button" class="chip" data-fbcat="${k}" aria-pressed="${k===fbCat}">${T(j,e)}</button>`).join('')}</div>
+  <textarea class="fbta" id="fbTx" maxlength="500" placeholder="${T('例：武器を名前の順に並べ替えたい／〇〇の防具が選べない など','e.g. I want to sort weapons by name / I can\'t find some armor')}"></textarea>
+  <div class="fbmeta"><span>${T('名前やSNSのIDは書かないでね。送った内容は公開されず、管理人だけが見るよ。','Please don\'t include names or SNS IDs. Feedback is private; only the site owner reads it.')}</span><span id="fbN" style="white-space:nowrap">0/500</span></div>
+  <button type="button" class="btn pink" id="fbSend">${T('送る','Send')}</button> <span class="msg" id="fbMsg" role="status"></span>`);
+  $('fbTx').focus();
+}
+async function fbSend(){
+  const t=$('fbTx').value.trim(),m=$('fbMsg'),btn=$('fbSend');
+  if(t.length<5){m.className='msg ng';m.textContent=T('5文字以上で書いてね','Please write at least 5 characters');return}
+  btn.disabled=true;m.className='msg';m.textContent=T('送信中…','Sending…');
+  try{await FB.send(fbCat,t)}catch(e){btn.disabled=false;m.className='msg ng';m.textContent=/post_feedback/.test(e.message)?T('意見ボックスの準備中みたい。少し待ってね','Feedback is not ready yet'):e.message;return}
+  $('dBody').innerHTML=`<div style="text-align:center;padding:18px 0"><div style="font-size:44px">💌</div><p style="font-weight:700;font-size:18px;margin:8px 0">${T('ありがとう！届いたよ','Thank you! Got it.')}</p><p class="note">${T('いただいた意見は、サイトを良くするのに使わせてもらうね。','We\'ll use it to make the site better.')}</p><button type="button" class="btn small sub" id="fbDone">${T('閉じる','Close')}</button></div>`;
+  sparks($('dTitle'));
+}
+async function loadFb(){
+  const m=$('fbAMsg');m.className='msg';m.textContent='読み込み中…';
+  try{await FB.load();m.textContent=''}catch(e){m.className='msg ng';m.textContent=/fb_list/.test(e.message)?'意見ボックスの準備がまだみたい（Supabaseで feedback.sql を実行してね）':e.message;return}
+  renderFb();
+}
+function renderFb(){
+  const all=fbRows,L=all.filter(x=>fbF==='all'||x.cat===fbF);
+  $('fbF').innerHTML=[['all','すべて'],...FBC.map(([k,j])=>[k,j])].map(([k,j])=>`<button type="button" class="chip" data-fbf="${k}" aria-pressed="${k===fbF}">${j} ${k==='all'?all.length:all.filter(x=>x.cat===k).length}</button>`).join('');
+  $('fbList').innerHTML=L.map(x=>`<div class="fi"><span class="tg">${(FBC.find(c=>c[0]===x.cat)||FBC[3])[1]}</span><small>${new Date(x.created_at).toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}　${x.lang==='en'?'英語':'日本語'}</small><div class="tx">${esc(x.body)}</div><div class="acts"><button type="button" class="btn small sub" data-fbdel="${x.id}">消す</button></div></div>`).join('')||'<p class="nodata">まだ意見はないよ</p>';
+}
 const AS0=D.ASLOT, MS0=D.MSLOT;  // [[id,名前]]
 let AS=AS0, MS=MS0;
 const slotsL=()=>{AS=AS0.map(([s,l])=>[s,EL()?EN.SLOT[s]:l]);MS=MS0.map(([s,l])=>[s,EL()?EN.SLOT[s]:l])};slotsL();
@@ -612,8 +657,8 @@ function itemKw(col,id){if(!id)return '';if(col.startsWith('a_'))return KEYBY[id
 function mismatch(w,col,id){const k=itemKw(col,id);if(!k)return false;const wk=(WBY[w]||{}).kw||[];return wk.length>0&&!wk.includes(k)}
 
 // ===== 通信 =====
-const ERR_EN={bad_device:'Device info looks wrong. Please reload the page',bad_weapon:'No weapon selected',bad_armor:'That armor cannot go in that slot',bad_mod:'That mod cannot go in that slot',two_keys:'Only one key gear, please',too_few:'Pick at least 4',too_many:'Too many posts. Please wait a bit and try again',site_full:'The site reached today\'s post limit. Please come back tomorrow',bad_pass:'Wrong password'};
-const ERR={bad_device:'端末の情報がおかしいみたい。ページを読み込み直してね',bad_weapon:'武器が選べていないみたい',bad_armor:'その部位に付けられない防具が入ってるよ',bad_mod:'その部位に付けられないMODが入ってるよ',two_keys:'主要防具は1つだけにしてね',too_few:'4つ以上選んでね',too_many:'投稿が多すぎるみたい。少し時間をおいてからにしてね',site_full:'今日はサイト全体の投稿が上限に達したよ。明日また来てね',bad_pass:'合言葉がちがうよ'};
+const ERR_EN={fb_short:'Please write at least 5 characters',fb_long:'Please keep it within 500 characters',bad_device:'Device info looks wrong. Please reload the page',bad_weapon:'No weapon selected',bad_armor:'That armor cannot go in that slot',bad_mod:'That mod cannot go in that slot',two_keys:'Only one key gear, please',too_few:'Pick at least 4',too_many:'Too many posts. Please wait a bit and try again',site_full:'The site reached today\'s post limit. Please come back tomorrow',bad_pass:'Wrong password'};
+const ERR={fb_short:'5文字以上で書いてね',fb_long:'500文字以内にしてね',bad_device:'端末の情報がおかしいみたい。ページを読み込み直してね',bad_weapon:'武器が選べていないみたい',bad_armor:'その部位に付けられない防具が入ってるよ',bad_mod:'その部位に付けられないMODが入ってるよ',two_keys:'主要防具は1つだけにしてね',too_few:'4つ以上選んでね',too_many:'投稿が多すぎるみたい。少し時間をおいてからにしてね',site_full:'今日はサイト全体の投稿が上限に達したよ。明日また来てね',bad_pass:'合言葉がちがうよ'};
 async function api(path,opt={}){
   const h={'apikey':CONFIG.key,'Content-Type':'application/json'};
   if(/^eyJ/.test(CONFIG.key))h.Authorization='Bearer '+CONFIG.key;
@@ -903,6 +948,12 @@ $('v-admin').addEventListener('click',e=>{const c=e.target.closest('[data-fdev],
 $('aAll').addEventListener('change',e=>{document.querySelectorAll('.asel').forEach(x=>x.checked=e.target.checked);selCount()});
 $('aList').addEventListener('change',e=>{if(e.target.classList.contains('asel'))selCount()});
 $('demoSeed').addEventListener('click',seedDemo);
+$('fbOpen').addEventListener('click',openFb);
+$('dBody').addEventListener('click',e=>{const c=e.target.closest('[data-fbcat]');if(c){fbCat=c.dataset.fbcat;document.querySelectorAll('#fbCat .chip').forEach(b=>b.setAttribute('aria-pressed',String(b===c)));return}
+  if(e.target.id==='fbSend')fbSend();if(e.target.id==='fbDone')closeDlg()});
+$('dBody').addEventListener('input',e=>{if(e.target.id==='fbTx')$('fbN').textContent=e.target.value.length+'/500'});
+$('v-admin').addEventListener('click',e=>{const f=e.target.closest('[data-fbf]');if(f){fbF=f.dataset.fbf;renderFb()}const d=e.target.closest('[data-fbdel]');if(d&&armed(d)){FB.del(+d.dataset.fbdel).then(loadFb).catch(er=>{$('fbAMsg').className='msg ng';$('fbAMsg').textContent=er.message})}});
+$('aLoad').addEventListener('click',loadFb);
 $('sBody').addEventListener('click',e=>{const b=e.target.closest('[data-xrec]');if(b)showRec(b.dataset.xrec)});
 $('dBody').addEventListener('click',e=>{const b=e.target.closest('[data-rmode]');if(!b)return;recMode=b.dataset.rmode;const st=$('dBody').scrollTop;showRec(b.dataset.rw);$('dBody').scrollTop=st});
 $('demoClear').addEventListener('click',()=>{ls.set(DEMO_KEY,[]);ls.set('bs_mine',{});renderMine();loadCounts();toast('お試しデータを消したよ')});
