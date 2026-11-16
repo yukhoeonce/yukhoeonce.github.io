@@ -868,6 +868,8 @@ html.ed-open{overflow:hidden}
 </script>
 <script>
 (()=>{
+const NORM=[[/活動度|アクティブ度|アクティビティ|活躍度/g,'活躍度'],[/回復スピード/g,'回復速度'],[/創造物型|創造型|造物型/g,'創作物型'],[/アップ|上昇/g,'増加'],[/ダウン|減少/g,'低下'],[/しません/g,'しない'],[/します/g,'する'],[/しました/g,'した']];
+const normTx=s=>NORM.reduce((a,[r,b])=>a.replace(r,b),s);
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const KEY='devistudy-v1';
 let st={};
@@ -893,7 +895,7 @@ const SPECIES=Object.values(DEV).filter(d=>d.par).sort((a,b)=>a.n.localeCompare(
 const TR={};
 for(const [id,r] of Object.entries(DATA.tr)){
   const sk=r[5]?r[5].map(x=>x==='99000001'?'99900001':x):null;
-  TR[id]={id,n:r[0],ty:r[1],q:r[2],tx:String(r[3]||'').replace(/^デビエーションの(外観|造型)(に変化が生じ(る|た)|が変化(した|しました)|が変わり)[。、]?/,''),cf:r[4],sk};
+  TR[id]={id,n:r[0],ty:r[1],q:r[2],tx:normTx(String(r[3]||'').replace(/^デビエーションの(外観|造型)(に変化が生じ(る|た)|が変化(した|しました)|が変わり)[。、]?/,'')),cf:r[4],sk};
 }
 const TRL=Object.values(TR).sort((a,b)=>(+a.id)-(+b.id));
 const slotOf=ty=>ty===4?'c':(ty===10||ty===11)?'m':ty===12?'x':'r';
