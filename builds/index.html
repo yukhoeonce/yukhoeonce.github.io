@@ -339,7 +339,7 @@ h3::before{content:"";width:10px;height:10px;background:var(--pink);border:2px s
       <div class="box step"><h2><span class="no">3</span><span data-en="Mods (main effect)">MOD（メイン効果）</span></h2><p class="sub" data-en="Pick the mod on each slot.">部位ごとに付けているMODを選んでね。</p><div class="slots" id="pM"></div></div>
       <label class="note" id="admPostWrap" hidden style="display:flex;gap:8px;align-items:center;cursor:pointer"><input type="checkbox" id="admPost"> <span><b>管理者として投稿</b>（回数制限なし・同じ武器でも上書きせず毎回追加。合言葉は「管理」タブで入れたもの）</span></label>
       <div class="submit"><button type="button" class="btn" id="mkCard">ビルドカードを作る</button><button type="button" class="btn pink" id="send" data-en="Post this build">この装備を投稿する</button><button type="button" class="btn sub" id="reset" data-en="Clear">選び直す</button><span class="msg" id="msg" role="status"></span></div>
-      <p class="note" data-en="You can post <b>one build per weapon</b> from this device. Posting the same weapon again replaces it. Posts are anonymous.">この端末からは<b>武器ごとに1つ</b>だけ投稿できるよ。同じ武器でもう一度投稿すると上書きになる。投稿は名前なしで、誰が投稿したかは表示されないよ。</p>
+      <p class="note" data-en="You can post <b>one build per weapon</b> from this device. Posting the same weapon again replaces it. Posts and updates are limited to <b>8 per hour and 30 per day</b>. Posts are anonymous.">この端末からは<b>武器ごとに1つ</b>だけ投稿できるよ。同じ武器でもう一度投稿すると上書きになる。投稿・上書きは<b>1時間に8回、1日30回まで</b>。投稿は名前なしで、誰が投稿したかは表示されないよ。</p>
       <div id="mineWrap" hidden><h3 data-en="Builds posted from this device">この端末から投稿した装備</h3><div class="mine" id="mine"></div></div>
     </div>
   </section>
@@ -632,7 +632,7 @@ async function fbSend(){
   const t=$('fbTx').value.trim(),m=$('fbMsg'),btn=$('fbSend');
   if(t.length<5){m.className='msg ng';m.textContent=T('5文字以上で書いてね','Please write at least 5 characters');return}
   btn.disabled=true;m.className='msg';m.textContent=T('送信中…','Sending…');
-  try{await FB.send(fbCat,t)}catch(e){btn.disabled=false;m.className='msg ng';m.textContent=/post_feedback/.test(e.message)?T('意見ボックスの準備中みたい。少し待ってね','Feedback is not ready yet'):e.message;return}
+  try{await FB.send(fbCat,t)}catch(e){btn.disabled=false;m.className='msg ng';m.textContent=/post_feedback/.test(e.message)?T('意見ボックスの準備中みたい。少し待ってね','Feedback is not ready yet'):(e.message===ERR.too_many||e.message===ERR_EN.too_many)?T('送りすぎかも（1時間に5件・1日20件まで）。少し時間をおいてね','Too many (limit: 5 per hour, 20 per day). Please wait a bit'):e.message;return}
   $('dBody').innerHTML=`<div style="text-align:center;padding:18px 0"><div style="font-size:44px">💌</div><p style="font-weight:700;font-size:18px;margin:8px 0">${T('ありがとう！届いたよ','Thank you! Got it.')}</p><p class="note">${T('いただいた意見は、サイトを良くするのに使わせてもらうね。','We\'ll use it to make the site better.')}</p><button type="button" class="btn small sub" id="fbDone">${T('閉じる','Close')}</button></div>`;
   sparks($('dTitle'));
 }
@@ -666,8 +666,8 @@ function itemKw(col,id){if(!id)return '';if(col.startsWith('a_'))return KEYBY[id
 function mismatch(w,col,id){const k=itemKw(col,id);if(!k)return false;const wk=(WBY[w]||{}).kw||[];return wk.length>0&&!wk.includes(k)}
 
 // ===== 通信 =====
-const ERR_EN={fb_short:'Please write at least 5 characters',fb_long:'Please keep it within 300 characters',bad_device:'Device info looks wrong. Please reload the page',bad_weapon:'No weapon selected',bad_armor:'That armor cannot go in that slot',bad_mod:'That mod cannot go in that slot',two_keys:'Only one key gear, please',too_few:'Pick at least 4',too_many:'Too many posts. Please wait a bit and try again',site_full:'The site reached today\'s post limit. Please come back tomorrow',bad_pass:'Wrong password'};
-const ERR={fb_short:'5文字以上で書いてね',fb_long:'300文字以内にしてね',bad_device:'端末の情報がおかしいみたい。ページを読み込み直してね',bad_weapon:'武器が選べていないみたい',bad_armor:'その部位に付けられない防具が入ってるよ',bad_mod:'その部位に付けられないMODが入ってるよ',two_keys:'主要防具は1つだけにしてね',too_few:'4つ以上選んでね',too_many:'投稿が多すぎるみたい。少し時間をおいてからにしてね',site_full:'今日はサイト全体の投稿が上限に達したよ。明日また来てね',bad_pass:'合言葉がちがうよ'};
+const ERR_EN={fb_short:'Please write at least 5 characters',fb_long:'Please keep it within 300 characters',bad_device:'Device info looks wrong. Please reload the page',bad_weapon:'No weapon selected',bad_armor:'That armor cannot go in that slot',bad_mod:'That mod cannot go in that slot',two_keys:'Only one key gear, please',too_few:'Pick at least 4',too_many:'Too many posts (limit: 8 per hour, 30 per day). Please wait a bit and try again',site_full:'The site reached today\'s post limit. Please come back tomorrow',bad_pass:'Wrong password'};
+const ERR={fb_short:'5文字以上で書いてね',fb_long:'300文字以内にしてね',bad_device:'端末の情報がおかしいみたい。ページを読み込み直してね',bad_weapon:'武器が選べていないみたい',bad_armor:'その部位に付けられない防具が入ってるよ',bad_mod:'その部位に付けられないMODが入ってるよ',two_keys:'主要防具は1つだけにしてね',too_few:'4つ以上選んでね',too_many:'投稿が多すぎるみたい（1時間に8回・1日30回まで）。少し時間をおいてからにしてね',site_full:'今日はサイト全体の投稿が上限に達したよ。明日また来てね',bad_pass:'合言葉がちがうよ'};
 async function api(path,opt={}){
   const h={'apikey':CONFIG.key,'Content-Type':'application/json'};
   if(/^eyJ/.test(CONFIG.key))h.Authorization='Bearer '+CONFIG.key;
