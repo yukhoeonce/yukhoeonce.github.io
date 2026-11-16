@@ -1,0 +1,1636 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ワンスヒューマン 動物講座｜捕獲・好物・繁殖・特性を学べる（非公式）</title>
+<link rel="canonical" href="https://yukhoeonce.github.io/animal/">
+<meta name="description" content="ワンスヒューマン（Once Human）の動物を、初級・中級・上級のレッスン・動物図鑑・特性図鑑・クイズで学べる非公式講座。捕獲のしかた、満腹度と好物、子供部屋での繁殖、特性の育て方まで。">
+<meta name="theme-color" content="#fff4dc">
+<meta name="apple-mobile-web-app-title" content="動物講座">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:title" content="ワンスヒューマン 動物講座">
+<meta property="og:description" content="動物の捕獲・好物・繁殖・特性を、レッスンと図鑑で学べる講座（非公式）">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yukhoeonce.github.io/animal/">
+<meta name="twitter:card" content="summary">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Mochiy+Pop+One&family=M+PLUS+Rounded+1c:wght@500;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+<style>
+/* レイアウト: 上にカセット風の見出し＋タブ、中身は1列のノート。レッスンは左に目次、けいさん機は左に入力・右に結果（狭い画面では縦並び）。 */
+:root,:root[data-theme]{
+  color-scheme:light;
+  --sh:#3b2340; --hl:#ffe27a; --band:#ffd1df; --figc:#5d7ea3;
+  --bg:#fff4dc; --surface:#fffdf6; --field:#fff1e4; --ink:#3b2340; --ink-2:#4a3352; --muted:#6c5570; --line:#3b2340;
+  --atk:#e8517a; --atk-soft:#ffe1ea; --psi:#1f8f87; --psi-soft:#d9f6ef; --def:#6a58c9; --def-soft:#ebe5ff;
+  --ok:#3f9a4e; --ok-soft:#e2f6e0; --ng:#d8344f; --ng-soft:#ffe3e7; --wait:#b07800; --wait-soft:#fff2c4;
+  --pink:#ff9fbd; --mint:#9be8d4; --lemon:#ffe27a; --lilac:#c9b3ff; --sky:#9fd6ff; --on-pop:#3b2340;
+  --dot:rgba(59,35,64,.13); --scrim:rgba(59,35,64,.45);
+  --shadow:4px 4px 0 var(--sh);
+  --f-body:"BIZ UDPGothic","Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif;
+  --f-pop:"Mochiy Pop One","M PLUS Rounded 1c",sans-serif;
+  --f-dot:"DotGothic16","M PLUS Rounded 1c",monospace;
+}
+
+*{box-sizing:border-box}
+body{word-break:keep-all;overflow-wrap:anywhere;line-break:strict;background-color:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.75;
+  background-image:radial-gradient(circle at 1px 1px,var(--dot) 1.4px,transparent 1.6px);background-size:22px 22px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:var(--atk)}
+:focus-visible{outline:3px solid var(--atk);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-pop);font-weight:400;text-wrap:balance;line-height:1.4;margin:0}
+p{margin:0}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1040px;margin:0 auto}
+
+/* ===== ヘッダー ===== */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:3px solid var(--line);box-shadow:0 4px 0 var(--band)}
+.top .wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-block:10px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);margin-right:auto}
+.brand .cas{width:40px;height:28px;border:2.5px solid var(--line);border-radius:6px;background:var(--lemon);position:relative;flex:none}
+.brand .cas::before,.brand .cas::after{content:"";position:absolute;top:8px;width:8px;height:8px;border-radius:50%;border:2.5px solid var(--on-pop);background:var(--surface)}
+.brand .cas::before{left:6px}.brand .cas::after{right:6px}
+.brand b{font-family:var(--f-pop);font-weight:400;font-size:19px;letter-spacing:.04em}
+.brand small{display:block;font-weight:700;font-size:11px;color:var(--muted);letter-spacing:.12em;line-height:1.2}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs a{font-weight:800;font-size:14px;text-decoration:none;color:var(--ink);padding:6px 14px;border:2px solid var(--line);border-radius:999px;background:var(--surface);box-shadow:2px 2px 0 var(--sh);transition:transform .12s}
+.tabs a[aria-current="page"]{background:var(--pink);color:var(--on-pop)}
+.tabs a:active{transform:translate(2px,2px);box-shadow:none}
+
+main{padding-block:24px 48px}
+.view[hidden]{display:none}
+
+/* ===== 共通パーツ ===== */
+.card{background:var(--surface);border:2.5px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.eyebrow{font-family:var(--f-dot);font-size:13px;letter-spacing:.14em;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:800;padding:10px 18px;border:2.5px solid var(--line);border-radius:999px;background:var(--lemon);color:var(--on-pop);box-shadow:3px 3px 0 var(--sh);text-decoration:none;transition:transform .12s}
+.btn:active{transform:translate(3px,3px);box-shadow:none}
+.btn.sub{background:var(--surface);color:var(--ink)}
+.btn.pink{background:var(--pink)}
+.t{border:0;background:none;padding:0;font-weight:800;color:var(--ink);text-decoration:underline solid var(--atk) 2px;text-underline-offset:4px}
+.chip{display:inline-block;font-size:13px;font-weight:800;padding:1px 10px;border-radius:999px;border:2px solid var(--line);white-space:nowrap;line-height:1.6}
+.c-atk{background:var(--atk-soft);color:var(--atk);border-color:var(--atk)}
+.c-psi{background:var(--psi-soft);color:var(--psi);border-color:var(--psi)}
+.c-def{background:var(--def-soft);color:var(--def);border-color:var(--def)}
+.c-kw{background:var(--wait-soft);color:var(--wait);border-color:var(--wait)}
+.note{border:2px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--field);font-size:15px}
+.note b{font-family:var(--f-pop);font-weight:400}
+
+/* ===== ホーム ===== */
+.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:center}
+.hero h1{font-size:clamp(28px,5vw,44px);margin-block:6px 12px}
+.hero h1 em{font-style:normal;background:linear-gradient(transparent 62%,var(--hl) 62%);color:var(--ink)}
+.hero p.lead{font-size:17px;color:var(--ink-2);max-width:32em}
+.hero .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.prog{display:flex;align-items:center;gap:10px;margin-top:16px;font-weight:700;font-size:14px;color:var(--muted)}
+.prog .bar{flex:1;max-width:220px;height:14px;border:2px solid var(--line);border-radius:999px;background:var(--surface);overflow:hidden}
+.prog .bar i{display:block;height:100%;background:var(--mint);width:0;transition:width .4s}
+
+/* 7つの枠 */
+.rig{padding:18px;position:relative}
+.rig .lab{font-weight:700;font-size:13px;color:var(--muted);text-align:center;margin-bottom:8px}
+.rig-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+.rig-col{display:flex;flex-direction:column;gap:10px}
+.slot{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:8px 10px;border:2px solid var(--line);border-radius:12px;background:var(--field);box-shadow:2px 2px 0 var(--sh);min-width:0;transition:transform .12s}
+.slot:hover{transform:translateY(-2px)}
+.slot b{font-size:14px}
+.slot span{font-size:12px;color:var(--ink-2);line-height:1.4}
+.slot.w{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:center;gap:10px;background:var(--lemon);color:var(--on-pop)}
+.slot.w span{color:var(--on-pop)}
+.fig{width:96px;height:auto;display:block}
+.fig .p{fill:var(--figc)}.fig .k{fill:#f6cba8}.fig .g{fill:var(--lemon)}.fig .s{fill:var(--pink)}.fig .m{fill:var(--mint)}
+
+.paths{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:36px}
+.path{padding:18px;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink);transition:transform .12s}
+.path:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--sh)}
+.path h3{font-size:18px}
+.path p{font-size:15px;color:var(--ink-2)}
+.path .eyebrow{display:flex;justify-content:space-between}
+
+/* ===== レッスン ===== */
+.lesson{display:grid;grid-template-columns:240px minmax(0,1fr);gap:24px;align-items:start}
+.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);padding:10px;display:flex;flex-direction:column;gap:4px}
+.toc button{display:flex;gap:10px;align-items:center;text-align:left;padding:8px 10px;border:2px solid transparent;border-radius:10px;background:none;font-weight:700;font-size:14px;line-height:1.4}
+.toc button .n{flex:none;width:28px;height:28px;display:grid;place-items:center;border:2px solid var(--line);border-radius:50%;font-family:var(--f-dot);font-size:14px;background:var(--surface)}
+.toc button.done .n{background:var(--mint);color:var(--on-pop)}
+.toc button[aria-current="step"]{border-color:var(--line);background:var(--field)}
+.toc button[aria-current="step"] .n{background:var(--pink);color:var(--on-pop)}
+.les{padding:24px clamp(16px,4vw,36px) 28px;min-width:0}
+.les h2{font-size:clamp(22px,3.4vw,30px);margin-block:4px 14px}
+.les .body{display:flex;flex-direction:column;gap:16px;max-width:42em}
+.les .body > p{font-size:16.5px}
+.les .foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:28px;padding-top:18px;border-top:2.5px solid var(--line)}
+.les h3{font-size:17px;margin-top:6px}
+
+/* MODカードの見本 */
+.modcard{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 14px;align-items:center;padding:14px 16px;border:2.5px solid var(--line);border-radius:14px;background:var(--field)}
+.modcard .ic{grid-row:span 2;width:54px;height:54px;border:2.5px solid var(--line);border-radius:12px;background:var(--lemon);display:grid;place-items:center;font-family:var(--f-dot);font-size:22px;color:var(--on-pop)}
+.modcard .nm{font-weight:800;font-size:18px}
+.modcard .lv{grid-row:span 2;font-family:var(--f-dot);font-size:22px;border:2px solid var(--line);border-radius:8px;padding:2px 8px;background:var(--surface)}
+.modcard .ex{font-size:15px;color:var(--ink-2)}
+.parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.part{padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface)}
+.part .k{font-weight:700;font-size:13px;color:var(--muted)}
+.part b{display:block;font-size:16px}
+.part p{font-size:15px;color:var(--ink-2)}
+
+.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.role{padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface);display:flex;flex-direction:column;gap:4px}
+.role .chip{align-self:flex-start}
+.role b{font-size:16px}
+.role p{font-size:15px;color:var(--ink-2)}
+
+details.dex{border:2px solid var(--line);border-radius:12px;background:var(--surface)}
+details.dex+details.dex{margin-top:8px}
+details.dex summary{cursor:pointer;padding:10px 14px;font-weight:800;list-style:none;display:flex;justify-content:space-between;gap:8px}
+details.dex summary::after{content:"＋";font-family:var(--f-dot)}
+details.dex[open] summary::after{content:"－"}
+details.dex summary::-webkit-details-marker{display:none}
+.dexlist{padding:0 14px 12px;display:flex;flex-direction:column;gap:6px}
+.dexrow{display:grid;grid-template-columns:minmax(0,11em) minmax(0,1fr);gap:4px 12px;font-size:14px;padding-top:6px;border-top:1.5px solid var(--muted)}
+.dexrow b{font-weight:800}
+.dexrow span{color:var(--ink-2)}
+.kwgroup{padding-top:6px;border-top:1.5px solid var(--muted);font-size:14px}
+.kwgroup b{display:inline-block;margin-right:6px}
+
+.types{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.type{padding:16px;border:2.5px solid var(--line);border-radius:14px;display:flex;flex-direction:column;gap:8px}
+.type.a{background:var(--atk-soft)}.type.p{background:var(--psi-soft)}
+.type h3{font-size:18px;margin:0}
+.type.a h3{color:var(--atk)}.type.p h3{color:var(--psi)}
+.type ul{margin:0;padding-left:1.2em;font-size:16px}
+.formula{font-family:var(--f-body);font-weight:700;font-size:16px;line-height:2;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface);overflow-x:auto;white-space:nowrap}
+.formula .g{display:inline-block;padding:0 6px;border-radius:6px;margin:0 2px}
+.formula .g1{background:var(--atk-soft)}.formula .g2{background:var(--wait-soft)}.formula .g3{background:var(--psi-soft)}
+
+/* 足し算デモ */
+.demo{padding:16px;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);display:flex;flex-direction:column;gap:12px}
+.demo .q{font-weight:800}
+.demo .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.demo .opts button{padding:12px;border:2.5px solid var(--line);border-radius:12px;background:var(--field);text-align:left;box-shadow:2px 2px 0 var(--sh)}
+.demo .opts button[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop)}
+.demo .opts small{display:block;font-size:13px;color:var(--ink-2);font-weight:700}
+.demo .res{font-size:15px;min-height:3.5em}
+.demo .res b{font-size:19px;font-weight:700}
+.meter{display:grid;grid-template-columns:7em minmax(0,1fr) 4.5em;gap:8px;align-items:center;font-size:14px}
+.meter .bar{height:16px;border:2px solid var(--line);border-radius:999px;background:var(--field);overflow:hidden}
+.meter .bar i{display:block;height:100%;background:var(--pink);transition:width .4s}
+.meter .v{font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+
+/* 戦い方チェック */
+.style{padding:16px;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);display:flex;flex-direction:column;gap:12px}
+.seg{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg > span{font-weight:800;font-size:14px;min-width:5.5em}
+.seg button{padding:6px 14px;border:2px solid var(--line);border-radius:999px;background:var(--field);font-weight:700;font-size:14px}
+.seg button[aria-pressed="true"]{background:var(--mint);color:var(--on-pop)}
+.fit{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.fit > div{padding:10px 12px;border-radius:12px;border:2px solid var(--line);font-size:14px}
+.fit .yes{background:var(--ok-soft)}.fit .no{background:var(--ng-soft)}
+.fit h4{margin:0 0 4px;font-size:14px}
+.fit .yes h4{color:var(--ok)}.fit .no h4{color:var(--ng)}
+.fit ul{margin:0;padding-left:1.1em}
+
+.xtab{width:100%;border-collapse:collapse;font-size:16px;min-width:520px}
+.xtab td:first-child{font-weight:700}
+.xtab th,.xtab td{color:var(--ink);border-bottom:1.5px solid var(--muted);padding:10px 8px;text-align:left;vertical-align:top}
+.xtab th{font-weight:700;color:var(--ink-2);font-size:14px}
+.scroll{overflow-x:auto}
+
+.rules{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none;counter-reset:r}
+.rules li{counter-increment:r;display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:start;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface)}
+.rules li::before{content:counter(r);width:32px;height:32px;display:grid;place-items:center;border:2px solid var(--line);border-radius:50%;background:var(--lemon);color:var(--on-pop);font-family:var(--f-dot);font-size:16px}
+.practice{padding:18px;border:2.5px solid var(--line);border-radius:14px;background:var(--lilac);color:var(--on-pop);display:flex;flex-direction:column;gap:10px}
+.practice ol{margin:0;padding-left:1.3em}
+.practice .btn{align-self:flex-start;background:var(--surface);color:var(--ink)}
+
+.lvtabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.lvtabs button{display:flex;flex-direction:column;align-items:flex-start;gap:0;padding:10px 14px;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:3px 3px 0 var(--sh);text-align:left}
+.lvtabs button b{font-family:var(--f-pop);font-weight:400;font-size:18px}
+.lvtabs button small{font-size:12.5px;color:var(--ink-2)}
+.lvtabs button[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop)}
+.lvtabs button[aria-pressed="true"] small{color:var(--on-pop)}
+.num{width:100%;padding:6px 10px;border:2px solid var(--line);border-radius:10px;background:var(--field);font:inherit;font-weight:700;font-size:16px;color:var(--ink)}
+.meter input[type=range]{width:100%;accent-color:var(--atk)}
+/* ===== クイズ ===== */
+.quiz{max-width:720px;margin:0 auto;padding:24px clamp(16px,4vw,32px)}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.dots{display:flex;gap:5px;flex-wrap:wrap}
+.dots i{width:14px;height:14px;border:2px solid var(--line);border-radius:4px;background:var(--surface)}
+.dots i.ok{background:var(--mint)}.dots i.ng{background:var(--pink)}.dots i.now{background:var(--lemon)}
+.qtext{font-family:var(--f-pop);font-size:clamp(19px,3vw,23px);line-height:1.6;margin-block:18px 6px}
+.qsit{font-size:16px;color:var(--ink-2);margin-bottom:16px}
+.qopts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.qopts button{min-height:84px;padding:14px;border:2.5px solid var(--line);border-radius:14px;background:var(--field);box-shadow:3px 3px 0 var(--sh);font-weight:800;font-size:17px;line-height:1.4;transition:transform .12s}
+.qopts button:not(:disabled):active{transform:translate(3px,3px);box-shadow:none}
+.qopts button.right{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.qopts button.wrong{background:var(--ng-soft);border-color:var(--ng);color:var(--ng)}
+.qopts button:disabled{cursor:default}
+.qopts button small{display:block;font-size:12px;font-weight:700;color:var(--ink-2);margin-top:2px}
+.qexp{margin-top:16px;padding:14px;border:2px solid var(--line);border-radius:12px;background:var(--surface)}
+.qexp .big{font-family:var(--f-pop);font-size:20px}
+.qexp .big.ok{color:var(--ok)}.qexp .big.ng{color:var(--ng)}
+.qexp p{font-size:15px;margin-top:4px}
+.qnext{display:flex;justify-content:flex-end;margin-top:14px}
+.qend{text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px;padding-block:12px}
+.qend .score{font-family:var(--f-dot);font-size:56px;line-height:1}
+.qend .score small{font-size:22px}
+
+/* ===== 用語集 ===== */
+.words-head{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px}
+.words-head h2{font-size:26px;margin-right:auto}
+.search{flex:1 1 240px;max-width:360px;padding:10px 14px;border:2.5px solid var(--line);border-radius:999px;background:var(--surface);font:inherit;color:var(--ink)}
+.cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.cats button{padding:4px 12px;border:2px solid var(--line);border-radius:999px;background:var(--surface);font-weight:700;font-size:14px}
+.cats button[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop)}
+.wlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.word{padding:14px 16px;display:flex;flex-direction:column;gap:6px;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:3px 3px 0 var(--sh);scroll-margin-top:120px}
+.word.flash{animation:flash 1.2s}
+@keyframes flash{0%,40%{background:var(--lemon)}}
+.word header{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.word b{font-size:17px}
+.word p{font-size:16px;color:var(--ink-2)}
+.empty{color:var(--muted);padding:20px 0}
+
+/* 用語のポップアップ */
+.sheet{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;justify-content:center;background:var(--scrim);padding:16px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.sheet[hidden]{display:none}
+.sheet .box{width:min(520px,100%);padding:18px 20px;display:flex;flex-direction:column;gap:8px;animation:up .2s ease-out}
+@keyframes up{from{transform:translateY(20px);opacity:.6}}
+.sheet .box header{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.sheet .box b{font-family:var(--f-pop);font-weight:400;font-size:20px}
+.sheet .x{width:36px;height:36px;border:2px solid var(--line);border-radius:50%;background:var(--surface);font-weight:800}
+.sheet .box .more{align-self:flex-start;font-size:14px}
+
+footer.site{padding-block:24px 36px;border-top:3px solid var(--line);font-size:13px;color:var(--muted)}
+footer.site .wrap{display:flex;flex-direction:column;gap:4px}
+
+.tabs a.back{background:var(--lilac);display:inline-flex;align-items:center;gap:6px}
+.tabs a.back svg{width:16px;height:16px;flex:none;display:block}
+/* ===== ダメージラボのレトロかわいい版に寄せる ===== */
+body{animation:dots 30s linear infinite}
+@keyframes dots{to{background-position:220px 220px}}
+main,footer.site,.ticker{position:relative;z-index:1}
+.rfx{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.rfx i{position:absolute;font-style:normal;font-family:var(--f-pop);opacity:.5;animation:float 9s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-26px) rotate(10deg)}}
+.brand b{font-size:21px;letter-spacing:.06em;background:linear-gradient(90deg,#e8517a,#f29a3b,#2aa39a,#7b5bd6,#e8517a);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:rainbow 6s linear infinite}
+@keyframes rainbow{to{background-position:300% 0}}
+.brand .cas::before,.brand .cas::after{border-style:solid;animation:spin 3s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ticker{overflow:hidden;border-bottom:2px solid var(--line);background:var(--lemon);white-space:nowrap}
+.ticker div{display:inline-block;padding:4px 0;font-family:var(--f-dot);font-size:14px;color:var(--on-pop);animation:tick 26s linear infinite}
+@keyframes tick{to{transform:translateX(-50%)}}
+.card{border-radius:18px;box-shadow:5px 5px 0 var(--sh);animation:pop .55s cubic-bezier(.3,1.6,.5,1) backwards;position:relative}
+.paths .card:nth-child(2){animation-delay:.08s}.paths .card:nth-child(3){animation-delay:.16s}.paths .card:nth-child(4){animation-delay:.24s}
+@keyframes pop{from{opacity:0;transform:translateY(18px) scale(.94) rotate(-1deg)}}
+.les::after,.quiz::after,.rig::after{content:"";position:absolute;top:-12px;right:22px;width:70px;height:22px;background:repeating-linear-gradient(45deg,var(--pink) 0 8px,#ffd1df 8px 16px);border:2px solid var(--line);transform:rotate(4deg);border-radius:4px;opacity:.9}
+.rig::after{background:repeating-linear-gradient(45deg,var(--mint) 0 8px,#d4f7ec 8px 16px);transform:rotate(-5deg);left:22px;right:auto}
+.les h2,.qtext{letter-spacing:.03em}
+.btn,.tabs a,.slot,.lvtabs button,.qopts button,.demo .opts button,.seg button,.cats button{transition:transform .12s,box-shadow .12s,background .2s}
+.btn:hover,.tabs a:hover,.lvtabs button:hover,.qopts button:not(:disabled):hover,.demo .opts button:hover{transform:translate(-1px,-1px)}
+.btn:active,.lvtabs button:active,.demo .opts button:active,.slot:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--sh)}
+.path:hover{transform:translate(-2px,-2px) rotate(-.4deg)}
+.toc button[aria-current="step"] .n,.rules li::before{animation:bob 2.4s ease-in-out infinite}
+.rules li:nth-child(2)::before{animation-delay:-.4s}.rules li:nth-child(3)::before{animation-delay:-.8s}.rules li:nth-child(4)::before{animation-delay:-1.2s}.rules li:nth-child(5)::before{animation-delay:-1.6s}.rules li:nth-child(6)::before{animation-delay:-2s}
+@keyframes bob{50%{transform:translateY(-3px) rotate(-6deg)}}
+.lvtabs button[aria-pressed="true"] b,.tabs a[aria-current="page"]{animation:wig 3s ease-in-out infinite;display:inline-block}
+@keyframes wig{0%,86%,100%{transform:rotate(0)}90%{transform:rotate(-6deg)}95%{transform:rotate(6deg)}}
+.les .body>*{animation:pop .45s cubic-bezier(.3,1.6,.5,1) backwards}
+.les .body>*:nth-child(2){animation-delay:.04s}.les .body>*:nth-child(3){animation-delay:.08s}.les .body>*:nth-child(4){animation-delay:.12s}.les .body>*:nth-child(5){animation-delay:.16s}.les .body>*:nth-child(n+6){animation-delay:.2s}
+.les h3{display:flex;align-items:center;gap:8px}
+.les h3::before{content:"";width:10px;height:10px;background:var(--pink);border:2px solid var(--line);flex:none}
+.les h3::after{content:"";flex:1;border-top:2px solid rgba(59,35,64,.3)}
+/* PC: 背景の動きで文字の重なりレイヤーができて文字がぼやけるので、マウス操作の画面では背景を止める */
+@media (hover:hover) and (pointer:fine){body{animation:none}.rfx i{animation:none}}
+/* 部位のドット絵アイコン */
+.slot{flex-direction:row;align-items:center;gap:10px}
+.slot .ic{flex:none;width:30px;height:30px;display:grid;place-items:center;border:2.5px solid var(--line);border-radius:10px;box-shadow:2px 2px 0 var(--sh);transition:transform .2s}
+.slot .ic svg{width:18px;height:18px;display:block}
+.slot{gap:8px;padding:8px}
+.slot .tx span{font-size:11.5px}
+.slot:hover .ic{transform:rotate(-8deg) scale(1.08)}
+.slot .tx{display:flex;flex-direction:column;min-width:0}
+.slot.w .ic{background:var(--surface)!important}
+/* クイズ：ゲーム機の画面 */
+.screen{position:relative;overflow:hidden;width:min(360px,100%);padding:18px 16px 14px;border:3px solid var(--line);border-radius:16px;box-shadow:4px 4px 0 var(--sh);background:#2c1f45;background-image:radial-gradient(ellipse at 50% 0%,rgba(201,179,255,.25),transparent 70%);color:#fff4dc}
+.screen::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 2px,transparent 2px 4px)}
+.screen::after{content:"▶";position:absolute;right:14px;top:10px;font-size:12px;color:var(--lemon);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.screen .lab2{font-family:var(--f-dot);font-size:13px;color:#c9b8e0;letter-spacing:.2em}
+.qend .screen .score{color:var(--lemon);text-shadow:3px 3px 0 #e8517a,0 0 16px rgba(255,226,122,.5);animation:boing .5s cubic-bezier(.3,1.8,.5,1)}
+.qend .screen .score small{color:#fff4dc;text-shadow:none}
+@keyframes boing{0%{transform:scale(.6) translateY(6px)}60%{transform:scale(1.12)}100%{transform:none}}
+.qexp .big{display:inline-block;animation:boing .5s cubic-bezier(.3,1.8,.5,1)}
+.qopts button.right{animation:boing .45s cubic-bezier(.3,1.8,.5,1)}
+.qopts button.wrong{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.dots i.now{animation:bob 1.2s ease-in-out infinite}
+.spark{position:fixed;pointer-events:none;z-index:99;font-size:16px;animation:spark .8s ease-out forwards}
+@keyframes spark{from{opacity:1;transform:translate(0,0) scale(1)}to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.4) rotate(180deg)}}
+.sheet .box{border-width:3px;box-shadow:8px 8px 0 var(--sh);animation:pop .45s cubic-bezier(.3,1.6,.5,1)}
+.sheet .x{background:var(--pink);box-shadow:3px 3px 0 var(--sh);transition:transform .15s}
+.sheet .x:hover{transform:rotate(90deg)}
+.word{animation:pop .45s cubic-bezier(.3,1.6,.5,1) backwards}
+.word:hover{transform:translate(-2px,-2px) rotate(-.3deg);box-shadow:5px 5px 0 var(--sh)}
+@media (max-width:820px){
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .lesson{grid-template-columns:minmax(0,1fr)}
+  .toc{position:static;flex-direction:row;overflow-x:auto;padding:8px}
+  .toc button{flex:none}
+  .toc button .t2{display:none}
+  .toc button[aria-current="step"] .t2{display:inline}
+}
+@media (max-width:480px){
+  .lvtabs small .d{display:none}
+  .lvtabs button{padding:8px 12px}
+  .qopts{grid-template-columns:1fr}
+  .dexrow{grid-template-columns:minmax(0,1fr)}
+  .brand b{font-size:17px}
+  .tabs a{padding:5px 11px;font-size:13px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ===== デビ融合講座で足したもの ===== */
+.tabs a{white-space:nowrap}
+@media (max-width:760px){
+  .top .wrap{gap:8px}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;width:100%;padding:2px 4px 6px 2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs a{flex:none}
+}
+.cas.pod-ic{background:var(--mint)}
+
+/* 融合ポッドの図（ホーム） */
+.pod{padding:18px;position:relative}
+.pod .lab{font-weight:700;font-size:13px;color:var(--muted);text-align:center;margin-bottom:10px}
+.pod-grid{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center}
+.pod-core{width:88px;height:88px;border-radius:50%;border:3px solid var(--line);background:radial-gradient(circle at 38% 32%,#fff 0 10%,var(--lilac) 52%,#a98ff0 100%);display:grid;place-items:center;position:relative;box-shadow:3px 3px 0 var(--sh)}
+.pod-core::before{content:"";position:absolute;inset:7px;border-radius:50%;border:2.5px solid var(--on-pop);opacity:.5;animation:spin 9s linear infinite}
+.pod-core b{position:relative;font-family:var(--f-pop);font-weight:400;font-size:18px;color:var(--on-pop)}
+.pod-mats{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.pod-arrow{grid-column:1/-1;text-align:center;font-family:var(--f-dot);font-size:16px;line-height:1;color:var(--muted)}
+.pod::after{content:"";position:absolute;top:-12px;left:22px;width:70px;height:22px;background:repeating-linear-gradient(45deg,var(--mint) 0 8px,#d4f7ec 8px 16px);border:2px solid var(--line);transform:rotate(-5deg);border-radius:4px}
+
+/* デビカードの見本 */
+.devcard{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 14px;align-items:center;padding:14px 16px;border:2.5px solid var(--line);border-radius:14px;background:var(--field)}
+.devcard .ic{grid-row:span 2;width:56px;height:56px;border:2.5px solid var(--line);border-radius:12px;background:var(--mint);display:grid;place-items:center}
+.devcard .ic svg{width:34px;height:34px;display:block}
+.devcard .nm{font-weight:800;font-size:18px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.devcard .lvs{display:flex;gap:8px;flex-wrap:wrap}
+.devcard .lvs span{font-size:13.5px;font-weight:700;border:2px solid var(--line);border-radius:8px;padding:0 8px;background:var(--surface)}
+.devcard .lvs span b{font-family:var(--f-dot);font-weight:400;font-size:16px;margin-left:4px}
+.tslots{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.tslot{border:2px solid var(--line);border-radius:10px;padding:6px 10px;font-size:14px;line-height:1.45;min-width:0}
+.tslot small{display:block;font-size:11.5px;font-weight:800;color:var(--ink-2);letter-spacing:.04em}
+.tslot.c{background:var(--wait-soft)}.tslot.r{background:var(--atk-soft)}.tslot.m{background:var(--psi-soft)}.tslot.x{background:var(--def-soft)}
+.tslot.big{padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.tslot.big b{font-family:var(--f-pop);font-weight:400;font-size:17px}
+.tslot.big p{font-size:14.5px;color:var(--ink-2)}
+.tslot.big small{font-size:12.5px}
+@media (max-width:560px){.tslots{grid-template-columns:minmax(0,1fr)}}
+
+.les .body ul{margin:0;padding-left:1.25em;display:flex;flex-direction:column;gap:4px}
+.big-num{font-family:var(--f-dot);font-size:20px}
+.why-line{font-size:14px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap}
+.btn.sm{padding:7px 14px;font-size:14px}
+
+/* ===== けいさん機 ===== */
+.calc-head{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.calc-head h2{font-size:clamp(22px,3.4vw,28px)}
+.how{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.how li{display:flex;align-items:center;gap:8px;padding:5px 14px 5px 5px;border:2px solid var(--line);border-radius:999px;background:var(--surface);font-weight:700;font-size:14px;box-shadow:2px 2px 0 var(--sh)}
+.how li b{display:grid;place-items:center;width:26px;height:26px;border:2px solid var(--line);border-radius:50%;background:var(--lemon);color:var(--on-pop);font-family:var(--f-dot);font-weight:400;font-size:14px}
+.sec-h{font-size:16px;margin:4px 0 8px}
+.wants{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(150px,172px);gap:10px;overflow-x:auto;padding:4px 6px 12px 2px;margin-bottom:12px;scroll-snap-type:x proximity;overscroll-behavior-x:contain}
+@media (min-width:901px){.wants{grid-auto-flow:row;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));grid-auto-columns:auto;overflow:visible}}
+.want{scroll-snap-align:start;position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:10px 12px 11px;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:3px 3px 0 var(--sh);text-align:left;transition:transform .12s,box-shadow .12s,background .2s}
+.want:hover{transform:translate(-1px,-2px)}
+.want:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--sh)}
+.want[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop)}
+.want.reset{background:var(--field)}
+.want .wi{width:36px;height:36px;border:2px solid var(--line);border-radius:10px;display:grid;place-items:center;margin-bottom:2px}
+.want .wi svg{width:22px;height:22px;display:block}
+.want .wt{font-weight:800;font-size:14.5px;line-height:1.35}
+.want small{font-size:12px;color:var(--ink-2);line-height:1.45}
+.want .wp{position:absolute;top:9px;right:9px;font-family:var(--f-dot);font-size:15px;line-height:1.3;padding:0 6px;border:2px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink)}
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+.calc-in{display:flex;flex-direction:column;gap:14px;min-width:0}
+.calc-out{padding:18px clamp(14px,3vw,22px);display:flex;flex-direction:column;gap:16px;min-width:0;animation:none}
+@media (min-width:901px) and (min-height:700px){.calc-in{position:sticky;top:calc(env(safe-area-inset-top,0px) + 96px)}}
+.calc-note{margin-top:14px;font-size:13px;color:var(--muted)}
+/* 融合ポッド（押せるカード） */
+.podc{padding:16px clamp(12px,2.4vw,18px);display:flex;flex-direction:column;gap:10px;min-width:0}
+.podc .lab{font-weight:700;font-size:13px;color:var(--muted);text-align:center}
+.pc-par{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center}
+.pc-mats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;align-items:stretch}
+.podc .tok{width:100%;max-width:none;min-width:0;align-self:stretch;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.podc .tok:hover{transform:translate(-1px,-2px)}
+.podc .tok:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--sh)}
+.tok.empty{border-color:var(--muted);background:var(--surface);box-shadow:none;color:var(--muted)}
+.tok .tk-ed{margin-top:auto;padding-top:2px;font-size:11.5px;font-weight:800;color:var(--atk)}
+.pc-child{display:flex;align-items:center;gap:12px;width:100%;padding:10px 14px;border:2.5px solid var(--line);border-radius:14px;background:var(--lemon);color:var(--on-pop);box-shadow:3px 3px 0 var(--sh);text-align:left}
+.pc-child .tk-ic{flex:none;width:44px;height:44px;border:2.5px solid var(--line);border-radius:12px;display:grid;place-items:center}
+.pc-child .tk-ic svg{width:28px;height:28px;display:block}
+.pc-child .pcc-t{display:flex;flex-direction:column;min-width:0;flex:1}
+.pc-child small{font-size:12px;font-weight:700}
+.pc-child b{font-size:17px;line-height:1.35}
+.pc-child .pcc-g{display:flex;flex-direction:column;align-items:flex-end;padding-left:12px;border-left:2px solid var(--line)}
+.pc-child .pcc-g b{font-family:var(--f-dot);font-weight:400;font-size:22px}
+/* 結果 */
+.frow{display:grid;grid-template-columns:3.4em minmax(0,1fr);gap:8px;align-items:center}
+.frow > .l{font-weight:800;font-size:14px}
+.lvsel{display:flex;gap:6px;flex-wrap:wrap}
+.lvsel button{width:44px;height:40px;border:2px solid var(--line);border-radius:10px;background:var(--field);font-family:var(--f-dot);font-size:18px;line-height:1}
+.lvsel button[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop);box-shadow:2px 2px 0 var(--sh)}
+.cnt{display:flex;align-items:center;gap:10px}
+.cnt button{width:42px;height:42px;border:2px solid var(--line);border-radius:50%;background:var(--surface);font-weight:800;font-size:20px;line-height:1;padding:0}
+.cnt button:disabled{opacity:.4}
+.cnt output{min-width:2.4em;text-align:center;font-family:var(--f-dot);font-size:22px}
+.mini{font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.mini.warn{color:var(--ng);font-weight:700}
+.out-sec{display:flex;flex-direction:column;gap:8px}
+.out-sec > h4{margin:0;font-size:14px;color:var(--ink-2);font-family:var(--f-dot);font-weight:400;letter-spacing:.1em}
+.sprow{display:grid;grid-template-columns:minmax(0,1fr) 4.6em;gap:4px 10px;align-items:center;padding:8px 10px;border:2px solid var(--line);border-radius:12px;background:var(--field);text-align:left;width:100%}
+.sprow[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop)}
+.sprow .nm{font-weight:800;font-size:15px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;min-width:0}
+.sprow .v,.trow .v{text-align:right;font-weight:800;font-variant-numeric:tabular-nums}
+.sprow .bar{grid-column:1/-1;height:10px;border:2px solid var(--line);border-radius:999px;background:var(--surface);overflow:hidden}
+.sprow .bar i{display:block;height:100%;background:var(--pink);transition:width .35s}
+.slotres{border:2px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.slotres.c{background:var(--wait-soft)}.slotres.r{background:var(--atk-soft)}.slotres.m{background:var(--psi-soft)}.slotres.x{background:var(--def-soft)}
+.slotres > header{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.slotres > header b{font-size:14.5px}
+.slotres > header small{font-size:12px;font-weight:700;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.trow{display:grid;grid-template-columns:auto minmax(0,1fr) 4.6em;gap:4px 8px;align-items:center;font-size:14px}
+.trow .nm{font-weight:800;min-width:0;display:flex;align-items:center;gap:6px}
+.trow.none .nm{color:var(--muted);font-weight:700}
+.star{width:32px;height:32px;border:2px solid var(--line);border-radius:8px;background:var(--surface);font-size:15px;line-height:1;padding:0;color:var(--muted)}
+.star[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop);box-shadow:2px 2px 0 var(--sh)}
+.why{font-size:12.5px;color:var(--ink-2);line-height:1.7;border-top:1.5px solid var(--muted);padding-top:6px;font-variant-numeric:tabular-nums}
+.goal{padding:10px 12px;border:2.5px solid var(--line);border-radius:12px;background:var(--lilac);color:var(--on-pop);font-size:14px;display:flex;flex-direction:column;gap:2px}
+.goal .gv{font-family:var(--f-dot);font-size:28px;line-height:1.2}
+.goal.off{background:var(--field);color:var(--ink-2)}
+.togl{align-self:flex-start;padding:4px 12px;border:2px solid var(--line);border-radius:999px;background:var(--surface);font-weight:700;font-size:13px}
+.togl[aria-pressed="true"]{background:var(--mint);color:var(--on-pop)}
+.calc-sum{display:none}
+/* えらぶ画面（カードを押したとき） */
+html.ed-open{overflow:hidden}
+.ed .edbox{width:min(760px,100%);max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);padding:16px clamp(12px,3vw,20px);gap:10px}
+.ed .edbox b{font-family:inherit;font-weight:800;font-size:inherit}
+.ed .edbox header b{font-family:var(--f-pop);font-weight:400;font-size:19px}
+.edbody{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:18px;padding:2px 4px 8px 2px}
+.edfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:2px solid var(--line);padding-top:10px}
+.edfoot .mini{font-weight:700}
+.ed-sec{display:flex;flex-direction:column;gap:8px}
+.ed-sec > h4{margin:0;display:flex;align-items:center;gap:8px;font-size:16px;flex-wrap:wrap}
+.ed-sec > h4 .n{font-family:var(--f-pop);font-weight:400;color:var(--atk)}
+.ed-sec > h4 small{font-size:12.5px;font-weight:700;color:var(--muted)}
+.search.sm{flex:none;max-width:none;width:100%;padding:8px 14px;font-size:15px}
+.pk-grp{display:flex;flex-direction:column;gap:6px}
+.pk-h{margin:0}
+.pk-sub{margin:2px 0 0;font-size:12px;font-weight:800;color:var(--muted)}
+.picks{display:flex;flex-wrap:wrap;gap:6px}
+.pick{display:inline-flex;flex-direction:column;align-items:flex-start;padding:6px 11px;border:2px solid var(--line);border-radius:10px;background:var(--surface);font-weight:700;font-size:13.5px;line-height:1.35;text-align:left;min-height:36px;justify-content:center}
+.pick small{font-size:11px;font-weight:700;color:var(--ink-2)}
+.pick[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop);box-shadow:2px 2px 0 var(--sh)}
+.pick[aria-pressed="true"] small{color:var(--on-pop)}
+.pick.bad{color:var(--muted);background:var(--field)}
+.pick.none{color:var(--ink-2)}
+.pick.big{padding:9px 16px;font-size:15px}
+.pick[hidden]{display:none}
+.pk-more > summary{cursor:pointer;font-size:13px;font-weight:800;color:var(--ink-2);padding:4px 0}
+.pk-more[open] > summary{margin-bottom:6px}
+.ed-slot{display:flex;flex-direction:column;gap:6px;padding:10px 12px;border:2px solid var(--line);border-radius:12px}
+.ed-slot + .ed-slot{margin-top:8px}
+.ed-slot.c{background:var(--wait-soft)}.ed-slot.r{background:var(--atk-soft)}.ed-slot.m{background:var(--psi-soft)}
+.ed-slot .es-h{margin:0;font-weight:800;font-size:14px}
+.teff2{font-size:13px;color:var(--ink-2);line-height:1.6;padding:6px 10px;border:1.5px solid var(--muted);border-radius:8px;background:var(--surface)}
+.teff2 strong{color:var(--ink)}
+.kind4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.k4{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 6px;border:2.5px solid var(--line);border-radius:12px;background:var(--surface);font-weight:800;font-size:13px;line-height:1.3;text-align:center}
+.k4 .tk-ic{width:42px;height:42px;border:2.5px solid var(--line);border-radius:11px;display:grid;place-items:center}
+.k4 .tk-ic svg{width:26px;height:26px;display:block}
+.k4[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop);box-shadow:3px 3px 0 var(--sh)}
+@media (min-width:901px){.ed{align-items:center}}
+@media (max-width:900px){
+  .calc{grid-template-columns:minmax(0,1fr)}
+  .calc-out{position:static;max-height:none;overflow:visible}
+  .calc-sum{display:flex;position:sticky;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);z-index:5;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border:2.5px solid var(--line);border-radius:14px;background:var(--lemon);color:var(--on-pop);box-shadow:3px 3px 0 var(--sh);font-size:13.5px;font-weight:700}
+  .calc-sum[hidden]{display:none}
+  .calc-sum button{flex:none;padding:6px 12px;border:2px solid var(--line);border-radius:999px;background:var(--surface);font-weight:800;font-size:13px}
+}
+
+/* ===== 図のパーツ ===== */
+.dfig{margin:0;display:flex;flex-direction:column;gap:8px}
+.dfig figcaption{font-size:13.5px;color:var(--ink-2);text-align:center;line-height:1.6}
+.fig-h{margin:0;font-weight:800;font-size:14px}
+.flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 6px;padding:14px 10px;border:2.5px solid var(--line);border-radius:16px;background:var(--surface)}
+.op{font-family:var(--f-pop);font-size:22px;line-height:1;color:var(--ink-2);padding:0 2px}
+.tok{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:84px;max-width:150px;padding:8px 8px 9px;border:2.5px solid var(--line);border-radius:14px;background:var(--field);box-shadow:3px 3px 0 var(--sh);text-align:center;color:var(--ink)}
+.tok .tk-tag{font-family:var(--f-dot);font-size:12px;line-height:1.35;padding:0 6px;border:2px solid var(--line);border-radius:6px;background:var(--surface)}
+.tok .tk-ic{position:relative;width:44px;height:44px;border:2.5px solid var(--line);border-radius:12px;display:grid;place-items:center;flex:none}
+.tok .tk-ic svg{width:28px;height:28px;display:block}
+.tok .tk-cnt{position:absolute;right:-12px;bottom:-9px;font-style:normal;font-family:var(--f-dot);font-size:13px;line-height:1.3;padding:0 4px;border:2px solid var(--line);border-radius:6px;background:var(--lemon);color:var(--on-pop)}
+.tok .tk-nm{font-size:13.5px;line-height:1.35;font-weight:800;overflow-wrap:anywhere}
+.flow.wrapped>.op.to,.clash.wrapped>.op.to{flex-basis:100%;text-align:center;font-size:0;padding:0;line-height:1}
+.flow.wrapped>.op.to::before,.clash.wrapped>.op.to::before{content:"▼";font-family:var(--f-dot);font-size:16px;color:var(--ink-2)}
+.calc-sum .cs-t{display:flex;flex-wrap:wrap;gap:0 .8em;min-width:0}
+.calc-sum .nw{white-space:nowrap}
+.tok .tk-lv{font-size:11.5px;font-weight:800;line-height:1.4;padding:0 6px;border:1.5px solid var(--line);border-radius:6px;background:var(--surface)}
+.tok .tk-trs{display:flex;flex-direction:column;gap:3px;width:100%}
+.tk-trs i{display:block;font-style:normal;font-size:11.5px;font-weight:700;line-height:1.35;padding:1px 5px;border:1.5px solid var(--line);border-radius:6px;overflow-wrap:anywhere}
+.tk-trs i.c{background:var(--wait-soft)}.tk-trs i.r{background:var(--atk-soft)}.tk-trs i.m{background:var(--psi-soft)}.tk-trs i.x{background:var(--def-soft)}
+.tk-trs i.n{background:var(--surface);color:var(--muted);border-color:var(--muted)}
+.tok .tk-note{font-size:11.5px;font-weight:700;color:var(--ink-2);line-height:1.4}
+.tok .tk-stamp{position:absolute;top:-8px;right:-10px;transform:rotate(12deg);font-family:var(--f-pop);font-size:12px;line-height:1.3;padding:1px 6px;border:2px solid var(--ng);color:var(--ng);background:var(--surface);border-radius:6px}
+.tok.child{background:var(--lemon);color:var(--on-pop)}
+.tok.gone .tk-ic{opacity:.6}
+.pod-core.sm{width:64px;height:64px;flex:none;box-shadow:2px 2px 0 var(--sh)}
+.pod-core.sm::before{inset:5px}
+.pod-core b small{display:block;font-family:var(--f-dot);font-size:12px;text-align:center}
+.pod-core.sm b{font-size:14px;text-align:center;line-height:1.2}
+.clash{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;padding:14px 10px;border:2.5px solid var(--line);border-radius:16px;background:var(--surface)}
+.cl-in{display:flex;flex-direction:column;gap:6px}
+.tchip{font-size:13px;font-weight:800;padding:4px 10px;border:2px solid var(--line);border-radius:10px;box-shadow:2px 2px 0 var(--sh)}
+.tchip.c{background:var(--wait-soft)}.tchip.r{background:var(--atk-soft)}.tchip.m{background:var(--psi-soft)}
+.clash .tslot{max-width:220px}
+.g22{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1fr) minmax(0,1fr);gap:6px;max-width:520px;width:100%;margin:0 auto}
+.g22h{display:grid;place-items:center;text-align:center;font-size:12.5px;font-weight:800;line-height:1.4;padding:6px 4px;color:var(--ink-2)}
+.g22c{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:64px;padding:6px 4px;border:2px solid var(--line);border-radius:12px;background:var(--surface);font-size:13px;font-weight:700;text-align:center}
+.g22c strong{font-family:var(--f-dot);font-weight:400;font-size:18px}
+.g22c.win{background:var(--lemon);color:var(--on-pop);box-shadow:3px 3px 0 var(--sh)}
+.lot{display:flex;flex-wrap:wrap;gap:5px;padding:10px;border:2.5px solid var(--line);border-radius:12px;background:var(--surface)}
+.lot i{width:28px;height:28px;border:2px solid var(--line);border-radius:7px;display:grid;place-items:center;font-style:normal;font-family:var(--f-dot);font-size:12px;color:var(--on-pop)}
+.lot i.a{background:var(--pink)}.lot i.b{background:var(--mint)}.lot i.x{background:var(--lemon)}
+.ptleg{display:flex;flex-direction:column;gap:6px;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface);font-size:14px}
+.ptleg span{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ptleg b{min-width:3.6em}
+.pb{display:inline-block;height:18px;border:2px solid var(--line);border-radius:4px;flex:none}
+.pb.half{width:40px;background:var(--pink)}
+.pb.tenth{width:10px;background:repeating-linear-gradient(45deg,var(--pink) 0 3px,#ffd1df 3px 6px)}
+.pb.one{width:80px;background:linear-gradient(90deg,var(--pink) 0 50%,var(--mint) 50%)}
+.bonus{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 14px;border:2.5px solid var(--line);border-radius:14px;background:var(--lilac);color:var(--on-pop);font-size:13px;font-weight:700;text-align:center;box-shadow:3px 3px 0 var(--sh)}
+.bonus strong{font-family:var(--f-dot);font-weight:400;font-size:22px}
+.role-top{display:flex;align-items:center;gap:8px}
+.role-ic{width:40px;height:40px;border:2.5px solid var(--line);border-radius:11px;display:grid;place-items:center;flex:none}
+.role-ic svg{width:24px;height:24px;display:block}
+.sbar{display:flex;height:28px;border:2.5px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
+.sbar i{display:flex;align-items:center;justify-content:center;min-width:0;font-style:normal;font-size:12.5px;font-weight:800;color:var(--on-pop);border-right:2px solid var(--line);white-space:nowrap;overflow:hidden;transition:width .35s}
+.sbar i:last-child{border-right:0}
+.sleg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;font-weight:700}
+.sleg span{display:inline-flex;align-items:center}
+.sw{display:inline-block;flex:none;width:13px;height:13px;border:2px solid var(--line);border-radius:4px;margin-right:6px;font-style:normal}
+.s0{background:var(--pink)}.s1{background:var(--mint)}.s2{background:var(--lilac)}.s3{background:var(--sky)}.s4{background:var(--lemon)}
+.se{background:repeating-linear-gradient(45deg,var(--surface) 0 5px,var(--field) 5px 10px)}
+.g-w{background:var(--pink)}.g-wn{background:repeating-linear-gradient(45deg,var(--pink) 0 4px,#ffd1df 4px 8px)}
+.g-r{background:var(--mint)}.g-rn{background:repeating-linear-gradient(45deg,var(--mint) 0 4px,#d4f7ec 4px 8px)}
+.gauge{display:flex;flex-direction:column;gap:4px}
+.gbox{position:relative;display:flex;height:32px;border:2.5px solid var(--line);border-radius:8px;background-color:var(--surface);background-image:linear-gradient(90deg,rgba(59,35,64,.14) 1.5px,transparent 1.5px)}
+.gbox i{height:100%;border-right:2px solid var(--line)}
+.gbox .g1{position:absolute;top:-7px;bottom:-7px;width:0;border-left:3px solid var(--atk);transform:translateX(-1.5px)}
+.gsc{position:relative;height:18px;font-size:12px;font-weight:800;color:var(--ink-2)}
+.gsc span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
+.gsc span.st{left:0;transform:none}
+.gsc span.end{transform:translateX(-100%)}
+.lvbars{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;align-items:end}
+.lvb{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
+.lvb .v{font-weight:800;font-size:13px;font-variant-numeric:tabular-nums}
+.lvb .col{width:100%;max-width:58px;height:72px;border:2px solid var(--line);border-radius:8px;background:var(--surface);display:flex;align-items:flex-end;overflow:hidden}
+.lvb .col i{display:block;width:100%;background:var(--pink);border-top:2px solid var(--line);transition:height .35s}
+.lvb.top .col i{background:var(--lemon)}
+.lvb.z{opacity:.45}
+.lvb.z .col i{border-top:0}
+.lvb b{font-family:var(--f-dot);font-weight:400;font-size:13px}
+
+/* ===== 特性図鑑 ===== */
+.dnote{font-size:14px;color:var(--ink-2);margin:-6px 0 14px}
+.word .sub{font-size:13px;color:var(--muted);line-height:1.5}
+.word .chips{display:flex;gap:6px;flex-wrap:wrap}
+.c-gold{background:var(--wait-soft);color:var(--wait);border-color:var(--wait)}
+.c-mid{background:var(--def-soft);color:var(--def);border-color:var(--def)}
+.c-bad{background:var(--ng-soft);color:var(--ng);border-color:var(--ng)}
+.more-row{display:flex;justify-content:center;margin-top:16px}
+
+@media (max-width:520px){
+  .pc-par{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pc-par .pod-core{grid-column:1/-1;order:-1;justify-self:center;width:56px;height:56px}
+  .kind4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tok{min-width:76px}
+  .flow{padding:12px 6px;gap:8px 4px}
+  .op{font-size:18px}
+  .pod-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pod-grid .pod-core{grid-column:1/-1;order:-1;justify-self:center;width:72px;height:72px}
+  .pod-grid .pod-core b{font-size:16px}
+  .pod-mats{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* 特性の意見 */
+.word{position:relative}
+.fbtn{align-self:flex-start;margin-top:2px;padding:4px 10px;border:2px solid var(--line);border-radius:999px;background:transparent;color:var(--ink-2);font-weight:700;font-size:12.5px;cursor:pointer}
+.fbtn:hover{background:var(--surface)}
+.fbbox{max-width:480px}
+.fb-now{font-size:14px;line-height:1.55;margin:0 0 10px;padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:var(--surface)}
+.fb-now small{color:var(--ink-2)}
+.fbf{display:flex;flex-direction:column;gap:6px}
+.fbf label{font-weight:800;font-size:14px}
+.fbf input,.fbf textarea{width:100%;box-sizing:border-box;border:2.5px solid var(--line);border-radius:12px;padding:9px 12px;font:inherit;font-size:16px;background:#fff;color:var(--ink);resize:vertical}
+.fb-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
+.fb-msg{font-size:13.5px;font-weight:700}
+.fb-msg.ok{color:#1f8a5b}
+.fb-msg.ng{color:#c2334f}
+/* スマホの特性図鑑：2列・小さめの文字 */
+@media (max-width:520px){
+  #dlist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  #dlist .word{padding:10px 10px 11px;gap:4px;border-width:2px;box-shadow:2px 2px 0 var(--sh)}
+  #dlist .word header{flex-direction:column;align-items:flex-start;gap:3px}
+  #dlist .word header .chip{order:-1;font-size:11px;padding:0 7px}
+  #dlist .word b{font-size:14px;line-height:1.35}
+  #dlist .word p{font-size:13px;line-height:1.5}
+  #dlist .word .sub{font-size:11.5px}
+  #dlist .fbtn{font-size:11px;padding:3px 8px;margin-top:auto}
+}
+.word .sub .ib{display:inline-block}
+/* スマホのレッスン図：カードを小さめにして1行に多く入れる */
+@media (max-width:520px){
+  .dfig .flow{gap:8px 3px;padding:12px 4px}
+  .dfig .tok{min-width:0;max-width:98px;padding:6px 5px 7px;gap:3px;border-width:2px;border-radius:12px;box-shadow:2px 2px 0 var(--sh)}
+  .dfig .tok .tk-tag{font-size:10.5px;padding:0 4px;border-width:1.5px}
+  .dfig .tok .tk-ic{width:34px;height:34px;border-width:2px;border-radius:10px}
+  .dfig .tok .tk-ic svg{width:22px;height:22px}
+  .dfig .tok .tk-cnt{font-size:11px;right:-10px;bottom:-8px}
+  .dfig .tok .tk-nm{font-size:12px}
+  .dfig .tok .tk-note,.dfig .tok .tk-lv,.dfig .tk-trs i{font-size:10.5px}
+  .dfig .tok .tk-stamp{font-size:10.5px;top:-7px;right:-6px}
+  .dfig .op{font-size:16px;padding:0}
+  .dfig .pod-core.sm{width:52px;height:52px}
+  .dfig .pod-core.sm b{font-size:12px}
+}
+
+/* 色違いはデビごとにたたむ（タイプ別・2列） */
+#dlist .sks{grid-column:1/-1;margin-top:6px}
+#dlist .skh{display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;margin:4px 0 10px;font-size:15px}
+#dlist .skh .chip{font-size:14px;padding:2px 12px}
+#dlist .skh small{font-size:12.5px;color:var(--muted);font-weight:700}
+#dlist .skgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;align-items:start}
+#dlist .skg{--k:var(--line);border:2.5px solid var(--line);border-left:8px solid var(--k);border-radius:14px;background:var(--surface);box-shadow:3px 3px 0 var(--sh);min-width:0}
+#dlist .sk-atk .skg{--k:var(--atk)} #dlist .sk-psi .skg{--k:var(--psi)} #dlist .sk-def .skg{--k:var(--def)}
+#dlist .skg[open]{grid-column:1/-1}
+#dlist .skg>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:10px 12px;font-size:15px}
+#dlist .skg>summary b{min-width:0;line-height:1.35}
+#dlist .skg>summary::-webkit-details-marker{display:none}
+#dlist .skg>summary::before{content:'▸';color:var(--k);transition:transform .15s}
+#dlist .skg[open]>summary::before{transform:rotate(90deg)}
+#dlist .skg .skn{margin-left:auto;flex:none;font-size:12.5px;font-weight:700;color:var(--muted);background:var(--bg);border-radius:99px;padding:1px 9px}
+#dlist .skl{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;padding:0 12px 12px}
+#dlist .skl .word{box-shadow:none;border-width:2px}
+@media (max-width:520px){
+  #dlist .skgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  #dlist .skg{border-width:2px;border-left-width:6px;box-shadow:2px 2px 0 var(--sh)}
+  #dlist .skg>summary{padding:9px 8px 9px 9px;font-size:13.5px;gap:5px}
+  #dlist .skg .skn{font-size:11px;padding:0 6px}
+  #dlist .skl{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:0 8px 8px}
+}
+
+/* ===== 動物講座だけの部品 ===== */
+.rflow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.rflow .slot{flex-direction:row;align-items:center;gap:10px}
+.rflow .slot.w{grid-column:1/-1}
+.rflow .slot b{font-family:var(--f-pop);font-weight:400;font-size:15px}
+.rflow .slot span{font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.tbd{display:inline-block;font-size:12px;font-weight:800;padding:0 8px;border-radius:999px;border:2px solid var(--line);background:var(--wait-soft);color:var(--wait);white-space:nowrap;line-height:1.6;vertical-align:1px}
+.tiers{display:grid;gap:8px}
+.tier{display:grid;grid-template-columns:6.5em minmax(0,1fr);gap:4px 12px;align-items:center;padding:10px 12px;border:2px solid var(--line);border-radius:12px;background:var(--surface)}
+.tier > b{font-family:var(--f-pop);font-weight:400;font-size:17px}
+.tier ul{margin:0;padding-left:1.2em;font-size:14.5px}
+.tier.t3{background:var(--ok-soft)}.tier.t2{background:var(--wait-soft)}.tier.t1{background:var(--ng-soft)}
+.tier.on{outline:3px solid var(--atk);outline-offset:2px}
+.slider{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-block:8px}
+.slider input[type=range]{flex:1;min-width:180px;accent-color:var(--atk)}
+.slider output{font-family:var(--f-pop);font-size:22px;min-width:3.5em}
+.chk{display:grid;gap:8px}
+.chk label{display:flex;gap:10px;align-items:center;padding:8px 12px;border:2px solid var(--line);border-radius:12px;background:var(--surface);font-weight:700;cursor:pointer}
+.chk input{width:20px;height:20px;accent-color:var(--psi)}
+.verdict{margin-top:10px;padding:12px 14px;border:2.5px solid var(--line);border-radius:12px;font-weight:700}
+.verdict.ok{background:var(--ok-soft)}.verdict.ng{background:var(--ng-soft)}
+.pickrow{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.pickrow button{padding:5px 12px;border:2px solid var(--line);border-radius:999px;background:var(--field);font-weight:700;font-size:14px}
+.pickrow button[aria-pressed="true"]{background:var(--mint)}
+.feedbox{padding:12px 14px;border:2.5px solid var(--line);border-radius:12px;background:var(--surface);display:grid;gap:6px}
+.feedbox .fav{font-family:var(--f-pop);font-size:18px}
+.lvmap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:6px}
+.lvmap div{padding:8px;border:2px solid var(--line);border-radius:10px;text-align:center;background:var(--field);font-weight:800;font-size:14px;line-height:1.4}
+.lvmap div.on{background:var(--lemon)}
+.lvmap small{display:block;font-weight:700;font-size:12px;color:var(--ink-2)}
+/* 動物図鑑のカード */
+.zlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.zc{padding:14px 16px;display:flex;flex-direction:column;gap:8px;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:3px 3px 0 var(--sh)}
+.zc header{display:flex;align-items:center;gap:10px}
+.zc header .ic{width:38px;height:38px;border:2px solid var(--line);border-radius:10px;display:grid;place-items:center;flex:none}
+.zc header .ic svg{width:24px;height:24px}
+.zc header b{font-family:var(--f-pop);font-weight:400;font-size:20px;line-height:1.3}
+.zc header small{display:block;font-size:12px;color:var(--muted);font-weight:700}
+.zc .chips{display:flex;flex-wrap:wrap;gap:4px}
+.zc dl{display:grid;grid-template-columns:5.6em minmax(0,1fr);gap:4px 10px;margin:0;font-size:14.5px}
+.zc dt{font-weight:800;color:var(--ink-2)}
+.zc dd{margin:0}
+.zc .fav{font-weight:800;background:linear-gradient(transparent 60%,var(--lemon) 60%)}
+.zc details{border-top:1.5px solid var(--muted);padding-top:6px;font-size:14px}
+.zc summary{cursor:pointer;font-weight:800}
+.zc details p{margin-top:4px}
+.chip.c-ride{background:var(--sky)}
+.chip.c-guard{background:var(--pink)}
+.chip.c-calm{background:var(--mint)}
+.word .rk{font-size:12.5px;color:var(--ink-2);font-weight:700}
+@media (max-width:560px){
+  .rflow{grid-template-columns:1fr}
+  .tier{grid-template-columns:1fr}
+  .lvmap{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .zlist{grid-template-columns:1fr}
+}
+.les .xtab{min-width:0;font-size:15px}
+.les .xtab th{white-space:nowrap}
+.fbtn{align-self:flex-start;margin-top:2px;padding:4px 10px;border:2px solid var(--line);border-radius:999px;background:transparent;color:var(--ink-2);font-weight:700;font-size:12.5px;cursor:pointer}
+.fbtn:hover{background:var(--field)}
+.fbbox{max-width:480px}
+.fb-now{font-size:14px;line-height:1.55;margin:0 0 10px;padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:var(--surface)}
+.fb-now small{color:var(--ink-2)}
+.fbf{display:flex;flex-direction:column;gap:6px}
+.fbf label{font-weight:800;font-size:14px}
+.fbf input,.fbf textarea{width:100%;box-sizing:border-box;border:2.5px solid var(--line);border-radius:12px;padding:9px 12px;font:inherit;font-size:16px;background:#fff;color:var(--ink);resize:vertical}
+.fb-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
+.fb-msg{font-size:13.5px;font-weight:700}
+.fb-msg.ok{color:#1f8a5b}.fb-msg.ng{color:#c2334f}
+.les .fbtn{margin-top:14px}
+
+.nw{white-space:nowrap}
+.word .fbtn,.zc .fbtn{margin-top:auto}
+</style>
+</head>
+<body>
+<header class="top gut">
+  <div class="wrap">
+    <a class="brand" href="#home"><span class="cas" aria-hidden="true"></span><span><b>動物講座</b><small>ONCE HUMAN · 初級から上級まで</small></span></a>
+    <nav class="tabs" aria-label="ページ">
+      <a href="#home" data-v="home">はじめに</a>
+      <a href="#lesson" data-v="lesson">レッスン</a>
+      <a href="#zoo" data-v="zoo">動物図鑑</a>
+      <a href="#dex" data-v="dex">特性図鑑</a>
+      <a href="#quiz" data-v="quiz">クイズ</a>
+      <a href="#words" data-v="words">用語集</a>
+      <a class="back" href="https://yukhoeonce.github.io/"><svg viewBox="0 0 8 8" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M3 1h1v1H3zM2 2h1v1H2zM1 3h6v2H1zM2 5h1v1H2zM3 6h1v1H3z"/></svg>ガイドへ戻る</a>
+    </nav>
+  </div>
+</header>
+
+<main class="gut">
+  <div class="wrap">
+
+  <!-- ===== はじめに ===== -->
+  <section class="view" id="v-home">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">ONCE HUMAN RANCH GUIDE</p>
+        <h1>動物、<em>どう育てればいいの？</em></h1>
+        <p class="lead">ワンスヒューマンの動物（捕まえて領地で飼える動物）を、初級・中級・上級の3つのレベルでまとめた講座だよ。つかまえ方、好物、繁殖、特性まで。最後はクイズで力だめし。</p>
+        <div class="acts">
+          <a class="btn pink" href="#lesson" id="startBtn">初級からはじめる</a>
+          <a class="btn sub" href="#zoo">動物図鑑を見る</a>
+        </div>
+        <div class="prog"><span id="progTxt">初級 0/5</span><span class="bar"><i id="progBar"></i></span></div>
+      </div>
+      <div class="card pod">
+        <p class="lab">動物を育てる流れ（押すと説明へ）</p>
+        <div class="rflow">
+          <button class="slot" data-go="b2" data-ic="NET"><b>1 つかまえる</b><span>HPを減らして麻酔</span></button>
+          <button class="slot" data-go="b3" data-ic="BOWL"><b>2 領地で飼う</b><span>飼い葉桶で満腹度キープ</span></button>
+          <button class="slot" data-go="b4" data-ic="APPLE"><b>3 好物をあげる</b><span>動物ごとにちがう</span></button>
+          <button class="slot" data-go="b5" data-ic="EGG"><b>4 繁殖させる</b><span>オスとメス＋子供部屋</span></button>
+          <button class="slot w" data-go="m4" data-ic="STAR"><b>5 特性を育てる</b><span>レベルで枠が開く・遺伝子で付けかえ</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="paths">
+      <a class="card path" href="#lesson"><span class="eyebrow"><span>LESSON</span><span>初級・中級・上級</span></span><h3>3つのレベルのレッスン</h3><p>初級で捕獲と飼い方、中級で繁殖と特性、上級でテイマー・騎乗・遺伝子まで。</p></a>
+      <a class="card path" href="#zoo"><span class="eyebrow"><span>ANIMALS</span><span id="zcount">—</span></span><h3>動物図鑑</h3><p>食べる物・好物・捕獲のHP・取れる物・乗れるかどうかを1枚のカードで。</p></a>
+      <a class="card path" href="#dex"><span class="eyebrow"><span>TRAITS</span><span id="dcount">—</span></span><h3>特性図鑑</h3><p>生産・屠殺・採集・戦闘・騎乗など、目的ごとに特性を探せるよ。</p></a>
+      <a class="card path" href="#quiz"><span class="eyebrow"><span>QUIZ</span><span>3レベル・毎回10問</span></span><h3>2択クイズ</h3><p>たくさんの問題から毎回10問がランダムに出るよ。答えると解説で答え合わせ。</p></a>
+      <a class="card path" style="grid-column:1/-1" href="https://yukhoeonce.github.io/devi/" target="_blank" rel="noopener"><span class="eyebrow"><span>DEVI</span><span>となりの講座</span></span><h3>デビ融合講座</h3><p>動物はデビ融合の材料にもなるよ。動物を入れると付く特性は、デビ融合講座でくわしく。</p></a>
+    </div>
+  </section>
+
+  <!-- ===== レッスン ===== -->
+  <section class="view" id="v-lesson" hidden>
+    <div class="lvtabs" id="lvtabs" role="group" aria-label="レベル"></div>
+    <div class="lesson">
+      <nav class="card toc" id="toc" aria-label="レッスンの目次"></nav>
+      <article class="card les" id="les" aria-live="polite"></article>
+    </div>
+  </section>
+
+  <!-- ===== 動物図鑑 ===== -->
+  <section class="view" id="v-zoo" hidden>
+    <div class="words-head">
+      <h2>動物図鑑</h2>
+      <input class="search" id="zq" type="search" placeholder="名前や食べ物で探す（例：魚、ミルク）" aria-label="動物を探す">
+    </div>
+    <div class="cats" id="zcats"></div>
+    <p class="dnote" id="znote"></p>
+    <div class="zlist" id="zlist"></div>
+  </section>
+
+  <!-- ===== 特性図鑑 ===== -->
+  <section class="view" id="v-dex" hidden>
+    <div class="words-head">
+      <h2>特性図鑑</h2>
+      <input class="search" id="dq" type="search" placeholder="名前や効果で探す（例：ミルク）" aria-label="特性を探す">
+    </div>
+    <div class="cats" id="dcats"></div>
+    <p class="dnote" id="dnote"></p>
+    <div class="wlist" id="dlist"></div>
+  </section>
+
+  <!-- ===== クイズ ===== -->
+  <section class="view" id="v-quiz" hidden>
+    <div class="card quiz" id="quiz"></div>
+  </section>
+
+  <!-- ===== 用語集 ===== -->
+  <section class="view" id="v-words" hidden>
+    <div class="words-head">
+      <h2>用語集</h2>
+      <input class="search" id="wq" type="search" placeholder="ことばで探す（例：満腹度）" aria-label="用語を探す">
+    </div>
+    <div class="cats" id="wcats"></div>
+    <div class="wlist" id="wlist"></div>
+  </section>
+
+  </div>
+</main>
+
+<div class="sheet" id="fbs" hidden>
+  <div class="card box fbbox" role="dialog" aria-modal="true" aria-labelledby="fbT">
+    <header><b id="fbT">まちがいを教えて</b><button class="x" id="fbX" aria-label="閉じる">×</button></header>
+    <p class="fb-now" id="fbNow"></p>
+    <div class="fbf">
+      <label for="fbName">正しい内容（ゲームでの表示など）</label>
+      <input id="fbName" type="text" maxlength="80" autocomplete="off" placeholder="例：ゲーム内の表示どおりに">
+      <label for="fbMemo">メモ（なくてもOK）</label>
+      <textarea id="fbMemo" rows="3" maxlength="150" placeholder="どこがちがうか、など"></textarea>
+    </div>
+    <p class="mini">送った内容は管理人だけが読むよ。名前や連絡先は書かないでね。</p>
+    <div class="fb-foot"><span class="fb-msg" id="fbMsg" role="status"></span><button type="button" class="btn pink" id="fbSend">送る</button></div>
+  </div>
+</div>
+<div class="sheet" id="sheet" hidden>
+  <div class="card box" role="dialog" aria-modal="true" aria-labelledby="sheetT">
+    <header><b id="sheetT"></b><button class="x" id="sheetX" aria-label="閉じる">×</button></header>
+    <p id="sheetD"></p>
+    <a href="#words" class="more" id="sheetMore">用語集で見る →</a>
+  </div>
+</div>
+
+<footer class="site gut">
+  <div class="wrap">
+    <span>非公式のファンサイトです。ゲームの名称・内容の権利は © NetEase / Starry Studio に帰属します。</span>
+    <span>V3.1.2（2026年11月）時点の内容です。「確認待ち」はまだゲームで確かめられていないこと。いちばん新しい内容はゲーム内の表示を見てね。</span>
+    <span><a href="https://yukhoeonce.github.io/">OnceHumanシナリオガイド</a> ・ <a href="https://yukhoeonce.github.io/mod/">MOD講座</a> ・ <a href="https://yukhoeonce.github.io/devi/">デビ融合講座</a> ・ <a href="https://yukhoeonce.github.io/damage/">ダメージラボ</a> ・ <a href="https://yukhoeonce.github.io/builds/">みんなの装備</a> ・ <a href="https://yukhoeonce.github.io/ask/">わかる人教えて！</a></span>
+  </div>
+</footer>
+
+<div class="rfx" aria-hidden="true"></div>
+<script>
+(()=>{
+  const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cols=['#ff9fbd','#9be8d4','#ffe27a','#c9b3ff','#9fd6ff'];
+  const fx=document.querySelector('.rfx');
+  if(!RM)['★','✦','●','♪','◆','★','▲','✦','●','♪','◆','★'].forEach((t,i)=>{const e=document.createElement('i');e.textContent=t;
+    e.style.left=(5+i*8.1)%96+'%';e.style.top=(8+(i*37)%84)+'%';e.style.color=cols[i%5];
+    e.style.fontSize=(18+(i*7)%26)+'px';e.style.animationDelay=(-i*0.8)+'s';e.style.animationDuration=(7+i%5)+'s';fx.appendChild(e)});
+  const top=document.querySelector('.top');
+  if(top){const tk=document.createElement('div');tk.className='ticker';tk.setAttribute('aria-hidden','true');
+    const s='★ 動物講座 ✦ 繁殖は満腹度80%以上 ✦ 好物で満腹度がよく増える ♪ 子供部屋は5つまで ◆ 特性はLv20・30・40・50で開く ★ テイマーは3匹呼べる ';
+    tk.innerHTML='<div>'+s.repeat(6)+'</div>';top.after(tk)}
+  // ドット絵アイコン
+  const P={DEVI:['..####..','.######.','##.##.##','########','########','########','#.#..#.#','........'],
+    MAT:['..####..','.######.','##.##.##','########','##....##','########','#.#..#.#','........'],
+    BLANK:['..####..','.#....#.','#..#.#.#','#......#','#......#','#......#','#.#..#.#','........'],
+    FLASK:['..####..','...##...','...##...','..#..#..','.#....#.','#.####.#','#.####.#','.######.'],
+    EGG:['...##...','..####..','.######.','.##.#.#.','########','########','.######.','..####..'],
+    SWORD:['......##','.....###','....###.','#..###..','.####...','..##....','.#.#....','#.......'],
+    PICK:['..####..','.#.##.#.','#..##..#','...##...','...##...','...##...','...##...','...##...'],
+    GEAR:['...##...','.######.','.##..##.','###..###','###..###','.##..##.','.######.','...##...'],
+    PAW:['.##..##.','.##..##.','........','#.####.#','.######.','.######.','..####..','........']};
+  const C={DEVI:'#ff9fbd',MAT:'#9be8d4',BLANK:'#c9b3ff',FLASK:'#9fd6ff',EGG:'#ffe27a',SWORD:'#ff9fbd',PICK:'#9be8d4',GEAR:'#c9b3ff',PAW:'#ffe27a'};
+  P.NET=['......##', '.....###', '....###.', '...###..', '..###...', '.#.#....', '#.#.....', '.#......'];P.BOWL=['........', '........', '#......#', '########', '#.#..#.#', '.######.', '.#....#.', '.#....#.'];P.APPLE=['....#...', '...#.##.', '.##.##..', '########', '########', '########', '.######.', '..#..#..'];P.STAR=['...##...', '...##...', '########', '.######.', '..####..', '.##..##.', '.#....#.', '........'];P.MEAT=['..####..', '.######.', '########', '########', '.######.', '...##...', '...##...', '..#..#..'];P.DEER=['#.#..#.#', '.#....#.', '..####..', '..#..#..', '..####..', '...##...', '...##...', '........'];P.SHEEP=['.######.', '########', '##.##.##', '########', '.######.', '..#..#..', '..#..#..', '........'];P.WOLF=['#......#', '##....##', '########', '#.####.#', '########', '.######.', '..####..', '...##...'];P.BEAR=['##....##', '########', '#.####.#', '########', '###..###', '.######.', '..####..', '........'];P.BOAR=['........', '.######.', '#.####.#', '########', '##.##.##', '#.####.#', '.######.', '........'];P.RABBIT=['.#....#.', '.#....#.', '.##..##.', '.######.', '##.##.##', '.######.', '..####..', '........'];P.CROC=['........', '.##.....', '#..#....', '########', '#.#.#.##', '########', '........', '........'];P.CAPY=['........', '.##..##.', '.######.', '########', '#.#..#.#', '########', '.######.', '........'];P.BIRD=['...##...', '..####..', '..#.##..', '...###..', '....##..', '...###..', '..####..', '...#.#..'];P.CAT=['#......#', '##....##', '########', '#.#..#.#', '########', '###..###', '.######.', '........'];P.FOX=['#......#', '##....##', '.######.', '##.##.##', '.######.', '..####..', '...##...', '........'];P.COW=['#......#', '.######.', '########', '#.#..#.#', '.######.', '.#....#.', '.######.', '........'];P.TURTLE=['........', '..####..', '.######.', '#######.', '########', '.#.#.##.', '........', '........'];C.NET='#9fd6ff';C.BOWL='#ffe27a';C.APPLE='#ff9fbd';C.STAR='#c9b3ff';C.MEAT='#ff9fbd';
+  const svg=k=>{let r='';P[k].forEach((row,y)=>[...row].forEach((c,x)=>{if(c==='#')r+=`<rect x="${x}" y="${y}" width="1.02" height="1.02"/>`}));
+    return `<svg viewBox="0 0 8 8" fill="#3b2340" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`};
+  window.pixIcon=svg;
+  document.querySelectorAll('.slot[data-ic]').forEach(b=>{const k=b.dataset.ic;if(!P[k])return;
+    const tx=document.createElement('span');tx.className='tx';while(b.firstChild)tx.appendChild(b.firstChild);
+    const ic=document.createElement('span');ic.className='ic';ic.style.background=C[k];ic.innerHTML=svg(k);b.append(ic,tx)});
+  // せいかいのキラキラ
+  window.sparkle=el=>{if(RM||!el)return;const r=el.getBoundingClientRect();
+    for(let k=0;k<10;k++){const s=document.createElement('span');s.className='spark';s.textContent=['✦','★','◆','✧'][k%4];
+      s.style.left=(r.left+r.width*Math.random())+'px';s.style.top=(r.top+r.height*.5)+'px';s.style.color=cols[k%5];
+      s.style.setProperty('--dx',(Math.random()*90-45)+'px');s.style.setProperty('--dy',(-30-Math.random()*60)+'px');
+      document.body.appendChild(s);setTimeout(()=>s.remove(),850)}};
+})();
+</script>
+<script>
+(()=>{
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const KEY='animalstudy-v1';
+let st={};
+try{const v=JSON.parse(localStorage.getItem(KEY)||'null'); if(v&&typeof v==='object') st=v;}catch(e){}
+if(!st.dn||typeof st.dn!=='object') st.dn={b:[],m:[],a:[]};
+['b','m','a'].forEach(k=>{if(!Array.isArray(st.dn[k])) st.dn[k]=[];});
+if(!st.sp||typeof st.sp!=='object') st.sp={b:1,m:1,a:1};
+if(!st.qb||typeof st.qb!=='object') st.qb={b:null,m:null,a:null};
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const TBD='<span class="tbd">確認待ち</span>';
+const PI='<span class="tbd" style="background:var(--psi-soft);color:var(--psi)">プレイヤー情報</span>';
+const pix=k=>window.pixIcon?window.pixIcon(k):'';
+
+/* ===== 動物のデータ（ゲーム内の説明文をもとに。V3.1.2） =====
+ cap: 捕獲できるHPの目安（このHP%未満で麻酔が効く。100＝満タンでも効く）
+ ride: 乗れる  guard: 領地を守ろうとする  sex: オス・メスで別アイテム */
+const ZOO=[
+ {id:'deer',n:'シカ',sub:'雄ジカ・雌ジカ',ic:'DEER',cap:60,ride:1,sex:1,eat:'穀物・草・果物・野菜',fav:'コムギ、トウモロコシ',
+  get:'シカ肉・シカの皮',side:'メスはシカのミルク',
+  rs:['突進：しばらく移動速度が大きく上がる（CD24秒）','風力強化：速く走るほど、騎乗者の銃器DMG・状態異常DMGが上がる']},
+ {id:'sheep',n:'ヒツジ',sub:'オスヒツジ・雌ヒツジ',ic:'SHEEP',cap:60,sex:1,eat:'穀物・草',fav:'セージ、スイカズラなどの草本植物',
+  get:'ヒツジ肉・ウール',side:'ウール（メスはヒツジのミルクも）',note:'まれに金のウールが取れる'},
+ {id:'wolf',n:'オオカミ',ic:'WOLF',cap:60,guard:1,eat:'全ての肉類',fav:'大型動物の大きな肉',get:'獣肉・オオカミの皮'},
+ {id:'bear',n:'クマ',ic:'BEAR',cap:30,ride:1,guard:1,eat:'魚類・草・果物・野菜',fav:'魚類',get:'クマ肉・クマの皮',note:'貝の身も食べるという情報あり',
+  rs:['クマの手ヒット：前に衝撃波。当てた数だけ騎乗者のDMGが少し上がる','バトルマインド・ブースト：騎乗者の銃器DMG・状態異常DMG＋20%']},
+ {id:'boar',n:'イノシシ',ic:'BOAR',cap:30,ride:1,guard:1,eat:'穀物・草・野菜・果物・肉類',fav:'リンゴ、オレンジ',get:'イノシシ肉・イノシシの毛',
+  rs:['猪突猛進：体当たり。当てた数だけ自分のDMG軽減が上がる','身代わり：騎乗者の被ダメージを20%代わりに受ける']},
+ {id:'rabbit',n:'ウサギ',ic:'RABBIT',cap:100,eat:'草・果物・野菜',fav:'セージ、スイカズラなどの草本植物',get:'ウサギ肉・ウサギの皮'},
+ {id:'croc',n:'ワニ',ic:'CROC',cap:30,guard:1,eat:'全ての肉類',fav:'魚類、シカ肉、イノシシ肉など哺乳類の肉',get:'ワニ肉・ワニの皮',side:'ワニの卵'},
+ {id:'capy',n:'カピバラ',ic:'CAPY',cap:100,eat:'穀物・草・野菜・果物',fav:'セージ、スイカズラなどの草本植物',get:'獣肉・獣皮'},
+ {id:'flamingo',n:'フラミンゴ',ic:'BIRD',cap:100,eat:'魚肉・貝類・海草',fav:'レッドベリー、トマト',get:'トリ肉・羽根',side:'羽根・鳥の卵'},
+ {id:'leopard',n:'ヒョウ',ic:'CAT',cap:30,guard:1,eat:'全ての肉類',fav:'大型動物の大きな肉',get:'獣肉・獣皮',note:'貝の身も食べるという情報あり'},
+ {id:'fox',n:'キツネ',ic:'FOX',cap:100,eat:'肉類と果実',fav:'小型動物の小さな肉',get:'獣肉・キツネの皮'},
+ {id:'snowfox',n:'スノーフォックス',ic:'FOX',cap:100,eat:'肉類と果実',fav:'小型動物の小さな肉',get:'獣肉・キツネの皮'},
+ {id:'buffalo',n:'バッファロー',ic:'COW',cap:30,ride:1,guard:1,eat:'穀物・草',fav:'セージ、スイカズラなどの草本植物',get:'牛肉・ウシの皮',side:'牛乳',
+  rs:['採食本能：近く（30m）の作物を食べて、自分の満腹度を回復','牛乳変換：作物を食べると、たまに肥料やミルクが出る']},
+ {id:'polar',n:'ホッキョクグマ',ic:'BEAR',cap:30,guard:1,eat:'魚類・草・果物・野菜',fav:'魚類',get:'クマ肉・クマの皮'},
+ {id:'snapper',n:'ワニガメ',ic:'TURTLE',cap:60,guard:1,eat:'穀物・海草・魚肉',fav:'海草と魚肉',get:'カメ肉・獣皮',side:'卵'},
+ {id:'seaturtle',n:'ウミガメ',ic:'TURTLE',cap:60,guard:1,eat:'穀物・海草・魚肉',fav:'海草と魚肉',get:'獣肉・獣皮',side:'卵'},
+ {id:'saltcroc',n:'イリエワニ',ic:'CROC',cap:null,ride:1,guard:1,eat:'全ての肉類',fav:'魚類、シカ肉、イノシシ肉など哺乳類の肉',get:'ワニ肉・イリエワニの皮',
+  note:'禁断の島で追加。水面に呼び出して乗れる。ほかの動物より大人になるまで時間がかかる',
+  rs:['逆鱗：自分と騎乗者に反撃ダメージ（PvPでは弱め）','スケイルアーマー：自分と騎乗者の被ダメージ10%軽減。水中ではもっとかたくなる']}
+];
+const capTx=z=>z.cap==null?`${TBD}`:z.cap>=100?'満タンでもOK':`${z.cap}%未満`;
+
+/* ===== 特性のデータ（I〜IIIは数字が大きいほど強い） ===== */
+const DCATS=[['grow','育てる'],['prod','副産物'],['meat','屠殺'],['gather','採集'],['fight','戦闘'],['tamer','テイマー補助'],['ride','騎乗'],['special','場所・イベント'],['gene','遺伝子']];
+const DNOTE={grow:'満腹度や子どもの育ち方、繁殖にかかわる特性。どの目的でも1つあるとうれしい。',
+ prod:'生きたまま取れる副産物（ミルク・ウール・羽根など）が増える特性。',
+ meat:'屠殺したときの肉・皮が増える特性。皮を増やす特性どうしは取り合いになることがあるよ。',
+ gather:'獣笛で連れ歩いたとき、採集や掘り出しを手伝ってくれる特性。',
+ fight:'一緒に戦うときの強さが上がる特性。「進化」が付いたものは、条件をこなすと育つらしい（くわしい仕組みは確認待ち）。「合成」はゲーム内で合成できると表示される特性。',
+ tamer:'テイマーが獣笛で呼んだときに、テイマー本人を助けてくれる特性。',
+ ride:'乗っているときだけ効く特性。動物の種類が決まっているよ。',
+ special:'特別な場所やイベントの間に捕まえたり生まれたりすると付く特性。',
+ gene:'テイマーが作る「変異誘発遺伝子」で付ける戦闘特性。属性ごとに3つずつ。'};
+const t_=(n,c,rk,tx,o)=>Object.assign({n,c,rk,tx},o||{});
+const TRAITS=[
+ t_('従順','grow','I〜III','幼獣の成長速度が上がる（＋20/35/50%）'),
+ t_('節食','grow','I〜III','満腹度が減りにくくなる（−20/35/50%）'),
+ t_('闘争の血脈','grow','','自分と同じかそれ以上のレベルのエリートを倒すと、繁殖回数＋1（8回まで）'),
+ t_('変異体','grow','','屠殺で変異体が追加で取れる。繁殖のとき、たまに特性が変わったり特性レベルが上がったりする',{syn:1}),
+ t_('高産','prod','I〜III','副産物の量が増える'),
+ t_('高速生産','prod','I','副産物ができる間隔が15%短くなる'),
+ t_('スターダスト乳業','prod','I〜III','汚染区域にいると、たまにスターダストのミルクを出す',{syn:1}),
+ t_('先端生産技術','prod','I〜III','食品の副産物を取るとき、たまにレアな副産物が出る（上質なミルクなど）'),
+ t_('サステナブル放牧','prod','','草原や凍原にいると、たまにレアなウールを出す',{who:'ヒツジ'}),
+ t_('酸性分泌物','prod','I','副産物を取るとき、少し酸液も取れる'),
+ t_('多肉','meat','I〜III','屠殺で取れる肉が増える'),
+ t_('精肉','meat','I〜III','屠殺でレアな肉が取れることがある'),
+ t_('厚皮','meat','I〜III','屠殺で取れる皮が増える'),
+ t_('酸性肉質','meat','I〜III','屠殺で酸液が取れる'),
+ t_('〇〇の眷属','meat','I〜II','屠殺や副産物のとき、その動物の特別な皮（例：高原のシカの皮）が追加で取れる'),
+ t_('採集の名手','gather','I〜III','鉱物・木を採集したとき、取れる数＋20/30/40%',{syn:1}),
+ t_('採掘の名手','gather','I〜III','採掘したとき、取れる数＋20/30/40%',{syn:1}),
+ t_('食いしん坊の鼻','gather','I〜II','土や雪に埋まった種や作物を掘り出す',{syn:1}),
+ t_('トレジャーハンター','gather','I','集落の近くに埋まった廃物や道具を掘り出す',{syn:1}),
+ t_('木の実泥棒','gather','','森や草原で、ほかの動物がためたナッツを見つける'),
+ t_('ハニーハンター','gather','','森で蜂の巣を見つける'),
+ t_('塩分補給','gather','','岩や崖の近くで岩塩を掘る'),
+ t_('回遊のハンター','gather','','川辺で魚をつかまえる'),
+ t_('狙い定めて','gather','I〜III','動物を狩ると、一定の確率で毛皮が増える',{syn:1}),
+ t_('強健','fight','I〜III','最大HPが増える'),
+ t_('獰猛','fight','I〜III','攻撃力＋15/30/50%'),
+ t_('大型獣','fight','I〜III','体が大きくなり、最終DMGと最大HPが上がる',{syn:1}),
+ t_('ミニ','fight','','見た目が小さくなる。HPは下がるけど、30%で攻撃をよける'),
+ t_('不屈','fight','I〜III','HP30%未満で数秒間無敵（CD180秒）'),
+ t_('持久戦','fight','I〜II','戦闘中、毎秒HPが回復する'),
+ t_('治癒の毛皮','fight','I〜III','戦闘が終わったあとのHP回復が速くなる'),
+ t_('怒れる自然','fight','I〜II','まわりのほかの動物の最終DMGを上げる',{evo:1}),
+ t_('暴風の子','fight','I','雨や雷雨のときダメージ＋10%、攻撃にパワーサージが付く'),
+ t_('警戒','fight','','10秒ごとに近くの敵1体をマークして見えるようにする'),
+ t_('静寂の一時','fight','','敵を引きつけて、かたくなりながらHPを回復する時間に入る'),
+ t_('一匹狼','fight','','まわりにほかのクマがいないと攻撃力・HPが上がる',{who:'クマ'}),
+ t_('戦場の獲物','fight','I〜III','同じ敵を続けて攻撃すると、HPを20%回復'),
+ t_('厚い毛皮','fight','I','DMG無効＋5%。大きい一撃のダメージを減らす',{who:'クマ',evo:1}),
+ t_('不屈の激戦','fight','I','敵を倒すのに参加するとHPを10%回復',{who:'クマ',evo:1}),
+ t_('アルファウルフ','fight','','体が大きく、攻撃力・HPが上がる。群れのオオカミが多いほど強い',{who:'オオカミ'}),
+ t_('アルファウルフの天性','fight','','攻撃力＋25%、最大HP＋15%',{who:'オオカミ',evo:1}),
+ t_('裂傷','fight','I','攻撃した敵に裂傷。ほかのオオカミの攻撃で追加ダメージ',{who:'オオカミ',evo:1}),
+ t_('精密ウォークライ','fight','I','攻撃するとテイマーの弱点DMG＋6%（5秒）',{who:'オオカミ',evo:1}),
+ t_('強靭な精神','fight','I','攻撃を受けるたびにDMG無効が少し上がる（重なる）',{who:'バッファロー',evo:1}),
+ t_('一撃離脱','fight','I','攻撃していた敵が倒れると、HPを回復して狙われなくなる',{who:'ヒョウ',evo:1}),
+ t_('高速攻撃','fight','I〜III','新しい敵への最初の攻撃で追加ダメージ',{who:'ヒョウ',evo:1}),
+ t_('ジャングル迷彩','fight','I〜III','狙われにくい。HPが80%以上なら攻撃力アップ',{who:'ヒョウ',evo:1}),
+ t_('カモフラージュカラー','fight','I','10秒攻撃しないと隠れる。隠れているときの攻撃が強い',{who:'ワニ',evo:1}),
+ t_('再生能力','fight','I〜II','攻撃を受けると、少しのあいだHPが回復し続ける',{who:'ワニ',evo:1}),
+ t_('バトルマインド','fight','II','攻撃でレイジを重ね、倒したときにフロストDMGを追加',{who:'ホッキョクグマ',evo:1}),
+ t_('コールドサイン','fight','I','0℃未満のとき、攻撃にフロストDMGを追加',{who:'ホッキョクグマ',evo:1}),
+ t_('雪原の迷彩','fight','I〜II','雪や吹雪のとき、狙われにくく、速く、強くなる',{who:'ホッキョクグマ',evo:1}),
+ t_('果敢に前進','fight','I','同じ敵を攻撃し続けると攻撃力が少しずつ上がる',{evo:1}),
+ t_('ワイルドラッシュ','fight','I','移動速度＋10%、攻撃にブレイズDMGを少し追加',{evo:1}),
+ t_('共に成長','tamer','I〜III','獣笛で呼んで一緒に戦うと、呼んだ人の経験値＋10/15/20%',{syn:1}),
+ t_('緊急援護','tamer','I〜III','獣笛で呼んだとき、この動物に向かって走るとスプリント速度アップ',{syn:1}),
+ t_('ナビゲート','tamer','I〜III','獣笛で呼んだとき、呼んだ人のスタミナと移動速度アップ（戦闘外）',{syn:1}),
+ t_('軽量','ride','I〜III','乗っているとき、ジャンプが遠く高くなる',{who:'シカ'}),
+ t_('神速','ride','I〜III','乗っているとき、移動速度が上がる',{who:'シカ'}),
+ t_('アフターマス','ride','I〜III','乗っているとき、衝撃波の範囲が広がる（＋10/20/30%）',{who:'クマ'}),
+ t_('適応毛皮','ride','I〜III','乗っているとき、寒さ・暑さに強くなる',{who:'バッファロー'}),
+ t_('多産体質','ride','I〜II','乗っているとき、ミルクが出る確率が上がる',{who:'バッファロー'}),
+ t_('スタミナ','ride','I〜III','乗っているとき、動物のスタミナ上限が上がる',{who:'シカ・イノシシ・クマ・バッファロー',syn:1}),
+ t_('極地の血','special','','気温10℃未満か30℃超えで、HP回復と攻撃力アップ',{where:'白銀の荒野：条件を満たした温度制御塔の下で生まれる。塔の外で交配した子には付かない'}),
+ t_('ドリームゲノム','special','I〜III','生産のとき、夢の毛皮が追加で取れる',{where:'永い夢：夢の領域の中で捕まえると付くことがある'}),
+ t_('ブレイズ虚霊','special','','攻撃がブレイズエレメントDMGになる',{where:'条件を満たした汚染エリアで「虚態」の動物を捕まえる'}),
+ t_('ショックヴォイド','special','','攻撃がショックエレメントDMGになる',{where:'条件を満たした汚染エリアで「虚態」の動物を捕まえる'}),
+ t_('氷結の虚霊','special','','攻撃が氷結エレメントDMGになる',{where:'条件を満たした汚染エリアで「虚態」の動物を捕まえる'}),
+ t_('爆炎の虚霊','special','','攻撃がバーストエレメントDMGになる',{where:'条件を満たした汚染エリアで「虚態」の動物を捕まえる'}),
+ t_('月の予兆','special','I〜II','屠殺のとき、月の皮が追加で取れる',{where:'超常現象イベント「月の予兆」「月の饗宴」の間だけ'}),
+ t_('逆行する星','special','I〜III','屠殺や副産物のとき、星の羽毛が追加で取れる',{where:'超常現象イベント「逆行する星」「グラビティアビス」の間だけ'}),
+ t_('ファイアトラップの子','gene','','攻撃にブレイズDMG（攻撃力の25%）を追加。火傷の敵には2倍'),
+ t_('烈火の主','gene','','ファイアトラップの子の効果＋ダメージを受けると足元にファイアトラップ'),
+ t_('ファイアトラップ貫通','gene','','ウォークライにブレイズDMG＋8%を追加'),
+ t_('雷光の眷属','gene','','攻撃にショックDMG（攻撃力の25%）を追加。パワーサージの敵には2倍'),
+ t_('雷光の主','gene','','雷光の眷属の効果＋攻撃で稲妻チェーン（最大5体）'),
+ t_('雷霆貫通','gene','','ウォークライにショックDMG＋8%を追加'),
+ t_('フロストの眷属','gene','','攻撃にフロストDMG（攻撃力の25%）を追加。フロストボルテックスの敵には2倍'),
+ t_('白銀の支配者','gene','','フロストの眷属の効果＋敵を倒すとフロストバースト'),
+ t_('フロスト貫通','gene','','ウォークライにフロストDMG＋8%を追加'),
+ t_('スターダストの子','gene','','攻撃に状態異常DMG（攻撃力の25%）を追加。汚染区域では2倍'),
+ t_('スターダストの主','gene','','スターダストの子の効果＋敵を倒すとHP全回復＆3秒無敵'),
+ t_('スターダスト貫通','gene','','ウォークライに状態異常DMG＋4%を追加。汚染区域では2倍')
+];
+
+/* ===== 用語集 ===== */
+const CATN={base:'きほん',keep:'飼育',breed:'繁殖',trait:'特性',tamer:'テイマー',item:'アイテム'};
+const WORDS=[
+ ['動物','base','捕まえて領地で飼える生き物。デビエーションとは別の仕組みだよ。'],
+ ['捕獲のHP','base','動物のHPをこの割合より下げると、麻酔が効いて捕まえられる。動物ごとにちがう。'],
+ ['資源追跡','base','マップの「情報検索」にある機能。今のシナリオで動物がどこにいるか見られる。'],
+ ['麻酔吹き矢','item','動物を捕まえる投げ道具。HPが低い動物に当てると眠らせられる。上級作業台で作る。'],
+ ['麻酔弾','item','スナイパーライフル用の弾。ダメージを与えずに動物を眠らせられる。'],
+ ['飼い葉桶','item','えさと水を入れておく施設。オフラインの間は、ここに入っているえさだけが食べられる。'],
+ ['子供部屋','item','繁殖に必要な施設。生まれた子はここに入る。1つの領地に5つまで。'],
+ ['セル強化飼料','item','動物のレベルを上げる飼料。Ⅰ〜Ⅴで、Lv20・30・40・50・60まで上がる。'],
+ ['デコイボックス','item','えさを入れて置くと、近くの動物を呼び寄せるアイテム。1人1つ、60分で消える。'],
+ ['孵化器','item','卵を入れると動物の子がかえる家具。電気が必要で、使える回数に限りがある。'],
+ ['満腹度','keep','今の飼育でいちばん大事な数値。成長・繁殖・副産物・屠殺の量がぜんぶ満腹度で決まる。'],
+ ['好物','keep','その動物がいちばん喜ぶ食べ物。動物ごとにちがう。'],
+ ['副産物','keep','生きたまま定期的に取れる物。ミルク・ウール・羽根・卵など。'],
+ ['屠殺','keep','動物を肉や皮にすること。満腹度が高いほどたくさん取れる。'],
+ ['従順度','keep','昔あった数値。V3.0.6（2026年9月）でなくなって、満腹度にまとめられた。'],
+ ['繁殖','breed','オスとメスから子どもを生むこと。大人どうし・満腹度80%以上・子供部屋の空きが必要。'],
+ ['幼獣','breed','動物の子ども。領地で飼っていると大人に育つ。'],
+ ['方向性繁殖','breed','子供部屋を調べて［G］で開く。「計画育成」の画面で母体（メス）と父方（オス）を選んで、繁殖させる親を自分で決められる。'],
+ ['繁殖回数','breed','1匹が繁殖できる残りの回数。特性「闘争の血脈」で増やせる（8回まで）。'],
+ ['レア柄','breed','めずらしい模様。繁殖で生まれることがある。親が2匹ともレア柄だと出やすいらしい。'],
+ ['特性','trait','動物1匹ずつに付いている効果。生産・屠殺・採集・戦闘など、いろいろある。'],
+ ['特性レベル','trait','特性の強さ。I〜IIIのように書かれて、数字が大きいほど強い。'],
+ ['変異誘発遺伝子','trait','テイマーが作る遺伝子アイテム。動物に使うと特性を永久に変えられる。'],
+ ['性格','trait','臆病・穏やか・頑固などの性格。何に効くのかはまだわかっていない（確認待ち）。'],
+ ['テイマー','tamer','動物が得意な職業。捕獲前に特性が見える、最大3匹呼べる、サドルや遺伝子を作れる。'],
+ ['獣笛','tamer','呼んだ動物に指示を出す道具。自分より10レベル以上高い動物には指示できない。'],
+ ['サドル','tamer','動物に付けると安定して乗れる鞍。作ったり付けかえたりできるのはテイマーだけ。'],
+ ['騎乗スキル','tamer','乗っているときに使える動物の技。使えるのはテイマーだけ（PCはCtrl）。']
+];
+const WMAP=Object.fromEntries(WORDS.map(w=>[w[0],w]));
+const T=(w,label)=>`<button class="t" data-t="${w}">${label||w}</button>`;
+
+/* ===== レッスン ===== */
+const zooOpts=(id,def)=>`<div class="pickrow" id="${id}">${ZOO.map(z=>`<button data-v="${z.id}" aria-pressed="${z.id===def}">${z.n}</button>`).join('')}</div>`;
+const LES=[
+{t:'動物でできること',h:()=>`
+ <p>ワンスヒューマンの${T('動物')}は、ただ狩るだけじゃなくて、<b>捕まえて領地で飼える</b>よ。飼うとこんなことができる。</p>
+ <div class="roles">
+  <div class="role"><span class="role-top"><span class="role-ic" style="background:#ffe27a">${pix('BOWL')}</span><span class="chip c-psi">生産</span></span><b>${T('副産物')}を取る</b><p>ミルク・ウール・羽根・卵などが、生きたまま定期的に取れる。</p></div>
+  <div class="role"><span class="role-top"><span class="role-ic" style="background:#ff9fbd">${pix('MEAT')}</span><span class="chip c-atk">素材</span></span><b>肉と皮にする</b><p>${T('屠殺')}すると肉と皮が取れる。皮は防具づくりの素材になる。</p></div>
+  <div class="role"><span class="role-top"><span class="role-ic" style="background:#9be8d4">${pix('EGG')}</span><span class="chip c-def">繁殖</span></span><b>増やして選ぶ</b><p>オスとメスで${T('繁殖')}。いい${T('特性')}や${T('レア柄')}の子をねらえる。</p></div>
+  <div class="role"><span class="role-top"><span class="role-ic" style="background:#9fd6ff">${pix('PAW')}</span><span class="chip c-kw">仲間</span></span><b>連れて歩く・乗る</b><p>呼び出して採集や戦闘を手伝ってもらったり、サドルを付けて乗ったりできる。</p></div>
+ </div>
+ <h3>捕まえられる動物</h3>
+ <p>今は<b>${ZOO.length}種類</b>（シカとヒツジはオス・メスが別アイテム）。どこにいるかは、マップの「情報検索」→「${T('資源追跡')}」で見られるよ。</p>
+ <div class="note"><b>ポイント</b>　動物はデビエーションとは別の仕組み。でも、動物は<b>デビ融合の材料</b>にもなるよ（上級のレッスンで紹介）。</div>`},
+{t:'動物をつかまえる',h:()=>`
+ <p>捕獲は「<b>弱らせて、麻酔</b>」の2ステップ。</p>
+ <ol>
+  <li><b>HPを減らす</b>：動物を狙うと、HPバーに目印が出る。そこより下まで減らす。</li>
+  <li><b>麻酔をかける</b>：${T('麻酔吹き矢')}を当てると眠る。近づいてインタラクトでバッグに入るよ。</li>
+ </ol>
+ <h3>動物ごとの捕獲のHP</h3>
+ <div class="scroll"><table class="xtab"><tr><th>捕獲のHP</th><th>動物</th></tr>
+ ${[[100,'満タンでもOK（すぐ麻酔）'],[60,'60%未満'],[30,'30%未満']].map(([c,l])=>`<tr><td><b>${l}</b></td><td>${ZOO.filter(z=>z.cap===c).map(z=>z.n).join('・')}</td></tr>`).join('')}
+ <tr><td><b>${TBD}</b></td><td>イリエワニ</td></tr></table></div>
+ <p class="mini">強い武器だと倒してしまうので、目印が近づいたら弱い武器に持ちかえるのがコツ。</p>
+ <h3>ほかの捕まえ方</h3>
+ <ul>
+  <li>${T('麻酔弾')}（スナイパーライフル用）：ダメージなしで眠らせられる。</li>
+  <li>${T('デコイボックス')}：えさを入れて置くと動物を呼び寄せる。</li>
+  <li>${T('孵化器')}：卵から子どもをかえす（中級で紹介）。</li>
+ </ul>
+ <div class="note"><b>テイマーなら</b>　近づいても動物が逃げたり攻撃したりしなくなって、<b>捕まえる前に特性が見られる</b>よ。</div>`},
+{t:'領地で飼う',h:()=>`
+ <p>捕まえた動物は、領地の中でバッグから使うと放せる。あとは${T('飼い葉桶')}にえさを入れておけばOK。</p>
+ <h3>大事なのは満腹度だけ</h3>
+ <p>V3.0.6（2026年9月）から、${T('従順度')}と水分はなくなって、<b>${T('満腹度')}だけ</b>を見ればよくなったよ。満腹度で、こう変わる。</p>
+ <div class="slider"><label for="hgR">満腹度</label><input type="range" id="hgR" min="0" max="100" step="5" value="85"><output id="hgO">85%</output></div>
+ <div class="tiers" id="hgT">
+  <div class="tier t3" data-min="80"><b>80〜100%</b><ul><li>副産物をたくさん作る</li><li>屠殺で多めに取れる</li><li>子どもはふつうに育つ</li><li><b>繁殖できる</b></li></ul></div>
+  <div class="tier t2" data-min="20"><b>20〜80%</b><ul><li>副産物はふつう</li><li>屠殺はふつうの量</li><li>子どもはふつうに育つ</li><li>繁殖できない</li></ul></div>
+  <div class="tier t1" data-min="0"><b>0〜20%</b><ul><li>副産物が止まる</li><li>屠殺は少なめ</li><li>子どもの成長が止まる</li><li>繁殖できない</li></ul></div>
+ </div>
+ <h3>オフラインのとき</h3>
+ <ul><li>オフラインの間は、<b>飼い葉桶の中のえさだけ</b>が食べられる。地面に置いたえさは食べない。</li><li>${T('セル強化飼料')}は、オフラインの間は減らない。</li></ul>
+ <div class="note"><b>ポイント</b>　繁殖させたいなら、満腹度は<b>80%以上</b>をキープ。好物をたっぷり入れておこう。</div>`},
+{t:'えさと好物',h:()=>`
+ <p>動物には「食べる物」と、とくに喜ぶ「${T('好物')}」がある。食べない物を入れても食べてくれないよ。</p>
+ <h3>えさチェッカー</h3>
+ ${zooOpts('fdP','deer')}
+ <div class="feedbox" id="fdB"></div>
+ <h3>えさのコツ</h3>
+ <ul>
+  <li>好物は満腹度が多く増える。毎日の世話がぐっと楽になる。</li>
+  <li>肉粒飼料・穀物飼料・草飼料は保存がきく。一部の動物の好物にもなる。</li>
+  <li>ミックス肉類／穀物／ハーブ粗飼料は、満腹度を多めに増やせる飼料。</li>
+ </ul>
+ <p class="mini">「好物」はゲーム内の説明文どおり。こまかい食べ物ごとの増え方は、プレイヤーの調べで${TBD}のものもあるよ。</p>`},
+{t:'繁殖のきほん',h:()=>`
+ <p>同じ種類の<b>オスとメス</b>がいれば、${T('繁殖')}で子どもを生めるよ。</p>
+ <h3>繁殖チェック</h3>
+ <div class="chk" id="brC">
+  <label><input type="checkbox" data-k="pair"> 同じ種類のオスとメスがいる</label>
+  <label><input type="checkbox" data-k="adult"> 2匹とも大人（${T('幼獣')}じゃない）</label>
+  <label><input type="checkbox" data-k="full"> 満腹度が80%以上</label>
+  <label><input type="checkbox" data-k="room"> ${T('子供部屋')}に空きがある</label>
+  <label><input type="checkbox" data-k="cd"> 繁殖のクールタイム中じゃない・${T('繁殖回数')}が残っている</label>
+ </div>
+ <div class="verdict" id="brV"></div>
+ <h3>子供部屋</h3>
+ <ul>
+  <li>繁殖に必要な施設。生まれた子はここに入る。</li>
+  <li>1つの領地に<b>5つまで</b>建てられる。</li>
+  <li>キャンピングカーと、禁断の島の水上領地には建てられない。</li>
+ </ul>
+ <div class="note"><b>ポイント</b>　子どもが大人に育つのは、<b>領地で飼っている間だけ</b>。バッグにしまっていると育たないよ。</div>`}
+];
+const FINAL=()=>`<div class="practice"><b style="font-family:var(--f-pop);font-weight:400;font-size:19px">初級クリア！</b><p>次は中級で、満腹度のくわしい話・方向性繁殖・特性のしくみを学ぼう。</p></div>`;
+
+const MID=[
+{t:'副産物と屠殺',h:()=>`
+ <p>動物から物を取る方法は2つ。生きたまま取る${T('副産物')}と、${T('屠殺')}だよ。</p>
+ <div class="scroll"><table class="xtab"><tr><th>動物</th><th>副産物（生きたまま）</th><th>屠殺</th></tr>
+ ${ZOO.filter(z=>z.side).map(z=>`<tr><td><b>${z.n}</b></td><td>${z.side}</td><td>${z.get}</td></tr>`).join('')}</table></div>
+ <p class="mini">副産物がない動物（オオカミ・クマ・ウサギなど）は、屠殺の肉と皮が目当て。</p>
+ <h3>どっちも満腹度しだい</h3>
+ <ul><li>満腹度80%以上：副産物をたくさん作る・屠殺も多め</li><li>20%未満：副産物が止まる・屠殺も少なめ</li></ul>
+ <div class="note"><b>小ワザ</b>　繁殖や副産物のクールタイムは、しまっていても進むという情報があるよ。待っている間はしまっておくと、えさの節約になるかも（${TBD}）。</div>`},
+{t:'方向性繁殖と卵',h:()=>`
+ <h3>方向性繁殖</h3>
+ <p>${T('子供部屋')}を調べて<b>［G］${T('方向性繁殖')}</b>を選ぶと、「計画育成」の画面になる。<b>母体（メス）と父方（オス）</b>を選んで「育成を開始する」を押すと、その2匹で繁殖させられるよ（育成待ちは2時間）。いい特性を持った2匹を選んで、子どもに残そう。</p>
+ <h3>卵から子どもをかえす</h3>
+ <p>${T('孵化器')}に卵を入れると、動物の子がかえる。</p>
+ <div class="scroll"><table class="xtab"><tr><th>卵</th><th>かえる子ども</th></tr>
+  <tr><td>鳥の卵</td><td>フラミンゴの子</td></tr><tr><td>カメの卵</td><td>ワニガメの子（たまにウミガメの子）</td></tr><tr><td>ワニの卵</td><td>小さなワニ</td></tr></table></div>
+ <ul><li>電気が必要で、使える回数に限りがある。</li><li>失敗すると「割れた卵」になる。成功率は${TBD}（プレイヤーの調べでは30%くらい）。</li><li>特性はランダム。レア柄が出ることもある。</li></ul>
+ <h3>デコイボックス</h3>
+ <p>えさを入れてフィールドに置くと、近くの動物を呼び寄せる。1人1つまで、置いてから60分で消えるよ。</p>`},
+{t:'子どもを早く育てる',h:()=>`
+ <p>${T('幼獣')}が大人になるまで、何もしないと<b>1日くらい</b>かかるよ。イリエワニはもっと時間がかかる。</p>
+ <h3>早く育てる方法</h3>
+ <ul>
+  <li>特性「従順」：幼獣の成長速度＋20/35/50%。</li>
+  <li>デビ「狐主任」を領地に置く（下で紹介）。</li>
+  <li>満腹度を20%より上にキープ（20%未満だと成長が止まる）。</li>
+ </ul>
+ <h3>狐主任の2つの能力</h3>
+ <div class="parts">
+  <div class="part"><span class="k">飼育エキスパート</span><b>成長が速くなる</b><p>領地の全動物の、幼獣の成長速度が上がる。異能レベルが高いほど効果が大きい。何体か置くと重なる（最大100%）。<b>オフラインの間は効かない</b>。</p></div>
+  <div class="part"><span class="k">子孫繁栄</span><b>双子が生まれる</b><p>繁殖のとき、一定の確率で幼獣がもう1匹生まれる。双子になるたびにスーパーレア肉を1つ使う（足りないと発動しない）。何体置いても重ならない。</p></div>
+ </div>
+ <p class="mini">狐主任3体の領地では、大人になるまで約1.6倍速くなった例があるよ ${PI}。</p>
+ <div class="note"><b>ポイント</b>　双子をねらうなら、スーパーレア肉（上質な肉）を用意しておこう。</div>`},
+{t:'特性のきほん',h:()=>`
+ <p>動物には1匹ずつ${T('特性')}が付いている。同じ名前でもI・II・IIIの${T('特性レベル')}があって、数字が大きいほど強い。</p>
+ <h3>特性はレベルで開く</h3>
+ <p>動物のレベルが<b>20・30・40・50</b>になるたびに、特性が順番に開くよ。レベルは${T('セル強化飼料')}で上げられる。</p>
+ <div class="slider"><label for="lvR">動物のレベル</label><input type="range" id="lvR" min="1" max="60" step="1" value="25"><output id="lvO">Lv25</output></div>
+ <div class="lvmap" id="lvM">${[20,30,40,50].map((l,i)=>`<div data-l="${l}">Lv${l}<small>${i+1}つ目が開く</small></div>`).join('')}</div>
+ <p id="lvF" class="mini" style="margin-top:8px"></p>
+ <h3>セル強化飼料</h3>
+ <div class="scroll"><table class="xtab"><tr><th>飼料</th><th>上がるレベル</th></tr>
+ ${['Ⅰ','Ⅱ','Ⅲ','Ⅳ','Ⅴ'].map((r,i)=>`<tr><td>セル強化飼料${r}</td><td>Lv${20+i*10}まで</td></tr>`).join('')}</table></div>
+ <p class="mini">そのレベルより下の動物しか食べないよ。大型研究作業台で作る。</p>
+ <div class="note"><b>ポイント</b>　捕まえたときのレベルで、その動物のHPが決まる。特性は繁殖や探索でも少しずつレベルが上がっていくよ。</div>`},
+{t:'目的別のおすすめ特性',h:()=>`
+ <p>どの特性を残すかは、<b>何のために飼うか</b>で決めよう。特性図鑑で効果をくわしく見られるよ。</p>
+ <div class="parts">
+  <div class="part"><span class="k">どの目的でも</span><b>育てる系</b><p>従順（子どもが早く育つ）・節食（えさが長持ち）</p></div>
+  <div class="part"><span class="k">ミルク・ウール</span><b>副産物</b><p>高産・高速生産・先端生産技術・スターダスト乳業・サステナブル放牧</p></div>
+  <div class="part"><span class="k">肉・皮</span><b>屠殺</b><p>多肉・精肉・厚皮・〇〇の眷属</p></div>
+  <div class="part"><span class="k">連れ歩き</span><b>採集</b><p>採集の名手・採掘の名手・トレジャーハンター</p></div>
+  <div class="part"><span class="k">一緒に戦う</span><b>戦闘</b><p>攻撃なら獰猛、守りなら強健・不屈・持久戦</p></div>
+  <div class="part"><span class="k">乗りもの</span><b>騎乗</b><p>スタミナ・神速（シカ）・適応毛皮（バッファロー）</p></div>
+ </div>
+ <p class="mini">イリエワニを乗る用にするなら、持久戦・大型獣・従順・節食あたりが人気だよ ${PI}。</p>
+ <div class="note"><b>注意</b>　皮を増やす特性（〇〇の眷属・厚皮・月の予兆・逆行する星）は、同時に付かず取り合いになるという情報があるよ（${TBD}）。</div>`},
+{t:'場所で付く特別な特性',h:()=>`
+ <p>特別な場所で捕まえたり生まれたりすると、そこでしか付かない特性がある。</p>
+ <div class="parts">
+  <div class="part"><span class="k">白銀の荒野</span><b>極地の血</b><p>条件を満たした温度制御塔の下で生まれると付く。寒い・暑い場所で強くなる。<b>塔の外で交配すると、子には付かない</b>。</p></div>
+  <div class="part"><span class="k">永い夢</span><b>ドリームゲノム</b><p>夢の領域の中で捕まえると付くことがある。夢の毛皮が取れる。</p></div>
+  <div class="part"><span class="k">汚染エリア</span><b>虚霊4種</b><p>条件を満たした汚染エリアで「虚態」の動物を捕まえると付く。攻撃の属性が変わる。</p></div>
+  <div class="part"><span class="k">イベント</span><b>月の予兆・逆行する星</b><p>超常現象イベントの間だけ。特別な皮や羽毛が取れる。</p></div>
+ </div>
+ <p class="mini">孵化器でかえしても、極地の血や虚霊は付かないという情報があるよ。</p>
+ <p class="mini">極地の血は5つ目の特性になる。付いた子は塔の外で交配させず、テイマーの遺伝子で付けかえて「5特性」に仕上げる人もいるよ ${PI}。</p>
+`}
+];
+const MIDFIN=()=>`<div class="practice"><b style="font-family:var(--f-pop);font-weight:400;font-size:19px">中級クリア！</b><p>上級では、テイマー・騎乗・遺伝子・レア柄・デビ融合とのつながりを学ぼう。</p></div>`;
+
+const ADV=[
+{t:'テイマーでできること',h:()=>`
+ <p>動物と遊ぶなら、職業「${T('テイマー')}」がいちばん。テイマーだけができることがたくさんあるよ。</p>
+ <div class="scroll"><table class="xtab"><tr><th></th><th>テイマー</th><th>ほかの職業</th></tr>
+  <tr><td>同時に呼べる数</td><td><b>3匹</b></td><td>1匹</td></tr>
+  <tr><td>捕まえる前に特性を見る</td><td>○</td><td>×</td></tr>
+  <tr><td>${T('獣笛')}で指示（戦闘・採集）</td><td>○</td><td>×（戦闘系を呼んでも戦わない）</td></tr>
+  <tr><td>${T('サドル')}・動物の装備を作る／付けかえる</td><td>○</td><td>×（付いているサドルは使える）</td></tr>
+  <tr><td>${T('騎乗スキル')}</td><td>○</td><td>×</td></tr>
+  <tr><td>${T('変異誘発遺伝子')}</td><td>○</td><td>×</td></tr>
+  <tr><td>領地で飼える数</td><td>10匹</td><td>6匹</td></tr></table></div>
+ <h3>呼び出しのルール</h3>
+ <ul>
+  <li>バッグかホットバーで動物アイテムを使うと呼べる。もう一度使うとしまえる（CD10秒）。</li>
+  <li>呼べるのは<b>大人</b>で、<b>満腹度が20%より多い</b>動物だけ。</li>
+  <li>動物が倒されると、満腹度が少し減る。</li>
+  <li>自分より10レベル以上高い動物には、獣笛で指示できない。</li>
+  <li>獣笛を持っていれば、ピン（目印）の操作で指示を出せる（V3.1.2）。</li>
+ </ul>
+ <p class="mini">クリエイティブクッキングのごはん（松の実・ピーナッツ入りなど）で、採集量が増えるという話もあるよ ${PI}。</p>`},
+{t:'動物に乗る',h:()=>`
+ <p>乗れるのは<b>${ZOO.filter(z=>z.ride).map(z=>z.n).join('・')}</b>。</p>
+ <h3>乗り方は2つ</h3>
+ <div class="parts">
+  <div class="part"><span class="k">安定</span><b>サドルで乗る</b><p>サドルを付けると、ずっと安定して乗れる。テイマーならCtrl（PC）で${T('騎乗スキル')}も使える。</p></div>
+  <div class="part"><span class="k">テイマーだけ</span><b>素手で乗る</b><p>野生の動物やサドルなしの動物にも乗れる。でもスタミナを使うし、動物が振り落とそうとする。スキルも使えない。</p></div>
+ </div>
+ <h3>騎乗スキル</h3>
+ <div class="scroll"><table class="xtab"><tr><th>動物</th><th>スキル</th></tr>
+ ${ZOO.filter(z=>z.rs).map(z=>`<tr><td><b>${z.n}</b></td><td>${z.rs.join('<br>')}</td></tr>`).join('')}</table></div>
+ <ul class="mini"><li>乗ったまま射撃・近接・採集・デビのスキルが使える。</li><li>宝箱を開ける・テレポートなど、特別な動きをすると降りる。</li><li>ダンジョンの中や戦闘中は、テイマー以外は呼び出せない。</li><li>サドル付きの動物をほかの人に売ると、その人も乗れるようになる。</li></ul>`},
+{t:'遺伝子で特性を変える',h:()=>`
+ <p>テイマーは${T('変異誘発遺伝子')}を作れる。動物に使うと、<b>特性を永久に変えられる</b>よ。</p>
+ <h3>遺伝子で付く戦闘特性</h3>
+ <div class="scroll"><table class="xtab"><tr><th>属性</th><th>特性</th></tr>
+  <tr><td>ブレイズ</td><td>ファイアトラップの子／烈火の主／ファイアトラップ貫通</td></tr>
+  <tr><td>ショック</td><td>雷光の眷属／雷光の主／雷霆貫通</td></tr>
+  <tr><td>フロスト</td><td>フロストの眷属／白銀の支配者／フロスト貫通</td></tr>
+  <tr><td>汚染</td><td>スターダストの子／スターダストの主／スターダスト貫通</td></tr></table></div>
+ <p class="mini">「〜の子・眷属」が基本で、「〜の主」はその強化版。どうやって強化版になるかは${TBD}。</p>
+ <p class="mini">特性図鑑で「合成」が付いた特性は、ゲーム画面で合成してレベルを上げられる。それ以外は、同じ特性の親どうしの繁殖で上げるらしい ${PI}。</p>
+ <h3>育つ特性（進化）</h3>
+ <p>戦闘特性の一部は、「敵を20回攻撃する」のような条件をこなすと育つらしいよ。特性図鑑で「進化」と付いているもの。くわしい仕組みは${TBD}。</p>
+" <p class="mini">特性「変異体」は子に引き継がれやすいので、遺伝子で変えた特性を繁殖で広げていく使い方もあるよ ${PI}。</p>
+ <div class="note"><b>ポイント</b>　遺伝子は「付けかえ」。いま付いているいい特性を消さないように、どの枠に付くかゲームの表示でよく確かめてね。</div>`},
+{t:'レア柄をねらう',h:()=>`
+ <p>繁殖で生まれる子には、ランダムな色や${T('レア柄')}が付くことがある。</p>
+ <ul>
+  <li>親が<b>2匹ともレア柄</b>だと、子どももレア柄になりやすいという情報があるよ。必ずではない。</li>
+  <li>孵化器でかえした子にも、レア柄が出ることがある。</li>
+  <li>特性の中には、体が光る・すける見た目になるものもある。</li>
+  <li>特性「ミニ」を持つ子は体が小さくなる（とても小さいブタなど）。</li>
+ </ul>
+ <h3>繁殖回数をふやす</h3>
+ <p>特性「闘争の血脈」があると、自分と同じかそれ以上のレベルのエリートを倒すたびに${T('繁殖回数')}が1ふえる（8回まで）。クマやバッファローで見つかっているよ。</p>
+ <h3>性格</h3>
+ <p>動物には臆病・穏やか・頑固・さわやか・のんびりや・冷静などの${T('性格')}がある。何に効くのかは${TBD}。</p>`},
+{t:'デビ融合の材料にする',h:()=>`
+ <p>動物は、<b>デビエーション融合の材料</b>にもなるよ。入れると、デビに「変異の枠」の特性が付くことがある。</p>
+ <div class="scroll"><table class="xtab"><tr><th>材料の動物</th><th>デビに付く特性</th></tr>
+ ${[['シカ・ヒツジ','草食動物'],['オオカミ','ムーンレイド'],['クマ','パワープレイ'],['イノシシ','穢れとの共生'],['ワニ','悪夢の水域'],['カピバラ','心のマッサージ'],['ヒョウ','ネコ科動物'],['バッファロー','最強の働き者'],['ホッキョクグマ','極地の怪物']].map(([a,b])=>`<tr><td>${a}</td><td><b>${b}</b></td></tr>`).join('')}</table></div>
+ <ul><li>動物は1匹で材料1枠、その特性に0.5点。<b>2匹で100%</b>。</li><li>材料にした動物は戻ってこないよ。</li></ul>
+ <p><a href="https://yukhoeonce.github.io/devi/" target="_blank" rel="noopener">デビ融合講座でくわしく見る →</a></p>`}
+];
+const ADVFIN=()=>`<div class="practice"><b style="font-family:var(--f-pop);font-weight:400;font-size:19px">上級クリア！</b><p>おつかれさま。上級クイズで力だめししよう。</p></div>`;
+
+const LV={b:{n:'初級',sub:'はじめての人',les:LES,fin:FINAL},m:{n:'中級',sub:'もっと上手に',les:MID,fin:MIDFIN},a:{n:'上級',sub:'動物マスター',les:ADV,fin:ADVFIN}};
+if(!LV[st.lv]) st.lv='b';
+for(const k of ['b','m','a']){
+  const n=LV[k].les.length;
+  st.dn[k]=st.dn[k].filter(x=>Number.isInteger(x)&&x>=1&&x<=n);
+  if(!(Number.isInteger(st.sp[k])&&st.sp[k]>=1&&st.sp[k]<=n)) st.sp[k]=1;
+  if(!(st.qb[k]==null||Number.isInteger(st.qb[k]))) st.qb[k]=null;
+}
+const cur=()=>LV[st.lv];
+const RMq=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function renderToc(){
+  const L=cur(), dn=st.dn[st.lv], sp=st.sp[st.lv];
+  $('#lvtabs').innerHTML=Object.entries(LV).map(([k,v])=>`<button data-lv="${k}" aria-pressed="${st.lv===k}"><b>${v.n}</b><small><span class="d">${v.sub}・</span>${st.dn[k].length}/${v.les.length}</small></button>`).join('');
+  $('#toc').innerHTML=L.les.map((l,i)=>`<button data-s="${i+1}" class="${dn.includes(i+1)?'done':''}" ${sp===i+1?'aria-current="step"':''}><span class="n">${dn.includes(i+1)?'✓':i+1}</span><span class="t2">${l.t}</span></button>`).join('');
+}
+function renderLesson(scroll){
+  const L=cur(), n=L.les.length, i=Math.min(Math.max(st.sp[st.lv],1),n), l=L.les[i-1];
+  const isDone=st.dn[st.lv].includes(i);
+  const nextLv=st.lv==='b'?'m':st.lv==='m'?'a':null;
+  const last=st.lv==='b'?`<button class="btn pink" data-fin="1">${isDone?'クイズで確かめる →':'わかった！クイズへ →'}</button>`
+    :nextLv?`<button class="btn pink" data-fin="${nextLv}">わかった！${LV[nextLv].n}へ →</button>`:`<button class="btn pink" data-fin="end">わかった！上級クイズへ →</button>`;
+  $('#les').innerHTML=`<p class="eyebrow">${L.n} · STEP ${i} / ${n}</p><h2>${l.t}</h2><div class="body">${l.h()}${i===n?L.fin():''}</div><button type="button" class="fbtn" data-fb="l:${st.lv}${i}">このページのまちがいを教えて</button>
+   <div class="foot">${i>1?`<button class="btn sub" data-nav="${i-1}">← もどる</button>`:'<span></span>'}
+   ${i<n?`<button class="btn pink" data-next="${i}">${isDone?'次へ →':'わかった！次へ →'}</button>`:last}</div>`;
+  renderToc(); bindLesson(); phrase($('#les'));
+  if(scroll){const top=$('#v-lesson').getBoundingClientRect().top+scrollY-90; if(scrollY>top) scrollTo({top,behavior:RMq?'auto':'smooth'});}
+}
+function markDone(i){const d=st.dn[st.lv]; if(!d.includes(i)) d.push(i); save(); renderProg();}
+function goStep(i){st.sp[st.lv]=i; save(); renderLesson(true);}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button,a'); if(!b) return;
+  if(b.closest('#fdP,#zcats,#dcats,#wcats')) return;
+  const d=b.dataset;
+  if(d.qlv){newQuiz(d.qlv);}
+  else if(d.lv){st.lv=d.lv; save(); renderLesson(false);}
+  else if(d.s) goStep(+d.s);
+  else if(d.nav) goStep(+d.nav);
+  else if(d.next){markDone(+d.next); goStep(+d.next+1);}
+  else if(d.fin){markDone(cur().les.length); const f=d.fin;
+    if(f==='1'||f==='end'){newQuiz(st.lv); location.hash='quiz';} else if(LV[f]){st.lv=f; save(); renderLesson(true);} }
+  else if(d.go){const g=d.go; if(LV[g[0]]){st.lv=g[0]; st.sp[st.lv]=+g.slice(1)||1; save(); if(location.hash==='#lesson') renderLesson(false); else location.hash='lesson';}}
+  else if(d.t) openTerm(d.t);
+});
+
+/* 日本語の改行：言葉の切れ目でだけ折り返す */
+const isH=c=>c>='ぁ'&&c<='ゟ';
+const AFTER='、。）」』！？…・：／';
+const BEFORE='（「『';
+function phrase(root){
+  if(!root) return;
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement.closest('script,style,input,select,option,textarea,.np,.nw,output')?NodeFilter.FILTER_REJECT:(n.nodeValue.length>3?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP)});
+  const nodes=[]; while(w.nextNode()) nodes.push(w.currentNode);
+  for(const n of nodes){
+    const s=n.nodeValue; const parts=[]; let last=0;
+    for(let i=0;i<s.length-1;i++){
+      const a=s[i], b=s[i+1];
+      const brk=(AFTER.includes(a)&&!AFTER.includes(b))||(BEFORE.includes(b)&&!BEFORE.includes(a))||(isH(a)&&!isH(b)&&!AFTER.includes(b)&&b!=='ー'&&!/[\s]/.test(b));
+      if(brk){parts.push(s.slice(last,i+1)); last=i+1;}
+    }
+    if(!parts.length) continue;
+    parts.push(s.slice(last));
+    const f=document.createDocumentFragment();
+    parts.forEach((p,k)=>{if(k) f.appendChild(document.createElement('wbr')); if(p.length>1&&p.length<=16){const sp=document.createElement('span'); sp.className='nw'; sp.textContent=p; f.appendChild(sp);} else f.appendChild(document.createTextNode(p));});
+    n.parentNode.replaceChild(f,n);
+  }
+}
+
+/* ===== レッスンの「ためしてみよう」 ===== */
+function bindLesson(){
+  const hg=$('#hgR');
+  if(hg){const up=()=>{const v=+hg.value; $('#hgO').textContent=v+'%'; const on=v>=80?80:v>=20?20:0; $$('#hgT .tier').forEach(t=>t.classList.toggle('on',+t.dataset.min===on));}; hg.oninput=up; up();}
+  const fp=$('#fdP');
+  if(fp){const up=id=>{const z=ZOO.find(x=>x.id===id); $('#fdB').innerHTML=`<p class="fav">${z.n}の好物：${z.fav}</p><p><b>食べる物：</b>${z.eat}</p><p class="mini">${z.side?'副産物：'+z.side+'　':''}屠殺：${z.get}</p>`; phrase($('#fdB'));};
+    fp.querySelectorAll('button').forEach(b=>b.onclick=()=>{fp.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b))); up(b.dataset.v);}); up('deer');}
+  const bc=$('#brC');
+  if(bc){const up=()=>{const miss=[...bc.querySelectorAll('input')].filter(i=>!i.checked).map(i=>i.parentElement.textContent.trim());
+    const v=$('#brV'); v.className='verdict '+(miss.length?'ng':'ok'); v.innerHTML=miss.length?`まだ繁殖できないよ。足りないもの：<br>・${miss.map(esc).join('<br>・')}`:'ぜんぶOK！繁殖できるよ。ただし、必ず生まれるわけじゃないので気長に待とう。'; phrase(v);};
+    bc.querySelectorAll('input').forEach(i=>i.onchange=up); up();}
+  const lv=$('#lvR');
+  if(lv){const up=()=>{const v=+lv.value; $('#lvO').textContent='Lv'+v; let n=0; $$('#lvM div').forEach(d=>{const on=v>=+d.dataset.l; d.classList.toggle('on',on); if(on) n++;});
+    const nx=[20,30,40,50,60].find(l=>l>v); const rn=['Ⅰ','Ⅱ','Ⅲ','Ⅳ','Ⅴ'][[20,30,40,50,60].indexOf(nx)];
+    $('#lvF').textContent=`開いている特性：${n}つ。`+(nx?`次はセル強化飼料${rn}でLv${nx}まで上げられるよ。`:'もう最大レベルだよ。'); phrase($('#lvF'));}; lv.oninput=up; up();}
+}
+
+/* ===== 動物図鑑 ===== */
+const ZCATS=[['all','すべて'],['ride','乗れる'],['guard','領地を守る'],['side','副産物あり'],['easy','すぐ捕まえられる']];
+let zcat='all';
+const zcard=z=>{const chips=[z.ride?['乗れる','c-ride']:null,z.guard?['領地を守る','c-guard']:null,z.cap>=100?['すぐ捕まえられる','c-calm']:null].filter(Boolean);
+ return `<article class="zc" id="z-${z.id}"><header><span class="ic" style="background:${z.ride?'#9fd6ff':z.guard?'#ff9fbd':'#9be8d4'}">${pix(z.ic)}</span><span><b>${z.n}</b>${z.sub?`<small>${z.sub}</small>`:''}</span></header>
+ ${chips.length?`<div class="chips">${chips.map(([l,c])=>`<span class="chip ${c}">${l}</span>`).join('')}</div>`:''}
+ <dl><dt>好物</dt><dd><span class="fav">${z.fav}</span></dd><dt>食べる物</dt><dd>${z.eat}</dd><dt>捕獲のHP</dt><dd>${capTx(z)}</dd><dt>屠殺</dt><dd>${z.get}</dd>${z.side?`<dt>副産物</dt><dd>${z.side}</dd>`:''}</dl>
+ ${z.note?`<p class="mini">${z.note}</p>`:''}
+ ${z.rs?`<details><summary>騎乗スキル（テイマー）</summary>${z.rs.map(s=>`<p>${s}</p>`).join('')}</details>`:''}<button type="button" class="fbtn" data-fb="z:${z.id}">まちがいを教えて</button></article>`;};
+function renderZoo(){
+  $('#zcats').innerHTML=ZCATS.map(([k,v])=>`<button data-zc="${k}" aria-pressed="${zcat===k}">${v}</button>`).join('');
+  const q=$('#zq').value.trim();
+  const list=ZOO.filter(z=>(zcat==='all'||(zcat==='easy'?z.cap>=100:z[zcat]))&&(!q||[z.n,z.sub,z.eat,z.fav,z.get,z.side,z.note].join(' ').includes(q)));
+  $('#znote').textContent=q?`「${q}」で探した結果：${list.length}種`:'カードの「好物」をあげると満腹度がよく増えるよ。捕獲のHPは、このHPより下げると麻酔が効く目安。';
+  $('#zlist').innerHTML=list.length?list.map(zcard).join(''):`<p class="empty">「${esc(q)}」に当てはまる動物は見つからなかったよ。</p>`;
+  phrase($('#zlist')); phrase($('#znote'));
+}
+$('#zcats').addEventListener('click',e=>{const b=e.target.closest('button[data-zc]'); if(!b) return; zcat=b.dataset.zc; renderZoo();});
+$('#zq').addEventListener('input',renderZoo);
+$('#zcount').textContent=ZOO.length+'種';
+
+/* ===== 特性図鑑 ===== */
+let dcat='grow';
+const dcard=t=>`<article class="word"><header><b>${esc(t.n)}</b>${t.rk?`<span class="rk">${t.rk}</span>`:''}</header><p>${esc(t.tx)}</p>${(t.who||t.where||t.evo||t.syn||t.tag)?`<p class="sub">${[t.who?`<span class="ib">${esc(t.who)}だけ</span>`:'',t.where?`<span class="ib">${esc(t.where)}</span>`:'',t.evo?'<span class="chip c-kw">進化</span>':'',t.syn?'<span class="chip c-mid">合成</span>':'',t.tag?`<span class="tbd">${esc(t.tag)}</span>`:''].filter(Boolean).join(' ')}</p>`:''}<button type="button" class="fbtn" data-fb="t:${TRAITS.indexOf(t)}">名前・効果がちがう？</button></article>`;
+function renderDex(){
+  const q=$('#dq').value.trim();
+  $('#dcats').innerHTML=DCATS.map(([k,v])=>`<button data-dc="${k}" aria-pressed="${!q&&dcat===k}">${v}（${TRAITS.filter(t=>t.c===k).length}）</button>`).join('');
+  let list;
+  if(q){list=TRAITS.filter(t=>[t.n,t.tx,t.who,t.where].join(' ').includes(q)); $('#dnote').textContent=`「${q}」で探した結果：${list.length}こ`;}
+  else{list=TRAITS.filter(t=>t.c===dcat); $('#dnote').textContent=DNOTE[dcat];}
+  $('#dlist').innerHTML=list.length?list.map(dcard).join(''):`<p class="empty">「${esc(q)}」に当てはまる特性は見つからなかったよ。</p>`;
+  phrase($('#dlist')); phrase($('#dnote'));
+}
+$('#dcats').addEventListener('click',e=>{const b=e.target.closest('button[data-dc]'); if(!b) return; dcat=b.dataset.dc; $('#dq').value=''; renderDex();});
+$('#dq').addEventListener('input',renderDex);
+$('#dcount').textContent=TRAITS.length+'こ';
+
+/* ===== クイズ（正解は1つ目。出すときに並びをまぜる） ===== */
+const qq=(q,a,b,e)=>({q,a:[a,b],c:0,e});
+const QS=[
+ qq('動物をつかまえるとき、麻酔の前にすることは？','HPを目印より下げる','えさをあげる','HPバーの目印より下まで減らしてから、麻酔吹き矢を当てるよ。'),
+ qq('ウサギは、HPが満タンでも麻酔で捕まえられる？','捕まえられる','30%未満にしないとダメ','ウサギ・カピバラ・フラミンゴ・キツネ・スノーフォックスは、満タンでも麻酔が効くよ。'),
+ qq('クマを捕まえられるのは、HPが何%未満のとき？','30%','60%','クマ・イノシシ・ワニ・ヒョウ・バッファロー・ホッキョクグマは30%未満が目安。'),
+ qq('今の飼育で、いちばん大事な数値は？','満腹度','従順度','V3.0.6で従順度と水分はなくなって、満腹度にまとめられたよ。'),
+ qq('繁殖できるのは、満腹度が何%以上のとき？','80%','50%','80〜100%のときだけ繁殖できる。それより低いと繁殖できないよ。'),
+ qq('満腹度が20%未満だと、子どもの成長は？','止まる','ふつうに育つ','20%未満だと、副産物も子どもの成長も止まっちゃう。'),
+ qq('オフラインの間に動物が食べるのは？','飼い葉桶の中のえさ','地面に置いたえさ','オフラインでは、飼い葉桶に入っているえさだけが食べられるよ。'),
+ qq('クマの好物は？','魚類','リンゴ、オレンジ','クマとホッキョクグマの好物は魚類。リンゴ・オレンジはイノシシの好物だよ。'),
+ qq('ヒツジの好物は？','セージ、スイカズラなどの草本植物','大型動物の大きな肉','ヒツジ・ウサギ・カピバラ・バッファローは、セージやスイカズラが好物。'),
+ qq('オオカミの好物は？','大型動物の大きな肉','小型動物の小さな肉','オオカミとヒョウは大型動物の大きな肉。小さな肉はキツネの好物だよ。'),
+ qq('フラミンゴの好物は？','レッドベリー、トマト','魚類','フラミンゴはレッドベリーとトマトが好物。'),
+ qq('繁殖に必要な施設は？','子供部屋','飼い葉桶だけ','子供部屋（子供部屋）に空きがないと繁殖できないよ。'),
+ qq('繁殖させるのに必要な組み合わせは？','同じ種類のオスとメス','同じ種類のメス2匹','同じ種類のオスとメス、どちらも大人であることが条件。'),
+ qq('子どもが大人に育つのは？','領地で飼っている間だけ','バッグにしまっている間も','バッグにしまっていると育たない。領地に出しておこう。'),
+ qq('動物がどこにいるか調べるには？','マップの資源追跡','動物図鑑を開く','マップの「情報検索」→「資源追跡」で、今のシナリオの動物の分布が見られるよ。'),
+ qq('動物とデビエーションは同じ仕組み？','別の仕組み','同じ仕組み','動物はデビとは別。ただし動物はデビ融合の材料になるよ。')
+];
+const MQ=[
+ qq('子供部屋は、1つの領地にいくつまで建てられる？','5つ','1つ','V3.0.7で5つまでになったよ。'),
+ qq('子供部屋を建てられない場所は？','禁断の島の水上領地','ふつうの領地','キャンピングカーと禁断の島の水上領地には建てられないよ。'),
+ qq('子供部屋の「方向性繁殖」でできることは？','繁殖させる親を選ぶ','子どもの性別を決める','子供部屋から、繁殖させる親を手動で選べる機能だよ。'),
+ qq('特性が開くのは、動物のレベルがいくつのとき？','20・30・40・50','5・10・15・20','Lv20・30・40・50になるたびに順番に開くよ。'),
+ qq('セル強化飼料Ⅲを食べると、何レベルまで上がる？','40','30','Ⅰが20、Ⅱが30、Ⅲが40、Ⅳが50、Ⅴが60。'),
+ qq('セル強化飼料は、オフラインの間に減る？','減らない','減る','セル強化飼料はオフライン中は消費されないよ。'),
+ qq('孵化器に鳥の卵を入れると？','フラミンゴの子がかえる','ワニの子がかえる','鳥の卵はフラミンゴ、ワニの卵は小さなワニ、カメの卵はワニガメ（たまにウミガメ）。'),
+ qq('デコイボックスは置いてから何分で消える？','60分','24時間','1人1つまでで、60分で消えるよ。'),
+ qq('特性「従順」の今の効果は？','幼獣の成長が速くなる','捕まえやすくなる','従順度がなくなったので、幼獣の成長速度アップに変わったよ。'),
+ qq('ミルクをたくさん取りたい。おすすめの特性は？','高産','多肉','高産は副産物が増える。多肉は屠殺の肉が増える特性だよ。'),
+ qq('屠殺で皮を増やしたい。おすすめの特性は？','厚皮','節食','厚皮は屠殺で取れる皮が増える。節食は満腹度が減りにくくなる特性。'),
+ qq('「極地の血」が付くのは？','白銀の荒野の温度制御塔の下で生まれた子','禁断の島で捕まえた動物','条件を満たした温度制御塔の下で生まれると付くよ。'),
+ qq('「ドリームゲノム」が付くことがあるのは？','永い夢の夢の領域で捕まえる','孵化器でかえす','永い夢の夢の領域の中で捕まえると付くことがあるよ。'),
+ qq('狐主任の「子孫繁栄」で双子が生まれるとき、使うのは？','スーパーレア肉','セル強化飼料','双子になるたびにスーパーレア肉を1つ使う。足りないと発動しないよ。'),
+ qq('狐主任の「飼育エキスパート」は、オフラインの間も効く？','効かない','効く','オフラインの間は効かない。何体か置くと重なる（最大100%）。'),
+ qq('ウールが取れるのは？','ヒツジ','ウサギ','ヒツジはウール、メスはヒツジのミルクも出すよ。'),
+ qq('牛乳が取れるのは？','バッファロー','クマ','バッファローは牛乳を出すよ。'),
+ qq('卵を産むのは？','ワニやワニガメ','オオカミ','ワニ・ワニガメ・ウミガメは卵、フラミンゴは鳥の卵を出すよ。')
+];
+const AQ=[
+ qq('テイマーが同時に呼べる動物は？','3匹','1匹','テイマーは3匹、ほかの職業は1匹まで。'),
+ qq('動物を呼び出せる条件は？','大人で満腹度20%より多い','満腹度100%','大人で、満腹度が20%より多い動物だけ呼べるよ。'),
+ qq('獣笛で指示できない動物は？','自分より10レベル以上高い','自分よりレベルが低い','自分より10レベル以上高い動物には指示できないよ。'),
+ qq('今乗れる動物は？','シカ・イノシシ・クマ・バッファロー・イリエワニ','ウサギ・キツネ・フラミンゴ','騎乗できるのは5種類。'),
+ qq('サドルを作ったり付けかえたりできるのは？','テイマーだけ','誰でも','テイマーだけ。ほかの職業は、付いているサドルを使うだけならできる。'),
+ qq('ほかの職業が、サドル付きの動物に乗ったら？','乗れるけど騎乗スキルは使えない','騎乗スキルも使える','騎乗スキルを使えるのはテイマーだけだよ。'),
+ qq('バッファローの騎乗スキル「採食本能」の効果は？','近くの作物を食べて満腹度回復','騎乗者の銃器DMGアップ','近く（30m）の作物を食べて、自分の満腹度を回復するよ。'),
+ qq('クマの「バトルマインド・ブースト」の効果は？','騎乗者の銃器・状態異常DMG＋20%','移動速度アップ','乗っている人の銃器DMGと状態異常DMGが20%上がるよ。'),
+ qq('変異誘発遺伝子を動物に使うと？','特性が永久に変わる','レベルが上がる','テイマーが作る遺伝子で、特性を永久に変えられるよ。'),
+ qq('遺伝子の特性「雷光の眷属」の属性は？','ショック','フロスト','雷光はショック。フロストは「フロストの眷属」だよ。'),
+ qq('「闘争の血脈」の効果は？','エリートを倒すと繁殖回数が増える','屠殺の肉が増える','同じかそれ以上のレベルのエリートを倒すと繁殖回数＋1（8回まで）。'),
+ qq('動物をデビ融合の材料にすると、1匹で何点？','0.5点','1点','動物は1匹で0.5点。2匹で1点＝100%になるよ。'),
+ qq('材料のクマをデビ融合に入れると付く特性は？','パワープレイ','ムーンレイド','クマはパワープレイ。ムーンレイドはオオカミだよ。'),
+ qq('イリエワニが追加されたのは？','禁断の島','白銀の荒野','禁断の島で捕獲と飼育が追加されたよ。'),
+ qq('テイマーが野生の動物に素手で乗ると？','動物が振り落とそうとする','安定して乗れる','素手だとスタミナを使うし、動物が暴れる。スキルも使えないよ。')
+];
+const QB={b:QS,m:MQ,a:AQ};
+let qz=null;
+const QN=10;
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+function newQuiz(lv){lv=lv||(qz&&qz.lv)||st.qlv||'b'; if(!QB[lv]) lv='b'; st.qlv=lv; save(); const Q=QB[lv]; qz={lv,order:shuffle(Q.map((_,i)=>i)).slice(0,QN),i:0,res:[],answered:false,flip:Q.map(()=>Math.random()<.5)}; renderQuiz();}
+const qTabs=()=>`<div class="lvtabs">${Object.entries(LV).map(([k,v])=>`<button data-qlv="${k}" aria-pressed="${qz.lv===k}"><b>${v.n}</b><small>${QN}問${st.qb[k]!=null?'・ベスト '+st.qb[k]:''}</small></button>`).join('')}</div>`;
+function renderQuiz(){
+  if(!qz) newQuiz();
+  const el=$('#quiz');
+  const dots=`<div class="dots">${qz.order.map((_,k)=>`<i class="${k<qz.res.length?(qz.res[k]?'ok':'ng'):(k===qz.i?'now':'')}"></i>`).join('')}</div>`;
+  if(qz.i>=qz.order.length){
+    const sc=qz.res.filter(Boolean).length, tot=qz.order.length;
+    if(st.qb[qz.lv]==null||sc>st.qb[qz.lv]){st.qb[qz.lv]=sc;save();}
+    const msg=sc===tot?'満点！もう動物マスターだね。':sc>=8?'すごい！ほとんどわかってる。':sc>=5?'いい感じ！まちがえたところをレッスンで見直そう。':'まずはレッスンを読んでから、もう一回やってみよう。';
+    el.innerHTML=qTabs()+`<div class="qhead"><span class="eyebrow">RESULT</span>${dots}</div><div class="qend"><div class="screen"><p class="lab2">SCORE</p><div class="score">${sc}<small> / ${tot}</small></div></div><p style="font-family:var(--f-pop);font-size:19px">${msg}</p><p style="font-size:14px;color:var(--muted)">${LV[qz.lv].n}のベスト：${st.qb[qz.lv]} / ${tot}</p><div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn pink" id="qAgain">もう一回</button><a class="btn sub" href="#lesson">レッスンを見る</a><a class="btn sub" href="#zoo">動物図鑑を見る</a></div></div>`;
+    phrase(el); $('#qAgain').onclick=()=>newQuiz(qz.lv); return;
+  }
+  const qi=qz.order[qz.i], Q=QB[qz.lv][qi], fl=qz.flip[qi];
+  const idx=fl?[1,0]:[0,1];
+  el.innerHTML=qTabs()+`<div class="qhead"><span class="eyebrow">${LV[qz.lv].n} · Q${qz.i+1} / ${qz.order.length}</span>${dots}</div>
+   <p class="qtext">${Q.q}</p><p class="qsit">2つのうち、合うほうを選んでね。</p>
+   <div class="qopts">${idx.map(k=>`<button data-k="${k}">${Q.a[k]}</button>`).join('')}</div><div id="qx"></div>`; phrase(el);
+  el.querySelectorAll('.qopts button').forEach(b=>b.onclick=()=>{
+    if(qz.answered) return; qz.answered=true;
+    const k=+b.dataset.k, ok=k===Q.c; qz.res.push(ok);
+    el.querySelectorAll('.qopts button').forEach(x=>{x.disabled=true; if(+x.dataset.k===Q.c) x.classList.add('right'); else if(x===b) x.classList.add('wrong');});
+    $('#qx').innerHTML=`<div class="qexp"><p class="big ${ok?'ok':'ng'}">${ok?'せいかい！':'ざんねん…'}</p><p>${Q.e}</p></div><div class="qnext"><button class="btn pink" id="qNext">${qz.i+1<qz.order.length?'次の問題 →':'結果を見る →'}</button></div>`;
+    phrase($('#qx')); if(ok&&window.sparkle) sparkle(b); $('#qNext').onclick=()=>{qz.i++;qz.answered=false;renderQuiz();};
+    $('#qNext').focus({preventScroll:true});
+  });
+}
+
+/* ===== まちがいの報告（みんなの装備の意見ボックスに届く） ===== */
+const FBCFG={url:'https://uybgscjkahdcmvkmpdbb.supabase.co',key:'sb_publishable_IVZ4IdQZn4KIt_qahKepRQ_tN2bNJBv'};
+let fbItem=null, fbLast=null;
+function fbDev(){let d=''; try{d=localStorage.getItem('animal_dev')||'';}catch(e){} if(!/^[0-9a-f]{32}$/.test(d)){const a=new Uint8Array(16); crypto.getRandomValues(a); d=[...a].map(x=>x.toString(16).padStart(2,'0')).join(''); try{localStorage.setItem('animal_dev',d);}catch(e){}} return d;}
+function fbInfo(k){const [t,v]=[k[0],k.slice(2)];
+  if(t==='z'){const z=ZOO.find(x=>x.id===v); return z&&{kind:'動物図鑑',n:z.n,tx:`好物：${z.fav}／食べる物：${z.eat}`};}
+  if(t==='t'){const x=TRAITS[+v]; return x&&{kind:'特性図鑑',n:x.n,tx:x.tx};}
+  if(t==='l'){const L=LV[v[0]], l=L&&L.les[+v.slice(1)-1]; return l&&{kind:'レッスン',n:`${L.n} ${v.slice(1)}「${l.t}」`,tx:''};}
+  return null;}
+function openFbs(k,btn){fbItem=fbInfo(k); if(!fbItem) return; fbLast=btn; $('#fbNow').innerHTML=`いまの表示：<b>${esc(fbItem.n)}</b>${fbItem.tx?`<br><small>${esc(fbItem.tx)}</small>`:''}`; $('#fbName').value=''; $('#fbMemo').value=''; $('#fbMsg').textContent=''; $('#fbMsg').className='fb-msg'; $('#fbSend').disabled=false; $('#fbs').hidden=false; $('#fbName').focus();}
+function closeFbs(){if($('#fbs').hidden) return; $('#fbs').hidden=true; if(fbLast) fbLast.focus({preventScroll:true});}
+async function sendFbs(){
+  const nm=$('#fbName').value.trim(), memo=$('#fbMemo').value.trim(), m=$('#fbMsg');
+  if(!nm&&!memo){m.className='fb-msg ng'; m.textContent='正しい内容かメモのどちらかを書いてね'; return;}
+  const body=(`【動物講座・${fbItem.kind}】${fbItem.n}\n正しい内容：${nm||'-'}\nメモ：${memo||'-'}`).slice(0,300);
+  $('#fbSend').disabled=true; m.className='fb-msg'; m.textContent='送ってるよ…';
+  try{
+    const r=await fetch(FBCFG.url+'/rest/v1/rpc/post_feedback',{method:'POST',headers:{apikey:FBCFG.key,Authorization:'Bearer '+FBCFG.key,'Content-Type':'application/json'},body:JSON.stringify({p_dev:fbDev(),p_cat:'other',p_text:body,p_lang:'ja'})});
+    if(!r.ok){const t=await r.text(); throw new Error(/too_many/.test(t)?'送りすぎみたい。少し時間をあけてね':/site_full/.test(t)?'今日はたくさん届いたので、また明日送ってね':'送れなかった…（'+r.status+'）');}
+    m.className='fb-msg ok'; m.textContent='送ったよ、ありがとう！';
+  }catch(e){$('#fbSend').disabled=false; m.className='fb-msg ng'; m.textContent=e.message&&!/fetch/i.test(e.message)?e.message:'送れなかった…。ネットにつながってるか確かめてね';}
+}
+$('#fbX').onclick=closeFbs; $('#fbSend').onclick=sendFbs;
+$('#fbs').addEventListener('click',e=>{if(e.target.id==='fbs') closeFbs();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#fbs').hidden) closeFbs();});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-fb]'); if(b) openFbs(b.dataset.fb,b);});
+
+/* ===== 用語集 ===== */
+const WCC={base:'c-psi',keep:'c-atk',breed:'c-def',trait:'c-kw',tamer:'c-gold',item:'c-mid'};
+let wcat='all';
+function renderWords(){
+  $('#wcats').innerHTML=[['all','すべて'],...Object.entries(CATN)].map(([k,v])=>`<button data-c="${k}" aria-pressed="${wcat===k}">${v}</button>`).join('');
+  $$('#wcats button').forEach(b=>b.onclick=()=>{wcat=b.dataset.c;renderWords();});
+  const q=$('#wq').value.trim();
+  const list=WORDS.filter(w=>(wcat==='all'||w[1]===wcat)&&(!q||w[0].includes(q)||w[2].includes(q)));
+  $('#wlist').innerHTML=list.length?list.map(w=>`<article class="word" id="w-${w[0]}"><header><b>${w[0]}</b><span class="chip ${WCC[w[1]]}">${CATN[w[1]]}</span></header><p>${w[2]}</p></article>`).join(''):`<p class="empty">「${esc(q)}」に当てはまる言葉はまだないよ。</p>`; phrase($('#wlist'));
+}
+$('#wq').addEventListener('input',renderWords);
+
+/* 用語ポップアップ */
+let lastFocus=null;
+function openTerm(t){
+  const w=WMAP[t]; if(!w) return; lastFocus=document.activeElement;
+  $('#sheetT').textContent=w[0]; $('#sheetD').textContent=w[2]; $('#sheetMore').dataset.w=w[0];
+  phrase($('#sheetD')); $('#sheet').hidden=false; $('#sheetX').focus();
+}
+const closeTerm=()=>{$('#sheet').hidden=true; if(lastFocus) lastFocus.focus({preventScroll:true});};
+$('#sheetX').onclick=closeTerm;
+$('#sheet').addEventListener('click',e=>{if(e.target.id==='sheet') closeTerm();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#sheet').hidden) closeTerm();});
+$('#sheetMore').addEventListener('click',e=>{
+  e.preventDefault(); const t=e.currentTarget.dataset.w; $('#sheet').hidden=true;
+  wcat='all'; $('#wq').value=''; location.hash='words'; renderWords();
+  setTimeout(()=>{const c=document.getElementById('w-'+t); if(c){c.scrollIntoView({behavior:RMq?'auto':'smooth',block:'center'}); c.classList.add('flash'); setTimeout(()=>c.classList.remove('flash'),1300);}},60);
+});
+
+/* ===== 進み具合・ページ切り替え ===== */
+function renderProg(){
+  const d=st.dn, all=LES.length+MID.length+ADV.length, done=d.b.length+d.m.length+d.a.length;
+  $('#progTxt').textContent=`初級 ${d.b.length}/${LES.length}・中級 ${d.m.length}/${MID.length}・上級 ${d.a.length}/${ADV.length}`+(st.qb.b!=null||st.qb.m!=null||st.qb.a!=null?`　クイズのベスト ${['b','m','a'].map(k=>LV[k].n+' '+(st.qb[k]??'-')).join('・')}`:'');
+  $('#progBar').style.width=(done/all*100)+'%';
+  $('#startBtn').textContent=done===0?'初級からはじめる':'つづきから';
+}
+const VIEWS=['home','lesson','zoo','dex','quiz','words'];
+function route(){
+  let v=location.hash.slice(1); if(!VIEWS.includes(v)) v='home';
+  $('#fbs').hidden=true;
+  VIEWS.forEach(k=>{$('#v-'+k).hidden=k!==v;});
+  $$('.tabs a[data-v]').forEach(a=>{if(a.dataset.v===v) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');});
+  if(v==='lesson') renderLesson(false);
+  if(v==='zoo') renderZoo();
+  if(v==='dex') renderDex();
+  if(v==='quiz') renderQuiz();
+  if(v==='words') renderWords();
+  if(v==='home') renderProg();
+  phrase($('#v-'+v)); window.scrollTo(0,0);
+}
+$('#startBtn').addEventListener('click',()=>{for(const k of ['b','m','a']){const L=LV[k].les.length, d=st.dn[k]; if(d.length<L){st.lv=k; for(let i=1;i<=L;i++){if(!d.includes(i)){st.sp[k]=i;break;}} break;}} save();});
+addEventListener('hashchange',route);
+renderProg(); route();
+})();
+</script>
+
+</body>
+</html>
