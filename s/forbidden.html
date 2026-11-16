@@ -331,6 +331,175 @@ ol.rsteps b{font-size:16px}
 @media (prefers-reduced-motion:reduce){.sc-open,.sc-hull,.sc-on rect{animation:none;stroke-dashoffset:0}}
 #log-sec{display:none!important}
 </style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Mochiy+Pop+One&family=BIZ+UDPGothic:wght@400;700&display=swap">
+<style>
+:root{--pa:#2f6fb0}
+/* ===== レトロ版の見た目（ダメージラボ・MOD講座・デビ融合講座・わかる人教えて！と同じ系統）=====
+   build-hub.js が各シナリオのガイド（s/*.html）の最初のstyleの直後に入れる。元のページは触らない。
+   クリーム色の台紙＋水玉、濃い紫の実線の枠、ずらした影、ポップな見出し。ダークモードは使わない（常に明るい色）。
+   --pa はシナリオごとの色（build-hub.js が入れる） */
+html:root:not(#_){
+  color-scheme:light;
+  --r-bg:#fff4dc; --r-surface:#fffdf6; --r-field:#fff1e4; --r-ink:#3b2340; --r-ink-2:#4a3352; --r-muted:#6c5570; --r-line:#3b2340;
+  --r-pink:#ff9fbd; --r-mint:#9be8d4; --r-lemon:#ffe27a; --r-lilac:#c9b3ff; --r-sky:#9fd6ff; --r-band:#ffd1df;
+  --r-dot:rgba(59,35,64,.13);
+  --bg:var(--r-bg); --surface:var(--r-surface); --surface-2:var(--r-field); --ink:var(--r-ink); --ink-2:var(--r-ink-2); --muted:var(--r-muted);
+  --line:#d9c7b8; --glass:var(--r-bg); --mist:var(--r-bg);
+  --accent:#c98a12; --accent-ink:#7a4e05;
+  --violet:var(--pa); --violet-soft:color-mix(in srgb,var(--pa) 14%,#fff);
+  --sea:var(--pa); --sea-soft:color-mix(in srgb,var(--pa) 14%,#fff); --aqua:var(--pa);
+  --f-display:"Mochiy Pop One","Hiragino Maru Gothic ProN","Yu Gothic UI",sans-serif;
+  --f-jp:"BIZ UDPGothic","Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif;
+  --f-mono:"DotGothic16","BIZ UDPGothic",monospace;
+  --f-pop:"Mochiy Pop One","Hiragino Maru Gothic ProN","Yu Gothic UI",sans-serif;
+}
+body{background-color:var(--r-bg);color:var(--r-ink);font-family:var(--f-jp);-webkit-font-smoothing:auto;
+  background-image:radial-gradient(circle at 1px 1px,var(--r-dot) 1.4px,transparent 1.6px);background-size:22px 22px}
+body::before{background:var(--r-bg)}
+
+/* ---- 上の見出し（暗い海・夜空をやめて、クリームの台紙に） ---- */
+.hero{background:transparent!important;color:var(--r-ink)!important;border-bottom:3px solid var(--r-line);box-shadow:0 4px 0 var(--r-band)}
+.hero canvas,.hero .waves,.hero .mist,.hero .moon,.hero .halo,.hero .aurora,.hero .orbs,.hero .glow{display:none!important}
+.hero .inner{padding-block:30px 30px!important;gap:12px!important}
+.kicker{font-family:var(--f-mono)!important;color:var(--r-muted)!important;letter-spacing:.14em!important;font-size:13px!important;text-transform:none}
+.kicker .dot{background:var(--pa)!important;box-shadow:none!important;animation:none!important;width:10px!important;height:10px!important;border:2px solid var(--r-line)}
+.hero h1{line-height:1.25!important}
+.hero h1 .en{display:inline-block!important;font-family:var(--f-mono)!important;font-style:normal!important;font-weight:400!important;font-size:15px!important;letter-spacing:.08em;
+  color:var(--r-ink)!important;background:var(--r-lemon)!important;-webkit-background-clip:border-box!important;background-clip:border-box!important;
+  padding:2px 12px!important;border:2.5px solid var(--r-line);border-radius:999px;box-shadow:2px 2px 0 var(--r-line);line-height:1.5}
+.hero h1 .jp{font-family:var(--f-pop)!important;font-weight:400!important;font-size:clamp(28px,5vw,44px)!important;letter-spacing:.04em!important;color:var(--r-ink)!important;margin-top:12px!important}
+.hero p.lead{color:var(--r-ink-2)!important;font-size:16px!important;max-width:38em}
+.hero-meta{color:var(--r-ink-2)!important;gap:10px!important;font-size:14px!important;font-weight:700}
+.hero-meta > div{background:var(--r-surface);border:2.5px solid var(--r-line);border-radius:14px;padding:6px 14px;box-shadow:3px 3px 0 var(--r-line)}
+.hero-meta > div[style]{background:none;border:0;box-shadow:none;padding:6px 0;font-weight:400}
+.hero-meta b{font-family:var(--f-mono)!important;color:var(--pa)!important;font-size:26px!important;font-weight:400!important}
+.hero-meta a{color:var(--pa)!important}
+
+/* ---- タブと検索 ---- */
+.bar{background:var(--r-bg)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;border-bottom:3px solid var(--r-line)!important}
+.tabs{gap:6px!important;padding:3px 3px 6px!important}
+.tabs .pill{display:none!important}
+.tabs button{color:var(--r-ink)!important;background:var(--r-surface)!important;border:2px solid var(--r-line)!important;border-radius:999px!important;padding:5px 14px!important;font-size:15px!important;box-shadow:2px 2px 0 var(--r-line);transition:transform .12s,background .2s!important}
+.tabs button:active{transform:translate(2px,2px);box-shadow:none}
+.tabs button[aria-selected="true"]{background:var(--r-lemon)!important;color:var(--r-ink)!important}
+.tabs button i{border:1.5px solid var(--r-line)}
+.tabs button[aria-selected="true"] i{background:var(--c)!important}
+.tabs .n{font-family:var(--f-mono)!important;opacity:.8!important}
+.search{background:var(--r-surface)!important;border:2.5px solid var(--r-line)!important;box-shadow:3px 3px 0 var(--r-line)}
+.search:focus-within{box-shadow:3px 3px 0 var(--r-line),0 0 0 3px var(--r-lemon)!important}
+.search input{border:0!important;background:transparent!important;box-shadow:none!important}
+.search:has(input:first-child),label.search{border-radius:999px}
+.search button{background:var(--r-pink)!important;color:var(--r-ink)!important;border:2px solid var(--r-line)!important;font-weight:700}
+
+/* ---- 見出し ---- */
+.sec-head h2{font-family:var(--f-pop)!important;font-weight:400!important;letter-spacing:.02em!important}
+.sec-head h2 small{font-family:var(--f-mono)!important;font-style:normal!important;color:var(--r-muted)!important;font-size:.5em!important}
+.sec-head .idx{font-family:var(--f-mono)!important;color:var(--r-muted)!important;letter-spacing:.14em!important}
+.sec-head .idx::before{width:14px!important;height:14px!important;-webkit-mask:none!important;mask:none!important;background:var(--pa)!important;border:2px solid var(--r-line);border-radius:4px;transform:rotate(45deg)}
+.sec-head p{color:var(--r-ink-2)!important}
+.ghead{font-family:var(--f-pop)!important;font-weight:400!important;color:var(--r-ink)!important}
+.ghead i{border:2px solid var(--r-line);width:14px!important;height:14px!important}
+.ghead small,.ghead span{font-family:var(--f-mono)!important}
+.ghead::after{height:2.5px!important;background:var(--r-line)!important;border-radius:2px}
+
+/* ---- カード ---- */
+.card{background:var(--r-surface)!important;border:2.5px solid var(--r-line)!important;border-radius:18px!important;box-shadow:5px 5px 0 var(--r-line)!important}
+.card::after{display:none!important}
+@media (hover:hover){.card:hover{transform:translate(-2px,-2px)!important;box-shadow:7px 7px 0 var(--r-line)!important;border-color:var(--r-line)!important}}
+.card:active{transform:translate(3px,3px)!important;box-shadow:2px 2px 0 var(--r-line)!important}
+.card h3{font-weight:700!important}
+.card .lbl{color:var(--r-ink-2)!important}
+/* 色分けの小カード: 上にカテゴリー色の帯 */
+.card.tile{padding:22px 18px 16px!important}
+.card.tile::before,.grid .card::before{left:0!important;right:0!important;top:0!important;bottom:auto!important;width:auto!important;height:10px!important;background:var(--c)!important;border-bottom:2.5px solid var(--r-line)}
+.tile .ctag,.card .lbl{font-size:12.5px!important;font-weight:700!important;padding:1px 10px!important;border-radius:999px!important;border:2px solid currentColor!important;color:color-mix(in srgb,var(--c) 70%,var(--r-ink))!important;background:color-mix(in srgb,var(--c) 13%,#fff)!important;align-self:flex-start;letter-spacing:0!important}
+.tile .go{color:var(--r-ink)!important}
+.chip{border:2px solid var(--r-line)!important;background:var(--r-surface)!important;color:var(--r-ink-2)!important;font-weight:700}
+.chip.off{background:var(--r-lilac)!important}.chip.db{background:var(--r-mint)!important}.chip.web{background:var(--r-lemon)!important}.chip.en{background:var(--r-band)!important}
+.tag{border:2px solid var(--r-line)!important;background:var(--r-surface)!important;color:var(--r-ink)!important;font-weight:700!important}
+.tag.s2{background:var(--r-lemon)!important}
+.tag.ok{background:var(--r-mint)!important}
+.tag.pre{background:var(--r-field)!important}
+.pending{border:2px solid var(--r-line)!important;background:var(--r-lemon)!important;color:var(--r-ink)!important;border-radius:8px!important}
+
+/* 絞り込みボタン */
+.filters button,.legend button,.cats button{border:2px solid var(--r-line)!important;background:var(--r-surface)!important;color:var(--r-ink)!important;font-weight:700;border-radius:999px!important}
+.filters button[aria-pressed="true"],.cats button[aria-pressed="true"]{background:var(--r-lemon)!important;color:var(--r-ink)!important;border-color:var(--r-line)!important}
+.filters button[style]::before,.filters button[style][aria-pressed="true"]::before{background:var(--c)!important;border:1.5px solid var(--r-line);width:10px!important;height:10px!important}
+
+/* 概要 */
+.stats{background:transparent!important;border:0!important;gap:12px!important;border-radius:0!important;overflow:visible!important}
+.stat{background:var(--r-surface)!important;border:2.5px solid var(--r-line);border-radius:18px;box-shadow:4px 4px 0 var(--r-line)}
+.stat:nth-child(4n+1){background:#fff3f7!important}.stat:nth-child(4n+2){background:#fffbe6!important}.stat:nth-child(4n+3){background:#effcf7!important}.stat:nth-child(4n+4){background:#f3efff!important}
+.stat b{font-family:var(--f-mono)!important;color:var(--r-ink)!important;font-size:44px!important}
+.stat b small{font-family:var(--f-pop)!important;font-weight:400!important}
+.timeline li{border-top:3px solid var(--r-line)!important}
+.timeline li::before{width:16px!important;height:16px!important;top:-9.5px!important;background:var(--r-surface)!important;border:2.5px solid var(--r-line)!important}
+.timeline li:last-child::before{background:var(--r-lemon)!important}
+.timeline b{font-family:var(--f-mono)!important;color:var(--pa)!important;font-weight:400!important;font-size:15px!important}
+.facts div{border-bottom:2px solid var(--line)!important}
+.flow li{background:var(--r-surface)!important;border:2.5px solid var(--r-line)!important;box-shadow:4px 4px 0 var(--r-line)}
+.flow li:nth-child(4n+1){background:#fff3f7!important}.flow li:nth-child(4n+2){background:#fffbe6!important}.flow li:nth-child(4n+3){background:#effcf7!important}.flow li:nth-child(4n+4){background:#f3efff!important}
+.flow b{font-family:var(--f-mono)!important;font-style:normal!important;color:var(--pa)!important}
+
+/* 施設などの中身 */
+.card.wide .col+.col{border-left:2px solid var(--line)!important}
+.fac-block{border-top:2px solid var(--line)!important}
+.limits span{border:2px solid var(--r-line)!important;background:var(--r-field)!important}
+.num,.feed b,.limits b,.prod-line b{color:var(--pa)!important}
+.more{border-top:2px solid var(--line)!important}
+.more summary{color:var(--r-ink)!important}
+.arrow{color:var(--pa)!important}
+.items li{border:2px solid var(--r-line)!important;background:var(--r-surface)!important}
+.sheet-content ul.items li{border:0!important;border-bottom:2px solid var(--line)!important;background:none!important}
+.items li b{font-family:var(--f-mono)!important;font-weight:400!important;color:var(--pa)!important}
+.chips .nb{border:2px solid var(--r-line)!important;background:var(--r-surface)!important}
+.chips .xref{border:2px solid var(--r-line)!important;background:var(--r-surface)!important;box-shadow:2px 2px 0 var(--r-line);color:var(--r-ink)!important;font-weight:700}
+.xref{color:color-mix(in srgb,var(--pa) 80%,var(--r-ink))!important}
+.kv,.kv dt,.kv dd{border-color:var(--line)!important}
+.note{border-left:4px solid var(--pa)!important;color:var(--r-ink-2)!important;background:var(--r-field);border-radius:0 10px 10px 0;padding:6px 12px!important}
+table.st th,table.st td{border-bottom:2px solid var(--line)!important}
+
+/* ---- 全画面の詳細 ---- */
+.sheet{background-color:var(--r-bg)!important;background-image:radial-gradient(circle at 1px 1px,var(--r-dot) 1.4px,transparent 1.6px);background-size:22px 22px}
+.sheet-head{background:var(--r-bg)!important;color:var(--r-ink)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;border-bottom:3px solid var(--r-line)!important;box-shadow:0 4px 0 color-mix(in srgb,var(--c) 40%,#fff)}
+.sheet-cat{color:var(--r-ink)!important;opacity:1!important;font-weight:700!important;display:flex;align-items:center;gap:8px}
+.sheet-cat::before{content:""!important;width:14px!important;height:14px!important;border-radius:4px!important;background:var(--c)!important;border:2px solid var(--r-line);transform:rotate(45deg);flex:none;display:inline-block}
+.sheet-back,.sheet-x{color:var(--r-ink)!important;background:var(--r-surface)!important;border:2.5px solid var(--r-line)!important;box-shadow:2px 2px 0 var(--r-line);font-weight:700!important}
+.sheet-x{background:var(--r-pink)!important}
+.sheet-back:active,.sheet-x:active{transform:translate(2px,2px);box-shadow:none}
+.sheet-body h2{font-family:var(--f-pop)!important;font-weight:400!important}
+.sheet-body .sum{background:var(--r-surface)!important;border:2.5px solid var(--r-line)!important;box-shadow:4px 4px 0 color-mix(in srgb,var(--c) 55%,var(--r-line))}
+.sheet h4{font-family:var(--f-pop)!important;font-weight:400!important;color:var(--r-ink)!important;letter-spacing:.04em!important;font-size:16px!important}
+
+/* ---- 船の素材計算の入口（中の計算画面はそのまま） ---- */
+.sc-launch{background:var(--r-surface)!important;color:var(--r-ink)!important;border:2.5px solid var(--r-line)!important;border-radius:18px!important;box-shadow:5px 5px 0 var(--r-line)!important}
+.sc-launch::after{display:none!important}
+.sc-kicker{font-family:var(--f-mono)!important;color:var(--r-muted)!important}
+.sc-launch h3{font-family:var(--f-pop)!important;font-weight:400!important;color:var(--r-ink)!important}
+.sc-launch ul{color:var(--r-ink-2)!important}
+.sc-open{background:var(--r-pink)!important;color:var(--r-ink)!important;border:2.5px solid var(--r-line)!important;box-shadow:3px 3px 0 var(--r-line)!important}
+.sc-open:active{transform:translate(3px,3px);box-shadow:none!important}
+.sc-note{color:var(--r-muted)!important}
+.sc-art{background:#0b2238;border:2.5px solid var(--r-line);border-radius:14px;padding:8px}
+
+/* 海底遺跡の図 */
+.ruin-map{border:2.5px solid var(--r-line)!important;background:var(--r-surface)!important}
+.holo{border:2.5px solid var(--r-line);border-radius:14px}
+
+/* 更新履歴・フッター */
+.log span{font-family:var(--f-mono)!important}
+footer .inner,footer{border-top-color:var(--r-line)!important}
+footer .inner{border-top-width:3px!important}
+
+/* 文字がぼやけないように、ふわっと出る動きは終わったら残さない */
+.rise,.panel.enter .card,.panel.enter .stat,.panel.enter .timeline li,.enter .card{animation-fill-mode:backwards!important}
+
+/* テーマ切り替えは使わない */
+.theme,.theme-btn,#theme-btn{display:none!important}
+main{background:none!important}
+.chips .nb .xref{border:0!important;box-shadow:none!important;background:none!important;padding:0!important}
+</style>
 </head>
 <body>
 <header class="hero" lang="ja">
@@ -2124,7 +2293,8 @@ if (document.fonts) document.fonts.ready.then(drawHull);
   }
   const hide = document.createElement("style"); hide.textContent = "#theme-btn,#theme{display:none!important}"; document.head.appendChild(hide);
   const root = document.documentElement;
-  const setTheme = t => { if (t === "dark" || t === "light") root.dataset.theme = t; };
+  // レトロ版は常に明るい色（ダークモードは使わない）
+  const setTheme = () => { root.dataset.theme = "light"; }; setTheme();
   try { setTheme(new URLSearchParams(location.search).get("theme")); } catch (e) {}
   addEventListener("message", e => {
     if (e.source !== parent) return;
