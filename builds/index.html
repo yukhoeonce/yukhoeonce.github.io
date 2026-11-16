@@ -612,6 +612,7 @@ async function makeCard(dz){if(typeof dz==='number')cardDesign=dz;
   };
 }
 const FBC=[['improve','改善してほしい','Improvement'],['idea','あったらいいな','Idea'],['bug','不具合','Bug'],['other','その他','Other']];
+const FBL=[...FBC,['devi','デビ図鑑','Deviation']];
 let fbCat='idea', fbF='all';
 let fbRows=[];
 const FB={
@@ -643,8 +644,8 @@ async function loadFb(){
 }
 function renderFb(){
   const all=fbRows,L=all.filter(x=>fbF==='all'||x.cat===fbF);$('fbCnt').textContent=all.length+'件';
-  $('fbF').innerHTML=[['all','すべて'],...FBC.map(([k,j])=>[k,j])].map(([k,j])=>`<button type="button" class="chip" data-fbf="${k}" aria-pressed="${k===fbF}">${j} ${k==='all'?all.length:all.filter(x=>x.cat===k).length}</button>`).join('');
-  $('fbList').innerHTML=L.map(x=>`<div class="fi"><span class="tg">${(FBC.find(c=>c[0]===x.cat)||FBC[3])[1]}</span><small>${new Date(x.created_at).toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}　${x.lang==='en'?'英語':'日本語'}</small><div class="tx">${esc(x.body)}</div><div class="acts"><button type="button" class="btn small sub" data-fbdel="${x.id}">消す</button></div></div>`).join('')||'<p class="nodata">まだ意見はないよ</p>';
+  $('fbF').innerHTML=[['all','すべて'],...FBL.map(([k,j])=>[k,j])].map(([k,j])=>`<button type="button" class="chip" data-fbf="${k}" aria-pressed="${k===fbF}">${j} ${k==='all'?all.length:all.filter(x=>x.cat===k).length}</button>`).join('');
+  $('fbList').innerHTML=L.map(x=>`<div class="fi"><span class="tg">${(FBL.find(c=>c[0]===x.cat)||FBC[3])[1]}</span><small>${new Date(x.created_at).toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}　${x.lang==='en'?'英語':'日本語'}</small><div class="tx">${esc(x.body)}</div><div class="acts"><button type="button" class="btn small sub" data-fbdel="${x.id}">消す</button></div></div>`).join('')||'<p class="nodata">まだ意見はないよ</p>';
 }
 const AS0=D.ASLOT, MS0=D.MSLOT;  // [[id,名前]]
 let AS=AS0, MS=MS0;
