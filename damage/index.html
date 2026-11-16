@@ -24,7 +24,13 @@
 <meta property="og:image:alt" content="ダメージラボ：武器を選んで数字を入れるだけで1発・1マガジンのダメージがわかる">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://yukhoeonce.github.io/damage/ogp.png?v=2">
-<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.askl{font-weight:700;font-size:13px;color:inherit;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.askbox{margin-top:28px;margin-bottom:12px}
+.askbox a{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;padding:12px 16px;border:2.5px solid currentColor;border-radius:14px;text-decoration:none;color:inherit;background:rgba(255,255,255,.55)}
+.askbox b{font-size:16px}
+.askbox span{font-size:14px}
+</style>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1080,7 +1086,7 @@ body:not(.pro) .spec b{-webkit-text-stroke:.4px currentColor}
       <p class="point" id="pNote"></p>
       <details class="trait"><summary>ゲーム内の武器特性を読む</summary><p id="pTrait"></p></details>
       <div class="fine">
-        <p>ゲーム内のダミーで、実弾・クリ・弱点、スプレッドガン、バウンス、パワーサージ、フロストボルテックス、火傷（最大スタックまで）、不安定爆弾を測り、式と一致しました。表示は四捨五入です。不安定爆弾はダミーで式より約1割低く出たので×0.9で計算していて、1回ごとに±5%ほどばらつきます。<b>確認待ち</b>の攻撃（爆弾の特殊な派生・特殊弾・武器固有の範囲ダメージなど）はまだ確かめていない予想の式で、初心者モードでは表示しません。近接武器は未検証のため載せていません。</p>
+        <p>ゲーム内のダミーで、実弾・クリ・弱点、スプレッドガン、バウンス、パワーサージ、フロストボルテックス、火傷（最大スタックまで）、不安定爆弾を測り、式と一致しました。表示は四捨五入です。不安定爆弾はダミーで式より約1割低く出たので×0.9で計算していて、1回ごとに±5%ほどばらつきます。<b>確認待ち</b>の攻撃（爆弾の特殊な派生・特殊弾・武器固有の範囲ダメージなど）はまだ確かめていない予想の式で、初心者モードでは表示しません。近接武器は未検証のため載せていません。確認待ちの攻撃の数字を知っている人は、<a href="https://yukhoeonce.github.io/ask/" target="_blank" rel="noopener">わかる人教えて！</a>から教えてね。</p>
         <p>シナリオごとの攻略・素材は <a href="https://yukhoeonce.github.io/">OnceHumanシナリオガイド</a> にまとめています。</p>
         <p>非公式のファンツールです。© NetEase / Starry Studio</p>
       </div>
@@ -1116,6 +1122,7 @@ body:not(.pro) .spec b{-webkit-text-stroke:.4px currentColor}
   </aside>
 </div>
 
+<p class="wrap askbox"><a href="https://yukhoeonce.github.io/ask/" target="_blank" rel="noopener"><b>わかる人教えて！</b><span>ダメージの仕組みで、まだわからないことを募集中。知ってたら教えてね →</span></a></p>
 <footer class="wrap chlog" id="chlog"><details open><summary>更新履歴</summary><ol><li><time>11/15</time><ul><li>重要な防具を11個追加（カゲロウゴーグル・精密射撃マスク・ブラスト戦線トップス・マグネットトップス・長老クローク・フロスト戦術ベスト・ホットドッグショートパンツ・漂流者のグローブ・タクティカルブーツ・炎のエナメルブーツ・レザーブーツ）。漂流者のグローブと炎のエナメルブーツは条件つきで計算に入るよ。</li></ul></li><li><time>11/14</time><ul><li>TEC9（追加ルール）の属性弾を氷（フロスト）・雷（サージ）・炎（火傷）から選べるように。同じ属性のキーワードMOD（氷核エンハンスなど）が属性弾に乗り、MODおすすめもその属性のMODを選ぶように</li><li>重要な防具に「ベレー帽」「ベテランレザージャケット」「BBQグローブ」を追加（ベレー帽はスプレッドの当たる回数+1、ベテランレザージャケットは敵との距離×2%を爆弾ダメージに計算）</li><li>入力欄のドット数字を太く・大きくして見やすく</li></ul></li><li><time>11/13</time><ul><li>MODの考え方を学べる「MOD講座」へのリンクを追加（MODおすすめの下）</li><li>スマホで武器を選ぶ画面がいつも2列になるように</li><li>スマホでMODおすすめの理想の付け方が空白になる不具合を修正</li><li>スマホの装備画面を見やすく（上の結果を小さく、条件と内訳はボタンで開く、カードは名前だけ）</li><li>初めて開いたときだけ「開発中です」のお知らせを出すように</li><li>MODおすすめ：エレメント系の武器（フロスト・火傷・サージ・爆弾）ではエレメントの共鳴を最大で計算</li><li>MODおすすめ：異常増幅は「リロード直後に撃つ」をONにすると候補に入るように</li><li>MODおすすめ：フロスト金武器の定番を反映（アビスアイ＝クライオブラスト＋コールドウェーブ、パスファインダー・天外来客・静寂の帰途＝マスクはフロスト創造物）</li><li>キーワード専用のメイン効果（単独爆破など）は、その武器のキーワードのときだけ計算に入れるよう修正</li><li>防具セットの部位数を、セット一覧の上で変えられるように</li><li>MODおすすめ（武器を選ぶと理想のMODの付け方を自動で表示）を追加</li><li>精密バウンス（マスク）の効果を計算に追加</li><li>P90の範囲ダメージを実測で確認（弱点DMGが乗る）</li><li>危険物の投げに単独爆破が乗らないよう修正（実測）</li></ul></li><li><time>11/12</time><ul><li>レトロかわいいデザインに変更（プロモードは喫茶店風）</li><li>装備画面を「いまの装備／試す装備」の比較表に作り直し</li><li>防具セット（複数選択可）と重要な防具を追加</li><li>絶響のスプレッド回数を残響の数で計算、牢獄ヘルメットに対応</li><li>危険物・不安定爆弾・エコー追撃を実測で確認済みに</li><li>マガジン容量の入力を追加</li><li>タッチ端末で数字を押すとテンキーが出るように</li></ul></li><li><time>11/11</time><ul><li>武器MODの選択画面をキーワード別に分けた</li></ul></li><li><time>11/10</time><ul><li>武器MOD・防具MODを図鑑に合わせて全部追加</li><li>弾の種類（銅弾・銅芯弾・徹甲弾）の選択を追加</li><li>武器の画像を追加</li></ul></li><li><time>11/08</time><ul><li>装備画面（MODの付け替え比較）と、メイン効果・閃光の選択を追加</li><li>明るく見やすいレイアウトに変更</li></ul></li><li><time>11/07</time><ul><li>ダメージラボを公開（初心者／プロ切り替え）</li></ul></li></ol></details></footer>
 
 <nav class="tabbar" id="tabbar" aria-label="画面の切り替え"><button type="button" data-t="w"><b>1</b>武器</button><button type="button" data-t="s"><b>2</b>ステータス</button><button type="button" data-t="m"><b>3</b>MOD</button><button type="button" data-t="r"><b>=</b>結果</button></nav>
@@ -1862,7 +1869,7 @@ body:not(.pro) .spec b{-webkit-text-stroke:.4px currentColor}
     if(fresh){
       heroKey=key;
       const h=$('hero'); h.className='hero '+clsOf(a);
-      h.innerHTML=`<div class="hero-top">${ok?'<span class="chip ok">ゲームで確認済み</span>':'<span class="chip wait">確認待ち</span>'}<span class="chip base">${K.base==='atk'?'攻撃力':'超感覚強度'}で伸びる</span>${hits>1?`<span class="chip base">${hits}発</span>`:''}</div>
+      h.innerHTML=`<div class="hero-top">${ok?'<span class="chip ok">ゲームで確認済み</span>':'<span class="chip wait">確認待ち</span><a class="askl" href="https://yukhoeonce.github.io/ask/#q-special-hits" target="_blank" rel="noopener">数字を知ってたら教えて →</a>'}<span class="chip base">${K.base==='atk'?'攻撃力':'超感覚強度'}で伸びる</span>${hits>1?`<span class="chip base">${hits}発</span>`:''}</div>
         <div class="readout">
           <svg class="reticle" viewBox="0 0 200 200" aria-hidden="true"><g class="r1"><circle cx="100" cy="100" r="92" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2 6"/><path d="M100 2v14M100 184v14M2 100h14M184 100h14" stroke="currentColor" stroke-width="2"/></g><g class="r2"><circle cx="100" cy="100" r="70" fill="none" stroke="currentColor" stroke-opacity=".5" stroke-width="1" stroke-dasharray="40 14"/></g><circle cx="100" cy="100" r="46" fill="none" stroke="currentColor" stroke-opacity=".25"/></svg>
           <div class="num" id="numBox"><span class="v" id="bigV">0</span><span class="l" id="bigL"></span><span id="cmp"></span></div>
