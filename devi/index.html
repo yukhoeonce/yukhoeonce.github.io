@@ -1946,7 +1946,7 @@ function renderDex(){
     $('#dmore').innerHTML=''; phrase($('#dlist')); phrase($('#dnote')); return;
   }
   const shown=list.slice(0,dlimit);
-  $('#dlist').innerHTML=shown.length?shown.map(dexCard).join(''):`<p class="empty">「${esc(q)}」に当てはまる特性は見つからなかったよ。</p>`;
+  $('#dlist').innerHTML=shown.length?shown.map(t=>dexCard(t)).join(''):`<p class="empty">「${esc(q)}」に当てはまる特性は見つからなかったよ。</p>`;
   $('#dmore').innerHTML=list.length>dlimit?`<button class="btn sub" id="dMore">もっと見る（あと${list.length-dlimit}こ）</button>`:'';
   phrase($('#dlist')); phrase($('#dnote'));
 }
