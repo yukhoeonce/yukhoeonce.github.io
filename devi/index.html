@@ -670,18 +670,28 @@ html.ed-open{overflow:hidden}
   .dfig .pod-core.sm b{font-size:12px}
 }
 
-/* 色違いはデビごとにたたむ */
-#dlist .skg{grid-column:1/-1;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:3px 3px 0 var(--sh)}
-#dlist .skg>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:11px 14px;font-size:15.5px}
+/* 色違いはデビごとにたたむ（タイプ別・2列） */
+#dlist .sks{grid-column:1/-1;margin-top:6px}
+#dlist .skh{display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;margin:4px 0 10px;font-size:15px}
+#dlist .skh .chip{font-size:14px;padding:2px 12px}
+#dlist .skh small{font-size:12.5px;color:var(--muted);font-weight:700}
+#dlist .skgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;align-items:start}
+#dlist .skg{--k:var(--line);border:2.5px solid var(--line);border-left:8px solid var(--k);border-radius:14px;background:var(--surface);box-shadow:3px 3px 0 var(--sh);min-width:0}
+#dlist .sk-atk .skg{--k:var(--atk)} #dlist .sk-psi .skg{--k:var(--psi)} #dlist .sk-def .skg{--k:var(--def)}
+#dlist .skg[open]{grid-column:1/-1}
+#dlist .skg>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:10px 12px;font-size:15px}
+#dlist .skg>summary b{min-width:0;line-height:1.35}
 #dlist .skg>summary::-webkit-details-marker{display:none}
-#dlist .skg>summary::before{content:'▸';color:var(--muted);transition:transform .15s}
+#dlist .skg>summary::before{content:'▸';color:var(--k);transition:transform .15s}
 #dlist .skg[open]>summary::before{transform:rotate(90deg)}
-#dlist .skg .skn{margin-left:auto;font-size:13px;font-weight:700;color:var(--muted);background:var(--bg,#fff4dc);border-radius:99px;padding:1px 10px}
+#dlist .skg .skn{margin-left:auto;flex:none;font-size:12.5px;font-weight:700;color:var(--muted);background:var(--bg);border-radius:99px;padding:1px 9px}
 #dlist .skl{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;padding:0 12px 12px}
 #dlist .skl .word{box-shadow:none;border-width:2px}
 @media (max-width:520px){
-  #dlist .skg{border-width:2px;box-shadow:2px 2px 0 var(--sh)}
-  #dlist .skg>summary{padding:10px 12px;font-size:14.5px}
+  #dlist .skgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  #dlist .skg{border-width:2px;border-left-width:6px;box-shadow:2px 2px 0 var(--sh)}
+  #dlist .skg>summary{padding:9px 8px 9px 9px;font-size:13.5px;gap:5px}
+  #dlist .skg .skn{font-size:11px;padding:0 6px}
   #dlist .skl{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:0 8px 8px}
 }
 </style>
@@ -1928,8 +1938,10 @@ function renderDex(){
     $('#dnote').textContent=`「${q}」で探した結果：${list.length}こ`;
   }else{list=TRL.filter(t=>dcatOf(t)===dcat); $('#dnote').textContent=DNOTE[dcat];}
   if(!q&&dcat==='s'){
-    const G=new Map(); list.forEach(t=>{const k=skinName(t)||'そのほか'; if(!G.has(k)) G.set(k,[]); G.get(k).push(t);});
-    $('#dlist').innerHTML=[...G].map(([k,a])=>`<details class="skg"><summary><b>${esc(k)}</b><span class="skn">${a.length}こ</span></summary><div class="skl">${a.map(t=>dexCard(t,k)).join('')}</div></details>`).join('');
+    const G=new Map(); list.forEach(t=>{const k=skinName(t)||'そのほか'; const d=(t.sk||[]).map(x=>DEV[x]).find(Boolean); if(!G.has(k)) G.set(k,{t:d?d.t:0,a:[]}); G.get(k).a.push(t);});
+    const SEC=[[3,'戦闘デビ','一緒に戦う','atk'],[2,'領地デビ','資源を集めてくる','psi'],[1,'創作物デビ','資源を作る','def'],[0,'そのほか','','mid']];
+    $('#dlist').innerHTML=SEC.map(([ty,h,d,c])=>{const g=[...G].filter(([,v])=>(v.t||0)===ty); if(!g.length) return ''; const n=g.reduce((s,[,v])=>s+v.a.length,0);
+      return `<section class="sks sk-${c}"><h3 class="skh"><span class="chip c-${c}">${h}</span><small>${d?d+'・':''}${g.length}種・色違い${n}こ</small></h3><div class="skgrid">${g.map(([k,v])=>`<details class="skg"><summary><b>${esc(k)}</b><span class="skn">${v.a.length}こ</span></summary><div class="skl">${v.a.map(t=>dexCard(t,k)).join('')}</div></details>`).join('')}</div></section>`;}).join('');
     $('#dmore').innerHTML=''; phrase($('#dlist')); phrase($('#dnote')); return;
   }
   const shown=list.slice(0,dlimit);
