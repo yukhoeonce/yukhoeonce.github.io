@@ -632,7 +632,7 @@ async function fbSend(){
   const t=$('fbTx').value.trim(),m=$('fbMsg'),btn=$('fbSend');
   if(t.length<5){m.className='msg ng';m.textContent=T('5文字以上で書いてね','Please write at least 5 characters');return}
   btn.disabled=true;m.className='msg';m.textContent=T('送信中…','Sending…');
-  try{await FB.send(fbCat,t)}catch(e){btn.disabled=false;m.className='msg ng';m.textContent=/post_feedback/.test(e.message)?T('意見ボックスの準備中みたい。少し待ってね','Feedback is not ready yet'):e.message;return}
+  try{await FB.send(fbCat,t)}catch(e){btn.disabled=false;m.className='msg ng';m.textContent=/post_feedback/.test(e.message)?T('意見ボックスの準備中みたい。少し待ってね','Feedback is not ready yet'):(e.message===ERR.too_many||e.message===ERR_EN.too_many)?T('送りすぎかも（1時間に5件・1日20件まで）。少し時間をおいてね','Too many (limit: 5 per hour, 20 per day). Please wait a bit'):e.message;return}
   $('dBody').innerHTML=`<div style="text-align:center;padding:18px 0"><div style="font-size:44px">💌</div><p style="font-weight:700;font-size:18px;margin:8px 0">${T('ありがとう！届いたよ','Thank you! Got it.')}</p><p class="note">${T('いただいた意見は、サイトを良くするのに使わせてもらうね。','We\'ll use it to make the site better.')}</p><button type="button" class="btn small sub" id="fbDone">${T('閉じる','Close')}</button></div>`;
   sparks($('dTitle'));
 }
