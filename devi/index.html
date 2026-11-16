@@ -1,0 +1,2012 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ワンスヒューマン デビ融合講座｜融合の確率と特性の残し方を学べる（非公式）</title>
+<link rel="canonical" href="https://yukhoeonce.github.io/devi/">
+<meta name="description" content="ワンスヒューマン（Once Human）のデビエーション融合を、図つきのレッスン・融合けいさん機・特性図鑑・クイズで学べる非公式講座。生まれる種類の確率、特性の0.5点ルール、無特性で80%、100%ルートまで。">
+<meta name="theme-color" content="#fff4dc">
+<meta name="apple-mobile-web-app-title" content="デビ融合講座">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:title" content="ワンスヒューマン デビ融合講座">
+<meta property="og:description" content="デビエーション融合の確率と特性の残し方を、図とけいさん機で学べる講座（非公式）">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yukhoeonce.github.io/devi/">
+<meta name="twitter:card" content="summary">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Mochiy+Pop+One&family=M+PLUS+Rounded+1c:wght@500;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+<style>
+/* レイアウト: 上にカセット風の見出し＋タブ、中身は1列のノート。レッスンは左に目次、けいさん機は左に入力・右に結果（狭い画面では縦並び）。 */
+:root,:root[data-theme]{
+  color-scheme:light;
+  --sh:#3b2340; --hl:#ffe27a; --band:#ffd1df; --figc:#5d7ea3;
+  --bg:#fff4dc; --surface:#fffdf6; --field:#fff1e4; --ink:#3b2340; --ink-2:#4a3352; --muted:#6c5570; --line:#3b2340;
+  --atk:#e8517a; --atk-soft:#ffe1ea; --psi:#1f8f87; --psi-soft:#d9f6ef; --def:#6a58c9; --def-soft:#ebe5ff;
+  --ok:#3f9a4e; --ok-soft:#e2f6e0; --ng:#d8344f; --ng-soft:#ffe3e7; --wait:#b07800; --wait-soft:#fff2c4;
+  --pink:#ff9fbd; --mint:#9be8d4; --lemon:#ffe27a; --lilac:#c9b3ff; --sky:#9fd6ff; --on-pop:#3b2340;
+  --dot:rgba(59,35,64,.13); --scrim:rgba(59,35,64,.45);
+  --shadow:4px 4px 0 var(--sh);
+  --f-body:"BIZ UDPGothic","Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif;
+  --f-pop:"Mochiy Pop One","M PLUS Rounded 1c",sans-serif;
+  --f-dot:"DotGothic16","M PLUS Rounded 1c",monospace;
+}
+
+*{box-sizing:border-box}
+body{word-break:keep-all;overflow-wrap:anywhere;line-break:strict;background-color:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.75;
+  background-image:radial-gradient(circle at 1px 1px,var(--dot) 1.4px,transparent 1.6px);background-size:22px 22px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:var(--atk)}
+:focus-visible{outline:3px solid var(--atk);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-pop);font-weight:400;text-wrap:balance;line-height:1.4;margin:0}
+p{margin:0}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1040px;margin:0 auto}
+
+/* ===== ヘッダー ===== */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:3px solid var(--line);box-shadow:0 4px 0 var(--band)}
+.top .wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-block:10px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);margin-right:auto}
+.brand .cas{width:40px;height:28px;border:2.5px solid var(--line);border-radius:6px;background:var(--lemon);position:relative;flex:none}
+.brand .cas::before,.brand .cas::after{content:"";position:absolute;top:8px;width:8px;height:8px;border-radius:50%;border:2.5px solid var(--on-pop);background:var(--surface)}
+.brand .cas::before{left:6px}.brand .cas::after{right:6px}
+.brand b{font-family:var(--f-pop);font-weight:400;font-size:19px;letter-spacing:.04em}
+.brand small{display:block;font-weight:700;font-size:11px;color:var(--muted);letter-spacing:.12em;line-height:1.2}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs a{font-weight:800;font-size:14px;text-decoration:none;color:var(--ink);padding:6px 14px;border:2px solid var(--line);border-radius:999px;background:var(--surface);box-shadow:2px 2px 0 var(--sh);transition:transform .12s}
+.tabs a[aria-current="page"]{background:var(--pink);color:var(--on-pop)}
+.tabs a:active{transform:translate(2px,2px);box-shadow:none}
+
+main{padding-block:24px 48px}
+.view[hidden]{display:none}
+
+/* ===== 共通パーツ ===== */
+.card{background:var(--surface);border:2.5px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+.eyebrow{font-family:var(--f-dot);font-size:13px;letter-spacing:.14em;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:800;padding:10px 18px;border:2.5px solid var(--line);border-radius:999px;background:var(--lemon);color:var(--on-pop);box-shadow:3px 3px 0 var(--sh);text-decoration:none;transition:transform .12s}
+.btn:active{transform:translate(3px,3px);box-shadow:none}
+.btn.sub{background:var(--surface);color:var(--ink)}
+.btn.pink{background:var(--pink)}
+.t{border:0;background:none;padding:0;font-weight:800;color:var(--ink);text-decoration:underline dotted var(--atk) 2px;text-underline-offset:4px}
+.chip{display:inline-block;font-size:13px;font-weight:800;padding:1px 10px;border-radius:999px;border:2px solid var(--line);white-space:nowrap;line-height:1.6}
+.c-atk{background:var(--atk-soft);color:var(--atk);border-color:var(--atk)}
+.c-psi{background:var(--psi-soft);color:var(--psi);border-color:var(--psi)}
+.c-def{background:var(--def-soft);color:var(--def);border-color:var(--def)}
+.c-kw{background:var(--wait-soft);color:var(--wait);border-color:var(--wait)}
+.note{border:2px dashed var(--line);border-radius:12px;padding:12px 14px;background:var(--field);font-size:15px}
+.note b{font-family:var(--f-pop);font-weight:400}
+
+/* ===== ホーム ===== */
+.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:center}
+.hero h1{font-size:clamp(28px,5vw,44px);margin-block:6px 12px}
+.hero h1 em{font-style:normal;background:linear-gradient(transparent 62%,var(--hl) 62%);color:var(--ink)}
+.hero p.lead{font-size:17px;color:var(--ink-2);max-width:32em}
+.hero .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.prog{display:flex;align-items:center;gap:10px;margin-top:16px;font-weight:700;font-size:14px;color:var(--muted)}
+.prog .bar{flex:1;max-width:220px;height:14px;border:2px solid var(--line);border-radius:999px;background:var(--surface);overflow:hidden}
+.prog .bar i{display:block;height:100%;background:var(--mint);width:0;transition:width .4s}
+
+/* 7つの枠 */
+.rig{padding:18px;position:relative}
+.rig .lab{font-weight:700;font-size:13px;color:var(--muted);text-align:center;margin-bottom:8px}
+.rig-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+.rig-col{display:flex;flex-direction:column;gap:10px}
+.slot{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:8px 10px;border:2px solid var(--line);border-radius:12px;background:var(--field);box-shadow:2px 2px 0 var(--sh);min-width:0;transition:transform .12s}
+.slot:hover{transform:translateY(-2px)}
+.slot b{font-size:14px}
+.slot span{font-size:12px;color:var(--ink-2);line-height:1.4}
+.slot.w{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:center;gap:10px;background:var(--lemon);color:var(--on-pop)}
+.slot.w span{color:var(--on-pop)}
+.fig{width:96px;height:auto;display:block}
+.fig .p{fill:var(--figc)}.fig .k{fill:#f6cba8}.fig .g{fill:var(--lemon)}.fig .s{fill:var(--pink)}.fig .m{fill:var(--mint)}
+
+.paths{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:36px}
+.path{padding:18px;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:var(--ink);transition:transform .12s}
+.path:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--sh)}
+.path h3{font-size:18px}
+.path p{font-size:15px;color:var(--ink-2)}
+.path .eyebrow{display:flex;justify-content:space-between}
+
+/* ===== レッスン ===== */
+.lesson{display:grid;grid-template-columns:240px minmax(0,1fr);gap:24px;align-items:start}
+.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);padding:10px;display:flex;flex-direction:column;gap:4px}
+.toc button{display:flex;gap:10px;align-items:center;text-align:left;padding:8px 10px;border:2px solid transparent;border-radius:10px;background:none;font-weight:700;font-size:14px;line-height:1.4}
+.toc button .n{flex:none;width:28px;height:28px;display:grid;place-items:center;border:2px solid var(--line);border-radius:50%;font-family:var(--f-dot);font-size:14px;background:var(--surface)}
+.toc button.done .n{background:var(--mint);color:var(--on-pop)}
+.toc button[aria-current="step"]{border-color:var(--line);background:var(--field)}
+.toc button[aria-current="step"] .n{background:var(--pink);color:var(--on-pop)}
+.les{padding:24px clamp(16px,4vw,36px) 28px;min-width:0}
+.les h2{font-size:clamp(22px,3.4vw,30px);margin-block:4px 14px}
+.les .body{display:flex;flex-direction:column;gap:16px;max-width:42em}
+.les .body > p{font-size:16.5px}
+.les .foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:28px;padding-top:18px;border-top:2.5px dashed var(--line)}
+.les h3{font-size:17px;margin-top:6px}
+
+/* MODカードの見本 */
+.modcard{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 14px;align-items:center;padding:14px 16px;border:2.5px solid var(--line);border-radius:14px;background:var(--field)}
+.modcard .ic{grid-row:span 2;width:54px;height:54px;border:2.5px solid var(--line);border-radius:12px;background:var(--lemon);display:grid;place-items:center;font-family:var(--f-dot);font-size:22px;color:var(--on-pop)}
+.modcard .nm{font-weight:800;font-size:18px}
+.modcard .lv{grid-row:span 2;font-family:var(--f-dot);font-size:22px;border:2px solid var(--line);border-radius:8px;padding:2px 8px;background:var(--surface)}
+.modcard .ex{font-size:15px;color:var(--ink-2)}
+.parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.part{padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface)}
+.part .k{font-weight:700;font-size:13px;color:var(--muted)}
+.part b{display:block;font-size:16px}
+.part p{font-size:15px;color:var(--ink-2)}
+
+.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.role{padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface);display:flex;flex-direction:column;gap:4px}
+.role .chip{align-self:flex-start}
+.role b{font-size:16px}
+.role p{font-size:15px;color:var(--ink-2)}
+
+details.dex{border:2px solid var(--line);border-radius:12px;background:var(--surface)}
+details.dex+details.dex{margin-top:8px}
+details.dex summary{cursor:pointer;padding:10px 14px;font-weight:800;list-style:none;display:flex;justify-content:space-between;gap:8px}
+details.dex summary::after{content:"＋";font-family:var(--f-dot)}
+details.dex[open] summary::after{content:"－"}
+details.dex summary::-webkit-details-marker{display:none}
+.dexlist{padding:0 14px 12px;display:flex;flex-direction:column;gap:6px}
+.dexrow{display:grid;grid-template-columns:minmax(0,11em) minmax(0,1fr);gap:4px 12px;font-size:14px;padding-top:6px;border-top:1.5px dashed var(--muted)}
+.dexrow b{font-weight:800}
+.dexrow span{color:var(--ink-2)}
+.kwgroup{padding-top:6px;border-top:1.5px dashed var(--muted);font-size:14px}
+.kwgroup b{display:inline-block;margin-right:6px}
+
+.types{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.type{padding:16px;border:2.5px solid var(--line);border-radius:14px;display:flex;flex-direction:column;gap:8px}
+.type.a{background:var(--atk-soft)}.type.p{background:var(--psi-soft)}
+.type h3{font-size:18px;margin:0}
+.type.a h3{color:var(--atk)}.type.p h3{color:var(--psi)}
+.type ul{margin:0;padding-left:1.2em;font-size:16px}
+.formula{font-family:var(--f-body);font-weight:700;font-size:16px;line-height:2;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface);overflow-x:auto;white-space:nowrap}
+.formula .g{display:inline-block;padding:0 6px;border-radius:6px;margin:0 2px}
+.formula .g1{background:var(--atk-soft)}.formula .g2{background:var(--wait-soft)}.formula .g3{background:var(--psi-soft)}
+
+/* 足し算デモ */
+.demo{padding:16px;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);display:flex;flex-direction:column;gap:12px}
+.demo .q{font-weight:800}
+.demo .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.demo .opts button{padding:12px;border:2.5px solid var(--line);border-radius:12px;background:var(--field);text-align:left;box-shadow:2px 2px 0 var(--sh)}
+.demo .opts button[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop)}
+.demo .opts small{display:block;font-size:13px;color:var(--ink-2);font-weight:700}
+.demo .res{font-size:15px;min-height:3.5em}
+.demo .res b{font-size:19px;font-weight:700}
+.meter{display:grid;grid-template-columns:7em minmax(0,1fr) 4.5em;gap:8px;align-items:center;font-size:14px}
+.meter .bar{height:16px;border:2px solid var(--line);border-radius:999px;background:var(--field);overflow:hidden}
+.meter .bar i{display:block;height:100%;background:var(--pink);transition:width .4s}
+.meter .v{font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+
+/* 戦い方チェック */
+.style{padding:16px;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);display:flex;flex-direction:column;gap:12px}
+.seg{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg > span{font-weight:800;font-size:14px;min-width:5.5em}
+.seg button{padding:6px 14px;border:2px solid var(--line);border-radius:999px;background:var(--field);font-weight:700;font-size:14px}
+.seg button[aria-pressed="true"]{background:var(--mint);color:var(--on-pop)}
+.fit{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.fit > div{padding:10px 12px;border-radius:12px;border:2px solid var(--line);font-size:14px}
+.fit .yes{background:var(--ok-soft)}.fit .no{background:var(--ng-soft)}
+.fit h4{margin:0 0 4px;font-size:14px}
+.fit .yes h4{color:var(--ok)}.fit .no h4{color:var(--ng)}
+.fit ul{margin:0;padding-left:1.1em}
+
+.xtab{width:100%;border-collapse:collapse;font-size:16px;min-width:520px}
+.xtab td:first-child{font-weight:700}
+.xtab th,.xtab td{color:var(--ink);border-bottom:1.5px dashed var(--muted);padding:10px 8px;text-align:left;vertical-align:top}
+.xtab th{font-weight:700;color:var(--ink-2);font-size:14px}
+.scroll{overflow-x:auto}
+
+.rules{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none;counter-reset:r}
+.rules li{counter-increment:r;display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:start;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface)}
+.rules li::before{content:counter(r);width:32px;height:32px;display:grid;place-items:center;border:2px solid var(--line);border-radius:50%;background:var(--lemon);color:var(--on-pop);font-family:var(--f-dot);font-size:16px}
+.practice{padding:18px;border:2.5px solid var(--line);border-radius:14px;background:var(--lilac);color:var(--on-pop);display:flex;flex-direction:column;gap:10px}
+.practice ol{margin:0;padding-left:1.3em}
+.practice .btn{align-self:flex-start;background:var(--surface);color:var(--ink)}
+
+.lvtabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.lvtabs button{display:flex;flex-direction:column;align-items:flex-start;gap:0;padding:10px 14px;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:3px 3px 0 var(--sh);text-align:left}
+.lvtabs button b{font-family:var(--f-pop);font-weight:400;font-size:18px}
+.lvtabs button small{font-size:12.5px;color:var(--ink-2)}
+.lvtabs button[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop)}
+.lvtabs button[aria-pressed="true"] small{color:var(--on-pop)}
+.num{width:100%;padding:6px 10px;border:2px solid var(--line);border-radius:10px;background:var(--field);font:inherit;font-weight:700;font-size:16px;color:var(--ink)}
+.meter input[type=range]{width:100%;accent-color:var(--atk)}
+/* ===== クイズ ===== */
+.quiz{max-width:720px;margin:0 auto;padding:24px clamp(16px,4vw,32px)}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.dots{display:flex;gap:5px;flex-wrap:wrap}
+.dots i{width:14px;height:14px;border:2px solid var(--line);border-radius:4px;background:var(--surface)}
+.dots i.ok{background:var(--mint)}.dots i.ng{background:var(--pink)}.dots i.now{background:var(--lemon)}
+.qtext{font-family:var(--f-pop);font-size:clamp(19px,3vw,23px);line-height:1.6;margin-block:18px 6px}
+.qsit{font-size:16px;color:var(--ink-2);margin-bottom:16px}
+.qopts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.qopts button{min-height:84px;padding:14px;border:2.5px solid var(--line);border-radius:14px;background:var(--field);box-shadow:3px 3px 0 var(--sh);font-weight:800;font-size:17px;line-height:1.4;transition:transform .12s}
+.qopts button:not(:disabled):active{transform:translate(3px,3px);box-shadow:none}
+.qopts button.right{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.qopts button.wrong{background:var(--ng-soft);border-color:var(--ng);color:var(--ng)}
+.qopts button:disabled{cursor:default}
+.qopts button small{display:block;font-size:12px;font-weight:700;color:var(--ink-2);margin-top:2px}
+.qexp{margin-top:16px;padding:14px;border:2px dashed var(--line);border-radius:12px;background:var(--surface)}
+.qexp .big{font-family:var(--f-pop);font-size:20px}
+.qexp .big.ok{color:var(--ok)}.qexp .big.ng{color:var(--ng)}
+.qexp p{font-size:15px;margin-top:4px}
+.qnext{display:flex;justify-content:flex-end;margin-top:14px}
+.qend{text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px;padding-block:12px}
+.qend .score{font-family:var(--f-dot);font-size:56px;line-height:1}
+.qend .score small{font-size:22px}
+
+/* ===== 用語集 ===== */
+.words-head{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px}
+.words-head h2{font-size:26px;margin-right:auto}
+.search{flex:1 1 240px;max-width:360px;padding:10px 14px;border:2.5px solid var(--line);border-radius:999px;background:var(--surface);font:inherit;color:var(--ink)}
+.cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.cats button{padding:4px 12px;border:2px solid var(--line);border-radius:999px;background:var(--surface);font-weight:700;font-size:14px}
+.cats button[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop)}
+.wlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.word{padding:14px 16px;display:flex;flex-direction:column;gap:6px;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:3px 3px 0 var(--sh);scroll-margin-top:120px}
+.word.flash{animation:flash 1.2s}
+@keyframes flash{0%,40%{background:var(--lemon)}}
+.word header{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.word b{font-size:17px}
+.word p{font-size:16px;color:var(--ink-2)}
+.empty{color:var(--muted);padding:20px 0}
+
+/* 用語のポップアップ */
+.sheet{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;justify-content:center;background:var(--scrim);padding:16px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.sheet[hidden]{display:none}
+.sheet .box{width:min(520px,100%);padding:18px 20px;display:flex;flex-direction:column;gap:8px;animation:up .2s ease-out}
+@keyframes up{from{transform:translateY(20px);opacity:.6}}
+.sheet .box header{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.sheet .box b{font-family:var(--f-pop);font-weight:400;font-size:20px}
+.sheet .x{width:36px;height:36px;border:2px solid var(--line);border-radius:50%;background:var(--surface);font-weight:800}
+.sheet .box .more{align-self:flex-start;font-size:14px}
+
+footer.site{padding-block:24px 36px;border-top:3px solid var(--line);font-size:13px;color:var(--muted)}
+footer.site .wrap{display:flex;flex-direction:column;gap:4px}
+
+.tabs a.back{background:var(--lilac);display:inline-flex;align-items:center;gap:6px}
+.tabs a.back svg{width:16px;height:16px;flex:none;display:block}
+/* ===== ダメージラボのレトロかわいい版に寄せる ===== */
+body{animation:dots 30s linear infinite}
+@keyframes dots{to{background-position:220px 220px}}
+main,footer.site,.ticker{position:relative;z-index:1}
+.rfx{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.rfx i{position:absolute;font-style:normal;font-family:var(--f-pop);opacity:.5;animation:float 9s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-26px) rotate(10deg)}}
+.brand b{font-size:21px;letter-spacing:.06em;background:linear-gradient(90deg,#e8517a,#f29a3b,#2aa39a,#7b5bd6,#e8517a);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:rainbow 6s linear infinite}
+@keyframes rainbow{to{background-position:300% 0}}
+.brand .cas::before,.brand .cas::after{border-style:dashed;animation:spin 3s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ticker{overflow:hidden;border-bottom:2px solid var(--line);background:var(--lemon);white-space:nowrap}
+.ticker div{display:inline-block;padding:4px 0;font-family:var(--f-dot);font-size:14px;color:var(--on-pop);animation:tick 26s linear infinite}
+@keyframes tick{to{transform:translateX(-50%)}}
+.card{border-radius:18px;box-shadow:5px 5px 0 var(--sh);animation:pop .55s cubic-bezier(.3,1.6,.5,1) backwards;position:relative}
+.paths .card:nth-child(2){animation-delay:.08s}.paths .card:nth-child(3){animation-delay:.16s}.paths .card:nth-child(4){animation-delay:.24s}
+@keyframes pop{from{opacity:0;transform:translateY(18px) scale(.94) rotate(-1deg)}}
+.les::after,.quiz::after,.rig::after{content:"";position:absolute;top:-12px;right:22px;width:70px;height:22px;background:repeating-linear-gradient(45deg,var(--pink) 0 8px,#ffd1df 8px 16px);border:2px solid var(--line);transform:rotate(4deg);border-radius:4px;opacity:.9}
+.rig::after{background:repeating-linear-gradient(45deg,var(--mint) 0 8px,#d4f7ec 8px 16px);transform:rotate(-5deg);left:22px;right:auto}
+.les h2,.qtext{letter-spacing:.03em}
+.btn,.tabs a,.slot,.lvtabs button,.qopts button,.demo .opts button,.seg button,.cats button{transition:transform .12s,box-shadow .12s,background .2s}
+.btn:hover,.tabs a:hover,.lvtabs button:hover,.qopts button:not(:disabled):hover,.demo .opts button:hover{transform:translate(-1px,-1px)}
+.btn:active,.lvtabs button:active,.demo .opts button:active,.slot:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--sh)}
+.path:hover{transform:translate(-2px,-2px) rotate(-.4deg)}
+.toc button[aria-current="step"] .n,.rules li::before{animation:bob 2.4s ease-in-out infinite}
+.rules li:nth-child(2)::before{animation-delay:-.4s}.rules li:nth-child(3)::before{animation-delay:-.8s}.rules li:nth-child(4)::before{animation-delay:-1.2s}.rules li:nth-child(5)::before{animation-delay:-1.6s}.rules li:nth-child(6)::before{animation-delay:-2s}
+@keyframes bob{50%{transform:translateY(-3px) rotate(-6deg)}}
+.lvtabs button[aria-pressed="true"] b,.tabs a[aria-current="page"]{animation:wig 3s ease-in-out infinite;display:inline-block}
+@keyframes wig{0%,86%,100%{transform:rotate(0)}90%{transform:rotate(-6deg)}95%{transform:rotate(6deg)}}
+.les .body>*{animation:pop .45s cubic-bezier(.3,1.6,.5,1) backwards}
+.les .body>*:nth-child(2){animation-delay:.04s}.les .body>*:nth-child(3){animation-delay:.08s}.les .body>*:nth-child(4){animation-delay:.12s}.les .body>*:nth-child(5){animation-delay:.16s}.les .body>*:nth-child(n+6){animation-delay:.2s}
+.les h3{display:flex;align-items:center;gap:8px}
+.les h3::before{content:"";width:10px;height:10px;background:var(--pink);border:2px solid var(--line);flex:none}
+.les h3::after{content:"";flex:1;border-top:2px dotted rgba(59,35,64,.3)}
+/* PC: 背景の動きで文字の重なりレイヤーができて文字がぼやけるので、マウス操作の画面では背景を止める */
+@media (hover:hover) and (pointer:fine){body{animation:none}.rfx i{animation:none}}
+/* 部位のドット絵アイコン */
+.slot{flex-direction:row;align-items:center;gap:10px}
+.slot .ic{flex:none;width:30px;height:30px;display:grid;place-items:center;border:2.5px solid var(--line);border-radius:10px;box-shadow:2px 2px 0 var(--sh);transition:transform .2s}
+.slot .ic svg{width:18px;height:18px;display:block}
+.slot{gap:8px;padding:8px}
+.slot .tx span{font-size:11.5px}
+.slot:hover .ic{transform:rotate(-8deg) scale(1.08)}
+.slot .tx{display:flex;flex-direction:column;min-width:0}
+.slot.w .ic{background:var(--surface)!important}
+/* クイズ：ゲーム機の画面 */
+.screen{position:relative;overflow:hidden;width:min(360px,100%);padding:18px 16px 14px;border:3px solid var(--line);border-radius:16px;box-shadow:4px 4px 0 var(--sh);background:#2c1f45;background-image:radial-gradient(ellipse at 50% 0%,rgba(201,179,255,.25),transparent 70%);color:#fff4dc}
+.screen::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 2px,transparent 2px 4px)}
+.screen::after{content:"▶";position:absolute;right:14px;top:10px;font-size:12px;color:var(--lemon);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.screen .lab2{font-family:var(--f-dot);font-size:13px;color:#c9b8e0;letter-spacing:.2em}
+.qend .screen .score{color:var(--lemon);text-shadow:3px 3px 0 #e8517a,0 0 16px rgba(255,226,122,.5);animation:boing .5s cubic-bezier(.3,1.8,.5,1)}
+.qend .screen .score small{color:#fff4dc;text-shadow:none}
+@keyframes boing{0%{transform:scale(.6) translateY(6px)}60%{transform:scale(1.12)}100%{transform:none}}
+.qexp .big{display:inline-block;animation:boing .5s cubic-bezier(.3,1.8,.5,1)}
+.qopts button.right{animation:boing .45s cubic-bezier(.3,1.8,.5,1)}
+.qopts button.wrong{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.dots i.now{animation:bob 1.2s ease-in-out infinite}
+.spark{position:fixed;pointer-events:none;z-index:99;font-size:16px;animation:spark .8s ease-out forwards}
+@keyframes spark{from{opacity:1;transform:translate(0,0) scale(1)}to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.4) rotate(180deg)}}
+.sheet .box{border-width:3px;box-shadow:8px 8px 0 var(--sh);animation:pop .45s cubic-bezier(.3,1.6,.5,1)}
+.sheet .x{background:var(--pink);box-shadow:3px 3px 0 var(--sh);transition:transform .15s}
+.sheet .x:hover{transform:rotate(90deg)}
+.word{animation:pop .45s cubic-bezier(.3,1.6,.5,1) backwards}
+.word:hover{transform:translate(-2px,-2px) rotate(-.3deg);box-shadow:5px 5px 0 var(--sh)}
+@media (max-width:820px){
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .lesson{grid-template-columns:minmax(0,1fr)}
+  .toc{position:static;flex-direction:row;overflow-x:auto;padding:8px}
+  .toc button{flex:none}
+  .toc button .t2{display:none}
+  .toc button[aria-current="step"] .t2{display:inline}
+}
+@media (max-width:480px){
+  .lvtabs small .d{display:none}
+  .lvtabs button{padding:8px 12px}
+  .qopts{grid-template-columns:1fr}
+  .dexrow{grid-template-columns:minmax(0,1fr)}
+  .brand b{font-size:17px}
+  .tabs a{padding:5px 11px;font-size:13px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ===== デビ融合講座で足したもの ===== */
+.tabs a{white-space:nowrap}
+@media (max-width:760px){
+  .top .wrap{gap:8px}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;width:100%;padding:2px 4px 6px 2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs a{flex:none}
+}
+.cas.pod-ic{background:var(--mint)}
+
+/* 融合ポッドの図（ホーム） */
+.pod{padding:18px;position:relative}
+.pod .lab{font-weight:700;font-size:13px;color:var(--muted);text-align:center;margin-bottom:10px}
+.pod-grid{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center}
+.pod-core{width:88px;height:88px;border-radius:50%;border:3px solid var(--line);background:radial-gradient(circle at 38% 32%,#fff 0 10%,var(--lilac) 52%,#a98ff0 100%);display:grid;place-items:center;position:relative;box-shadow:3px 3px 0 var(--sh)}
+.pod-core::before{content:"";position:absolute;inset:7px;border-radius:50%;border:2.5px dashed var(--on-pop);opacity:.5;animation:spin 9s linear infinite}
+.pod-core b{position:relative;font-family:var(--f-pop);font-weight:400;font-size:18px;color:var(--on-pop)}
+.pod-mats{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.pod-arrow{grid-column:1/-1;text-align:center;font-family:var(--f-dot);font-size:16px;line-height:1;color:var(--muted)}
+.pod::after{content:"";position:absolute;top:-12px;left:22px;width:70px;height:22px;background:repeating-linear-gradient(45deg,var(--mint) 0 8px,#d4f7ec 8px 16px);border:2px solid var(--line);transform:rotate(-5deg);border-radius:4px}
+
+/* デビカードの見本 */
+.devcard{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 14px;align-items:center;padding:14px 16px;border:2.5px solid var(--line);border-radius:14px;background:var(--field)}
+.devcard .ic{grid-row:span 2;width:56px;height:56px;border:2.5px solid var(--line);border-radius:12px;background:var(--mint);display:grid;place-items:center}
+.devcard .ic svg{width:34px;height:34px;display:block}
+.devcard .nm{font-weight:800;font-size:18px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.devcard .lvs{display:flex;gap:8px;flex-wrap:wrap}
+.devcard .lvs span{font-size:13.5px;font-weight:700;border:2px solid var(--line);border-radius:8px;padding:0 8px;background:var(--surface)}
+.devcard .lvs span b{font-family:var(--f-dot);font-weight:400;font-size:16px;margin-left:4px}
+.tslots{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.tslot{border:2px solid var(--line);border-radius:10px;padding:6px 10px;font-size:14px;line-height:1.45;min-width:0}
+.tslot small{display:block;font-size:11.5px;font-weight:800;color:var(--ink-2);letter-spacing:.04em}
+.tslot.c{background:var(--wait-soft)}.tslot.r{background:var(--atk-soft)}.tslot.m{background:var(--psi-soft)}.tslot.x{background:var(--def-soft)}
+.tslot.big{padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.tslot.big b{font-family:var(--f-pop);font-weight:400;font-size:17px}
+.tslot.big p{font-size:14.5px;color:var(--ink-2)}
+.tslot.big small{font-size:12.5px}
+@media (max-width:560px){.tslots{grid-template-columns:minmax(0,1fr)}}
+
+.les .body ul{margin:0;padding-left:1.25em;display:flex;flex-direction:column;gap:4px}
+.big-num{font-family:var(--f-dot);font-size:20px}
+.why-line{font-size:14px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap}
+.btn.sm{padding:7px 14px;font-size:14px}
+
+/* ===== けいさん機 ===== */
+.calc-head{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.calc-head h2{font-size:clamp(22px,3.4vw,28px)}
+.how{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.how li{display:flex;align-items:center;gap:8px;padding:5px 14px 5px 5px;border:2px solid var(--line);border-radius:999px;background:var(--surface);font-weight:700;font-size:14px;box-shadow:2px 2px 0 var(--sh)}
+.how li b{display:grid;place-items:center;width:26px;height:26px;border:2px solid var(--line);border-radius:50%;background:var(--lemon);color:var(--on-pop);font-family:var(--f-dot);font-weight:400;font-size:14px}
+.sec-h{font-size:16px;margin:4px 0 8px}
+.wants{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(150px,172px);gap:10px;overflow-x:auto;padding:4px 6px 12px 2px;margin-bottom:12px;scroll-snap-type:x proximity;overscroll-behavior-x:contain}
+@media (min-width:901px){.wants{grid-auto-flow:row;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));grid-auto-columns:auto;overflow:visible}}
+.want{scroll-snap-align:start;position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:10px 12px 11px;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:3px 3px 0 var(--sh);text-align:left;transition:transform .12s,box-shadow .12s,background .2s}
+.want:hover{transform:translate(-1px,-2px)}
+.want:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--sh)}
+.want[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop)}
+.want.reset{background:var(--field)}
+.want .wi{width:36px;height:36px;border:2px solid var(--line);border-radius:10px;display:grid;place-items:center;margin-bottom:2px}
+.want .wi svg{width:22px;height:22px;display:block}
+.want .wt{font-weight:800;font-size:14.5px;line-height:1.35}
+.want small{font-size:12px;color:var(--ink-2);line-height:1.45}
+.want .wp{position:absolute;top:9px;right:9px;font-family:var(--f-dot);font-size:15px;line-height:1.3;padding:0 6px;border:2px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink)}
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+.calc-in{display:flex;flex-direction:column;gap:14px;min-width:0}
+.calc-out{padding:18px clamp(14px,3vw,22px);display:flex;flex-direction:column;gap:16px;min-width:0;animation:none}
+@media (min-width:901px) and (min-height:700px){.calc-in{position:sticky;top:calc(env(safe-area-inset-top,0px) + 96px)}}
+.calc-note{margin-top:14px;font-size:13px;color:var(--muted)}
+/* 融合ポッド（押せるカード） */
+.podc{padding:16px clamp(12px,2.4vw,18px);display:flex;flex-direction:column;gap:10px;min-width:0}
+.podc .lab{font-weight:700;font-size:13px;color:var(--muted);text-align:center}
+.pc-par{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center}
+.pc-mats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;align-items:stretch}
+.podc .tok{width:100%;max-width:none;min-width:0;align-self:stretch;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.podc .tok:hover{transform:translate(-1px,-2px)}
+.podc .tok:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--sh)}
+.tok.empty{border-style:dashed;background:var(--surface);box-shadow:none;color:var(--muted)}
+.tok .tk-ed{margin-top:auto;padding-top:2px;font-size:11.5px;font-weight:800;color:var(--atk)}
+.pc-child{display:flex;align-items:center;gap:12px;width:100%;padding:10px 14px;border:2.5px solid var(--line);border-radius:14px;background:var(--lemon);color:var(--on-pop);box-shadow:3px 3px 0 var(--sh);text-align:left}
+.pc-child .tk-ic{flex:none;width:44px;height:44px;border:2.5px solid var(--line);border-radius:12px;display:grid;place-items:center}
+.pc-child .tk-ic svg{width:28px;height:28px;display:block}
+.pc-child .pcc-t{display:flex;flex-direction:column;min-width:0;flex:1}
+.pc-child small{font-size:12px;font-weight:700}
+.pc-child b{font-size:17px;line-height:1.35}
+.pc-child .pcc-g{display:flex;flex-direction:column;align-items:flex-end;padding-left:12px;border-left:2px dashed var(--line)}
+.pc-child .pcc-g b{font-family:var(--f-dot);font-weight:400;font-size:22px}
+/* 結果 */
+.frow{display:grid;grid-template-columns:3.4em minmax(0,1fr);gap:8px;align-items:center}
+.frow > .l{font-weight:800;font-size:14px}
+.lvsel{display:flex;gap:6px;flex-wrap:wrap}
+.lvsel button{width:44px;height:40px;border:2px solid var(--line);border-radius:10px;background:var(--field);font-family:var(--f-dot);font-size:18px;line-height:1}
+.lvsel button[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop);box-shadow:2px 2px 0 var(--sh)}
+.cnt{display:flex;align-items:center;gap:10px}
+.cnt button{width:42px;height:42px;border:2px solid var(--line);border-radius:50%;background:var(--surface);font-weight:800;font-size:20px;line-height:1;padding:0}
+.cnt button:disabled{opacity:.4}
+.cnt output{min-width:2.4em;text-align:center;font-family:var(--f-dot);font-size:22px}
+.mini{font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.mini.warn{color:var(--ng);font-weight:700}
+.out-sec{display:flex;flex-direction:column;gap:8px}
+.out-sec > h4{margin:0;font-size:14px;color:var(--ink-2);font-family:var(--f-dot);font-weight:400;letter-spacing:.1em}
+.sprow{display:grid;grid-template-columns:minmax(0,1fr) 4.6em;gap:4px 10px;align-items:center;padding:8px 10px;border:2px solid var(--line);border-radius:12px;background:var(--field);text-align:left;width:100%}
+.sprow[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop)}
+.sprow .nm{font-weight:800;font-size:15px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;min-width:0}
+.sprow .v,.trow .v{text-align:right;font-weight:800;font-variant-numeric:tabular-nums}
+.sprow .bar{grid-column:1/-1;height:10px;border:2px solid var(--line);border-radius:999px;background:var(--surface);overflow:hidden}
+.sprow .bar i{display:block;height:100%;background:var(--pink);transition:width .35s}
+.slotres{border:2px solid var(--line);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.slotres.c{background:var(--wait-soft)}.slotres.r{background:var(--atk-soft)}.slotres.m{background:var(--psi-soft)}.slotres.x{background:var(--def-soft)}
+.slotres > header{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.slotres > header b{font-size:14.5px}
+.slotres > header small{font-size:12px;font-weight:700;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.trow{display:grid;grid-template-columns:auto minmax(0,1fr) 4.6em;gap:4px 8px;align-items:center;font-size:14px}
+.trow .nm{font-weight:800;min-width:0;display:flex;align-items:center;gap:6px}
+.trow.none .nm{color:var(--muted);font-weight:700}
+.star{width:32px;height:32px;border:2px solid var(--line);border-radius:8px;background:var(--surface);font-size:15px;line-height:1;padding:0;color:var(--muted)}
+.star[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop);box-shadow:2px 2px 0 var(--sh)}
+.why{font-size:12.5px;color:var(--ink-2);line-height:1.7;border-top:1.5px dashed var(--muted);padding-top:6px;font-variant-numeric:tabular-nums}
+.goal{padding:10px 12px;border:2.5px solid var(--line);border-radius:12px;background:var(--lilac);color:var(--on-pop);font-size:14px;display:flex;flex-direction:column;gap:2px}
+.goal .gv{font-family:var(--f-dot);font-size:28px;line-height:1.2}
+.goal.off{background:var(--field);color:var(--ink-2)}
+.togl{align-self:flex-start;padding:4px 12px;border:2px solid var(--line);border-radius:999px;background:var(--surface);font-weight:700;font-size:13px}
+.togl[aria-pressed="true"]{background:var(--mint);color:var(--on-pop)}
+.calc-sum{display:none}
+/* えらぶ画面（カードを押したとき） */
+html.ed-open{overflow:hidden}
+.ed .edbox{width:min(760px,100%);max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);padding:16px clamp(12px,3vw,20px);gap:10px}
+.ed .edbox b{font-family:inherit;font-weight:800;font-size:inherit}
+.ed .edbox header b{font-family:var(--f-pop);font-weight:400;font-size:19px}
+.edbody{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:18px;padding:2px 4px 8px 2px}
+.edfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:2px dashed var(--line);padding-top:10px}
+.edfoot .mini{font-weight:700}
+.ed-sec{display:flex;flex-direction:column;gap:8px}
+.ed-sec > h4{margin:0;display:flex;align-items:center;gap:8px;font-size:16px;flex-wrap:wrap}
+.ed-sec > h4 .n{font-family:var(--f-pop);font-weight:400;color:var(--atk)}
+.ed-sec > h4 small{font-size:12.5px;font-weight:700;color:var(--muted)}
+.search.sm{flex:none;max-width:none;width:100%;padding:8px 14px;font-size:15px}
+.pk-grp{display:flex;flex-direction:column;gap:6px}
+.pk-h{margin:0}
+.pk-sub{margin:2px 0 0;font-size:12px;font-weight:800;color:var(--muted)}
+.picks{display:flex;flex-wrap:wrap;gap:6px}
+.pick{display:inline-flex;flex-direction:column;align-items:flex-start;padding:6px 11px;border:2px solid var(--line);border-radius:10px;background:var(--surface);font-weight:700;font-size:13.5px;line-height:1.35;text-align:left;min-height:36px;justify-content:center}
+.pick small{font-size:11px;font-weight:700;color:var(--ink-2)}
+.pick[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop);box-shadow:2px 2px 0 var(--sh)}
+.pick[aria-pressed="true"] small{color:var(--on-pop)}
+.pick.bad{border-style:dashed}
+.pick.none{border-style:dashed;color:var(--ink-2)}
+.pick.big{padding:9px 16px;font-size:15px}
+.pick[hidden]{display:none}
+.pk-more > summary{cursor:pointer;font-size:13px;font-weight:800;color:var(--ink-2);padding:4px 0}
+.pk-more[open] > summary{margin-bottom:6px}
+.ed-slot{display:flex;flex-direction:column;gap:6px;padding:10px 12px;border:2px solid var(--line);border-radius:12px}
+.ed-slot + .ed-slot{margin-top:8px}
+.ed-slot.c{background:var(--wait-soft)}.ed-slot.r{background:var(--atk-soft)}.ed-slot.m{background:var(--psi-soft)}
+.ed-slot .es-h{margin:0;font-weight:800;font-size:14px}
+.teff2{font-size:13px;color:var(--ink-2);line-height:1.6;padding:6px 10px;border:1.5px dashed var(--muted);border-radius:8px;background:var(--surface)}
+.teff2 strong{color:var(--ink)}
+.kind4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.k4{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 6px;border:2.5px solid var(--line);border-radius:12px;background:var(--surface);font-weight:800;font-size:13px;line-height:1.3;text-align:center}
+.k4 .tk-ic{width:42px;height:42px;border:2.5px solid var(--line);border-radius:11px;display:grid;place-items:center}
+.k4 .tk-ic svg{width:26px;height:26px;display:block}
+.k4[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop);box-shadow:3px 3px 0 var(--sh)}
+@media (min-width:901px){.ed{align-items:center}}
+@media (max-width:900px){
+  .calc{grid-template-columns:minmax(0,1fr)}
+  .calc-out{position:static;max-height:none;overflow:visible}
+  .calc-sum{display:flex;position:sticky;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);z-index:5;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border:2.5px solid var(--line);border-radius:14px;background:var(--lemon);color:var(--on-pop);box-shadow:3px 3px 0 var(--sh);font-size:13.5px;font-weight:700}
+  .calc-sum[hidden]{display:none}
+  .calc-sum button{flex:none;padding:6px 12px;border:2px solid var(--line);border-radius:999px;background:var(--surface);font-weight:800;font-size:13px}
+}
+
+/* ===== 図のパーツ ===== */
+.dfig{margin:0;display:flex;flex-direction:column;gap:8px}
+.dfig figcaption{font-size:13.5px;color:var(--ink-2);text-align:center;line-height:1.6}
+.fig-h{margin:0;font-weight:800;font-size:14px}
+.flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 6px;padding:14px 10px;border:2.5px dashed var(--line);border-radius:16px;background:var(--surface)}
+.op{font-family:var(--f-pop);font-size:22px;line-height:1;color:var(--ink-2);padding:0 2px}
+.tok{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:84px;max-width:150px;padding:8px 8px 9px;border:2.5px solid var(--line);border-radius:14px;background:var(--field);box-shadow:3px 3px 0 var(--sh);text-align:center;color:var(--ink)}
+.tok .tk-tag{font-family:var(--f-dot);font-size:12px;line-height:1.35;padding:0 6px;border:2px solid var(--line);border-radius:6px;background:var(--surface)}
+.tok .tk-ic{position:relative;width:44px;height:44px;border:2.5px solid var(--line);border-radius:12px;display:grid;place-items:center;flex:none}
+.tok .tk-ic svg{width:28px;height:28px;display:block}
+.tok .tk-cnt{position:absolute;right:-12px;bottom:-9px;font-style:normal;font-family:var(--f-dot);font-size:13px;line-height:1.3;padding:0 4px;border:2px solid var(--line);border-radius:6px;background:var(--lemon);color:var(--on-pop)}
+.tok .tk-nm{font-size:13.5px;line-height:1.35;font-weight:800;overflow-wrap:anywhere}
+.flow.wrapped>.op.to,.clash.wrapped>.op.to{flex-basis:100%;text-align:center;font-size:0;padding:0;line-height:1}
+.flow.wrapped>.op.to::before,.clash.wrapped>.op.to::before{content:"▼";font-family:var(--f-dot);font-size:16px;color:var(--ink-2)}
+.calc-sum .cs-t{display:flex;flex-wrap:wrap;gap:0 .8em;min-width:0}
+.calc-sum .nw{white-space:nowrap}
+.tok .tk-lv{font-size:11.5px;font-weight:800;line-height:1.4;padding:0 6px;border:1.5px solid var(--line);border-radius:6px;background:var(--surface)}
+.tok .tk-trs{display:flex;flex-direction:column;gap:3px;width:100%}
+.tk-trs i{display:block;font-style:normal;font-size:11.5px;font-weight:700;line-height:1.35;padding:1px 5px;border:1.5px solid var(--line);border-radius:6px;overflow-wrap:anywhere}
+.tk-trs i.c{background:var(--wait-soft)}.tk-trs i.r{background:var(--atk-soft)}.tk-trs i.m{background:var(--psi-soft)}.tk-trs i.x{background:var(--def-soft)}
+.tk-trs i.n{background:var(--surface);color:var(--muted);border-style:dashed}
+.tok .tk-note{font-size:11.5px;font-weight:700;color:var(--ink-2);line-height:1.4}
+.tok .tk-stamp{position:absolute;top:-8px;right:-10px;transform:rotate(12deg);font-family:var(--f-pop);font-size:12px;line-height:1.3;padding:1px 6px;border:2px solid var(--ng);color:var(--ng);background:var(--surface);border-radius:6px}
+.tok.child{background:var(--lemon);color:var(--on-pop)}
+.tok.gone .tk-ic{opacity:.6}
+.pod-core.sm{width:64px;height:64px;flex:none;box-shadow:2px 2px 0 var(--sh)}
+.pod-core.sm::before{inset:5px}
+.pod-core b small{display:block;font-family:var(--f-dot);font-size:12px;text-align:center}
+.pod-core.sm b{font-size:14px;text-align:center;line-height:1.2}
+.clash{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;padding:14px 10px;border:2.5px dashed var(--line);border-radius:16px;background:var(--surface)}
+.cl-in{display:flex;flex-direction:column;gap:6px}
+.tchip{font-size:13px;font-weight:800;padding:4px 10px;border:2px solid var(--line);border-radius:10px;box-shadow:2px 2px 0 var(--sh)}
+.tchip.c{background:var(--wait-soft)}.tchip.r{background:var(--atk-soft)}.tchip.m{background:var(--psi-soft)}
+.clash .tslot{max-width:220px}
+.g22{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1fr) minmax(0,1fr);gap:6px;max-width:520px;width:100%;margin:0 auto}
+.g22h{display:grid;place-items:center;text-align:center;font-size:12.5px;font-weight:800;line-height:1.4;padding:6px 4px;color:var(--ink-2)}
+.g22c{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:64px;padding:6px 4px;border:2px solid var(--line);border-radius:12px;background:var(--surface);font-size:13px;font-weight:700;text-align:center}
+.g22c strong{font-family:var(--f-dot);font-weight:400;font-size:18px}
+.g22c.win{background:var(--lemon);color:var(--on-pop);box-shadow:3px 3px 0 var(--sh)}
+.lot{display:flex;flex-wrap:wrap;gap:5px;padding:10px;border:2.5px solid var(--line);border-radius:12px;background:var(--surface)}
+.lot i{width:28px;height:28px;border:2px solid var(--line);border-radius:7px;display:grid;place-items:center;font-style:normal;font-family:var(--f-dot);font-size:12px;color:var(--on-pop)}
+.lot i.a{background:var(--pink)}.lot i.b{background:var(--mint)}.lot i.x{background:var(--lemon)}
+.ptleg{display:flex;flex-direction:column;gap:6px;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface);font-size:14px}
+.ptleg span{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ptleg b{min-width:3.6em}
+.pb{display:inline-block;height:18px;border:2px solid var(--line);border-radius:4px;flex:none}
+.pb.half{width:40px;background:var(--pink)}
+.pb.tenth{width:10px;background:repeating-linear-gradient(45deg,var(--pink) 0 3px,#ffd1df 3px 6px)}
+.pb.one{width:80px;background:linear-gradient(90deg,var(--pink) 0 50%,var(--mint) 50%)}
+.bonus{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 14px;border:2.5px solid var(--line);border-radius:14px;background:var(--lilac);color:var(--on-pop);font-size:13px;font-weight:700;text-align:center;box-shadow:3px 3px 0 var(--sh)}
+.bonus strong{font-family:var(--f-dot);font-weight:400;font-size:22px}
+.role-top{display:flex;align-items:center;gap:8px}
+.role-ic{width:40px;height:40px;border:2.5px solid var(--line);border-radius:11px;display:grid;place-items:center;flex:none}
+.role-ic svg{width:24px;height:24px;display:block}
+.sbar{display:flex;height:28px;border:2.5px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
+.sbar i{display:flex;align-items:center;justify-content:center;min-width:0;font-style:normal;font-size:12.5px;font-weight:800;color:var(--on-pop);border-right:2px solid var(--line);white-space:nowrap;overflow:hidden;transition:width .35s}
+.sbar i:last-child{border-right:0}
+.sleg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;font-weight:700}
+.sleg span{display:inline-flex;align-items:center}
+.sw{display:inline-block;flex:none;width:13px;height:13px;border:2px solid var(--line);border-radius:4px;margin-right:6px;font-style:normal}
+.s0{background:var(--pink)}.s1{background:var(--mint)}.s2{background:var(--lilac)}.s3{background:var(--sky)}.s4{background:var(--lemon)}
+.se{background:repeating-linear-gradient(45deg,var(--surface) 0 5px,var(--field) 5px 10px)}
+.g-w{background:var(--pink)}.g-wn{background:repeating-linear-gradient(45deg,var(--pink) 0 4px,#ffd1df 4px 8px)}
+.g-r{background:var(--mint)}.g-rn{background:repeating-linear-gradient(45deg,var(--mint) 0 4px,#d4f7ec 4px 8px)}
+.gauge{display:flex;flex-direction:column;gap:4px}
+.gbox{position:relative;display:flex;height:32px;border:2.5px solid var(--line);border-radius:8px;background-color:var(--surface);background-image:linear-gradient(90deg,rgba(59,35,64,.14) 1.5px,transparent 1.5px)}
+.gbox i{height:100%;border-right:2px solid var(--line)}
+.gbox .g1{position:absolute;top:-7px;bottom:-7px;width:0;border-left:3px solid var(--atk);transform:translateX(-1.5px)}
+.gsc{position:relative;height:18px;font-size:12px;font-weight:800;color:var(--ink-2)}
+.gsc span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
+.gsc span.st{left:0;transform:none}
+.gsc span.end{transform:translateX(-100%)}
+.lvbars{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;align-items:end}
+.lvb{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
+.lvb .v{font-weight:800;font-size:13px;font-variant-numeric:tabular-nums}
+.lvb .col{width:100%;max-width:58px;height:72px;border:2px solid var(--line);border-radius:8px;background:var(--surface);display:flex;align-items:flex-end;overflow:hidden}
+.lvb .col i{display:block;width:100%;background:var(--pink);border-top:2px solid var(--line);transition:height .35s}
+.lvb.top .col i{background:var(--lemon)}
+.lvb.z{opacity:.45}
+.lvb.z .col i{border-top:0}
+.lvb b{font-family:var(--f-dot);font-weight:400;font-size:13px}
+
+/* ===== 特性図鑑 ===== */
+.dnote{font-size:14px;color:var(--ink-2);margin:-6px 0 14px}
+.word .sub{font-size:13px;color:var(--muted);line-height:1.5}
+.word .chips{display:flex;gap:6px;flex-wrap:wrap}
+.c-gold{background:var(--wait-soft);color:var(--wait);border-color:var(--wait)}
+.c-mid{background:var(--def-soft);color:var(--def);border-color:var(--def)}
+.c-bad{background:var(--ng-soft);color:var(--ng);border-color:var(--ng)}
+.more-row{display:flex;justify-content:center;margin-top:16px}
+
+@media (max-width:520px){
+  .pc-par{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pc-par .pod-core{grid-column:1/-1;order:-1;justify-self:center;width:56px;height:56px}
+  .kind4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tok{min-width:76px}
+  .flow{padding:12px 6px;gap:8px 4px}
+  .op{font-size:18px}
+  .pod-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pod-grid .pod-core{grid-column:1/-1;order:-1;justify-self:center;width:72px;height:72px}
+  .pod-grid .pod-core b{font-size:16px}
+  .pod-mats{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top gut">
+  <div class="wrap">
+    <a class="brand" href="#home"><span class="cas pod-ic" aria-hidden="true"></span><span><b>デビ融合講座</b><small>ONCE HUMAN · 初級から上級まで</small></span></a>
+    <nav class="tabs" aria-label="ページ">
+      <a href="#home" data-v="home">はじめに</a>
+      <a href="#lesson" data-v="lesson">レッスン</a>
+      <a href="#calc" data-v="calc">けいさん機</a>
+      <a href="#dex" data-v="dex">特性図鑑</a>
+      <a href="#quiz" data-v="quiz">クイズ</a>
+      <a href="#words" data-v="words">用語集</a>
+      <a class="back" href="https://yukhoeonce.github.io/"><svg viewBox="0 0 8 8" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M3 1h1v1H3zM2 2h1v1H2zM1 3h6v2H1zM2 5h1v1H2zM3 6h1v1H3z"/></svg>ガイドへ戻る</a>
+    </nav>
+  </div>
+</header>
+
+<main class="gut">
+  <div class="wrap">
+
+  <!-- ===== はじめに ===== -->
+  <section class="view" id="v-home">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">ONCE HUMAN FUSION GUIDE</p>
+        <h1>デビ融合、<em>どう組めばいいの？</em></h1>
+        <p class="lead">ワンスヒューマンのデビエーション融合を、初級・中級・上級の3つのレベルでまとめた講座だよ。読んで、けいさん機で確かめて、最後はクイズで力だめし。</p>
+        <div class="acts">
+          <a class="btn pink" href="#lesson" id="startBtn">初級からはじめる</a>
+          <a class="btn sub" href="#calc">けいさん機をつかう</a>
+        </div>
+        <div class="prog"><span id="progTxt">初級 0/6</span><span class="bar"><i id="progBar"></i></span></div>
+      </div>
+      <div class="card pod">
+        <p class="lab">融合ポッドに入れるもの（押すと説明へ）</p>
+        <div class="pod-grid">
+          <button class="slot" data-go="b2" data-ic="DEVI"><b>親（主素材）</b><span>消えない・融合回数が1へる</span></button>
+          <div class="pod-core" aria-hidden="true"><b>融合</b></div>
+          <button class="slot" data-go="b5" data-ic="DEVI"><b>親（主素材）</b><span>同じ特性なら100%</span></button>
+          <div class="pod-mats">
+            <button class="slot" data-go="b3" data-ic="MAT"><b>材料</b><span>同じ種類で出やすく</span></button>
+            <button class="slot" data-go="m1" data-ic="BLANK"><b>材料</b><span>無特性で残りやすく</span></button>
+            <button class="slot" data-go="m5" data-ic="FLASK"><b>材料</b><span>動物・家具・誘発剤</span></button>
+          </div>
+          <p class="pod-arrow" aria-hidden="true">▼ ▼ ▼</p>
+          <button class="slot w" data-go="b3" data-ic="EGG"><b>生まれるデビ</b><span>種類・特性・異能・活性が決まる</span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="paths">
+      <a class="card path" href="#lesson"><span class="eyebrow"><span>LESSON</span><span>初級・中級・上級</span></span><h3>3つのレベルのレッスン</h3><p>初級で融合のルール、中級で特性のコピーとハズレ消し、上級で100%ルートと誘発剤まで。</p></a>
+      <a class="card path" href="#calc"><span class="eyebrow"><span>CALC</span><span>本物の名前で</span></span><h3>融合けいさん機</h3><p>「やりたいこと」を選んで、カードを押して親と材料を変えるだけ。生まれるデビと特性の確率が図で出るよ。</p></a>
+      <a class="card path" href="#dex"><span class="eyebrow"><span>TRAITS</span><span id="dcount">—</span></span><h3>特性図鑑</h3><p>共通・戦闘・領地・創作物・変異・色違い。特性の効果を名前や言葉で探せるよ。</p></a>
+      <a class="card path" href="#quiz"><span class="eyebrow"><span>QUIZ</span><span>3レベル・毎回12問</span></span><h3>2択クイズ</h3><p>たくさんの問題から毎回12問がランダムに出るよ。答えると解説で答え合わせ。</p></a>
+    </div>
+  </section>
+
+  <!-- ===== レッスン ===== -->
+  <section class="view" id="v-lesson" hidden>
+    <div class="lvtabs" id="lvtabs" role="group" aria-label="レベル"></div>
+    <div class="lesson">
+      <nav class="card toc" id="toc" aria-label="レッスンの目次"></nav>
+      <article class="card les" id="les" aria-live="polite"></article>
+    </div>
+  </section>
+
+  <!-- ===== けいさん機 ===== -->
+  <section class="view" id="v-calc" hidden>
+    <div class="calc-head">
+      <p class="eyebrow">FUSION CALCULATOR</p>
+      <h2>融合けいさん機</h2>
+      <ol class="how">
+        <li><b>1</b>やりたいことを選ぶ</li>
+        <li><b>2</b>カードを押して、親や材料を変える</li>
+        <li><b>3</b>結果の★で、ほしい特性をえらぶ</li>
+      </ol>
+    </div>
+    <h3 class="sec-h">やりたいことから選ぶ</h3>
+    <div class="wants" id="wants"></div>
+    <div class="calc">
+      <div class="calc-in">
+        <div class="card podc" id="podc"></div>
+        <div class="calc-sum" id="calcSum" hidden></div>
+      </div>
+      <div class="card calc-out" id="calcOut" aria-label="けいさん結果"></div>
+    </div>
+    <p class="calc-note">通常サーバーの計算だよ。異次元の収容サーバーの技などは入ってないよ。</p>
+  </section>
+
+  <!-- ===== 特性図鑑 ===== -->
+  <section class="view" id="v-dex" hidden>
+    <div class="words-head">
+      <h2>特性図鑑</h2>
+      <input class="search" id="dq" type="search" placeholder="名前や効果で探す（例：エネルギー）" aria-label="特性を探す">
+    </div>
+    <div class="cats" id="dcats"></div>
+    <p class="dnote" id="dnote"></p>
+    <div class="wlist" id="dlist"></div>
+    <div class="more-row" id="dmore"></div>
+  </section>
+
+  <!-- ===== クイズ ===== -->
+  <section class="view" id="v-quiz" hidden>
+    <div class="card quiz" id="quiz"></div>
+  </section>
+
+  <!-- ===== 用語集 ===== -->
+  <section class="view" id="v-words" hidden>
+    <div class="words-head">
+      <h2>用語集</h2>
+      <input class="search" id="wq" type="search" placeholder="ことばで探す（例：無特性）" aria-label="用語を探す">
+    </div>
+    <div class="cats" id="wcats"></div>
+    <div class="wlist" id="wlist"></div>
+  </section>
+
+  </div>
+</main>
+
+<div class="sheet ed" id="ed" hidden>
+  <div class="card box edbox" role="dialog" aria-modal="true" aria-labelledby="edT">
+    <header><b id="edT"></b><button class="x" id="edX" aria-label="閉じる">×</button></header>
+    <div class="edbody" id="edBody"></div>
+    <div class="edfoot"><span class="mini" id="edNow"></span><button class="btn pink" id="edOk">決定</button></div>
+  </div>
+</div>
+
+<div class="sheet" id="sheet" hidden>
+  <div class="card box" role="dialog" aria-modal="true" aria-labelledby="sheetT">
+    <header><b id="sheetT"></b><button class="x" id="sheetX" aria-label="閉じる">×</button></header>
+    <p id="sheetD"></p>
+    <a href="#words" class="more" id="sheetMore">用語集で見る →</a>
+  </div>
+</div>
+
+<footer class="site gut">
+  <div class="wrap">
+    <span>非公式のファンサイトです。ゲームの名称・内容の権利は © NetEase / Starry Studio に帰属します。</span>
+    <span>確率はゲーム内の融合プレビューと同じ考え方で計算していますが、アップデートで変わることがあります。いちばん新しい内容はゲーム内の表示を見てね。</span>
+    <span><a href="https://yukhoeonce.github.io/">OnceHumanシナリオガイド</a> ・ <a href="https://yukhoeonce.github.io/mod/">MOD講座</a> ・ <a href="https://yukhoeonce.github.io/damage/">ダメージラボ</a></span>
+  </div>
+</footer>
+
+<div class="rfx" aria-hidden="true"></div>
+<script>
+(()=>{
+  const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cols=['#ff9fbd','#9be8d4','#ffe27a','#c9b3ff','#9fd6ff'];
+  const fx=document.querySelector('.rfx');
+  if(!RM)['★','✦','●','♪','◆','★','▲','✦','●','♪','◆','★'].forEach((t,i)=>{const e=document.createElement('i');e.textContent=t;
+    e.style.left=(5+i*8.1)%96+'%';e.style.top=(8+(i*37)%84)+'%';e.style.color=cols[i%5];
+    e.style.fontSize=(18+(i*7)%26)+'px';e.style.animationDelay=(-i*0.8)+'s';e.style.animationDuration=(7+i%5)+'s';fx.appendChild(e)});
+  const top=document.querySelector('.top');
+  if(top){const tk=document.createElement('div');tk.className='ticker';tk.setAttribute('aria-hidden','true');
+    const s='★ デビ融合講座 ✦ 欲しい特性は両方の親に ✦ 無特性3体で80% ♪ 材料は戻ってこないよ ✿ 親は2体とも高レベルに ◆ 色違いも特性だよ ';
+    tk.innerHTML='<div>'+s.repeat(6)+'</div>';top.after(tk)}
+  // ドット絵アイコン
+  const P={DEVI:['..####..','.######.','##.##.##','########','########','########','#.#..#.#','........'],
+    MAT:['..####..','.######.','##.##.##','########','##....##','########','#.#..#.#','........'],
+    BLANK:['..####..','.#....#.','#..#.#.#','#......#','#......#','#......#','#.#..#.#','........'],
+    FLASK:['..####..','...##...','...##...','..#..#..','.#....#.','#.####.#','#.####.#','.######.'],
+    EGG:['...##...','..####..','.######.','.##.#.#.','########','########','.######.','..####..'],
+    SWORD:['......##','.....###','....###.','#..###..','.####...','..##....','.#.#....','#.......'],
+    PICK:['..####..','.#.##.#.','#..##..#','...##...','...##...','...##...','...##...','...##...'],
+    GEAR:['...##...','.######.','.##..##.','###..###','###..###','.##..##.','.######.','...##...'],
+    PAW:['.##..##.','.##..##.','........','#.####.#','.######.','.######.','..####..','........']};
+  const C={DEVI:'#ff9fbd',MAT:'#9be8d4',BLANK:'#c9b3ff',FLASK:'#9fd6ff',EGG:'#ffe27a',SWORD:'#ff9fbd',PICK:'#9be8d4',GEAR:'#c9b3ff',PAW:'#ffe27a'};
+  const svg=k=>{let r='';P[k].forEach((row,y)=>[...row].forEach((c,x)=>{if(c==='#')r+=`<rect x="${x}" y="${y}" width="1.02" height="1.02"/>`}));
+    return `<svg viewBox="0 0 8 8" fill="#3b2340" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`};
+  window.pixIcon=svg;
+  document.querySelectorAll('.slot[data-ic]').forEach(b=>{const k=b.dataset.ic;if(!P[k])return;
+    const tx=document.createElement('span');tx.className='tx';while(b.firstChild)tx.appendChild(b.firstChild);
+    const ic=document.createElement('span');ic.className='ic';ic.style.background=C[k];ic.innerHTML=svg(k);b.append(ic,tx)});
+  // せいかいのキラキラ
+  window.sparkle=el=>{if(RM||!el)return;const r=el.getBoundingClientRect();
+    for(let k=0;k<10;k++){const s=document.createElement('span');s.className='spark';s.textContent=['✦','★','◆','✧'][k%4];
+      s.style.left=(r.left+r.width*Math.random())+'px';s.style.top=(r.top+r.height*.5)+'px';s.style.color=cols[k%5];
+      s.style.setProperty('--dx',(Math.random()*90-45)+'px');s.style.setProperty('--dy',(-30-Math.random()*60)+'px');
+      document.body.appendChild(s);setTimeout(()=>s.remove(),850)}};
+})();
+</script>
+<script>
+(()=>{
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const KEY='devistudy-v1';
+let st={};
+try{const v=JSON.parse(localStorage.getItem(KEY)||'null'); if(v&&typeof v==='object') st=v;}catch(e){}
+if(!st.dn||typeof st.dn!=='object') st.dn={b:[],m:[],a:[]};
+['b','m','a'].forEach(k=>{if(!Array.isArray(st.dn[k])) st.dn[k]=[];});
+if(!st.sp||typeof st.sp!=='object') st.sp={b:1,m:1,a:1};
+if(!st.qb||typeof st.qb!=='object') st.qb={b:null,m:null,a:null};
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pct=p=>{const v=p*100; if(Math.abs(v-Math.round(v))<1e-6) return Math.round(v)+'%'; return (v<1?v.toFixed(2):v.toFixed(1))+'%';};
+const fmtPt=v=>String(Math.round(v*100)/100);
+const clone=o=>JSON.parse(JSON.stringify(o));
+
+/* ===== ゲームのデータ（デビ・特性・材料） ===== */
+const DATA={"dev":[["99000002","ディスコボール",1],["99000003","極寒クラゲ",3],["99000004","ゼンマイガエル",1],["99000005","デンキウナギ",2],["99000007","バルーン・ドッグ",1],["99000008","アクティブゲル",3],["99000009","栄枯の種",1],["99000010","ドリームキャッチャー",1],["99000011","ささやくローンウルフ",3],["99000013","スペースキューブ",1],["99000014","ウサウサ",2],["99000016","氷の瓶",1],["99000018","Dr.クマ",3],["99000019","ハチマル",2],["99000020","グリーン・ドラゴン",2],["99000021","NO.37",2],["99000022","ヘクセンハウス",1],["99000023","丸鶏ボウル",1],["99000024","原子ライター",1],["99000025","じっと見つめる黒猫",3],["99000026","ビッグ・アイ",3],["99000027","くるみ割り人形",2],["99000028","大工ビーバー",2],["99000029","エレメントボーイ",2],["99000030","レッド・ドラゴン",3],["99000031","蝶の夢",2],["99000032","空の子",3],["99000033","ユニオン",1],["99000034","ミスターウィッシュ",3],["99000035","悪臭タマネギ",3],["99000036","スノードーム",1],["99000037","のっぽキノコ",2],["99000038","ブショウ",3],["99000039","レインマン",2],["99000040","スナップショット",3],["99000041","トビラ",1],["99000042","量子カタツムリ",1],["99000043","夜の灯火",2],["99000044","宇宙飛行魚",2],["99000045","パーティーモンキー",1],["99000046","上界の卵",1],["99000047","ブードゥー人形",3],["99000048","炎の精霊",2],["99000049","ブロークンガール",3],["99000050","ミニチュア特異点",3],["99000051","異次元の大猫",2],["99000052","イナズマボール",1],["99000053","黄衣の王（ミニ）",3],["99000054","紙人形",2],["99000055","ジェントルラビット",2],["99000056","職人の手",1],["99000057","タールプリン",2],["99000058","冬の精",3],["99000059","サンダラマンダー",3],["99000060","ウィッシュボックス",2],["99000064","クジラワン",3],["99000065","闇医者",2],["99000066","生命の精",3],["99000067","ブレイブ・ジョージ",3],["99000069","ベヒモス",3],["99000070","狐主任",2],["99000077","デュエット",2],["99000079","沈黙の彫像",3],["99900001","蝶の使者",3]],"res":[["99200051","混沌・異次元の大猫",2],["99200030","混沌のレッド・ドラゴン",3],["99200058","混沌・冬の精",3],["99200034","混沌・ミスターウィッシュ",3],["99200050","混沌・ミニチュア特異点",3]],"tr":{"100001":["もう一本",1,3,"創造型デビエーションが資源を生産する時、2%の確率で獲得する資源+2",1],"100002":["1個の値段で2個",1,3,"造物型が資源を生産する際、5%の確率で1個多く生産します",1],"100003":["死闘の前夜",1,3,"造物型の資源生産間隔を15%短縮",1],"100004":["加速、加速",1,3,"造物型の資源生産間隔を10%短縮",1],"100005":["グランデ",1,3,"創造型デビエーションの収納可能な資源上限+20%",1],"100006":["ベンティ",1,3,"創造型デビエーションの収納可能な資源上限+30%",1],"100007":["副産物",1,3,"デビエーションの活躍度が90%以上の時、資源を生産する時に10%の確率で他の創造型デビエーションに異常エネルギー+2点",1],"100008":["取らぬ狸の皮算用",1,3,"デビエーションの活躍度が90%以上の時、資源を生産する際に5%の確率で他の造物型デビエーションの異常エネルギーを10ポイント増加させる",1],"100009":["リスタート、ゼロから！",1,3,"造物型デビエーションが資源を生産する際、3%の確率で異常エネルギーが減少しない",1],"100010":["無から有を生み出す",1,3,"造物型デビエーションが資源を生産する際、5%の確率で異常エネルギーが減少しない",1],"100011":["手間いらず",1,3,"造物型デビエーションが資源を生産する際、3%の確率で活躍度が減少しません",1],"100012":["おちゃのこさいさい",1,3,"造物型デビエーションが資源を生産する際、5%の確率で活躍度が減少しない",1],"100013":["無料プレゼント",1,2,"創造物型デビエーションは資源を生産する時、5%の確率で獲得する資源+2。資源の生産時間間隔+20%",1],"100014":["ひらめき",1,2,"造物型が資源を生産する際、1%の確率で10個多く生産します。ただし、資源生産間隔が50%増加",1],"100015":["効率第一",1,2,"創造物型デビエーションの資源生産時間間隔-20%、収納可能な資源上限-30%",1],"100016":["切れっぱし",1,2,"デビエーションの活躍度が20%超えると、資源の獲得時に10%の確率で他の造物型デビエーションの異常エネルギー +1ポイント、収納可能な資源の上限 -20.0%",1],"100017":["過度生産",1,2,"デビエーションの活躍度が20%を下回ると、資源の獲得時に他の造物型デビエーションの異常エネルギー -1.0ポイント、獲得資源 +2",1],"100018":["計画外の生産",1,2,"創造物型デビエーションは資源を生産する時、10%の確率で異常エネルギーを消費しません。資源の生産時間間隔+20%",1],"100019":["おサボりの楽しさ",1,2,"創造物型デビエーションは資源を生産する時、10%の確率で活躍度を消費しません。資源の生産時間間隔+20%",1],"100020":["生産能力NO.1",1,2,"造物型の資源生産間隔を5%短縮",1],"100021":["トール",1,2,"創造物型デビエーションの収納可能な資源上限+10%",1],"100022":["ドジっ子",1,1,"創造物型デビエーションは資源を生産する時、5%の確率で獲得する資源-1",1],"100023":["怠惰",1,1,"創造物型デビエーションの資源生産時間間隔+10%",1],"100024":["存在しないショート",1,1,"創造物型デビエーションの収納可能な資源上限-10%",1],"100025":["横取り",1,1,"デビエーションの活躍度が20%未満の時、資源を生産する際に他の造物型デビエーションの異常エネルギーを5ポイント減少させる",1],"100026":["鉱脈強化",1,3,"油田の範囲内で、造物型デビエーションが資源を生産する際に、20%の確率で1が増加する。",1],"100027":["一致団結",1,3,"創造型が資源を産出する時、領地内に領地型デビエーションが1体増えるたびに産出量+1 （一定時間オフラインで無効になる）",1],"100028":["スターダスト強化",1,3,"汚染区域で、造物型が資源を生産する際に、20%の確率で1が増加する。",1],"100029":["スペースキューブ - ウォーターキューブ",1,3,"生産時に5%の確率でパールを1個獲得する",1,["99000013"]],"100030":["ヘクセンハウス - 浜辺の小屋",1,3,"水辺で休憩している間、エネルギーの回復速度+40%",1,["99000022"]],"100031":["スノードーム - 沈没船の秘宝",1,3,"産出時、5%の確率で沈船秘宝を1つ獲得する。",1,["99000036"]],"200001":["森の精霊",2,3,"領地型デビエーションが資源を持ち帰る際、5%の確率で変異花を持ち帰ります",1],"200002":["毒薬研究者",2,3,"領地型デビエーションが資源を持ち帰る時、一定の確率で酸液を持ち帰ることができます",1],"200003":["箴言の伝達者",2,3,"領地型デビエーションが資源を持ち帰る時、一定の確率で追加の鉱石を持ち帰ることができます",1],"200004":["縁の下の力持ち",2,3,"領地型デビエーションが稼働する時、消費するエネルギーと活躍度の時間間隔+20%",1],"200005":["働き蜂",2,3,"領地型デビエーションが稼働する時、消費するエネルギーと活躍度の時間間隔+10%",1],"200006":["神の目線",2,3,"領地型デビエーションの作業からの復帰時間の間隔-10%",1],"200007":["生きる地図",2,3,"領地型デビエーションの作業からの復帰時間の間隔-5%",1],"200008":["心神耗弱対策",2,3,"デビエーションは休眠でエネルギーを回復する時、20%の確率で他の領地型デビエーションの異常エネルギーを5点回復します",1],"200009":["幸せは夢にあり",2,3,"デビエーションは休眠でエネルギーを回復する時、10%の確率で他の領地型デビエーションの異常エネルギーを10点回復します",1],"200010":["甘い言葉",2,3,"デビエーションは休眠で活躍度を回復する時、20%の確率で他の領地型デビエーションの活躍度を5点回復します",1],"200011":["傾国の魅力",2,3,"デビエーションは休眠で活躍度を回復する時、10%の確率で他の領地型デビエーションの活躍度を20点回復します",1],"200012":["不完全な永久機関",2,3,"デビエーションが稼働する時、10%の確率で異常エネルギーを消費しません",1],"200013":["自主残業",2,3,"デビエーションが稼働する時、10%の確率で活躍度を消費しません",1],"200014":["無料プレゼント",2,2,"領地型デビエーションが5%の確率で金鉱石を持ち帰るが、戻ってくる時間間隔が延びる",1],"200015":["年寄りは家の宝",2,2,"領地型デビエーションが稼働する時、消費するエネルギーと活躍度の頻度が増えます。作業からの復帰時間の間隔-10%",1],"200016":["寝る子は育つ",2,2,"活躍度が低下したとき、10%の確率で他の領地型デビエーションの活躍度を低下させる。休眠してエネルギーを回復する間、5%の確率で他の領地型デビエーションの異常エネルギーを回復する",1],"200017":["国民的恋人",2,2,"異常エネルギーが低下したとき、10%の確率で他の領地型デビエーションの異常エネルギーを低下させる。休眠して活躍度を回復する間、5%の確率で他の領地型デビエーションの活躍度を回復する",1],"200018":["迷惑行為",2,1,"異常エネルギーが減ると、他の領地型デビエーションの異常エネルギーも10%の確率で減ります。",1],"200019":["足を引っ張る",2,1,"活躍度が減ると、他の領地型デビエーションの活躍度も10%の確率で減ります。",1],"200020":["怠け者",2,1,"領地型デビエーションの作業からの復帰時間の間隔+5%",1],"200021":["おサボり",2,1,"領地型デビエーションが稼働する時、消費するエネルギーと活躍度の時間間隔-5%",1],"200022":["スターダスト強化",2,3,"領地型デビエーションが汚染区域で仕事をしている間、20%の確率でエネルギーを消費しない",1],"200023":["スターダスト親和",2,3,"領地型デビエーションが汚染区域で稼働している間、20%の確率で活躍値を消費しない",1],"200024":["親密の水域",2,3,"領地型デビエーションが水辺で休憩している間、エネルギー回復速度が30%上昇する",1],"200025":["水域の休眠",2,3,"領地型デビエーションが水辺で休んでいる間、活躍値回復速度+30%",1],"200026":["働き蜂 - 光と影",2,3,"稼働する時、消費するエネルギーと活躍度の時間間隔+20%",1,["99000027"]],"200027":["甘い囁き - ミスターシルバー",2,3,"休眠で活躍度を回復する時、25%の確率で他の領地型デビエーションの活躍度を10点回復する",1,["99000027"]],"200028":["スターダストとともに - オーシャンブルー",2,3,"汚染区域で稼働している間、30%の確率で活躍値を消費しない",1,["99000027"]],"200029":["不完全な永久機関 - エレガントパープル",2,3,"汚染区域で仕事をしている間、20%の確率で異常エネルギーを消費しない",1,["99000027"]],"200030":["幸せは夢の中に - ムーンダイヤ",2,3,"休眠でエネルギーを回復する時、20%の確率で他の領地型デビエーションの異常エネルギーを15点回復する",1,["99000051"]],"200031":["水辺のひととき - ビッグオレンジ",2,3,"水辺で休んでいる間、活躍値回復速度+35%",1,["99000051"]],"200032":["箴言の伝達者 - ゴールド",2,3,"資源を持ち帰る時、一定の確率で鉱石を持ち帰ることができる",1,["99000029"]],"200033":["自主残業 - プリズム",2,3,"稼働する時、15%の確率で活躍度を消費しない",1,["99000029"]],"200034":["毒薬研究者 - 薄緑",2,3,"汚染区域で仕事をしている間、25%の確率でエネルギーを消費しない",1,["99000037"]],"200035":["森の精霊 - アリス",2,3,"資源を持ち帰る際、10%の確率で変異花を持ち帰る",1,["99000014"]],"200036":["毒薬研究者 - ブラック",2,3,"資源を持ち帰る時、一定の確率で酸液を持ち帰ることができる",1,["99000014"]],"200037":["海軍の上将",2,3,"デビエーションが稼働する時、3%の確率で異常エネルギーを消費しない",1,["99000027"]],"200038":["お菓子の兵隊",2,3,"デビエーションが稼働する時、3%の確率で活躍度を消費しない",1,["99000027"]],"200039":["クリスマス",2,3,"領地型デビエーションが稼働する時、消費するエネルギーと活躍度の時間間隔+5%",1,["99000027"]],"200040":["アール・ダイヤモンド",2,3,"領地型デビエーションが汚染区域で仕事をしている間、5%の確率でエネルギーを消費しない",1,["99000027"]],"200194":["エレメントボーイ-グラビティアビス",4,3,"デビエーションの外観に変化が生じた。領地型デビエーションが資源を持ち帰る時、一定確率で追加の鉱石を持ち帰ることができる",0,["99000029"]],"200195":["原子ライター-グラビティアビス",4,3,"デビエーションの外観が変化した。創造型の資源産出時、20%の確率で1個多く獲得できる。",0,["99000024"]],"200196":["くるみ割り人形 - ダークブロック",4,3,"同時に活躍度上限+40",0,["99000027"]],"200197":["NO.37 - 潜水艦態勢",2,3,"生産時に5%の確率で酸素タンク×1を獲得する",1,["99000021"]],"200198":["狐主任 - 休暇",2,3,"水辺で休憩している間、活躍値の回復速度+40%",1,["99000070"]],"300001":["ダメンズ",3,2,"当デビエーションと同期後、プレイヤーの所持重量の上限+8。",1],"300002":["健康",3,2,"当デビエーションと同期後、プレイヤーのスタミナ上限+10。",1],"300003":["耐久度",3,2,"当デビエーションと同期後、プレイヤーのスタミナ消費-5%。",1],"300004":["飛脚",3,2,"当デビエーションと同期後、プレイヤーの移動速度+5%。",1],"300005":["力持ち",3,2,"当デビエーションと同期後、プレイヤーの所持重量の上限+15、移動速度-5%。",1],"300006":["植物のように静か",3,2,"当デビエーションと同期後、プレイヤーのスタミナ上限+15、移動速度-5%。",1],"300007":["体力温存",3,2,"当デビエーションと同期後、プレイヤーのスタミナ消費-10%、移動速度-5%。",1],"300008":["力王",3,2,"当デビエーションと同期後、プレイヤーの所持重量の上限+25、移動速度-10%。",1],"300009":["長距離ランナー",3,2,"当デビエーションと同期後、プレイヤーのスタミナ消費-20%、移動速度-10%。",1],"300010":["神射手",3,3,"当デビエーションが戦闘状態の場合、プレイヤーの銃器DMG+5%。",1],"300011":["サイキックボーイ",3,3,"当デビエーションが戦闘状態の場合、プレイヤーの状態異常DMG+5%。",1],"300016":["シフト制",3,2,"当デビエーションと同期後、昼になるとプレイヤーの所持重量の上限+16、夜になるとプレイヤーの移動速度+12%。",1],"300017":["運動で長寿",3,3,"当デビエーションと同期後、プレイヤーがスプリント状態の場合、8秒ごとに異常エネルギー+1Pt",1],"300018":["運動不足",3,1,"当デビエーションと同期後、プレイヤーが集落エリアにいる時、所持重量の上限-8。",1],"300019":["自宅警備員",3,1,"当デビエーションと同期後、プレイヤーが集落エリアにいる時、スタミナ消費+8%。",1],"300020":["都会っ子",3,2,"当デビエーションと同期後、プレイヤーが集落エリアにいる時、所持重量の上限+15。",1],"300021":["ストリートボーイ",3,2,"当デビエーションと同期後、プレイヤーが集落エリアにいる時、移動速度+10%。",1],"300022":["重くて硬い",3,3,"当デビエーションと同期後、プレイヤーの所持重量の上限が高ければ、ボディDMG軽減も高くなり、最大で+15%。",1],"300023":["心の断捨離",3,3,"当デビエーションと同期後、プレイヤーの所持重量の上限が低ければ、頭部DMG軽減も高くなり、最大で+15%。",1],"300101":["太陽の賛歌 - 春のバラ",3,3,"能力の同期後、プレイヤーの昼の間の治療効果+20%。夜は効果が半減する。",1,["99000008"]],"300102":["満月の賛歌 - 星月夜",3,3,"能力の同期後、プレイヤーの夜の間のダメージ（銃器、状態異常）+6%。昼は効果が半減する",1,["99900001"]],"300103":["星空 - 瑠璃色の星",3,3,"能力の同期後、リロードするたびにランダムで銃器DMG+5%または状態異常DMG+5%",1,["99000008"]],"300104":["弱点マスター - 揺らめく青",3,3,"能力の同期後、弱点に命中すると追加で異常エネルギー+1Pt。CD3秒",1,["99900001"]],"300105":["ささやくローンウルフ - 月の予兆",3,3,"能力の同期後、プレイヤーの銃器DMG+5%。理性値が30%未満の場合は1.5倍になる",0,["99000011"]],"300106":["アクティブゲル - 月の予兆",3,3,"能力の同期後、8秒ごとに異常エネルギーを1Pt回復する。理性値が30%未満の場合は1.5倍になる",0,["99000008"]],"300107":["冬の精 - 月の予兆",3,3,"能力の同期後、状態異常DMG+5%。理性値が30%未満の場合は1.5倍になる",0,["99000058"]],"300108":["空の子 - 月の予兆",3,3,"能力の同期後、滑空時の落下速度-20%、水平速度+10%。理性値が30%未満の場合は1.5倍になる",0,["99000032"]],"300109":["ブショウ - 月の予兆",3,3,"能力の同期後、プレイヤーとブショウの近接DMG+10%。理性値が30%未満の場合は1.5倍になる",0,["99000038"]],"300110":["レッド・ドラゴン - 月の予兆",3,3,"能力の同期後、状態異常DMG+5%。理性値が30%未満の場合は1.5倍になる。",0,["99000030"]],"300111":["ミニチュア特異点 - 逆行する星",3,3,"デビエーションの外観に変化が生じた。能力の同期後、プレイヤーのヘッドおよびボディへのDMG軽減+5%。空中にいる場合、効果+50%",0,["99000050"]],"300112":["ビッグ・アイ - 逆行する星",3,3,"能力の同期後、ブレイズエレメントDMG+5%。空中にいる間、効果+50%",0,["99000026"]],"300113":["極寒クラゲ - 逆行する星",3,3,"能力の同期後、氷結エレメントDMG+5%。空中にいる場合、効果+50%",0,["99000003"]],"300114":["ブードゥー人形 - 逆行する星",3,3,"デビエーションの外観に変化が生じた。能力の同期後、8秒ごとに異常エネルギーを1Pt回復する。空中にいる場合、効果+50%",0,["99000047"]],"300115":["じっと見つめる黒猫 - 逆行する星",3,3,"能力の同期後、近接DMG+5%。空中にいる場合、効果+50%",0,["99000025"]],"300116":["黄衣の王（ミニ） - 逆行する星",3,3,"デビエーションの外観に変化が生じた。能力の同期後、状態異常DMG+5%。空中にいる場合、効果+50%",0,["99000053"]],"300117":["ミスターウィッシュ - ホープグース",3,3,"デビエーションの外観が変化した。このデビエーションが戦闘状態の場合、プレイヤーの銃器DMG+5%",1,["99000034"]],"300118":["ミスターウィッシュ - ホープグース",3,3,"デビエーションの外観が変化した。このデビエーションを同期すると、プレイヤーの所持重量が重いほど胴体の被DMG軽減が上昇する。最大で+15%まで",1,["99000034"]],"300119":["ミスターウィッシュ - ホープグース",3,3,"デビエーションの外観が変化した。このデビエーションが戦闘状態の場合、プレイヤーの状態異常DMG+5%",1,["99000034"]],"300120":["ミスターウィッシュ-ホワイ",3,3,"デビエーションの外観が変化した。このデビエーションのHPが300%上昇する。",1,["99000034"]],"300121":["ミスターウィッシュ-ホワイ",3,3,"デビエーションの外観が変化した。このデビエーションのHPが300%上昇する。",1,["99000034"]],"300196":["サンダラマンダー-グラビティアビス",4,3,"能力の同期後、サンダーエレメントDMG+5%。空中にいる間、効果が50%向上します",0,["99000059"]],"300197":["サンダラマンダー-ピンクブロック",4,3,"能力の同期後、サンダーエレメントDMG+5%。異常エネルギーが100以上の場合は効果が50%向上する",0,["99000059"]],"300198":["Dr.クマ-守護ブロック",4,3,"能力の同期後、DMG軽減+10%。異常エネルギーが100以上の場合は効果が1.5倍になる",0,["99000018"]],"300199":["ブロークンガール - セーラー服",3,3,"デビエーションの造型に変化が生じる。装備時、プレイヤーの泳ぐ速度が120%まで上昇する。",1,["99000049"]],"300200":["クジラワン - 水嫌い",3,3,"デビエーションの造型が変化しました。装備時、プレイヤーが濡れているか泳ぎ状態の場合、10%のDMG軽減を獲得します。",1,["99000064"]],"400001":["予備エネルギー1",4,3,"異常エネルギー上限+15%",1],"400002":["予備エネルギー2",4,3,"異常エネルギーの上限が20%増加",1],"400003":["予備エネルギー3",4,3,"異常エネルギー上限が25%アップ",1],"400004":["予備エネルギー4",4,3,"異常エネルギー上限が30%増加",1],"400005":["予備エネルギー5",4,3,"異常エネルギーの上限が35%アップ",1],"400006":["生まれつきの楽天家1",4,3,"活動度の上限が15%アップ",1],"400007":["生まれつきの楽天家2",4,3,"活躍度上限+20%",1],"400008":["生まれつきの楽天家3",4,3,"活動度の上限が25%アップ",1],"400009":["生まれつきの楽天家4",4,3,"活躍度上限+30%",1],"400010":["生まれつきの楽天家5",4,3,"活躍度上限+35%",1],"400011":["ありふれるパワー1",4,3,"異常エネルギーの回復速度5%アップ",1],"400012":["ありふれるパワー2",4,3,"異常エネルギーの回復速度が10%アップ",1],"400013":["元気いっぱい1",4,3,"活動度の回復速度が5%増加",1],"400014":["元気いっぱい2",4,3,"アクティビティ回復スピード10%アップ",1],"400015":["元気いっぱい3",4,3,"活動度の回復速度が15%アップ",1],"400016":["元気いっぱい4",4,3,"アクティブ度の回復速度が20%増加",1],"400017":["元気いっぱい5",4,3,"活躍度回復速度+25%",1],"400018":["内面拡張1",4,2,"異常エネルギーの上限が30%増加。活動度の回復速度が5%低下",1],"400019":["活気を刺激する1",4,2,"アクティビティ上限が30%増加。異常エネルギーの回復速度が5%低下",1],"400020":["内面拡張2",4,2,"異常エネルギーの上限が40%アップ。活動度の回復スピードが5%ダウン",1],"400021":["活気を刺激する2",4,2,"活動度の上限が40%増加。異常エネルギーの回復速度が5%低下",1],"400022":["内面拡張3",4,2,"異常エネルギーの上限が50%増加。活動度の回復速度5%減少",1],"400023":["活気を刺激する3",4,2,"アクティビティ上限が50%増加。異常エネルギーの回復速度が5%低下",1],"400024":["憂鬱",4,1,"活躍度上限 -5.0%",1],"400025":["陳腐",4,1,"異常エネルギー上限 -5.0%",1],"400026":["憂鬱2",4,1,"活躍度上限 -10.0%",1],"400027":["陳腐2",4,1,"異常エネルギー上限 -10.0%",1],"400028":["位置エネルギー変換",4,3,"エネルギーが0になると、自動的にアクティブ度を消費してエネルギーを回復する",1],"400029":["エネルギー安定",4,3,"エネルギーの上限が30増加する",1],"400030":["活躍安定",4,3,"活躍度の上限が30増加",1],"400031":["予備エネルギー - パラレルテール",4,3,"エネルギー上限+40%",1,["99000027"]],"400032":["安定の活躍 - ゴールデンエイジ",4,3,"活躍度上限+35",1,["99000027"]],"400033":["安定のエネルギー - 錫の兵隊",4,3,"エネルギー上限+35",1,["99000027"]],"400034":["不正常なメーター - パープル",4,3,"エネルギー回復速度+15%",1,["99000027"]],"400035":["みなぎる活力 - ゴージャスパープル",4,3,"活躍度回復速度+30%",1,["99000027"]],"400036":["オプティミスト - フォーチュン",4,3,"活躍度上限+40%",1,["99000051"]],"400037":["オプティミスト - 倍倍ゲーム",4,3,"活躍度上限+40%",1,["99000037"]],"400038":["カボチャのライト",4,3,"異常エネルギー上限+10%",1,["99000019"]],"400039":["旅する魔女",4,3,"異常エネルギー上限+10%",1,["99000049"]],"400040":["若葉",4,3,"エネルギーの上限が+10",1,["99000027"]],"400041":["青緑",4,3,"異常エネルギーの回復速度+7%",1,["99000027"]],"400042":["緑青",4,3,"異常エネルギー上限+7%",1,["99000027"]],"400043":["赤茶",4,3,"活躍度の上限+7%",1,["99000027"]],"400044":["黄土",4,3,"活躍度の回復速度+7%",1,["99000027"]],"400045":["クリスマスエルフ",4,3,"異常エネルギー上限+10%、異常エネルギー回復速度+5%。",1,["99000018"]],"400046":["クリスマスエルフ",4,3,"異常エネルギー上限+10%、異常エネルギー回復速度+5%。",1,["99000028"]],"400047":["クリスマスエルフ",4,3,"異常エネルギー上限+10%、異常エネルギー回復速度+5%。",1,["99000020"]],"400048":["フォーチュンダイス",4,3,"期待に応えるサイコロが、あなたに幸運をもたらしますように。異常エネルギー上限+6%",1,["99000029"]],"400049":["残り火",4,3,"あなたの実りある一年を願って幸せを詰め込んだ飾り灯籠。活躍度の上限+8%",1,["99000019"]],"400067":["ウサウサ-低周波ファントム",4,3,"エネルギー上限+40%",1,["99000014"]],"400068":["スペースキューブ-ホワイトクリフ",4,3,"活躍度上限+35",1,["99000013"]],"400069":["デンキウナギ-金色の稲妻",4,3,"エネルギー回復速度+15%",1,["99000005"]],"400070":["バルーン・ドッグ - ゴールデンサンダー",4,3,"活躍度回復速度+30%",1,["99000007"]],"400072":["空の子 - バーストメルト",4,3,"エネルギー回復速度+10%",1,["99000032"]],"400073":["ささやくローンウルフ「マグマバースト」",4,3,"エネルギー上限+40%",1,["99000011"]],"400074":["ミニチュア特異点 - バーストメルト",4,3,"活躍度上限+35",1,["99000050"]],"400075":["量子カタツムリ-金色の稲妻",4,3,"エネルギー回復速度+15%",1,["99000042"]],"400076":["グリーン・ドラゴン-低周波ファントム",4,3,"活躍度回復速度+30%",1,["99000020"]],"400077":["極寒クラゲ-光質種",4,3,"活躍度回復速度+20%",1,["99000003"]],"400078":["夢の領域 - エレメントボーイ",4,3,"エネルギー回復速度+10%",1,["99000029"]],"400079":["ささやくローンウルフ - 星の涙",4,3,"エネルギー上限+40%",1,["99000011"]],"400080":["ささやくローンウルフ - 凍える触手",4,3,"活躍度上限+35",1,["99000011"]],"400081":["空の子 - 凍える触手",4,3,"エネルギー回復速度+15%",1,["99000032"]],"400082":["ウサウサ-水瓶座",4,3,"活躍度回復速度+30%",1,["99000014"]],"400083":["炎の精霊 - ガマ",4,3,"活躍度回復速度+20%",1,["99000048"]],"400084":["黄衣の王（ミニ）-星喰い異形",4,3,"エネルギー回復速度+10%",1,["99000053"]],"400085":["蝶の使者 - レトロ",4,3,"エネルギー上限+40%",1,["99900001"]],"400086":["アクティブゲル - ミルクキャンディ",4,3,"活躍度上限+35",1,["99000008"]],"400087":["ウサウサ - 神獣",4,3,"エネルギー回復速度+15%",1,["99000014"]],"400088":["じっと見つめる黒猫 - ファラオ",4,3,"活躍度回復速度+30%",1,["99000025"]],"400089":["ビッグ・アイ - ヨコシマな太陽",4,3,"活躍度回復速度+20%",1,["99000026"]],"400090":["エレメントボーイ - エメラルド",4,3,"エネルギー回復速度+10%",1,["99000029"]],"400091":["のっぽキノコ - ヒカリダケ",4,3,"エネルギー上限+40%",1,["99000037"]],"400093":["レインマン - 光る雨",4,3,"エネルギー回復速度+15%",1,["99000039"]],"400094":["レインマン - 子供時代",4,3,"活躍度回復速度+30%",1,["99000039"]],"400095":["夜の灯火 - 極夜の末裔",4,3,"活躍度回復速度+20%",1,["99000043"]],"400096":["タールプリン - 美酒",4,3,"エネルギー回復速度+10%",1,["99000057"]],"400097":["タールプリン - 放射光",4,3,"エネルギー上限+40%",1,["99000057"]],"400102":["ブードゥー人形 - ふわふわ呪物",4,3,"エネルギー回復速度+10%",1,["99000047"]],"400104":["炎の精霊 - プリンス",4,3,"活躍度上限+35",1,["99000048"]],"400107":["紙人形 - 魔女の宝物",4,3,"活躍度回復速度+20%",1,["99000054"]],"400108":["スナップショット - 愚者の記憶",4,3,"エネルギー回復速度+10%",1,["99000040"]],"400109":["悪臭タマネギ - 高貴な身分",4,3,"エネルギー上限+40%",1,["99000035"]],"400110":["冬の精 - 春の訪れ",4,3,"活躍度上限+35",1,["99000058"]],"400111":["ミスターウィッシュ - 願いのグリーン・ドラゴン",4,3,"エネルギー回復速度+15%",1,["99000034"]],"400113":["ウィッシュボックス-アトナル・レゾナンス",4,3,"活躍度回復速度+20%",1,["99000060"]],"400114":["NO.37 - プロトタイプ",4,3,"エネルギー回復速度+10%",1,["99000021"]],"400116":["量子カタツムリ - 月の予兆",4,3,"資源の生産間隔-15%",0,["99000042"]],"400117":["デンキウナギ - 月の予兆",4,3,"領地型デビエーション稼働時、エネルギーと活躍度の消費間隔+20%",0,["99000005"]],"400118":["ささやくローンウルフ - サウンドファントム",4,3,"活躍度回復速度+30%",1,["99000011"]],"400119":["ジェントルラビット - サウンドファントム",4,3,"活躍度回復速度+20%",1,["99000055"]],"400120":["悪臭タマネギ - サウンドファントム",4,3,"エネルギー回復速度+10%",1,["99000035"]],"400121":["狐主任 - サウンドファントム",4,3,"エネルギー上限+40%",1,["99000070"]],"400122":["くるみ割り人形 - サウンドファントム",4,3,"活躍度上限+35",1,["99000027"]],"400123":["生命の精 - サウンドファントム",4,3,"エネルギー回復速度+15%",1,["99000066"]],"400124":["ヘクセンハウス - サウンドファントム",4,3,"活躍度回復速度+30%",1,["99000022"]],"400125":["タールプリン - サウンドファントム",4,3,"活躍度回復速度+20%",1,["99000057"]],"400126":["スナップショット - サウンドファントム",4,3,"エネルギー回復速度+10%",1,["99000040"]],"400127":["量子カタツムリ - サウンドファントム",4,3,"エネルギー上限+40%",1,["99000042"]],"400128":["大工ビーバー - サウンドファントム",4,3,"活躍度上限+35",1,["99000028"]],"400129":["のっぽキノコ - サウンドファントム",4,3,"エネルギー回復速度+15%",1,["99000037"]],"400130":["バルーン・ドッグ - サウンドファントム",4,3,"活躍度回復速度+30%",1,["99000007"]],"400131":["Dr.クマ - サウンドファントム",4,3,"活躍度回復速度+20%",1,["99000018"]],"400132":["ビッグ・アイ - サウンドファントム",4,3,"エネルギー回復速度+10%",1,["99000026"]],"400133":["ウィッシュボックス - サウンドファントム",4,3,"エネルギー上限+40%",1,["99000060"]],"400134":["デンキウナギ - サウンドファントム",4,3,"活躍度上限+35",1,["99000005"]],"400135":["ハチマル - サウンドファントム",4,3,"エネルギー回復速度+15%",1,["99000019"]],"400136":["アクティブゲル - サウンドファントム",4,3,"活躍度回復速度+30%",1,["99000008"]],"400137":["クジラワン - サウンドファントム",4,3,"活躍度回復速度+20%",1,["99000064"]],"400138":["パーティーモンキー - サウンドファントム",4,3,"エネルギー回復速度+10%",1,["99000045"]],"400139":["スノードーム - サウンドファントム",4,3,"エネルギー上限+40%",1,["99000036"]],"400140":["炎の精霊 - サウンドファントム",4,3,"活躍度上限+35",1,["99000048"]],"400141":["ゼンマイガエル - サウンドファントム",4,3,"エネルギー回復速度+15%",1,["99000004"]],"400142":["蝶の使者 - サウンドファントム",4,3,"活躍度回復速度+30%",1,["99000001"]],"400143":["NO.37 - サウンドファントム",4,3,"活躍度回復速度+20%",1,["99000021"]],"400144":["レインマン - サウンドファントム",4,3,"エネルギー回復速度+10%",1,["99000039"]],"400145":["レッド・ドラゴン - サウンドファントム",4,3,"エネルギー上限+40%",1,["99000030"]],"400146":["空の子 - サウンドファントム",4,3,"活躍度上限+35",1,["99000032"]],"400147":["丸鶏ボウル - サウンドファントム",4,3,"エネルギー回復速度+15%",1,["99000023"]],"400148":["紙人形 - サウンドファントム",4,3,"活躍度回復速度+30%",1,["99000054"]],"400149":["原子ライター - サウンドファントム",4,3,"活躍度回復速度+20%",1,["99000024"]],"400150":["ディスコボール - サウンドファントム",4,3,"エネルギー回復速度+10%",1,["99000002"]],"400151":["スペースキューブ - サウンドファントム",4,3,"エネルギー上限+40%",1,["99000013"]],"400152":["極寒クラゲ-低周波ファントム",4,3,"活躍度上限+35",1,["99000003"]],"400153":["ウサウサ-低周波ファントム",4,3,"エネルギー回復速度+15%",1,["99000014"]],"400154":["スナップショット - 月の予兆",4,3,"デビエーションの外観が変化した。能力の同期後、プレイヤーの銃器DMG+5%、理性値が30%未満の場合、効果+50%",0,["99000040"]],"400155":["レインマン - 童心",4,3,"活躍度回復速度+30%",1,["99000039"]],"400156":["ミスターウィッシュ - ウィッシュ・ドラゴン",4,3,"エネルギー回復速度+15%",1,["99000034"]],"400157":["宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400158":["ウォーマウス宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400159":["コクレン宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400160":["サッカー-ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400161":["コイ宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400162":["アロワナ宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400163":["ティラピア宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400164":["シーバス宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400165":["アストロノータス宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400166":["エンゼルフィッシュ宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400167":["コバンアジ宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400168":["バラクーダ宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400169":["ニシキゴイ宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400170":["ブラッドジェイド宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400171":["ブラックローズ飛行士-ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400172":["ソメツケ飛行士-ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400173":["スポッテッド宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400174":["アンバー宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400175":["オパール飛行士-ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400176":["アクアマリン宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400177":["クラウド宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400178":["ブルーピーコック飛行士-ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400179":["純白宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400180":["ゴールデンダガー飛行士-ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400181":["ブラッドレッド宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400182":["レッドジャイアント飛行士-ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400183":["ラッキーパープル飛行士-ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400184":["極寒クラゲ飛行士-ピチピチ",4,3,"収容ポッド内にある場合、領地内でプレイヤーの酷暑耐性+5Pt（この効果はスタック不可）",1,["99000044"]],"400185":["炎の精霊飛行士-ピチピチ",4,3,"収容ポッド内にある場合、領地内でプレイヤーの寒冷耐性+5Pt（この効果はスタック不可）",1,["99000044"]],"400186":["デンキウナギ宇宙飛行魚 - ピチピチ",4,3,"光に対する好みが満たされるようになる",1,["99000044"]],"400187":["エレメントボーイ - 一方通行",4,3,"光に対する好みが満たされるようになる",1,["99000029"]],"400188":["上界の卵-異形との共生",4,3,"デビエーションの外観が変化した。汚染区域での資源収集時、30%の確率で1個追加で獲得できる。",0,["99000046"]],"400189":["レインマン-異形との共生",4,3,"デビエーションの外観が変化した。デビエーションが汚染区域で仕事をしている間、30%の確率で活躍度を消費しない。",0,["99000039"]],"400190":["蝶の夢-異形との共生",4,3,"休眠でエネルギーを回復する時、20%の確率で他の領地型デビエーションの異常エネルギーを15Pt回復します",0,["99000031"]],"400191":["のっぽキノコ-異形との共生",4,3,"領地型デビエーションが汚染区域で仕事をしている間、10%の確率でエネルギーを消費しません",0,["99000037"]],"400192":["Dr.クマ-異形との共生",4,3,"デビエーションの外観が変化した。プレイヤーの被ダメージ-15%、汚染区域では効果が50%上昇する。",0,["99000018"]],"400193":["スノードーム-異形との共生",4,3,"デビエーションの外観が変化した。汚染区域内での資源産出時、30%の確率で1増加する。",0,["99000036"]],"400194":["煌めく銀河宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400195":["フローイングシルバー宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400196":["ジェイド宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400197":["蝶の夢 - バケーション",4,3,"エネルギーが0になった場合、作業閾値まで補充する。",0,["99000031"]],"400198":["レインボー宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400199":["キラキラ宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400200":["スカーレット宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400201":["シャーク宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400203":["マグロ宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400204":["アンコウ宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400205":["バブル宇宙飛行魚 - ピチピチ",4,3,"資源を持ち帰る際に2%の確率でエサを1個持ち帰られる",1,["99000044"]],"400206":["職人の手-アトナル・レゾナンス",4,3,"デビエーションの外観が変化した。創造型の資源産出時、20%の確率で1個多く獲得できる。",1,["99000056"]],"400207":["夜の灯火-アトナル・レゾナンス",4,3,"デビエーションの外観が変化した。領地型デビエーションが汚染区域で活動中、10%の確率でエネルギーを消費しない。",1,["99000043"]],"600045":["電撃炸裂 - デンキウナギ",4,3,"活躍度の上限+7%",1,["99000005"]],"600046":["ホワイトクリフの岩 - エレメントボーイ",4,3,"活躍度の上限+7%",1,["99000029"]],"600047":["光の異種 - ささやくローンウルフ",4,3,"活躍度の上限+7%",1,["99000011"]],"600048":["サウンドファントム - 極寒クラゲ",4,3,"活躍度の上限+7%",1,["99000003"]],"600049":["遺影の撮影者 - スナップショット",4,3,"活躍度の上限+7%",1,["99000040"]],"600050":["極夜の末裔 - レインマン",4,3,"活躍度の上限+7%",1,["99000039"]],"1000001":["草食動物",10,3,"産出時、一定確率で変異植物を1つ追加で獲得できる",1],"1000002":["ムーンレイド",10,3,"夜間、エネルギーと活躍度の回復速度+15%",1],"1000004":["穢れとの共生",10,3,"汚染区域での生産時、10%の確率で酸液を追加で1個獲得できる",1],"1000005":["パワープレイ",10,3,"デビエーション生産時、10%の確率で資源量が2倍になる",1],"1000006":["悪夢の水域",10,3,"領地が水辺の近くにある場合、デビエーションの生産時、一定確率で追加の漁獲物を獲得できる",1],"1000007":["心のマッサージ",10,3,"プレイヤーが領地に戻ると、理性値が10%回復する（CD10分）",1],"1000008":["ネコ科動物",10,3,"領地型デビエーションの移動速度+10",1],"1000009":["スノーフォックスライダー",10,3,"",1],"1000010":["極地の怪物",10,3,"所属領地の環境温度が0℃未満の場合、活躍度の回復速度+10%",1],"1000011":["最強の働き者",10,3,"エネルギーが10%まで低下すると自動的に活躍度をエネルギーに変換し、作業を継続できる",1],"1100002":["円卓の騎士",11,3,"デビエーションの防御力+5%、攻撃を受けた時のエネルギー消費が減少する",1],"1100006":["ひらめき",11,3,"収容条件のうち、照明の条件が満たされる",1],"1100009":["追加容量",11,3,"創造型デビエーションの保存容量+15%",1],"1100011":["パーフェクトタイミング",11,3,"1時間ごとに領地内の全デビエーションの活躍度と異常エネルギー+10（効果は重複不可）",1],"1200001":["混沌",12,3,"図鑑の価値が極めて高い混沌特性",0],"11510104":["ぬくもりの火種",11,3,"プレイヤーが領地内にいるとき、寒冷耐性+10",1],"11510125":["ネオンフラッシュ",11,3,"領地内にいる「ネオンフラッシュ」特性を持つデビエーション1体ごとに、全デビエーションの活躍度上限+1",1],"11550130":["変わらぬ幼心",11,3,"収容条件のうち、おもちゃの条件が満たされる",1],"11550525":["音楽の共鳴",11,3,"収容条件のうち、音楽の条件が満たされる",1],"11550527":["汚染への適合",11,3,"汚染区域内での異常エネルギー上限+15",1],"11560102":["温度調節",11,3,"プレイヤーが領地内にいると酷暑耐性+10",1],"11560180":["衛生的",11,3,"プレイヤーが領地内にいると理性値が20%を下回らない",1]},"anim":[["雄ジカ","1000001"],["雌ジカ","1000001"],["オオカミ","1000002"],["オスヒツジ","1000001"],["雌ヒツジ","1000001"],["クマ","1000005"],["イノシシ","1000004"],["ワニ","1000006"],["カピバラ","1000007"],["ヒョウ","1000008"],["バッファロー","1000011"],["ホッキョクグマ","1000010"]],"furn":{"1100002":["テーブル","コーナーテーブル","普通の白い長テーブル","アメリカンローテーブル","アメリカンダイナーテーブル","アンティークローテーブル","アンティークダイナーテーブル","クラシック丸テーブル・Ⅰ","クラシック丸テーブル・Ⅱ"],"1100006":["蛍光管","シーリングライト","フロアライト","シャンデリア","ウォールランプ","フェアリーライト","ダブルアーム街路灯","スタンド探照灯","小型センサー","石製ガーデンライト","鉄製ガーデンライト","アメリカンウォールランプ","アメリカンフロアランプ","アメリカンライト","アメリカンランプ","アンティークウォールランプ","アンティークフロアランプ","アンティークライト","アンティークランプ"],"1100009":["段ボール・Ⅰ","段ボール・Ⅱ","段ボール・Ⅲ","段ボール・Ⅳ","段ボール・Ⅴ"],"1100011":["デスクトップ電子時計"],"11510104":["キャンドルスタンド"],"11510125":["「ほほえみ」","「注意」","「いいね」"],"11550130":["飾りモデル・Ⅰ","飾りモデル・Ⅱ","飾りモデル・Ⅲ","飾りモデル・Ⅳ","飾りモデル・Ⅴ","飾りモデル・Ⅵ","飾りモデル・Ⅶ","飾りモデル・Ⅷ","飾りモデル・Ⅸ"],"11550525":["家庭用ジュークボックス"],"11550527":["モダンな便器"],"11560102":["エアコンの室外機","換気扇"],"11560180":["簡易洗面台"]},"fish":{"400157":["ノーザンパイク","オオクチバス","サーモン","ニジマス","ロングノーズガー","サバ","ニシイワシ","グッピー","シクリッド[カラー]","シクリッド[ゴールデン]","シクリッド[ジェイド]","シクリッド[レッドチーク]","シクリッド[ホワイト]","シクリッド[キリン]","シクリッド[サファイア]"],"400158":["ウォーマウス"],"400159":["コクレン"],"400160":["シロサッカー"],"400161":["コイ"],"400162":["アジアアロワナ"],"400163":["ティラピア"],"400164":["シーバス"],"400165":["アストロノータス"],"400166":["エンゼルフィッシュ"],"400167":["コバンアジ"],"400168":["バラクーダ"],"400169":["ニシキゴイ"],"400170":["ノーザンパイク[ブラッドジェイド]"],"400171":["ウォーマウス[ブラックローズ]"],"400172":["ニジマス[ソメツケ]"],"400173":["サッカー[スポッテッド]"],"400174":["アストロノータス[アンバー]"],"400175":["コバンアジ[オパール]"],"400176":["バラクーダ[アクアマリン]"],"400177":["ニシキゴイ[クラウド]"],"400178":["グッピー[ブルーピーコック]"],"400179":["ブラックバス[纯白]"],"400180":["コクレン[ゴールデンダガー]"],"400181":["ニシイワシ[ブラッドレッド]"],"400182":["ティラピア[レッドジャイアント]"],"400183":["エンゼルフィッシュ[ラッキーパープル]"],"400194":["サーモン「銀河」"],"400195":["ロングノーズガー「流銀」"],"400196":["サバ「翡翠」"],"400198":["アロワナ「七色の光」"],"400199":["コイ「金ピカ」"],"400200":["シーバス「真紅」"],"400201":["シャーク"],"400203":["マグロ"],"400204":["アンコウ"],"400205":["バブルフィッシュ"]},"devmat":{"99000003":["400184",["99000044"]],"99000005":["400186",["99000044"]],"99000013":["400084",["99000053"]],"99000020":["400111",["99000034"]],"99000035":["400110",["99000058"]],"99000048":["400074",["99000050"]]},"season":[["月の予兆変異誘発剤-ささやくローンウルフ","300105",["99000011"]],["月の予兆変異誘発剤-アクティブゲル","300106",["99000008"]],["月の予兆変異誘発剤-冬の精","300107",["99000058"]],["月の予兆変異誘発剤-空の子","300108",["99000032"]],["月の予兆変異誘発剤-ブショウ","300109",["99000038"]],["月の予兆変異誘発剤-レッド・ドラゴン","300110",["99000030"]],["月の予兆変異誘発剤-量子カタツムリ","400116",["99000042"]],["月の予兆変異誘発剤-デンキウナギ","400117",["99000005"]],["月の予兆変異誘発剤-スナップショット","400154",["99000040"]],["逆行する星の変異誘発剤 - ミニチュア特異点","300111",["99000050"]],["逆行する星の変異誘発剤 - ビッグ・アイ","300112",["99000026"]],["逆行する星の変異誘発剤 - 極寒クラゲ","300113",["99000003"]],["逆行する星の変異誘発剤 - ブードゥー人形","300114",["99000047"]],["逆行する星変異誘発剤-じっと見つめる黒猫","300115",["99000025"]],["逆行する星の変異誘発剤 - 黄衣の王（ミニ）","300116",["99000053"]],["異形との共生変異誘発剤-上界の卵","400188",["99000046"]],["異形との共生変異誘発剤-レインマン","400189",["99000039"]],["異形との共生変異誘発剤-蝶の夢","400190",["99000031"]],["異形との共生変異誘発剤-のっぽキノコ","400191",["99000037"]],["異形との共生変異誘発剤-Dr.クマ","400192",["99000018"]],["異形との共生変異誘発剤-スノードーム","400193",["99000036"]],["グラビティアビスにの変異誘発剤 - エレメントボーイ","200194",["99000029"]],["グラビティアビスにの変異誘発剤 - 原子ライター","200195",["99000024"]],["グラビティアビスにの変異誘発剤 - サンダラマンダー","300196",["99000059"]]],"smut":[["30139245","種族変異誘発剤 - 極寒クラゲ","99000003",5000],["30139246","種族変異誘発剤 - バルーン・ドッグ","99000007",5000],["30139247","種族変異誘発剤 - ささやくローンウルフ","99000011",5000],["30139248","種族変異誘発剤 - スペースキューブ","99000013",5000],["30139249","種族変異誘発剤 - Dr.クマ","99000018",5000],["30139250","種族変異誘発剤 - グリーン・ドラゴン","99000020",5000],["30139251","種族変異誘発剤 - NO.37","99000021",5000],["30139252","種族変異誘発剤 - ヘクセンハウス","99000022",5000],["30139253","種族変異誘発剤 - 原子ライター","99000024",5000],["30139254","種族変異誘発剤 - じっと見つめる黒猫","99000025",5000],["30139255","種族変異誘発剤 - ビッグ・アイ","99000026",5000],["30139256","種族変異誘発剤 - くるみ割り人形","99000027",5000],["30139257","種族変異誘発剤 - 大工ビーバー","99000028",5000],["30139258","種族変異誘発剤 - レッド・ドラゴン","99000030",5000],["30139259","種族変異誘発剤 - 蝶の夢","99000031",5000],["30139260","種族変異誘発剤 - 空の子","99000032",5000],["30139261","種族変異誘発剤 - ミスターウィッシュ","99000034",5000],["30139262","種族変異誘発剤 - 悪臭タマネギ","99000035",5000],["30139263","種族変異誘発剤 - のっぽキノコ","99000037",5000],["30139264","種族変異誘発剤 - ブショウ","99000038",5000],["30139265","種族変異誘発剤 - スナップショット","99000040",5000],["30139266","種族変異誘発剤 - トビラ","99000041",5000],["30139267","種族変異誘発剤 - 量子カタツムリ","99000042",5000],["30139268","種族変異誘発剤 - 夜の灯火","99000043",5000],["30139269","種族変異誘発剤 - 宇宙飛行魚","99000044",5000],["30139270","種族変異誘発剤—ブードゥー人形","99000047",5000],["30139271","種族変異誘発剤 - ミニチュア特異点","99000050",5000],["30139272","種族変異誘発剤 - 異次元の大猫","99000051",5000],["30139273","種族変異誘発剤 - 黄衣の王（ミニ）","99000053",5000],["30139274","種族変異誘発剤 - ジェントルラビット","99000055",5000],["30139275","種族変異誘発剤 - 冬の精","99000058",5000],["30139276","種族変異誘発剤 - レインマン","99000039",5000],["30139281","混沌変異誘発剤 - 異次元の大猫","99200051",5000],["30139282","混沌変異誘発剤 - レッド・ドラゴン","99200030",5000],["30139283","混沌変異誘発剤 - 冬の精","99200058",5000],["30139284","混沌変異誘発剤 - ミスターウィッシュ","99200034",5000],["30139304","混沌変異誘発剤 - ミニチュア特異点","99200050",5000],["30139306","種族変異誘発剤 - 闇医者","99000065",5000],["30139308","種族変異誘発剤 - ベヒモス","99000069",5000],["30139314","種族変異誘発剤 - デュエット","99000077",5000]],"chaosMat":{"30139281":["1200001",1,["99200051","99200030","99200034","99200058","99200050"]],"30139282":["1200001",1,["99200051","99200030","99200034","99200058","99200050"]],"30139283":["1200001",1,["99200051","99200030","99200034","99200058","99200050"]],"30139284":["1200001",1,["99200051","99200030","99200034","99200058","99200050"]],"30139304":["1200001",1,["99200051","99200030","99200034","99200058","99200050"]]}};
+const TYPEN={1:'創作物',2:'領地',3:'戦闘'};
+const TYPEC={1:'c-def',2:'c-psi',3:'c-atk'};
+const DEV={};
+DATA.dev.forEach(([id,n,t])=>DEV[id]={id,n,t,par:1});
+DATA.res.forEach(([id,n,t])=>DEV[id]={id,n,t,par:0,chaos:1});
+const SPECIES=Object.values(DEV).filter(d=>d.par).sort((a,b)=>a.n.localeCompare(b.n,'ja'));
+const TR={};
+for(const [id,r] of Object.entries(DATA.tr)){
+  const sk=r[5]?r[5].map(x=>x==='99000001'?'99900001':x):null;
+  TR[id]={id,n:r[0],ty:r[1],q:r[2],tx:String(r[3]||'').replace(/^デビエーションの(外観|造型)(に変化が生じ(る|た)|が変化(した|しました)|が変わり)[。、]?/,''),cf:r[4],sk};
+}
+const TRL=Object.values(TR).sort((a,b)=>(+a.id)-(+b.id));
+const slotOf=ty=>ty===4?'c':(ty===10||ty===11)?'m':ty===12?'x':'r';
+const SLOTN={c:'共通',r:'タイプ',m:'変異',x:'混沌'};
+const skinName=r=>(r.sk||[]).map(id=>DEV[id]?DEV[id].n:'').filter(Boolean).join('・');
+
+/* 材料の一覧 */
+const FURN_LABEL={'1100006':'照明いろいろ（蛍光管・シャンデリアなど）','1100002':'テーブル類','1100009':'段ボール','11550130':'飾りモデル','11510125':'ネオン看板（ほほえみ・注意・いいね）','1100011':'デスクトップ電子時計','11550525':'家庭用ジュークボックス','11550527':'モダンな便器','11560102':'エアコンの室外機・換気扇','11560180':'簡易洗面台','11510104':'キャンドルスタンド'};
+const ITEM={}, ITEMG=[];
+{ const byT={}; DATA.anim.forEach(([nm,t])=>{(byT[t]=byT[t]||[]).push(nm)});
+  let g=[]; for(const [t,nms] of Object.entries(byT)){const k='a'+t; ITEM[k]={k,label:nms.join('・').replace('雄ジカ・雌ジカ・オスヒツジ・雌ヒツジ','シカ・ヒツジ'),trait:t,up:.5,devs:[]}; g.push(k);} ITEMG.push(['動物（変異の枠）',g]);
+  g=[]; for(const t of Object.keys(DATA.furn)){const k='f'+t; ITEM[k]={k,label:FURN_LABEL[t]||DATA.furn[t].join('・'),trait:t,up:.5,devs:[]}; g.push(k);} ITEMG.push(['家具（変異の枠）',g]);
+  g=[]; for(const [t,nms] of Object.entries(DATA.fish)){const k='s'+t; ITEM[k]={k,label:nms.length>3?`ふつうの魚（${nms.slice(0,3).join('・')}など${nms.length}種）`:nms.join('・'),trait:t,up:.5,devs:['99000044']}; g.push(k);} ITEMG.push(['魚（宇宙飛行魚の色違い）',g]);
+}
+const MUT={}, MUTG=[];
+{ let g=[]; DATA.smut.filter(m=>!DATA.chaosMat[m[0]]).forEach(([it,nm,sp,w])=>{const k='u'+it; MUT[k]={k,label:nm.replace(/^種族変異誘発剤\s*[-—]\s*/,''),w:{[sp]:w}}; g.push(k);}); MUTG.push(['種族変異誘発剤（種類が変わる）',g]);
+  g=[]; DATA.smut.filter(m=>DATA.chaosMat[m[0]]).forEach(([it,nm,sp,w])=>{const c=DATA.chaosMat[it]; const k='x'+it; MUT[k]={k,label:nm.replace(/^混沌変異誘発剤\s*[-—]\s*/,''),w:{[sp]:w},trait:c[0],up:c[1],devs:c[2]}; g.push(k);}); MUTG.push(['混沌変異誘発剤（混沌版になる）',g]);
+  g=[]; DATA.season.forEach(([nm,t,devs])=>{const k='z'+t; MUT[k]={k,label:nm.replace(/の?変異誘発剤\s*[-—]?\s*/,' - ').replace('グラビティアビスに - ','グラビティアビス - '),trait:t,up:1,devs}; g.push(k);}); MUTG.push(['シーズン誘発剤（色違いが付く）',g]);
+}
+
+/* ===== 用語 ===== */
+const CATN={base:'デビの基本',fuse:'融合のしくみ',trait:'特性',item:'材料・アイテム',srv:'異次元の収容'};
+const WORDS=[
+ ['デビエーション','base','収容して一緒に戦ったり、領地で働いたりしてくれる不思議な生き物。略してデビ。'],
+ ['戦闘デビ','base','連れて歩くと一緒に戦うデビ。特性でプレイヤーも強くなる。'],
+ ['領地デビ','base','領地で働いて、鉱石などの資源を持ち帰ってくるデビ。'],
+ ['創作物デビ','base','領地に置いておくと資源を作ってくれるデビ。ゲームでは「造物型」「創造型」と書かれることもある。'],
+ ['異能レベル','base','デビの強さ。1〜5。融合では親2体のレベルから決まる（親と同じが40%ずつ）。'],
+ ['活性レベル','base','異常エネルギーなどの回復の速さ。1〜5。戦闘デビなら必殺技の回転に効く。融合では親と同じが45%ずつ。'],
+ ['5/5','base','異能5・活性5のこと。いちばん強い状態。'],
+ ['異常エネルギー','base','デビのエネルギー。戦闘デビは必殺技に、領地・創作物デビは仕事に使う。'],
+ ['活躍度','base','領地・創作物デビのやる気のような数値。働くと減って、休眠で回復する。'],
+ ['収容条件','base','照明・おもちゃ・音楽など、デビが好む環境。3つとも満たすと回復がかなり速くなる。'],
+ ['必殺技','base','戦闘デビの大技。異常エネルギーを使うので、回復が速いほどたくさん使える。'],
+ ['融合ポッド','fuse','融合をする建物。テックで建てられて、領地に1台だけ。使えるのは領地の持ち主だけ。'],
+ ['主素材','fuse','融合の親にする2体のデビ。融合しても消えないけど、残りの融合回数が1へる。'],
+ ['融合材料','fuse','親と一緒に入れるもの。最大3種類。デビ・動物・家具・魚・誘発剤など。始めた瞬間に消えて、中止しても戻らない。'],
+ ['融合回数','fuse','そのデビがあと何回親になれるか。ほとんどのデビは1回で、融合で生まれた子も1回。0になっても材料にはできる。'],
+ ['重み','fuse','生まれる種類を決めるくじの数。親1体1000、材料に入れた同じ種類のデビ1000、種族変異誘発剤1個5000。'],
+ ['上級回復剤','item','融合ポッドに入れると融合の時間が短くなる（最短1分35秒）。'],
+ ['圧縮','fuse','100%ルートで材料の枠が足りなくなったとき、同じ組み合わせの個体をもう1体作るターン。'],
+ ['100%ルート','fuse','同じ特性を2体分そろえて（0.5＋0.5＝1点）、確率100%だけで理想のデビを作るやり方。'],
+ ['特性','trait','デビに付いているおまけの効果。共通・タイプ・変異の枠ごとに1個まで。'],
+ ['共通枠','trait','どのタイプのデビにも付く特性の枠。予備エネルギー・ありふれるパワーなど。ほとんどの色違いもここを使う。'],
+ ['タイプ枠','trait','戦闘・領地・創作物それぞれ専用の特性の枠。生まれたデビのタイプと合わないものは消える。'],
+ ['変異枠','trait','動物・家具を材料に入れたときだけ付く特性の枠。融合でしか手に入らない。'],
+ ['無特性','trait','特性が1つもないデビ。材料にすると、その場の全部の特性に＋0.1点。'],
+ ['色違い','trait','見た目がちがうデビ。特性あつかいで枠を1つ使う。生まれたのが同じ種類のときだけ残る。'],
+ ['ハズレ特性','trait','憂鬱・陳腐・怠惰・怠け者など、マイナスの効果の特性。'],
+ ['0.5点ルール','trait','親か材料のデビが持っている特性は1体ごとに0.5点。枠の合計が1点より少なければそのまま確率、1点以上なら割合で分ける。'],
+ ['シナリオ専用スキル','trait','縦長のひし形のアイコンの技。これが付いていると、見た目が無特性でも無特性あつかいにならない。'],
+ ['6つの傾向','trait','攻撃バフ・HPバフ・物理攻撃力・特殊攻撃力・物理防御力・特殊防御力。融合のたびにランダムで決まる。'],
+ ['種族変異誘発剤','item','材料に入れると、その種類のくじが1個につき5000増える。'],
+ ['混沌変異誘発剤','item','混沌版のデビにする誘発剤。異次元の大猫・レッド・ドラゴン・冬の精・ミスターウィッシュ・ミニチュア特異点の5種類。'],
+ ['混沌デビ','item','混沌変異誘発剤で生まれる特別なデビ。混沌の特性が付く。融合回数は0（混沌・蝶の夢は例外っぽい）。'],
+ ['シーズン誘発剤','item','月の予兆・逆行する星・異形との共生・グラビティアビスの変異誘発剤。決まったデビに色違いを付けるけど、その色違いは融合で引き継げない。'],
+ ['異次元の収容','srv','融合のルールが多いシナリオ。異次元・混沌の特性と、技（スキル）がある。'],
+ ['技（スキル）','srv','異次元の収容で覚える技。最大3つ。親2体が同じ技なら100%残る。'],
+ ['スキル変異誘発剤','srv','異次元の収容で技を付ける誘発剤。1個で50%、2個で100%。'],
+ ['逆位エネルギーランク','srv','グレードS/A/Bのこと。収容したときに陣営がもらえる逆位エネルギーが変わる。融合では引き継がれない。']
+];
+const WMAP=Object.fromEntries(WORDS.map(w=>[w[0],w]));
+const T=(w,label)=>`<button class="t" data-t="${w}">${label||w}</button>`;
+
+/* ===== レッスンの部品 ===== */
+const pix=k=>window.pixIcon?window.pixIcon(k):'';
+const DEVCARD=()=>`<div class="devcard" aria-label="デビの見本">
+ <span class="ic">${pix('DEVI')}</span>
+ <span class="nm">異次元の大猫<span class="chip c-psi">領地</span></span>
+ <span class="lvs"><span>異能<b>5</b></span><span>活性<b>4</b></span><span>融合回数<b>1</b></span></span>
+ <div class="tslots">
+  <div class="tslot c"><small>共通の枠</small>生まれつきの楽天家5</div>
+  <div class="tslot r"><small>領地の枠</small>縁の下の力持ち</div>
+  <div class="tslot m"><small>変異の枠</small>ムーンレイド</div>
+ </div></div>`;
+const seg=(id,label,opts,on)=>`<div class="seg" id="${id}"><span>${label}</span>${opts.map(([v,l])=>`<button data-v="${v}" aria-pressed="${String(v)===String(on)}">${l}</button>`).join('')}</div>`;
+const lvSeg=(id,label,on)=>seg(id,label,[1,2,3,4,5].map(n=>[n,n]),on);
+const ANIMALS=[['シカ・ヒツジ','草食動物','産出時、たまに変異植物が増える'],['オオカミ','ムーンレイド','夜、エネルギーと活躍度の回復＋15%'],['クマ','パワープレイ','生産時、10%で資源2倍'],['イノシシ','穢れとの共生','汚染区域の生産で、10%で酸液'],['ワニ','悪夢の水域','水辺の領地で、追加の漁獲'],['カピバラ','心のマッサージ','領地に戻ると理性10%回復'],['ヒョウ','ネコ科動物','領地デビの移動速度＋10'],['バッファロー','最強の働き者','エネルギー10%で活躍度を変換して作業を続ける'],['ホッキョクグマ','極地の怪物','0℃未満の領地で活躍度回復＋10%']];
+const FURNS=[['照明いろいろ','ひらめき','収容条件の「照明」を満たす'],['飾りモデル','変わらぬ幼心','収容条件の「おもちゃ」を満たす'],['家庭用ジュークボックス','音楽の共鳴','収容条件の「音楽」を満たす'],['デスクトップ電子時計','パーフェクトタイミング','1時間ごとに領地の全デビの活躍度・異常エネルギー＋10'],['ネオン看板','ネオンフラッシュ','この特性のデビ1体ごとに、全デビの活躍度上限＋1'],['テーブル類','円卓の騎士','防御力＋5%、攻撃を受けたときのエネルギー消費が減る'],['段ボール','追加容量','創作物デビの保存容量＋15%'],['エアコンの室外機・換気扇','温度調節','領地にいると酷暑耐性＋10'],['キャンドルスタンド','ぬくもりの火種','領地にいると寒冷耐性＋10'],['簡易洗面台','衛生的','領地にいると理性が20%より下がらない'],['モダンな便器','汚染への適合','汚染区域で異常エネルギー上限＋15']];
+const rowsHTML=a=>a.map(([x,y,z])=>`<div class="dexrow"><b>${x} → ${y}</b><span>${z}</span></div>`).join('');
+const pbtn=(k,l)=>`<button class="btn sub sm" data-preset="${k}">${l}</button>`;
+/* 図のパーツ（レッスンとけいさん機で共通） */
+const ICOL={p:'#ff9fbd',m:'#9be8d4',b:'#c9b3ff',i:'#ffe27a',u:'#9fd6ff',child:'#ffe27a'};
+const IICON={p:'DEVI',m:'MAT',b:'BLANK',i:'PAW',u:'FLASK',child:'EGG'};
+const tok=o=>`<div class="tok ${o.k||''}${o.gone?' gone':''}">${o.tag?`<span class="tk-tag">${o.tag}</span>`:''}<span class="tk-ic" style="background:${o.col||ICOL[o.k]||'#fff'}">${pix(o.ic||IICON[o.k]||'DEVI')}${o.cnt?`<em class="tk-cnt">×${o.cnt}</em>`:''}</span>${o.nm?`<b class="tk-nm">${o.nm}</b>`:''}${o.lv?`<span class="tk-lv">${o.lv}</span>`:''}${o.trs&&o.trs.length?`<span class="tk-trs">${o.trs.map(([g,n])=>`<i class="${g}">${n}</i>`).join('')}</span>`:''}${o.note?`<span class="tk-note">${o.note}</span>`:''}${o.stamp?`<span class="tk-stamp">${o.stamp}</span>`:''}</div>`;
+const OP=s=>`<span class="op" aria-hidden="true">${s}</span>`;
+const POD=(a,b)=>`<span class="pod-core sm" aria-hidden="true"><b>${a}${b?`<small>${b}</small>`:''}</b></span>`;
+const TO='<span class="op to" aria-hidden="true">→</span>';
+const flow=(cap,...parts)=>{const i=parts.lastIndexOf(OP('→')); if(i>=0) parts[i]=TO; return `<figure class="dfig"><div class="flow">${parts.join('')}</div>${cap?`<figcaption>${cap}</figcaption>`:''}</figure>`;};
+const sw=c=>`<i class="sw ${c}"></i>`;
+const sbar=(segs,leg)=>`<div class="sbar" role="img" aria-label="${segs.map(s=>s.l+' '+pct(s.p)).join('、')}">${segs.filter(s=>s.p>1e-9).map(s=>`<i class="${s.c}" style="width:${s.p*100}%">${s.p>=.16?`<span>${pct(s.p)}</span>`:''}</i>`).join('')}</div>`+(leg===false?'':`<div class="sleg">${segs.map(s=>`<span>${sw(s.c)}${s.l} ${pct(s.p)}</span>`).join('')}</div>`);
+const tickets=arr=>`<div class="lot" role="img" aria-label="${arr.map(([,l,n])=>`${l} ${n}こ`).join('、')}">${arr.map(([c,l,n])=>Array.from({length:n},()=>`<i class="${c}">${l}</i>`).join('')).join('')}</div>`;
+const clash=(chips,slot,cap)=>`<figure class="dfig"><div class="clash"><span class="cl-in">${chips.map(([g,n])=>`<span class="tchip ${g}">${n}</span>`).join('')}</span>${TO}<span class="tslot ${slot[0]}"><small>${slot[1]}</small>${slot[2]}</span></div>${cap?`<figcaption>${cap}</figcaption>`:''}</figure>`;
+
+/* ===== 初級 ===== */
+const LES=[
+{t:'デビってなに？',h:()=>`
+ <p>デビエーション（略して${T('デビエーション','デビ')}）は、収容して一緒に戦ったり、領地で働いたりしてくれる不思議な生き物だよ。</p>
+ <h3>デビは3つのタイプ</h3>
+ <div class="roles">
+  <div class="role"><span class="role-top"><span class="role-ic" style="background:#ff9fbd">${pix('SWORD')}</span><span class="chip c-atk">戦闘</span></span><b>一緒に戦う</b><p>連れて歩くと戦ってくれて、特性でプレイヤーも強くなる。例：蝶の使者、ささやくローンウルフ</p></div>
+  <div class="role"><span class="role-top"><span class="role-ic" style="background:#9be8d4">${pix('PICK')}</span><span class="chip c-psi">領地</span></span><b>資源を集めてくる</b><p>領地で働いて、鉱石などを持ち帰ってくる。例：異次元の大猫、デンキウナギ</p></div>
+  <div class="role"><span class="role-top"><span class="role-ic" style="background:#c9b3ff">${pix('GEAR')}</span><span class="chip c-def">創作物</span></span><b>資源を作る</b><p>領地に置いておくと、少しずつ資源を作ってくれる。例：栄枯の種、スペースキューブ</p></div>
+ </div>
+ <h3>1体ずつちがうところ</h3>
+ ${DEVCARD()}
+ <div class="parts">
+  <div class="part"><span class="k">① 枠に付いている効果</span><b>${T('特性')}</b><p>おまけの効果。良いものもハズレもある。</p></div>
+  <div class="part"><span class="k">② 強さ</span><b>${T('異能レベル')}</b><p>1〜5。高いほど強い。</p></div>
+  <div class="part"><span class="k">③ 回復の速さ</span><b>${T('活性レベル')}</b><p>1〜5。エネルギーなどの回復が速くなる。</p></div>
+ </div>
+ <p>同じ種類のデビでも、特性とレベルは1体ずつちがう。<b>融合</b>は、この特性とレベルを自分好みにそろえるための仕組みだよ。</p>
+ <div class="note"><b>ポイント</b>　よく「${T('5/5')}」と言うのは、異能5・活性5のこと。いちばん強い状態だよ。</div>`},
+{t:'融合ってなに？',h:()=>`
+ <p>融合は、デビ2体を<b>親</b>にして、新しいデビを1体生み出す仕組みだよ。</p>
+ ${flow('親は残って、材料は消える。生まれた子は、次の融合の親にもなれるよ。',
+   tok({k:'p',tag:'親A',nm:'デビ',note:'残る（融合回数−1）'}),OP('＋'),
+   tok({k:'p',tag:'親B',nm:'デビ',note:'残る（融合回数−1）'}),OP('＋'),
+   tok({k:'m',tag:'材料',nm:'最大3種類',stamp:'消える',gone:1}),OP('→'),
+   POD('融合','5分'),OP('→'),
+   tok({k:'child',tag:'子',nm:'新しいデビ',note:'融合回数1'}))}
+ <h3>まずは融合ポッドを建てる</h3>
+ <ul>
+  <li>${T('融合ポッド')}は、テックで建てられる。領地に<b>1台だけ</b>。</li>
+  <li>使えるのは領地の持ち主だけ。エターナランドとレイドゾーンでは使えない。</li>
+ </ul>
+ <h3>入れるもの</h3>
+ <div class="parts">
+  <div class="part"><span class="k">${T('主素材')}</span><b>親 2体</b><p>融合しても<b>消えない</b>。そのかわり、残りの${T('融合回数')}が1へる（ほとんどのデビは1回だけ）。</p></div>
+  <div class="part"><span class="k">${T('融合材料')}</span><b>最大3種類</b><p>デビ・動物・家具・誘発剤など。<b>始めた瞬間に消える</b>。中止しても戻ってこない。</p></div>
+  <div class="part"><span class="k">時間</span><b>5分</b><p>${T('上級回復剤')}を入れると短くなる（最短1分35秒）。</p></div>
+ </div>
+ <h3>親にできないデビ</h3>
+ <ul>
+  <li>融合回数が0のデビ（<b>材料にはできる</b>）</li>
+  <li>${T('混沌デビ')}、イベント限定のデビ（犬3種・カマイタチ・ツッパニャン・モモチョ・ピエロ・ガーディアンなど）</li>
+  <li>キャラに連携しているデビ</li>
+ </ul>
+ <div class="note"><b>ポイント</b>　融合で生まれた子も、残りの融合回数は1。だから子を次の親にして、融合をつなげていけるよ。</div>`},
+{t:'何のデビが生まれる？',h:()=>`
+ <p>生まれるデビの種類は<b>くじ引き</b>で決まるよ。入れたものごとに${T('重み')}（くじの数）があって、多いほど出やすい。</p>
+ <div class="scroll"><table class="xtab"><thead><tr><th>入れたもの</th><th>くじの数</th></tr></thead><tbody>
+  <tr><td>親 1体</td><td>その種類に 1000</td></tr>
+  <tr><td>材料に入れた、親と同じ種類のデビ 1体</td><td>その種類に 1000</td></tr>
+  <tr><td>${T('種族変異誘発剤')} 1個</td><td>その種類に 5000</td></tr>
+ </tbody></table></div>
+ <div class="style" id="dmKind">
+  <p style="font-weight:800">ためしてみよう</p>
+  ${seg('kB','親B',[['same','親Aと同じ種類'],['diff','ちがう種類']],'diff')}
+  ${seg('kM','材料（親Aと同じ種類）',[[0,'0体'],[1,'1体'],[2,'2体'],[3,'3体']],0)}
+  ${seg('kX','別の種類の誘発剤',[[0,'なし'],[1,'1個'],[2,'2個']],0)}
+  <div id="kOut"></div>
+ </div>
+ <p>親が同じ種類どうしなら<b>100%</b>その種類。ちがう種類どうしなら50%ずつ。材料に親と同じ種類のデビを入れると、その種類が出やすくなるよ。</p>
+ <div class="note"><b>ポイント</b>　材料に入れたデビでも、親とちがう種類（その種類の誘発剤もなし）なら、種類のくじには入らない。でも特性はちゃんと引き継がれるよ（STEP 5で）。</div>`},
+{t:'特性と枠',h:()=>`
+ <p>${T('特性')}には「枠」があって、<b>1つの枠に1個まで</b>しか付かないよ。</p>
+ <div class="tslots">
+  <div class="tslot big c"><small>どのデビにも</small><b>${T('共通枠','共通の枠')}</b><p>例：予備エネルギー、ありふれるパワー、元気いっぱい</p></div>
+  <div class="tslot big r"><small>タイプ専用</small><b>${T('タイプ枠','タイプの枠')}</b><p>戦闘・領地・創作物それぞれ専用。例：神射手（戦闘）、縁の下の力持ち（領地）、死闘の前夜（創作物）</p></div>
+  <div class="tslot big m"><small>融合だけ</small><b>${T('変異枠','変異の枠')}</b><p>動物・家具を材料に入れると付く。例：ムーンレイド、ひらめき</p></div>
+ </div>
+ ${clash([['c','特性X（親A）'],['c','特性Y（親B）']],['c','共通の枠（1つだけ）','XかYのどちらか'],'同じ枠の特性どうしは取り合いになる')}
+ <p>生まれたデビのタイプと合わない<b>タイプの枠の特性は消える</b>。たとえば戦闘デビの子には、領地の特性は残らないよ。</p>
+ ${flow('戦闘デビが生まれたときは、領地の特性が消える',
+   tok({k:'p',tag:'親A',nm:'領地デビ',col:'#9be8d4',trs:[['r','縁の下の力持ち']]}),OP('＋'),
+   tok({k:'p',tag:'親B',nm:'戦闘デビ',trs:[['r','神射手']]}),OP('→'),
+   tok({k:'child',tag:'子（戦闘）',nm:'戦闘デビ',trs:[['r','神射手 50%'],['n','縁の下の力持ち ✕']]}))}
+ <div class="note"><b>色違いも特性</b>　${T('色違い')}の見た目も特性あつかいで、枠を1つ使う。ほとんどは共通の枠だよ（くわしくは中級で）。</div>`},
+{t:'特性の引き継ぎ（0.5点ルール）',h:()=>`
+ <p>いちばん大事なルールだよ。特性は<b>枠ごとに点数</b>を数えて、確率が決まる。</p>
+ <ol class="rules">
+  <li><div>親か材料のデビが持っている特性は、<b>1体ごとに0.5点</b>。</div></li>
+  <li><div>${T('無特性')}のデビを材料に入れると、1体ごとに<b>その場の全部の特性に＋0.1点</b>（3体で＋0.3点）。</div></li>
+  <li><div>枠の合計が<b>1点より少ない</b>ときは、点数がそのまま確率。のこりは「その枠は空」。</div></li>
+  <li><div>合計が<b>1点以上</b>のときは、点数の割合で分ける。</div></li>
+ </ol>
+ <div class="ptleg"><span><i class="pb half"></i><b>0.5点</b>特性を持つデビ1体（親でも材料でも）</span><span><i class="pb tenth"></i><b>＋0.1点</b>無特性の材料1体（その場の全部の特性に）</span><span><i class="pb one"></i><b>1点</b>箱がいっぱい＝100%</span></div>
+ <div class="style" id="dmTr">
+  <p style="font-weight:800">ためしてみよう（1つの枠だけ見るよ）</p>
+  ${seg('tA','親A',[['want','欲しい特性'],['none','なし']],'want')}
+  ${seg('tB','親B',[['want','欲しい特性'],['rival','別の特性'],['none','なし']],'none')}
+  ${seg('tN','無特性の材料',[[0,'0体'],[1,'1体'],[2,'2体'],[3,'3体']],0)}
+  <div id="tOut"></div>
+ </div>
+ <h3>よく使う結果</h3>
+ <div class="scroll"><table class="xtab"><thead><tr><th>状況</th><th>欲しい特性が残る確率</th></tr></thead><tbody>
+  <tr><td>片方の親だけが持ってる</td><td>50%</td></tr>
+  <tr><td>片方の親だけ＋無特性デビ3体を材料に</td><td>80%</td></tr>
+  <tr><td>両方の親が同じ特性</td><td>100%</td></tr>
+  <tr><td>同じ枠に、親Aと親Bで別々の特性</td><td>50%（無特性を入れても割合は同じ）</td></tr>
+  <tr><td>同じ枠の特性3つが取り合い</td><td>持ってる数の割合（2体と1体なら66.7%）</td></tr>
+ </tbody></table></div>
+ <div class="note"><b>ポイント</b>　欲しい特性は<b>両方の親に持たせる</b>と100%。片方しか持ってないなら、無特性デビ3体を材料にして80%まで上げるのが基本だよ。</div>
+ <div class="btnrow">${pbtn('copy80','けいさん機で試す（80%）')}${pbtn('both','けいさん機で試す（100%）')}</div>`},
+{t:'異能レベルと活性レベル',h:()=>`
+ <p>生まれる子のレベルは、親2体のレベルから決まるよ。</p>
+ ${flow('',tok({k:'p',tag:'親A',nm:'デビ',lv:'異能5・活性5'}),OP('＋'),tok({k:'p',tag:'親B',nm:'デビ',lv:'異能3・活性3'}),OP('→'),tok({k:'child',tag:'子',nm:'？',lv:'親のレベルから抽選'}))}
+ <div class="types">
+  <div class="type a"><h3>異能レベル（強さ）</h3><ul><li>親Aと同じ：40%</li><li>親Bと同じ：40%</li><li>高いほう＋1：10%</li><li>高いほう−1：9%</li><li>高いほう−2：1%</li></ul></div>
+  <div class="type p"><h3>活性レベル（回復の速さ）</h3><ul><li>親Aと同じ：45%</li><li>親Bと同じ：45%</li><li>低いほう＋1：5%</li><li>高いほう＋1：5%</li></ul></div>
+ </div>
+ <div class="style" id="dmLv">
+  <p style="font-weight:800">ためしてみよう</p>
+  ${lvSeg('lA','親Aの異能',5)}${lvSeg('lB','親Bの異能',3)}
+  <div id="lOut1"></div>
+  ${lvSeg('lC','親Aの活性',5)}${lvSeg('lD','親Bの活性',3)}
+  <div id="lOut2"></div>
+ </div>
+ <ul>
+  <li>レベルは最大5。5より上にはならない。</li>
+  <li>活性は、低いほうの親より下がらない。</li>
+  <li>ほかに「${T('6つの傾向')}」（攻撃バフ・HPバフなど）が毎回ランダムで決まる。</li>
+ </ul>
+ <div class="note"><b>ポイント</b>　片方の親が低いと、40〜45%でそっちのレベルになっちゃう。親は<b>2体とも高レベル</b>にそろえよう。5/5どうしなら、異能5が90%・活性5は100%だよ。</div>
+ <div class="btnrow">${pbtn('lv','けいさん機で試す（5と2の親）')}</div>`}
+];
+const FINAL=()=>`
+ <h3>初級のまとめ</h3>
+ <ol class="rules">
+  <li><div>親2体＋材料（最大3種類）で、新しいデビが1体生まれる。材料は消える。</div></li>
+  <li><div>種類はくじ引き。親1体1000、同じ種類の材料1000、誘発剤5000。</div></li>
+  <li><div>特性は枠ごとに点数。1体0.5点、無特性の材料で＋0.1点。</div></li>
+  <li><div>レベルは親から。親は2体とも高レベルに。</div></li>
+ </ol>`+PRACTICE('特性の★を押して、ねらった特性が付く確率を見てみよう','copy80');
+
+/* ===== 中級 ===== */
+const MID=[
+{t:'無特性デビを集めよう',h:()=>`
+ <p>${T('無特性')}のデビは、材料にすると全部の特性に＋0.1点。欲しい特性を残しやすくする、融合の必需品だよ。</p>
+ ${flow('無特性のデビは、材料にすると全部の特性を少しずつ押し上げる',
+   tok({k:'b',tag:'材料',nm:'無特性デビ',trs:[['n','特性なし']]}),OP('＝'),
+   `<span class="bonus">その場の全部の特性に<strong>＋0.1点</strong></span>`)}
+ <h3>集めやすいデビ</h3>
+ <div class="scroll"><table class="xtab"><thead><tr><th>デビ</th><th>タイプ</th><th>集め方</th></tr></thead><tbody>
+  <tr><td>異次元の大猫</td><td>領地</td><td>集めやすい定番</td></tr>
+  <tr><td>ささやくローンウルフ</td><td>戦闘</td><td>モノリス・フォングを周回</td></tr>
+  <tr><td>栄枯の種</td><td>創作物</td><td>モノリス・ガイアを周回</td></tr>
+  <tr><td>極寒クラゲ</td><td>戦闘</td><td>釣り。5〜10匹に1匹くらい無特性</td></tr>
+  <tr><td>デンキウナギ</td><td>領地</td><td>釣り。5〜10匹に1匹くらい無特性</td></tr>
+ </tbody></table></div>
+ <ul>
+  <li>拠点NPCのショップで買えるデビ（1マップ5体まで・1回だけ）や、モノリス・サイロの初回クリアでもらえるデビは<b>無特性で確定</b>。</li>
+  <li>毎朝9時のデイリーボックス（1マップ6個）からも集まる。</li>
+  <li>＋0.1点は、どの種類の無特性デビでも同じ。親と同じ種類なら、その種類も出やすくなる。</li>
+ </ul>
+ <div class="note"><b>注意</b>　見た目が無特性でも、${T('シナリオ専用スキル')}（縦長のひし形のアイコン）が付いていると無特性あつかいにならないよ。</div>`},
+{t:'特性をコピーして増やす',h:()=>`
+ <p>融合を使うと、良い特性を持つデビを<b>増やせる</b>よ。欲しい特性は、使う前にまずコピーしておくのがコツ。</p>
+ ${flow('コピーA：0.5＋0.3＝0.8点で80%',
+   tok({k:'p',tag:'親A',nm:'特性持ち',trs:[['r','★欲しい特性']]}),OP('＋'),
+   tok({k:'b',tag:'親B',nm:'無特性'}),OP('＋'),
+   tok({k:'b',tag:'材料3枠',nm:'無特性',cnt:3}),OP('→'),
+   tok({k:'child',tag:'子',trs:[['r','★ 80%']]}))}
+ ${flow('コピーB：0.5＋0.2＝0.7点で70%',
+   tok({k:'b',tag:'親A',nm:'無特性'}),OP('＋'),
+   tok({k:'b',tag:'親B',nm:'無特性'}),OP('＋'),
+   tok({k:'m',tag:'材料',nm:'特性持ち',trs:[['r','★欲しい特性']],note:'融合回数0でOK'}),OP('＋'),
+   tok({k:'b',tag:'材料2枠',nm:'無特性',cnt:2}),OP('→'),
+   tok({k:'child',tag:'子',trs:[['r','★ 70%']]}))}
+ <p>コピーBは、親2体を同じ種類の無特性にしておくと、生まれる種類も100%そろうよ。</p>
+ <p>コピーAで親にしたデビは融合回数が0になるけど、材料にはできる。だから次はコピーBに回せばいい。80%が外れて、次の70%も外れる（特性がなくなる）確率は<b>たった6%</b>。</p>
+ <p>生まれた子は融合回数が1あるので、次の親にしてくり返せるよ。</p>
+ <div class="btnrow">${pbtn('copy80','けいさん機で試す（80%）')}${pbtn('copy70','けいさん機で試す（70%）')}</div>`},
+{t:'いらない特性を消す',h:()=>`
+ <p>欲しい特性といっしょにハズレも付いてる…そんなときは、融合で<b>ハズレだけを消す</b>よ。</p>
+ <ol class="rules">
+  <li><div>その枠に特性がない親と組む。片親だけの特性は<b>50%で消える</b>。</div></li>
+  <li><div>消したいときは<b>無特性の材料を入れない</b>。ハズレの点数まで上がっちゃう。</div></li>
+  <li><div>同じ枠に別の特性をぶつけると、50%ずつの取り合いになる。</div></li>
+  <li><div>タイプがちがう親と組むと、生まれたタイプに合わないタイプの枠の特性は消える。</div></li>
+ </ol>
+ <figure class="dfig"><div class="g22">
+  <span></span><span class="g22h">ハズレ<br>残る 50%</span><span class="g22h">ハズレ<br>消える 50%</span>
+  <span class="g22h">★欲しい特性<br>残る 50%</span><span class="g22c">★＋ハズレ<strong>25%</strong></span><span class="g22c win">★だけ！<strong>25%</strong></span>
+  <span class="g22h">★欲しい特性<br>消える 50%</span><span class="g22c">ハズレだけ<strong>25%</strong></span><span class="g22c">なにもなし<strong>25%</strong></span>
+ </div><figcaption>特性2つが別々の枠にあるとき（材料なし）。ほしい形は4マスのうち1マス＝25%</figcaption></figure>
+ <h3>欲しい1つだけ残る確率</h3>
+ <div class="scroll"><table class="xtab"><thead><tr><th>材料</th><th>特性2つのうち、欲しい1つだけ残る</th></tr></thead><tbody>
+  <tr><td>なし</td><td>25%（残る50%×消える50%）</td></tr>
+  <tr><td>無特性2体</td><td>21%</td></tr>
+  <tr><td>無特性3体</td><td>16%</td></tr>
+ </tbody></table></div>
+ <h3>何回で当たる？</h3>
+ <div class="scroll"><table class="xtab"><thead><tr><th>やること</th><th>確率</th><th>80%の人が当たるまで</th></tr></thead><tbody>
+  <tr><td>特性2つから1つだけ残す</td><td>25%</td><td>6回</td></tr>
+  <tr><td>特性3つから1つだけ残す</td><td>12.5%</td><td>12回</td></tr>
+ </tbody></table></div>
+ <div class="note"><b>ポイント</b>　消す作業は外れが多いので、欲しい特性は先に6〜12体コピーしておこう。</div>
+ <div class="btnrow">${pbtn('erase','けいさん機で試す（ハズレ消し）')}</div>`},
+{t:'色違いも特性',h:()=>`
+ <p>${T('色違い')}の見た目は、<b>特性の1つ</b>としてあつかわれるよ。</p>
+ <ul>
+  <li>ほとんどの色違いは<b>共通の枠</b>を使う。だから同じ枠のふつうの特性と取り合いになる（例：願いのグリーン・ドラゴンとありふれるパワー2は、どちらか1つ）。</li>
+  <li>ムーンダイヤ（異次元の大猫）は領地の枠。禁断の島で増えた色違い7種（ブロークンガール - セーラー服など）や満月の賛歌 - 星月夜は、タイプの枠を使う。</li>
+  <li>生まれたデビが<b>同じ種類のときだけ</b>残る。ちがう種類が生まれたら消える。</li>
+ </ul>
+ ${flow('色違いは「見た目の特性」。ふつうの特性と同じように枠を1つ使う',
+   tok({k:'p',nm:'デンキウナギ',col:'#9be8d4',trs:[['n','ふつうの見た目']]}),
+   tok({k:'p',nm:'デンキウナギ',col:'#ffe27a',tag:'色違い',trs:[['c','金色の稲妻（共通の枠）']]}))}
+ <div class="scroll"><table class="xtab"><thead><tr><th>色違いを残すやり方</th><th>確率</th></tr></thead><tbody>
+  <tr><td>片方の親が色違い（親は同じ種類どうし）</td><td>50%</td></tr>
+  <tr><td>↑＋無特性3体</td><td>80%</td></tr>
+  <tr><td>両方の親が同じ色違い</td><td>100%</td></tr>
+  <tr><td>親は同じ種類の無特性2体、材料に色違い（融合回数0でもOK）＋無特性2体</td><td>70%</td></tr>
+ </tbody></table></div>
+ <p>レアなムーンダイヤも、この70%のやり方で増やせた検証があるよ。</p>
+ <div class="btnrow">${pbtn('moon70','けいさん機で試す（ムーンダイヤ）')}</div>`},
+{t:'動物・家具・魚で付く特性',h:()=>`
+ <p>${T('変異枠','変異の枠')}の特性は、融合でしか手に入らない。動物や家具を材料に入れると付くよ。</p>
+ <ul>
+  <li>動物・家具は1つでその特性に0.5点。<b>1匹で1枠</b>使うので、オオカミ2匹なら材料の枠を2つ使って、ムーンレイド100%。</li>
+  <li>オオカミとクマをいっしょに入れると、変異の枠を取り合って50%ずつ。</li>
+ </ul>
+ ${flow('動物は1匹0.5点。2匹で1点＝100%',
+   tok({k:'p',tag:'親A',nm:'デビ'}),OP('＋'),tok({k:'p',tag:'親B',nm:'デビ'}),OP('＋'),
+   tok({k:'i',tag:'材料1',nm:'オオカミ'}),OP('＋'),tok({k:'i',tag:'材料2',nm:'オオカミ'}),OP('→'),
+   tok({k:'child',tag:'子',trs:[['m','ムーンレイド 100%']]}))}
+ ${clash([['m','ムーンレイド（オオカミ）'],['m','パワープレイ（クマ）']],['m','変異の枠（1つだけ）','50%ずつの取り合い'],'ちがう動物を一緒に入れると、同じ変異の枠を取り合う')}
+ <details class="dex"><summary>動物の特性（${ANIMALS.length}）</summary><div class="dexlist">${rowsHTML(ANIMALS)}</div></details>
+ <details class="dex"><summary>家具の特性（${FURNS.length}）</summary><div class="dexlist">${rowsHTML(FURNS)}<div class="kwgroup">ほかの家具（ソファ・本棚・絵など）は、効果のない見た目だけの特性になる。</div></div></details>
+ <h3>融合でしか出ない色違い</h3>
+ <p>決まったデビを材料に入れると、生まれた子に専用の見た目（色違い）が付く。0.5点ぶんなので、ほかに何もなければ50%。</p>
+ <div class="scroll"><table class="xtab"><thead><tr><th>生まれるデビ</th><th>材料に入れるもの</th><th>色違い</th><th>効果</th></tr></thead><tbody>
+  <tr><td>黄衣の王（ミニ）</td><td>スペースキューブ</td><td>星喰い異形</td><td>エネルギー回復＋10%</td></tr>
+  <tr><td>ミスターウィッシュ</td><td>グリーン・ドラゴン</td><td>願いのグリーン・ドラゴン</td><td>エネルギー回復＋15%</td></tr>
+  <tr><td>冬の精</td><td>悪臭タマネギ</td><td>春の訪れ</td><td>活躍度上限＋35</td></tr>
+  <tr><td>ミニチュア特異点</td><td>炎の精霊</td><td>バーストメルト</td><td>活躍度上限＋35</td></tr>
+  <tr><td>宇宙飛行魚</td><td>魚（種類ごとに別の見た目）</td><td>○○宇宙飛行魚 - ピチピチ</td><td>2%でエサを持ち帰る</td></tr>
+  <tr><td>宇宙飛行魚</td><td>極寒クラゲ</td><td>極寒クラゲ飛行士</td><td>領地で酷暑耐性＋5</td></tr>
+  <tr><td>宇宙飛行魚</td><td>デンキウナギ</td><td>デンキウナギ宇宙飛行魚</td><td>光の好みが満たされる</td></tr>
+ </tbody></table></div>
+ <div class="note"><b>ポイント</b>　いちばん人気は願いのグリーン・ドラゴン（エネルギー回復＋15%）。ミニチュア特異点は今は手に入りにくい（闇鍋収容箱か、異次元の収容のショップ）。</div>
+ <div class="btnrow">${pbtn('wolf','けいさん機で試す（オオカミ2匹）')}${pbtn('wish','けいさん機で試す（願いのグリーン・ドラゴン）')}</div>`},
+{t:'狙うべき特性',h:()=>`
+ <p>どの特性を狙えばいいか、タイプごとにまとめたよ。効果の全部は<a href="#dex">特性図鑑</a>で見られる。</p>
+ <div class="roles">
+  <div class="role"><span class="chip c-atk">戦闘</span><b>神射手・サイキックボーイ</b><p>戦闘中、プレイヤーの銃器DMG＋5%（神射手）／状態異常DMG＋5%（サイキックボーイ）。ビルドに合わせて選ぶ。</p></div>
+  <div class="role"><span class="chip c-atk">戦闘</span><b>重くて硬い・心の断捨離</b><p>ボディ／頭部の被DMG軽減が最大＋15%。</p></div>
+  <div class="role"><span class="chip c-psi">領地</span><b>縁の下の力持ち・神の目線</b><p>エネルギーと活躍度の消費間隔＋20%／作業から戻る間隔−10%。</p></div>
+  <div class="role"><span class="chip c-psi">領地</span><b>不完全な永久機関・自主残業・箴言の伝達者</b><p>10%でエネルギー／活躍度を消費しない。箴言の伝達者は追加の鉱石。</p></div>
+  <div class="role"><span class="chip c-def">創作物</span><b>死闘の前夜・ベンティ</b><p>生産間隔−15%／資源の上限＋30%。</p></div>
+  <div class="role"><span class="chip c-def">創作物</span><b>1個の値段で2個・一致団結</b><p>5%で1個多く生産／領地デビ1体ごとに産出＋1。</p></div>
+ </div>
+ <h3>共通の枠のおすすめ</h3>
+ <ul>
+  <li>戦闘デビ：<b>ありふれるパワー2</b>（異常エネルギー回復＋10%）。必殺技の回転が早くなる。ミスターウィッシュなら色違いの<b>願いのグリーン・ドラゴン</b>（＋15%）のほうが上。</li>
+  <li>領地デビ：<b>生まれつきの楽天家5</b>（活躍度上限＋35%）や<b>元気いっぱい5</b>（活躍度回復＋25%）。</li>
+ </ul>
+ <h3>気をつけたい特性</h3>
+ <ul>
+  <li>${T('ハズレ特性')}：陳腐・憂鬱・怠け者・おサボり・迷惑行為・足を引っ張る・ドジっ子・怠惰・横取り など。</li>
+  <li><b>活気を刺激する</b>は、戦闘デビにはマイナス（異常エネルギー回復−5%）。</li>
+  <li>ただし<b>陳腐</b>（異常エネルギー上限−5%／−10%）は、戦闘デビだと必殺技の回転が速くなるので悪くない、という検証があるよ（上級で）。</li>
+ </ul>`}
+];
+const MIDFIN=()=>`
+ <h3>中級のまとめ</h3>
+ <ol class="rules">
+  <li><div>無特性デビは融合の必需品。どの種類でも＋0.1点。</div></li>
+  <li><div>コピーは80%（片親＋無特性3体）と70%（材料＋無特性2体）。</div></li>
+  <li><div>ハズレ消しは無特性なしで。25%なので回数がかかる。</div></li>
+  <li><div>色違い・動物・家具も特性。枠の取り合いに気をつける。</div></li>
+ </ol>`+PRACTICE('プリセットの「ハズレ消し」や「色違いコピー」を押して、点数の内訳を見てみよう','erase');
+
+/* ===== 上級 ===== */
+const ADV=[
+{t:'100%ルート',h:()=>`
+ <p>時間はかかるけど、<b>確率100%だけ</b>で「5/5＋欲しい特性ぜんぶ」を作るやり方があるよ。カギは「同じ特性を2つそろえると0.5＋0.5＝1点で100%」というルール。</p>
+ <ol class="rules">
+  <li><div>欲しい特性ごとに<b>2体ずつ</b>用意する（1体は融合回数が残っているもの）。コピーで増やしておこう。</div></li>
+  <li><div>親と材料で同じ特性を2つそろえると、その特性は100%で残る。材料3枠を使って、特性を1つずつ足していく。</div></li>
+  <li><div>生まれた子（融合回数1）を次の親に、使い終わった親を材料にしてくり返す。</div></li>
+  <li><div>材料枠が足りなくなったら、同じ組み合わせをもう1体作る「${T('圧縮')}」ターンをはさむ。</div></li>
+  <li><div>特性がそろったら、もう片方の親を<b>異能・活性の高い無特性</b>にして、材料に同じ特性セットの個体（前の親）を入れる。特性は100%のまま、レベルだけ何回でも回せる。</div></li>
+ </ol>
+ <h3>例：3つの特性を1回で100%</h3>
+ ${flow('',
+   tok({k:'p',tag:'親A',nm:'異次元の大猫',trs:[['c','楽天家5'],['r','縁の下の力持ち']]}),OP('＋'),
+   tok({k:'p',tag:'親B',nm:'異次元の大猫',trs:[['c','楽天家5'],['r','縁の下の力持ち']]}),OP('＋'),
+   tok({k:'i',tag:'材料1',nm:'オオカミ',trs:[['m','ムーンレイド']]}),OP('＋'),
+   tok({k:'i',tag:'材料2',nm:'オオカミ',trs:[['m','ムーンレイド']]}),OP('＋'),
+   tok({k:'b',tag:'材料3',nm:'無特性'}),OP('→'),
+   tok({k:'child',tag:'子',trs:[['c','楽天家5 100%'],['r','縁の下 100%'],['m','ムーンレイド 100%']]}))}
+ <p>親2体が楽天家5と縁の下の力持ちを両方持っていれば、どちらも0.5＋0.5＝1点。オオカミは1匹1枠なので2枠使って、ムーンレイドも0.5＋0.5＝1点。残りの1枠は無特性（全部に＋0.1点）。どの枠もほかに特性がないので、<b>全部100%</b>。</p>
+ <div class="btnrow">${pbtn('route','けいさん機で試す')}</div>
+ <h3>例：特性がそろったあとのレベル回し</h3>
+ ${flow('特性は100%のまま、レベルだけ何回でも抽選できる',
+   tok({k:'p',tag:'親A',nm:'できた子',trs:[['c','楽天家5'],['r','縁の下']]}),OP('＋'),
+   tok({k:'b',tag:'親B',nm:'無特性',lv:'異能5・活性5'}),OP('＋'),
+   tok({k:'m',tag:'材料',nm:'同じ特性の個体',trs:[['c','楽天家5'],['r','縁の下']]}),OP('→'),
+   tok({k:'child',tag:'子',trs:[['c','楽天家5 100%'],['r','縁の下 100%']],note:'レベルは抽選'}))}
+ <div class="note"><b>ポイント</b>　このやり方で、5/5に特性4つ・技3つのレッド・ドラゴン、さらに混沌版まで作った検証もあるよ。</div>`},
+{t:'色違いの親でハズレを追い出す',h:()=>`
+ <p>「良い特性＋共通の枠にハズレ」の子ができちゃったとき、ハズレだけを追い出すワザだよ。</p>
+ <ol class="rules">
+  <li><div>欲しい特性を持つデビ（例：良い領地特性＋共通の枠にハズレ）を<b>材料</b>に入れる。</div></li>
+  <li><div>親2体は、<b>同じタイプで釣れる色違い</b>（領地ならデンキウナギの色違い、戦闘なら極寒クラゲの色違い）。</div></li>
+  <li><div>残りの材料2枠は無特性。</div></li>
+ </ol>
+ <div class="formula">共通の枠：色違い 0.5＋0.5＋0.2＝1.2点 ／ ハズレ 0.5＋0.2＝0.7点 → 色違いが 1.2÷1.9＝63%</div>
+ <div class="formula">領地の枠：欲しい特性 0.5＋0.2＝0.7点 → 70%</div>
+ <figure class="dfig"><p class="fig-h">共通の枠</p>${sbar([{p:1.2/1.9,c:'s3',l:'色違い 1.2点'},{p:.7/1.9,c:'s0',l:'ハズレ 0.7点'}])}<p class="fig-h">領地の枠</p>${sbar([{p:.7,c:'s1',l:'欲しい特性 0.7点'},{p:.3,c:'se',l:'空'}])}<figcaption>両方うまくいくのは 63%×70%＝約44%</figcaption></figure>
+ <p>両方そろって<b>約44%</b>で「欲しい特性＋色違い」だけのきれいな子ができる（ふつうに消すと25%）。</p>
+ <p>生まれるのはウナギ（クラゲ）なので、特性の保管・コピー用だよ。創作物タイプは釣れないので、今までどおり25%のやり方になる。</p>
+ <div class="btnrow">${pbtn('purge','けいさん機で試す（44%）')}</div>`},
+{t:'誘発剤のつかいかた',h:()=>`
+ <p>誘発剤は材料に入れるアイテム。2個入れると効果も2倍になるよ（1つの枠に重ねられるかは、まだゲームで確かめてないよ）。</p>
+ <h3>種族変異誘発剤：種類を変える</h3>
+ <ul>
+  <li>1個でその種類に5000のくじ。親と関係ない種類でも、親2体（同じ種類）なら 5000÷7000＝<b>約71%</b>。2個なら約83%。</li>
+  <li>デュエット・ベヒモス・闇医者の誘発剤もある。入手は異次元の収容サーバー（STEP 5）。</li>
+ </ul>
+ <figure class="dfig">${tickets([['a','親',2],['x','誘',5]])}<figcaption>親2体（同じ種類）でくじ2マス、誘発剤1個でくじ5マス（1マス＝1000）。誘発剤の種類は 5÷7＝約71%</figcaption></figure>
+ <h3>混沌変異誘発剤：混沌版にする</h3>
+ <ul>
+  <li>異次元の大猫・レッド・ドラゴン・冬の精・ミスターウィッシュ・ミニチュア特異点の5種類。親だけなら1個で約71%で混沌版になり、混沌の特性が100%付く。</li>
+  <li>特性・異能・活性はふつうに引き継がれる。生まれた${T('混沌デビ')}は融合回数0なので、それ以上は融合できない（混沌・蝶の夢は例外っぽい）。</li>
+ </ul>
+ <h3>シーズン誘発剤：色違いを付ける</h3>
+ <ul>
+  <li>月の予兆・逆行する星・異形との共生・グラビティアビスの4シーズン。決まったデビに、1個につき1点で色違いを付ける。</li>
+  <li>同じ枠にほかの特性があると取り合い。例：憂鬱つきの蝶の夢に1個で66.7%、2個で80%。</li>
+  <li>この色違いは<b>融合で引き継げない</b>。だから、いちばん最後の融合で誘発剤を入れて付けよう。</li>
+  <li>イベントで、通常サーバーでももらえることがある（例：2026年11月のイベント「異常現象の輪」の蝶の夢）。</li>
+ </ul>
+ <div class="btnrow">${pbtn('mut','けいさん機で試す（種族変異）')}${pbtn('season','けいさん機で試す（シーズン）')}</div>`},
+{t:'活性と必殺技の回転',h:()=>`
+ <p>戦闘デビの${T('必殺技')}は、異常エネルギーがたまると使える。活性レベルは、その回転の速さに効くよ。</p>
+ <div style="display:flex;flex-direction:column;gap:6px">${[1,2,3,4,5].map(n=>`<div class="meter"><span>活性${n}</span><span class="bar"><i style="width:${Math.max(3,(n-1)*22.5)}%"></i></span><span class="v">＋${(n-1)*5}%</span></div>`).join('')}</div>
+ <ul>
+  <li>活性1は中身が0あつかいで、1つ上がるごとに必殺技の回復が5%速い（活性5は活性1より25%速い）。</li>
+  <li><b>活気を刺激する</b>は実質 活性−1、<b>ありふれるパワー2</b>は実質＋2。</li>
+  <li><b>陳腐2</b>はエネルギー上限が減るぶん、回転が実質10%速くなる。ハズレだけど戦闘デビなら悪くない。</li>
+  <li>${T('収容条件')}を3つとも満たすと約23.5%速くなる（活性4.7ぶん）。大事なデビは収容条件もそろえよう。</li>
+ </ul>
+ <div class="note"><b>ポイント</b>　この数字は検証動画の結果だよ。アップデートで変わることもあるので、気になったら自分でも測ってみてね。</div>`},
+{t:'異次元の収容だけのこと',h:()=>`
+ <p>シナリオ「${T('異次元の収容')}」のサーバーは、融合のルールが少し多いよ。ほかのシナリオで遊ぶなら読み飛ばしてOK。</p>
+ <ul>
+  <li>特性は5種類。共通・タイプ・変異はどのシナリオでも効く。「異次元」（召喚したときの攻撃力・HPなどが上がる）と「混沌」は、このシナリオでだけ効く。</li>
+  <li>${T('技（スキル）')}は最大3つ。親2体が同じ技を持っていると100%残り続けるので、いらない技は早めに消そう。生まれる種類が覚えられない技は消えるので、欲しい技だけを移せる（例：ビッグ・アイの技をレッド・ドラゴンへ）。3つを超えると、その中からランダムで3つ。</li>
+  <li>無特性あつかいは「特性なし＋技なし」（必殺技は数えない）。釣った子は技を覚えていないので使いやすい（寒いエリアは極寒クラゲ、それ以外はデンキウナギ）。</li>
+  <li>${T('種族変異誘発剤')}：ボスを倒して勝利のバッジ → 4体のボスのショップで種コード（1日3つまで）→ 拠点で誘発剤にする（共生レベル8から）。誘発剤で生まれた子は特性も技もない＝無特性。レッド・ドラゴンはこのサーバーでは野生にいないので、この方法で作る。</li>
+  <li>${T('スキル変異誘発剤')}：1個で50%、2個で100%。</li>
+  <li>${T('混沌変異誘発剤')}：混沌ボス（カオスの試練、共生レベル9から）を5回倒すと1個ぶん。</li>
+  <li>グレード S/A/B は「${T('逆位エネルギーランク')}」。融合では引き継がれない。</li>
+  <li>融合結果の画面では異能・活性が見えないので、カバンで確認しよう。</li>
+ </ul>
+ <div class="note"><b>けいさん機について</b>　けいさん機は通常サーバーの計算だよ。異次元・技の枠は入っていない。</div>`}
+];
+const ADVFIN=()=>`
+ <h3>まとめ</h3>
+ <p>上級まで読めたら、もう立派な融合マスター！</p>
+ <h3>まだわかっていないこと</h3>
+ <ul>
+  <li>混沌デビが全部融合できるようになったのか、混沌・蝶の夢だけなのか。</li>
+  <li>融合の属性フィルター（2026年6月に「後半に実装予定」と発表）がいつ来るか。</li>
+ </ul>`+PRACTICE('プリセットの「100%ルートの1回」を押して、全部100%になるのを確かめよう','route');
+
+function PRACTICE(tip,preset){return `
+ <div class="practice">
+  <b style="font-family:var(--f-pop);font-weight:400;font-size:19px">練習しよう：けいさん機</b>
+  <ol><li>上の「けいさん機」を開く</li><li>親2体と材料を選ぶ（プリセットもあるよ）</li><li>${tip}</li></ol>
+  <button class="btn" data-preset="${preset}">けいさん機を開く →</button>
+ </div>`;}
+/* ===== レッスンの進め方 ===== */
+const LV={b:{n:'初級',sub:'はじめての人',les:LES,fin:FINAL},m:{n:'中級',sub:'もっと上手に',les:MID,fin:MIDFIN},a:{n:'上級',sub:'完ぺきを目指す',les:ADV,fin:ADVFIN}};
+if(!LV[st.lv]) st.lv='b';
+for(const k of ['b','m','a']){
+  const n=LV[k].les.length;
+  st.dn[k]=st.dn[k].filter(x=>Number.isInteger(x)&&x>=1&&x<=n);
+  if(!(Number.isInteger(st.sp[k])&&st.sp[k]>=1&&st.sp[k]<=n)) st.sp[k]=1;
+  if(!(st.qb[k]==null||Number.isInteger(st.qb[k]))) st.qb[k]=null;
+}
+const cur=()=>LV[st.lv];
+const RMq=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const scrollToEl=(el,off)=>{if(!el) return; const top=el.getBoundingClientRect().top+scrollY-(off||90); scrollTo({top,behavior:RMq?'auto':'smooth'});};
+
+function renderToc(){
+  const L=cur(), dn=st.dn[st.lv], sp=st.sp[st.lv];
+  $('#lvtabs').innerHTML=Object.entries(LV).map(([k,v])=>`<button data-lv="${k}" aria-pressed="${st.lv===k}"><b>${v.n}</b><small><span class="d">${v.sub}・</span>${st.dn[k].length}/${v.les.length}</small></button>`).join('');
+  $('#toc').innerHTML=L.les.map((l,i)=>`<button data-s="${i+1}" class="${dn.includes(i+1)?'done':''}" ${sp===i+1?'aria-current="step"':''}><span class="n">${dn.includes(i+1)?'✓':i+1}</span><span class="t2">${l.t}</span></button>`).join('');
+}
+function renderLesson(scroll){
+  const L=cur(), n=L.les.length, i=Math.min(Math.max(st.sp[st.lv],1),n), l=L.les[i-1];
+  const isDone=st.dn[st.lv].includes(i);
+  const nextLv=st.lv==='b'?null:st.lv==='m'?'a':null;
+  const last=st.lv==='b'?`<button class="btn pink" data-fin="1">${isDone?'クイズで確かめる →':'わかった！クイズへ →'}</button>`
+    :nextLv?`<button class="btn pink" data-fin="${nextLv}">わかった！${LV[nextLv].n}へ →</button>`:`<button class="btn pink" data-fin="end">わかった！上級クイズへ →</button>`;
+  $('#les').innerHTML=`<p class="eyebrow">${L.n} · STEP ${i} / ${n}</p><h2>${l.t}</h2><div class="body">${l.h()}${i===n?L.fin():''}</div>
+   <div class="foot">${i>1?`<button class="btn sub" data-nav="${i-1}">← もどる</button>`:'<span></span>'}
+   ${i<n?`<button class="btn pink" data-next="${i}">${isDone?'次へ →':'わかった！次へ →'}</button>`:last}</div>`;
+  renderToc(); bindLesson(); phrase($('#les')); fixFlows($('#les'));
+  if(scroll){const top=$('#v-lesson').getBoundingClientRect().top+scrollY-90; if(scrollY>top) scrollTo({top,behavior:RMq?'auto':'smooth'});}
+}
+/* 図の矢印：子のカードが次の行に回ったら、矢印を下向き（▼）にして1行使う */
+function fixFlows(root){
+  if(!root) return;
+  root.querySelectorAll('.flow,.clash').forEach(f=>{
+    if(!f.querySelector(':scope>.op.to')) return;
+    f.classList.remove('wrapped');
+    const k=f.children, a=k[0].getBoundingClientRect(), z=k[k.length-1].getBoundingClientRect();
+    if(a.height&&z.top>=a.bottom-1) f.classList.add('wrapped');
+  });
+}
+let ffT=0; addEventListener('resize',()=>{clearTimeout(ffT); ffT=setTimeout(()=>fixFlows($('#les')),120);});
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>fixFlows($('#les')));
+function markDone(i){const d=st.dn[st.lv]; if(!d.includes(i)) d.push(i); save(); renderProg();}
+function goStep(i){st.sp[st.lv]=i; save(); renderLesson(true);}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button,a'); if(!b) return;
+  if(b.closest('#calcOut,#wants,#podc,#calcSum,#ed')) return;
+  const d=b.dataset;
+  if(d.qlv){newQuiz(d.qlv);}
+  else if(d.lv){st.lv=d.lv; save(); renderLesson(false);}
+  else if(d.s) goStep(+d.s);
+  else if(d.nav) goStep(+d.nav);
+  else if(d.next){markDone(+d.next); goStep(+d.next+1);}
+  else if(d.fin){markDone(cur().les.length); const f=d.fin;
+    if(f==='1'||f==='end'){newQuiz(st.lv); location.hash='quiz';} else if(LV[f]){st.lv=f; save(); renderLesson(true);} else {renderLesson(false);} }
+  else if(d.preset){loadPreset(d.preset); if(location.hash==='#calc') renderCalc(); else location.hash='calc';}
+  else if(d.go){const g=d.go; if(LV[g[0]]){st.lv=g[0]; st.sp[st.lv]=+g.slice(1)||1; save(); if(location.hash==='#lesson') renderLesson(false); else location.hash='lesson';}}
+  else if(d.t) openTerm(d.t);
+});
+
+/* 日本語の改行：言葉の切れ目（ひらがな→漢字・カタカナ、句読点のあと）でだけ折り返す */
+const isH=c=>c>='ぁ'&&c<='ゟ';
+const AFTER='、。）」』！？…・：';
+const BEFORE='（「『';
+function phrase(root){
+  if(!root) return;
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement.closest('.formula,script,style,input,select,option,textarea,.np')?NodeFilter.FILTER_REJECT:(n.nodeValue.length>3?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP)});
+  const nodes=[]; while(w.nextNode()) nodes.push(w.currentNode);
+  for(const n of nodes){
+    const s=n.nodeValue; const parts=[]; let last=0;
+    for(let i=0;i<s.length-1;i++){
+      const a=s[i], b=s[i+1];
+      const brk=(AFTER.includes(a)&&!AFTER.includes(b))||(BEFORE.includes(b)&&!BEFORE.includes(a))||(isH(a)&&!isH(b)&&!AFTER.includes(b)&&b!=='ー'&&!/[\s]/.test(b));
+      if(brk){parts.push(s.slice(last,i+1)); last=i+1;}
+    }
+    if(!parts.length) continue;
+    parts.push(s.slice(last));
+    const f=document.createDocumentFragment();
+    parts.forEach((p,k)=>{if(k) f.appendChild(document.createElement('wbr')); f.appendChild(document.createTextNode(p));});
+    n.parentNode.replaceChild(f,n);
+  }
+}
+
+/* ===== レッスンの「ためしてみよう」 ===== */
+const segVal=id=>{const b=document.querySelector('#'+id+' [aria-pressed="true"]'); return b?b.dataset.v:null;};
+const bindSeg=(id,fn)=>{const el=document.getElementById(id); if(!el) return; el.querySelectorAll('button').forEach(b=>b.onclick=()=>{el.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b))); fn();});};
+const meter=(label,p,hl)=>`<div class="meter"><span>${label}</span><span class="bar"><i style="width:${Math.max(0,Math.min(100,p*100))}%;${hl?'background:var(--mint)':''}"></i></span><span class="v">${pct(p)}</span></div>`;
+function gauge(parts){
+  parts=parts.filter(p=>p.v>1e-9);
+  const tot=parts.reduce((a,p)=>a+p.v,0), W=Math.max(1,tot);
+  return `<div class="gauge"><div class="gbox" style="background-size:${100/(W*10)}% 100%">${parts.map(p=>`<i class="${p.c}" style="width:${p.v/W*100}%"></i>`).join('')}<span class="g1" style="left:${100/W}%"></span></div><div class="gsc"><span class="st">0</span><span class="${W>1?'':'end'}" style="left:${100/W}%">1点</span>${W>1+1e-9?`<span class="end" style="left:100%">${fmtPt(W)}点</span>`:''}</div><div class="sleg">${parts.map(p=>`<span>${sw(p.c)}${p.l}</span>`).join('')}</div></div>`;
+}
+function bindLesson(){
+  if($('#dmKind')){
+    const up=()=>{
+      const same=segVal('kB')==='same', m=+segVal('kM'), x=+segVal('kX');
+      const A=1000+(same?1000:0)+m*1000, B=same?0:1000, X=x*5000, tot=A+B+X;
+      let h=`<p class="why-line">くじ箱の中身（1マス＝くじ1000こ）</p>`+tickets([['a','A',A/1000],['b','B',B/1000],['x','誘',X/1000]].filter(x=>x[2]>0))+meter('親Aの種類',A/tot,true);
+      if(!same) h+=meter('親Bの種類',B/tot);
+      if(X) h+=meter('誘発剤の種類',X/tot);
+      h+=`<p class="why-line">くじの数：親Aの種類 ${A}${!same?`、親Bの種類 ${B}`:''}${X?`、誘発剤の種類 ${X}`:''}（合計 ${tot}）</p>`;
+      $('#kOut').innerHTML=h; phrase($('#kOut'));
+    };
+    ['kB','kM','kX'].forEach(id=>bindSeg(id,up)); up();
+  }
+  if($('#dmTr')){
+    const up=()=>{
+      const a=segVal('tA'), b=segVal('tB'), n=+segVal('tN');
+      const cnt=(a==='want')+(b==='want');
+      const want=cnt?cnt*.5+n*.1:0, rival=b==='rival'?.5+n*.1:0, tot=want+rival;
+      const lt=tot<1-1e-9;
+      let h;
+      if(!tot) h=`<p class="res">どっちの親も持ってないので、この特性は付かないよ。無特性の＋0.1点は、その場にある特性にだけ付くんだ。</p>`;
+      else{
+        const pw=lt?want:want/tot, pr=lt?rival:rival/tot, pe=lt?1-tot:0;
+        const gp=[{v:cnt*.5,c:'g-w',l:`欲しい特性 ${fmtPt(cnt*.5)}点（持ってる親${cnt}体）`},{v:cnt&&n?n*.1:0,c:'g-wn',l:`無特性のおまけ ＋${fmtPt(n*.1)}点`},{v:rival?.5:0,c:'g-r',l:'別の特性 0.5点（親B）'},{v:rival&&n?n*.1:0,c:'g-rn',l:`別の特性のおまけ ＋${fmtPt(n*.1)}点`}];
+        h=`<p class="why-line">① 点数をためる（箱がいっぱい＝1点）</p>`+gauge(gp)+`<p class="why-line">② 確率になる</p>`+sbar([{p:pw,c:'s0',l:'欲しい特性'},...(b==='rival'?[{p:pr,c:'s1',l:'別の特性'}]:[]),{p:pe,c:'se',l:'空（なし）'}]);
+        h+=`<p class="why-line">点数：${want?`欲しい特性 ${fmtPt(want)}点`:''}${want&&rival?'、':''}${rival?`別の特性 ${fmtPt(rival)}点`:''}　合計 ${fmtPt(tot)}点。${lt?'1点より少ないので、点数がそのまま確率になるよ。':'1点以上なので、点数の割合で分けるよ。'}</p>`;
+      }
+      $('#tOut').innerHTML=h; phrase($('#tOut'));
+    };
+    ['tA','tB','tN'].forEach(id=>bindSeg(id,up)); up();
+  }
+  if($('#dmLv')){
+    const up=()=>{
+      $('#lOut1').innerHTML=`<p class="why-line">生まれる子の異能レベル</p>`+lvHTML(lvDist('dg',+segVal('lA'),+segVal('lB')));
+      $('#lOut2').innerHTML=`<p class="why-line">生まれる子の活性レベル</p>`+lvHTML(lvDist('bl',+segVal('lC'),+segVal('lD')));
+    };
+    ['lA','lB','lC','lD'].forEach(id=>bindSeg(id,up)); up();
+  }
+}
+
+/* ===== 融合のけいさん ===== */
+const K={core:1000,same:1000,inh:.5,nob:.1,dg:[40,80,89,90,100],bl:[45,90,95,100]};
+function lvDist(kind,a,b){
+  const hi=Math.max(a,b), lo=Math.min(a,b), cl=v=>Math.min(5,Math.max(1,v));
+  const th=kind==='dg'?K.dg:K.bl;
+  const vals=kind==='dg'?[a,b,cl(hi-1),cl(hi-2),cl(hi+1)]:[a,b,cl(lo+1),cl(hi+1)];
+  const m=[0,0,0,0,0,0], last=th[th.length-1]; let prev=0;
+  th.forEach((t,i)=>{m[vals[i]]+=(t-prev)/last; prev=t;});
+  return m;
+}
+function lvHTML(m){
+  const mx=Math.max(...m.slice(1));
+  return `<div class="lvbars" role="img" aria-label="${[1,2,3,4,5].map(n=>`Lv${n} ${pct(m[n])}`).join('、')}">${[1,2,3,4,5].map(n=>{const z=m[n]<1e-9, top=!z&&Math.abs(m[n]-mx)<1e-9;
+    return `<div class="lvb${z?' z':''}${top?' top':''}"><span class="v">${z?'0%':pct(m[n])}</span><span class="col"><i style="height:${z?0:Math.max(4,m[n]*100)}%"></i></span><b>Lv${n}</b></div>`;}).join('')}</div>`;
+}
+const P0=(sp,o)=>Object.assign({sp,dg:5,bl:5,c:'',r:'',m:''},o||{});
+const MD=(sp,o)=>Object.assign({k:'dev',sp,c:'',r:'',m:''},o||{});
+const MI=(it,n)=>({k:'item',it,n:n||1});
+const MU=(mu,n)=>({k:'mut',mu,n:n||1});
+const NONE=()=>({k:''});
+const NEKO='99000051', UNAGI='99000005', GD='99000020', WISH='99000034', BDREAM='99000031', CHOU='99900001';
+const PRESETS={
+ copy80:{name:'無特性3体で80%',p:[P0(NEKO,{r:'200004'}),P0(NEKO)],m:[MD(NEKO),MD(NEKO),MD(NEKO)],goal:{r:'200004'}},
+ both:{name:'両方の親に同じ特性（100%）',p:[P0(NEKO,{r:'200004'}),P0(NEKO,{r:'200004'})],m:[],goal:{r:'200004'}},
+ copy70:{name:'特性コピー（70%）',p:[P0(NEKO),P0(NEKO)],m:[MD(NEKO,{r:'200004'}),MD(NEKO),MD(NEKO)],goal:{r:'200004'}},
+ erase:{name:'ハズレ消し（25%）',p:[P0(NEKO,{r:'200004',c:'400024'}),P0(NEKO)],m:[],goal:{r:'200004',c:''}},
+ moon70:{name:'色違いコピー（70%）',p:[P0(NEKO),P0(NEKO)],m:[MD(NEKO,{r:'200030'}),MD(NEKO),MD(NEKO)],goal:{r:'200030'}},
+ purge:{name:'色違いの親でハズレ追い出し（44%）',p:[P0(UNAGI,{c:'400069'}),P0(UNAGI,{c:'400069'})],m:[MD(NEKO,{r:'200004',c:'400024'}),MD(UNAGI),MD(UNAGI)],goal:{c:'400069',r:'200004'}},
+ wolf:{name:'オオカミ2匹（100%）',p:[P0(NEKO),P0(NEKO)],m:[MI('a1000002'),MI('a1000002')],goal:{m:'1000002'}},
+ wish:{name:'願いのグリーン・ドラゴン（60%）',p:[P0(WISH),P0(WISH)],m:[MD(GD)],goal:{c:'400111'}},
+ mut:{name:'誘発剤で種類を変える（71%）',p:[P0(UNAGI),P0(UNAGI)],m:[MU('u30139272')],goal:{}},
+ season:{name:'シーズン誘発剤（80%）',p:[P0(BDREAM,{c:'400024'}),P0(BDREAM)],m:[MU('z400190',2)],goal:{c:'400190'}},
+ route:{name:'100%ルートの1回',p:[P0(NEKO,{r:'200004',c:'400010'}),P0(NEKO,{r:'200004',c:'400010'})],m:[MI('a1000002'),MI('a1000002'),MD(NEKO)],goal:{c:'400010',r:'200004',m:'1000002'}},
+ kind:{name:'ちがうタイプどうし',p:[P0(NEKO,{r:'200004'}),P0(CHOU,{r:'300010'})],m:[],goal:{}},
+ lv:{name:'レベル5と2',p:[P0(NEKO),P0(NEKO,{dg:2,bl:2})],m:[],goal:{}}
+};
+const PRESET_ORDER=['copy80','both','copy70','erase','moon70','purge','wolf','wish','mut','season','route','kind','lv'];
+const okTr=v=>v===''||!!TR[v];
+function validCS(c){
+  try{
+    if(!c||typeof c!=='object'||!Array.isArray(c.p)||c.p.length!==2||!Array.isArray(c.m)||c.m.length!==3) return false;
+    for(const p of c.p){
+      if(!p||!DEV[p.sp]||!DEV[p.sp].par) return false;
+      if(![1,2,3,4,5].includes(p.dg)||![1,2,3,4,5].includes(p.bl)) return false;
+      if(!['c','r','m'].every(g=>typeof p[g]==='string'&&okTr(p[g]))) return false;
+    }
+    for(const m of c.m){
+      if(!m) return false;
+      if(m.k==='dev'){ if(!DEV[m.sp]||!DEV[m.sp].par) return false; if(!['c','r','m'].every(g=>typeof m[g]==='string'&&okTr(m[g]))) return false; }
+      else if(m.k==='item'){ if(!ITEM[m.it]) return false; m.n=1; }
+      else if(m.k==='mut'){ if(!MUT[m.mu]||!(Number.isInteger(m.n)&&m.n>=1&&m.n<=10)) return false; }
+      else if(m.k!=='') return false;
+    }
+    if(!c.goal||typeof c.goal!=='object'||Array.isArray(c.goal)) return false;
+    for(const [g,t] of Object.entries(c.goal)) if(!['c','r','m','x'].includes(g)||typeof t!=='string'||!okTr(t)) return false;
+    return true;
+  }catch(e){return false;}
+}
+let CS=null;
+function loadPreset(k){
+  const p=PRESETS[k]; if(!p) return;
+  const m=clone(p.m); while(m.length<3) m.push(NONE());
+  CS={p:clone(p.p),m,goal:clone(p.goal||{}),view:'',why:CS?CS.why===true:false,preset:k,ui:2};
+  st.cs=CS; save();
+}
+function resetCalc(){
+  CS={p:[P0(NEKO),P0(NEKO)],m:[NONE(),NONE(),NONE()],goal:{},view:'',why:CS?CS.why===true:false,preset:'',ui:2};
+}
+if(validCS(st.cs)){CS=st.cs; if(typeof CS.view!=='string') CS.view=''; if(typeof CS.preset!=='string'||(CS.preset&&!PRESETS[CS.preset])) CS.preset=''; if(CS.ui!==2){CS.why=false; CS.ui=2;} CS.why=CS.why===true;}
+else loadPreset('copy80');
+
+function fixTraits(o){
+  const t=DEV[o.sp].t;
+  ['c','r','m'].forEach(g=>{ if(!o[g]) return; const tr=TR[o[g]]; if(!tr||(tr.sk&&!tr.sk.includes(o.sp))||(g==='r'&&tr.ty!==t)) o[g]=''; });
+}
+function compute(){
+  const P=CS.p, M=CS.m;
+  const w={}, why={};
+  const bump=(sp,v,key,n)=>{w[sp]=(w[sp]||0)+v; const o=why[sp]=why[sp]||{h:0,md:0,mu:0}; o[key]+=n;};
+  P.forEach(p=>bump(p.sp,K.core,'h',1));
+  M.forEach(m=>{ if(m.k==='mut'){ const u=MUT[m.mu]; if(u.w) for(const [sp,wt] of Object.entries(u.w)) if(DEV[sp]) bump(sp,wt*m.n,'mu',wt*m.n); } });
+  const cand=new Set(Object.keys(w));
+  const offMd=[];
+  M.forEach((m,j)=>{ if(m.k==='dev'){ if(cand.has(m.sp)) bump(m.sp,K.same,'md',1); else offMd.push(j); } });
+  const tot=Object.values(w).reduce((a,b)=>a+b,0);
+  const sp=Object.entries(w).map(([s,v])=>({s,w:v,p:v/tot,why:why[s]})).sort((a,b)=>b.p-a.p||a.s.localeCompare(b.s));
+  const src=[]; let nob=0;
+  P.forEach((p,i)=>['c','r','m'].forEach(g=>{ if(p[g]) src.push({t:p[g],pt:K.inh,lab:'親'+'AB'[i],held:1}); }));
+  M.forEach((m,j)=>{
+    const L='材料'+(j+1);
+    if(m.k==='dev'){
+      const has=['c','r','m'].filter(g=>m[g]);
+      has.forEach(g=>src.push({t:m[g],pt:K.inh,lab:L,held:1}));
+      const dm=DATA.devmat[m.sp]; if(dm) src.push({t:dm[0],pt:.5,lab:L,devs:dm[1]});
+      if(!has.length) nob++;
+    }else if(m.k==='item'){ const it=ITEM[m.it]; src.push({t:it.trait,pt:it.up*m.n,lab:L+(m.n>1?'×'+m.n:''),devs:it.devs}); }
+    else if(m.k==='mut'){ const u=MUT[m.mu]; if(u.trait) src.push({t:u.trait,pt:u.up*m.n,lab:L+(m.n>1?'×'+m.n:''),devs:u.devs}); }
+  });
+  const seen={}, dup=[];
+  M.forEach((m,j)=>{const key=m.k==='mut'?m.mu:null; if(!key) return; if(seen[key]!=null) dup.push(j); else seen[key]=j;});
+  return {sp,tot,src,nob,offMd,dup,dg:lvDist('dg',P[0].dg,P[1].dg),bl:lvDist('bl',P[0].bl,P[1].bl)};
+}
+function traitsFor(R,s){
+  const D=DEV[s], pts={}, drops=[], dropped={};
+  const drop=(t,why)=>{const k=t+'|'+why; if(dropped[k]) return; dropped[k]=1; drops.push({n:TR[t]?TR[t].n:t,why});};
+  R.src.forEach(x=>{
+    const tr=TR[x.t]; if(!tr) return;
+    if(x.devs&&x.devs.length&&!x.devs.includes(s)) return;
+    if(x.held&&tr.cf===0){drop(x.t,'融合で引き継げない'); return;}
+    const o=pts[x.t]=pts[x.t]||{t:x.t,sum:0,parts:[]}; o.sum+=x.pt; o.parts.push([x.pt,x.lab]);
+  });
+  if(R.nob) for(const o of Object.values(pts)){o.sum+=K.nob*R.nob; o.parts.push([K.nob*R.nob,`無特性${R.nob}体`]);}
+  const G={};
+  for(const o of Object.values(pts)){
+    const tr=TR[o.t], g=slotOf(tr.ty);
+    if(tr.sk&&!tr.sk.includes(s)){drop(o.t,`${skinName(tr)}の色違いだから`); continue;}
+    if(g==='r'&&tr.ty!==D.t){drop(o.t,`${TYPEN[tr.ty]}の特性だから`); continue;}
+    (G[g]=G[g]||{rows:[],sum:0}).rows.push(o); G[g].sum+=o.sum;
+  }
+  for(const g in G){const o=G[g], lt=o.sum<1-1e-9; o.rows.forEach(r=>r.p=lt?r.sum:r.sum/o.sum); o.empty=lt?1-o.sum:0; o.lt=lt; o.rows.sort((a,b)=>b.p-a.p);}
+  return {G,drops};
+}
+function goalProb(T){
+  let p=1;
+  for(const [g,t] of Object.entries(CS.goal)){
+    const o=T.G[g];
+    if(t==='') p*=o?o.empty:1;
+    else{const r=o&&o.rows.find(x=>x.t===t); p*=r?r.p:0;}
+  }
+  return p;
+}
+
+/* ===== けいさん機の画面 ===== */
+const TYCOL={1:'#c9b3ff',2:'#9be8d4',3:'#ff9fbd'};
+const SEGC=['s0','s1','s2','s3','s4'];
+const kana=s=>String(s||'').replace(/[ぁ-ゖ]/g,c=>String.fromCharCode(c.charCodeAt(0)+0x60)).replace(/[・\s\-－.．（）()]/g,'');
+const YOMI={'99000003':'ごっかんくらげ','99000009':'えいこのたね','99000016':'こおりのびん','99000018':'どくたーくま','99000021':'なんばー','99000023':'まるどりぼうる','99000024':'げんしらいたー','99000025':'じっとみつめるくろねこ','99000027':'くるみわりにんぎょう','99000028':'だいくびーばー','99000031':'ちょうのゆめ','99000032':'そらのこ','99000035':'あくしゅうたまねぎ','99000042':'りょうしかたつむり','99000043':'よるのともしび','99000044':'うちゅうひこうぎょ','99000046':'じょうかいのたまご','99000047':'ぶーどぅーにんぎょう','99000048':'ほのおのせいれい','99000050':'みにちゅあとくいてん','99000051':'いじげんのおおねこ','99000053':'こういのおう','99000054':'かみにんぎょう','99000056':'しょくにんのて','99000058':'ふゆのせい','99000065':'やみいしゃ','99000066':'せいめいのせい','99000070':'きつねしゅにん','99000079':'ちんもくのちょうぞう','99900001':'ちょうのししゃ'};
+const trShort=t=>{if(!t) return ''; if(t.sk){const m=t.n.split(/\s*[-－]\s*/); if(m.length>1&&t.sk.some(s=>DEV[s]&&DEV[s].n===m[0])) return m.slice(1).join(' - ');} return t.n;};
+const itemShort=it=>{if(it.k[0]==='s'){const n=DATA.fish[it.trait]||[]; return n.length>3?n[0]+'など':n.join('・');} return it.label.replace(/（.*$/,'');};
+const devNames=a=>(a||[]).map(s=>DEV[s]?DEV[s].n:'').filter(Boolean).join('・');
+const SLOTLAB=(g,D)=>g==='r'?TYPEN[D.t]+'の枠':SLOTN[g]+'の枠';
+function mutNote(u){
+  const sp=u.w?Object.keys(u.w)[0]:null;
+  if(u.k[0]==='u') return `${esc(DEV[sp].n)}のくじが、1個につき5000ふえる。`;
+  if(u.k[0]==='x') return `${esc(DEV[sp].n)}のくじが1個につき5000ふえる。混沌版が生まれたら、混沌の特性が1個につき1点。`;
+  return `${esc(devNames(u.devs))}が生まれたとき、色違い「${esc(TR[u.trait]?trShort(TR[u.trait]):'')}」が1個につき1点。この色違いは、次の融合では引き継げない。`;
+}
+const WANTS=[
+ ['copy80','特性をコピー','片方の親＋無特性3体','80%','DEVI','#ff9fbd'],
+ ['both','特性を確実に残す','両方の親に同じ特性','100%','DEVI','#ff9fbd'],
+ ['copy70','材料から特性をコピー','材料に特性持ち＋無特性2体','70%','MAT','#9be8d4'],
+ ['erase','ハズレを消す','無特性は入れない','25%','BLANK','#c9b3ff'],
+ ['moon70','色違いを増やす','ムーンダイヤの例','70%','EGG','#ffe27a'],
+ ['wolf','動物の特性を付ける','オオカミ2匹','100%','PAW','#ffe27a'],
+ ['wish','色違いを付ける','グリーン・ドラゴンを材料に','60%','MAT','#9be8d4'],
+ ['mut','種類を変える','種族変異誘発剤','71%','FLASK','#9fd6ff'],
+ ['season','シーズンの色違い','誘発剤2個','80%','FLASK','#9fd6ff'],
+ ['route','特性3つを100%で','100%ルート','100%','DEVI','#ff9fbd'],
+ ['purge','ハズレを追い出す','色違いの親で（上級）','44%','DEVI','#9be8d4'],
+ ['kind','ちがうタイプを混ぜる','消える特性を見る','','SWORD','#ff9fbd'],
+ ['lv','レベルの決まり方','異能5と2の親','','GEAR','#c9b3ff']
+];
+function renderWants(){
+  $('#wants').innerHTML=WANTS.map(([k,t,s,p,ic,col])=>`<button type="button" class="want" id="wt-${k}" data-preset="${k}" aria-pressed="${CS.preset===k}"><span class="wi" style="background:${col}">${pix(ic)}</span><span class="wt">${t}</span><small>${s}</small>${p?`<span class="wp">${p}</span>`:''}</button>`).join('')
+   +`<button type="button" class="want reset" id="wt-reset" data-reset><span class="wi" style="background:var(--surface)">${pix('BLANK')}</span><span class="wt">まっさらにする</span><small>自分で全部えらぶ</small></button>`;
+}
+function goalInfo(R){
+  const view=CS.view&&R.sp.some(x=>x.s===CS.view)?CS.view:R.sp[0].s;
+  const T=traitsFor(R,view);
+  const hasGoal=Object.keys(CS.goal).length>0;
+  const gThis=hasGoal?goalProb(T):0;
+  const gAll=hasGoal?R.sp.reduce((a,x)=>a+x.p*goalProb(x.s===view?T:traitsFor(R,x.s)),0):0;
+  return {view,T,hasGoal,gThis,gAll};
+}
+function trChips(o){
+  const a=['c','r','m'].filter(g=>o[g]&&TR[o[g]]).map(g=>`<i class="${g}">${esc(trShort(TR[o[g]]))}</i>`);
+  return a.length?a.join(''):`<i class="n">特性なし</i>`;
+}
+function podTok(who,R){
+  const isP=who[0]==='p', j=+who.slice(1), o=isP?CS.p[j]:CS.m[j], L=isP?'親'+'AB'[j]:'材料'+(j+1);
+  let ic='BLANK', col='var(--surface)', nm='＋ 入れる', sub='', trs='', cnt=0, cls=' empty';
+  if(isP){const D=DEV[o.sp]; cls=' p'; ic='DEVI'; col=TYCOL[D.t]; nm=D.n; sub=`<span class="tk-lv">異能${o.dg}・活性${o.bl}</span>`; trs=trChips(o);}
+  else if(o.k==='dev'){const D=DEV[o.sp], has=['c','r','m'].some(g=>o[g]); cls=''; ic=has?'MAT':'BLANK'; col=has?TYCOL[D.t]:'#c9b3ff'; nm=D.n; trs=has?trChips(o):`<i class="n">無特性 ＋0.1点</i>`;
+    if(R.offMd.includes(j)) sub=`<span class="tk-note">種類のくじには入らない</span>`;}
+  else if(o.k==='item'){const it=ITEM[o.it], t=TR[it.trait]; cls=''; ic='PAW'; col='#ffe27a'; nm=itemShort(it); trs=t?`<i class="${slotOf(t.ty)}">${esc(trShort(t))}</i>`:'';}
+  else if(o.k==='mut'){const u=MUT[o.mu]; cls=''; ic='FLASK'; col='#9fd6ff'; nm=u.label; cnt=o.n; trs=`<i class="n">${u.k[0]==='u'?'種類を変える':u.k[0]==='x'?'混沌版にする':'色違いを付ける'}</i>`;}
+  return `<button type="button" class="tok${cls}" id="tk-${who}" data-edit="${who}" aria-label="${L}を変える"><span class="tk-tag">${L}</span><span class="tk-ic" style="background:${col}">${pix(ic)}${cnt?`<em class="tk-cnt">×${cnt}</em>`:''}</span><b class="tk-nm">${esc(nm)}</b>${sub}${trs?`<span class="tk-trs">${trs}</span>`:''}<span class="tk-ed">✎ 変える</span></button>`;
+}
+function renderPod(R,GI){
+  const top=R.sp[0], D=DEV[top.s];
+  $('#podc').innerHTML=`<p class="lab">カードを押すと、中身を変えられるよ</p>
+   <div class="pc-par">${podTok('p0',R)}<span class="pod-core sm" aria-hidden="true"><b>融合</b></span>${podTok('p1',R)}</div>
+   <div class="pc-mats">${podTok('m0',R)}${podTok('m1',R)}${podTok('m2',R)}</div>
+   ${R.dup.length?`<p class="mini warn">同じ誘発剤が2つの枠に入ってるよ。計算は2個ぶんで合ってるけど、ゲームでは1つの枠に重ねられるかもしれないよ。</p>`:''}
+   <p class="pod-arrow" aria-hidden="true">▼ ▼ ▼</p>
+   <button type="button" class="pc-child" id="tk-child" data-goout="1"><span class="tk-ic" style="background:#ffe27a">${pix('EGG')}</span><span class="pcc-t"><small>生まれるデビ</small><b>${esc(D.n)} ${pct(top.p)}</b>${R.sp.length>1?`<small>ほかに${R.sp.length-1}種類（結果で見られる）</small>`:''}</span>${GI.hasGoal?`<span class="pcc-g"><small>★ねらい</small><b>${pct(GI.gAll)}</b></span>`:''}</button>`;
+}
+function renderCalc(focusId){
+  const R=compute(), GI=goalInfo(R);
+  renderWants(); renderPod(R,GI); renderOut(R,GI); phrase($('#wants')); phrase($('#podc'));
+  if(ED&&!$('#ed').hidden) renderEd();
+  if(focusId){const el=document.getElementById(focusId); if(el) el.focus({preventScroll:true});}
+  st.cs=CS; save();
+}
+function trow(g,o,name,c,none){
+  const t=none?'':o.t, p=none?o:o.p, on=CS.goal[g]===t, id=`st-${g}-${t||'none'}`;
+  const parts=!none&&CS.why?`<span class="why" style="grid-column:2/-1">${o.parts.map(([v,l])=>`${fmtPt(v)}（${esc(l)}）`).join('＋')}${o.parts.length>1?`＝${fmtPt(o.sum)}点`:'点'}</span>`:'';
+  return `<div class="trow${none?' none':''}"><button type="button" class="star" id="${id}" data-goal="${g}" data-gt="${t}" aria-pressed="${on}" aria-label="${esc(name)}をねらう">★</button><span class="nm">${sw(c)}${esc(name)}</span><span class="v">${pct(p)}</span>${parts}</div>`;
+}
+function renderOut(R,GI){
+  R=R||compute(); GI=GI||goalInfo(R);
+  const P=CS.p, {view,T,hasGoal,gThis,gAll}=GI, D=DEV[view];
+  let h=`<div class="out-sec"><h4>SPECIES　生まれるデビ</h4>`;
+  h+=R.sp.map(x=>{const d=DEV[x.s]; return `<button type="button" class="sprow" id="sv-${x.s}" data-view="${x.s}" aria-pressed="${x.s===view}"><span class="nm">${esc(d.n)}<span class="chip ${TYPEC[d.t]}">${TYPEN[d.t]}</span>${d.chaos?'<span class="chip c-kw">混沌</span>':''}</span><span class="v">${pct(x.p)}</span><span class="bar"><i style="width:${x.p*100}%"></i></span></button>`;}).join('');
+  if(R.sp.length>1) h+=`<p class="mini">押すと、その種類が生まれたときの特性に切りかわるよ。</p>`;
+  if(CS.why) h+=`<p class="why">くじの数：${R.sp.map(x=>`${esc(DEV[x.s].n)} ${x.w}（${[x.why.h?`親${x.why.h}体`:'',x.why.md?`材料のデビ${x.why.md}体`:'',x.why.mu?`誘発剤${x.why.mu}`:''].filter(Boolean).join('＋')}）`).join('、')}　合計 ${R.tot}${R.offMd.length?`<br>${R.offMd.map(j=>'材料'+(j+1)).join('・')}のデビは、親にも誘発剤にもない種類なので、くじに入らないよ。`:''}</p>`;
+  h+=`</div><button type="button" class="togl" id="whyT" data-why aria-pressed="${!!CS.why}">点数の内訳を見る</button>`;
+  h+=`<div class="out-sec"><h4>TRAITS　${esc(D.n)}が生まれたときの特性</h4><p class="mini">★を押すと「ねらう特性」になるよ（「空」の★は、その枠を空にしたいとき）。</p>`;
+  for(const g of ['c','r','m','x']){
+    const o=T.G[g];
+    if(!o&&g==='x') continue;
+    const rows=o?o.rows:[], emp=o?o.empty:1;
+    const segs=rows.map((r,i)=>({p:r.p,c:SEGC[i%SEGC.length],l:trShort(TR[r.t])}));
+    if(emp>1e-9) segs.push({p:emp,c:'se',l:'空'});
+    h+=`<div class="slotres ${g}"><header><b>${SLOTLAB(g,D)}</b><small>${o?`合計 ${fmtPt(o.sum)}点・${o.lt?'1点より少ないのでそのまま確率':'1点以上なので割合で分ける'}`:'特性なし'}</small></header>${sbar(segs,false)}`;
+    h+=rows.map((r,i)=>trow(g,r,trShort(TR[r.t]),SEGC[i%SEGC.length])).join('');
+    if(emp>1e-9) h+=trow(g,emp,'空（特性なし）','se',true);
+    h+=`</div>`;
+  }
+  if(T.drops.length) h+=`<p class="mini">消える特性：${T.drops.map(d=>`${esc(d.n)}（${esc(d.why)}）`).join('、')}</p>`;
+  h+=`</div>`;
+  if(hasGoal){
+    const glab=(g,t)=>t&&slotOf(TR[t].ty)==='r'?TYPEN[TR[t].ty]+'の枠':SLOTLAB(g,D);
+    const names=Object.entries(CS.goal).map(([g,t])=>`${glab(g,t)}＝${t?trShort(TR[t]):'空'}`).join('、');
+    const tries=gAll>0&&gAll<.8-1e-9?Math.ceil(Math.log(.2)/Math.log(1-gAll)-1e-9):null;
+    h+=`<div class="goal"><span>★ ねらった特性が全部付く確率（1回の融合で）</span><span class="gv">${pct(gAll)}</span>${R.sp.length>1?`<span>${esc(D.n)}が生まれたときだけで見ると ${pct(gThis)}</span>`:''}${tries?`<span>80%の人が当たるまで：${tries}回</span>`:''}${gAll===0?`<span>この組み合わせだと付かないよ。消える特性やタイプを確かめてね。</span>`:''}<small>ねらい：${esc(names)}</small></div>`;
+  }else h+=`<div class="goal off"><span>★ 特性の★を押すと、ねらった特性が全部付く確率が出るよ。</span></div>`;
+  h+=`<div class="out-sec"><h4>LEVEL　異能レベル（強さ）</h4>${lvHTML(R.dg)}${CS.why?`<p class="why">親A ${P[0].dg}・親B ${P[1].dg}：親と同じが40%ずつ、高いほう＋1が10%、−1が9%、−2が1%（1〜5の中で）</p>`:''}</div>`;
+  h+=`<div class="out-sec"><h4>LEVEL　活性レベル（回復の速さ）</h4>${lvHTML(R.bl)}${CS.why?`<p class="why">親A ${P[0].bl}・親B ${P[1].bl}：親と同じが45%ずつ、低いほう＋1が5%、高いほう＋1が5%</p>`:''}</div>`;
+  h+=`<p class="mini">6つの傾向（攻撃バフなど）は毎回ランダムだよ。</p>`;
+  $('#calcOut').innerHTML=h; phrase($('#calcOut'));
+  const s=$('#calcSum'); s.hidden=false;
+  s.innerHTML=`<span class="cs-t"><span class="nw">${esc(DEV[R.sp[0].s].n)} ${pct(R.sp[0].p)}</span>${hasGoal?`<span class="nw">★ ${pct(gAll)}</span>`:''}</span><button type="button" id="sumGo">結果を見る ↓</button>`;
+}
+
+/* カードを押したときの「えらぶ画面」 */
+let ED=null, edQ='';
+const edObj=()=>ED[0]==='p'?CS.p[+ED.slice(1)]:CS.m[+ED.slice(1)];
+function secSp(o,num){
+  return `<div class="ed-sec"><h4><span class="n">${num}</span>種類</h4>
+   <input class="search sm" id="edq" type="search" placeholder="名前で探す（例：うなぎ）" value="${esc(edQ)}" aria-label="デビを名前で探す" autocomplete="off">
+   ${[3,2,1].map(t=>`<div class="pk-grp"><p class="pk-h"><span class="chip ${TYPEC[t]}">${TYPEN[t]}</span></p><div class="picks">${SPECIES.filter(d=>d.t===t).map(d=>`<button type="button" class="pick" id="pk-sp-${d.id}" data-sp="${d.id}" data-nm="${esc(kana(d.n)+'|'+kana(YOMI[d.id]||''))}" aria-pressed="${o.sp===d.id}">${esc(d.n)}</button>`).join('')}</div></div>`).join('')}
+   <p class="mini" id="edqNone" hidden>見つからなかったよ。カタカナでも探してみてね。</p></div>`;
+}
+function applyEdQ(){
+  const q=kana(edQ.trim()); let any=false;
+  $$('#edBody .pk-grp').forEach(g=>{let n=0; g.querySelectorAll('.pick[data-sp]').forEach(b=>{const ok=!q||b.dataset.nm.includes(q); b.hidden=!ok; if(ok) n++;}); g.hidden=!n; if(n) any=true;});
+  const none=$('#edqNone'); if(none) none.hidden=any||!q;
+}
+function secLv(o){
+  const row=(f,l)=>`<div class="frow"><span class="l">${l}</span><div class="lvsel" role="group" aria-label="${l}レベル">${[1,2,3,4,5].map(n=>`<button type="button" id="ed-${f}-${n}" data-lv2="${f}" data-n="${n}" aria-pressed="${o[f]===n}">${n}</button>`).join('')}</div></div>`;
+  return `<div class="ed-sec"><h4><span class="n">②</span>レベル</h4>${row('dg','異能')}${row('bl','活性')}<p class="mini">異能は強さ、活性は回復の速さ。どちらも5がいちばん上。</p></div>`;
+}
+function slotPick(o,g){
+  const D=DEV[o.sp], t=D.t;
+  const ok=tr=>g==='c'?tr.ty===4:g==='r'?tr.ty===t:(tr.ty===10||tr.ty===11);
+  const list=TRL.filter(tr=>ok(tr)&&(!tr.sk||tr.sk.includes(o.sp)));
+  const groups=g==='m'?[['動物から',list.filter(x=>x.ty===10)],['家具から',list.filter(x=>x.ty===11)]]
+    :[['良い特性',list.filter(x=>!x.sk&&x.q===3)],['ふつうの特性',list.filter(x=>!x.sk&&x.q===2)],['ハズレ特性',list.filter(x=>!x.sk&&x.q===1)],['色違い（この種類だけ）',list.filter(x=>x.sk)]];
+  const cur=o[g], ct=cur?TR[cur]:null;
+  const chip=x=>`<button type="button" class="pick${x.q===1?' bad':''}" id="pk-${g}-${x.id}" data-tg="${g}" data-tv="${x.id}" aria-pressed="${cur===x.id}">${esc(trShort(x))}${x.cf===0?'<small>引き継げない</small>':''}</button>`;
+  return `<div class="ed-slot ${g}"><p class="es-h">${SLOTLAB(g,D)}</p>
+   <div class="picks"><button type="button" class="pick none" id="pk-${g}-none" data-tg="${g}" data-tv="" aria-pressed="${!cur}">なし</button></div>
+   ${groups.filter(([,a])=>a.length).map(([l,a])=>{const inner=`<div class="picks">${a.map(chip).join('')}</div>`; return a.length>12&&l.startsWith('色違い')?`<details class="pk-more"${a.some(x=>x.id===cur)?' open':''}><summary>${l}（${a.length}）</summary>${inner}</details>`:`<p class="pk-sub">${l}</p>${inner}`;}).join('')}
+   ${ct?`<p class="teff2"><strong>${esc(trShort(ct))}</strong>：${esc(ct.tx)}${ct.cf===0?'（この色違いは融合で引き継げない）':''}</p>`:''}
+  </div>`;
+}
+function secTr(o){return `<div class="ed-sec"><h4><span class="n">③</span>特性<small>枠ごとに1つまで</small></h4>${['c','r','m'].map(g=>slotPick(o,g)).join('')}</div>`;}
+function secTrMat(o){
+  const has=['c','r','m'].some(g=>o[g]);
+  return `<div class="ed-sec"><h4><span class="n">③</span>特性</h4>
+   <div class="picks"><button type="button" class="pick big" id="pk-nob" data-nob="1" aria-pressed="${!has}">無特性（特性なし）</button></div>
+   <p class="mini">無特性のデビを材料にすると、その場の全部の特性に＋0.1点。特性を持っているデビなら、下で選んでね（1体0.5点）。</p>
+   <details class="pk-more"${has?' open':''}><summary>特性を選ぶ</summary>${['c','r','m'].map(g=>slotPick(o,g)).join('')}</details></div>`;
+}
+function secKind(o){
+  const K4=[['','なし','BLANK','var(--surface)'],['dev','デビ','MAT','#9be8d4'],['item','動物・家具・魚','PAW','#ffe27a'],['mut','誘発剤','FLASK','#9fd6ff']];
+  return `<div class="ed-sec"><h4><span class="n">①</span>入れるもの</h4><div class="kind4">${K4.map(([k,l,ic,col])=>`<button type="button" class="k4" id="k4-${k||'none'}" data-k4="${k}" aria-pressed="${o.k===k}"><span class="tk-ic" style="background:${col}">${pix(ic)}</span><span>${l}</span></button>`).join('')}</div></div>`;
+}
+function secItem(o){
+  const it=ITEM[o.it], t=TR[it.trait];
+  return `<div class="ed-sec"><h4><span class="n">②</span>もの</h4>${ITEMG.map(([gl,ks])=>{const inner=`<div class="picks">${ks.map(k=>{const x=ITEM[k], xt=TR[x.trait]; return `<button type="button" class="pick" id="pk-it-${k}" data-it="${k}" aria-pressed="${o.it===k}">${esc(k[0]==='s'?x.label:itemShort(x))}${xt?`<small>${esc(trShort(xt))}</small>`:''}</button>`;}).join('')}</div>`;
+      return gl.startsWith('魚')?`<details class="pk-more"${o.it[0]==='s'?' open':''}><summary>${gl}（${ks.length}）</summary>${inner}</details>`:`<p class="pk-sub">${gl}</p>${inner}`;}).join('')}
+   ${t?`<p class="teff2"><strong>${esc(trShort(t))}</strong>：${esc(t.tx)}　1匹（1つ）で0.5点・1枠。2匹なら2つの枠に入れてね${it.devs.length?`（${esc(devNames(it.devs))}が生まれたときだけ）`:''}</p>`:''}</div>`;
+}
+function secMut(o){
+  return `<div class="ed-sec"><h4><span class="n">②</span>誘発剤</h4>${MUTG.map(([gl,ks])=>{const inner=`<div class="picks">${ks.map(k=>`<button type="button" class="pick" id="pk-mu-${k}" data-mu="${k}" aria-pressed="${o.mu===k}">${esc(MUT[k].label)}</button>`).join('')}</div>`;
+      return ks.length>8?`<details class="pk-more"${ks.includes(o.mu)?' open':''}><summary>${gl}（${ks.length}）</summary>${inner}</details>`:`<p class="pk-sub">${gl}</p>${inner}`;}).join('')}
+   <p class="teff2">${mutNote(MUT[o.mu])}</p></div>`;
+}
+function secCnt(o){
+  return `<div class="ed-sec"><h4><span class="n">③</span>個数</h4><div class="cnt big"><button type="button" id="ed-dec" data-cnt2="-1" aria-label="へらす"${o.n<=1?' disabled':''}>−</button><output>${o.n}</output><button type="button" id="ed-inc" data-cnt2="1" aria-label="ふやす"${o.n>=10?' disabled':''}>＋</button></div><p class="mini">同じものは1つの枠に何個でも重ねられるよ。</p></div>`;
+}
+function renderEd(first){
+  const body=$('#edBody'), sc=first?0:body.scrollTop, isP=ED[0]==='p', j=+ED.slice(1), o=edObj();
+  $('#edT').textContent=isP?`親${'AB'[j]}（主素材）をえらぶ`:`材料${j+1}に入れるもの`;
+  let h='';
+  if(isP) h=secSp(o,'①')+secLv(o)+secTr(o);
+  else{
+    h=secKind(o);
+    if(o.k==='dev') h+=secSp(o,'②')+secTrMat(o);
+    else if(o.k==='item') h+=secItem(o);
+    else if(o.k==='mut') h+=secMut(o)+secCnt(o);
+    else h+=`<p class="mini">この枠には何も入れない。上のボタンで入れるものを選んでね。</p>`;
+  }
+  body.innerHTML=h; phrase(body); applyEdQ(); body.scrollTop=sc;
+  const R=compute(), top=R.sp[0];
+  $('#edNow').textContent=`いまの結果：${DEV[top.s].n} ${pct(top.p)}`;
+}
+function openEd(who){
+  ED=who; edQ=''; $('#ed').hidden=false; document.documentElement.classList.add('ed-open');
+  renderEd(true); $('#edX').focus({preventScroll:true});
+}
+function closeEd(){
+  if($('#ed').hidden) return;
+  $('#ed').hidden=true; document.documentElement.classList.remove('ed-open');
+  const w=ED; ED=null; const b=document.getElementById('tk-'+w); if(b) b.focus({preventScroll:true});
+}
+$('#edBody').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b||b.disabled||!ED) return;
+  const j=+ED.slice(1), o=edObj(), d=b.dataset;
+  if(d.sp){o.sp=d.sp; fixTraits(o);}
+  else if(d.lv2){o[d.lv2]=+d.n;}
+  else if(d.tg!=null){o[d.tg]=d.tv;}
+  else if(d.nob){o.c=o.r=o.m='';}
+  else if(d.k4!=null){if(o.k===d.k4) return; CS.m[j]=d.k4==='dev'?MD(CS.p[0].sp):d.k4==='item'?MI(ITEM.a1000002?'a1000002':ITEMG[0][1][0]):d.k4==='mut'?MU(MUTG[0][1][0]):NONE();}
+  else if(d.it){o.it=d.it;}
+  else if(d.mu){o.mu=d.mu;}
+  else if(d.cnt2){o.n=Math.max(1,Math.min(10,(o.n||1)+(+d.cnt2)));}
+  else return;
+  CS.preset=''; renderCalc(b.id);
+});
+$('#edBody').addEventListener('input',e=>{if(e.target.id==='edq'){edQ=e.target.value; applyEdQ();}});
+$('#edX').onclick=closeEd; $('#edOk').onclick=closeEd;
+$('#ed').addEventListener('click',e=>{if(e.target.id==='ed') closeEd();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#ed').hidden) closeEd();});
+$('#podc').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b) return; if(b.dataset.edit) openEd(b.dataset.edit); else if(b.dataset.goout) scrollToEl($('#calcOut'));});
+$('#wants').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b) return; if(b.dataset.preset) loadPreset(b.dataset.preset); else if(b.hasAttribute('data-reset')) resetCalc(); else return; renderCalc(b.id);});
+$('#calcSum').addEventListener('click',e=>{if(e.target.closest('#sumGo')) scrollToEl($('#calcOut'));});
+$('#calcOut').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  if(b.dataset.view) CS.view=b.dataset.view;
+  else if(b.hasAttribute('data-gt')){const g=b.dataset.goal, t=b.dataset.gt; if(CS.goal[g]===t) delete CS.goal[g]; else CS.goal[g]=t;}
+  else if(b.hasAttribute('data-why')) CS.why=!CS.why;
+  else return;
+  renderCalc(b.id);
+});
+
+/* ===== 特性図鑑 ===== */
+const DCATS=[['c','共通'],['r3','戦闘'],['r2','領地'],['r1','創作物'],['m','変異・混沌'],['s','色違い']];
+const DNOTE={c:'共通の枠の特性。どのタイプのデビにも付くよ。同じ名前なら、数字が大きいほど効果も大きい。',
+ r3:'戦闘デビだけに付く特性。戦闘中、プレイヤーやデビを強くしてくれる。',
+ r2:'領地デビだけに付く特性。働き方やエネルギーの減り方が変わる。',
+ r1:'創作物デビだけに付く特性。生産のスピードや量が変わる。',
+ m:'動物・家具を材料に入れると付く変異の枠の特性と、混沌変異誘発剤で付く混沌の特性。',
+ s:'色違い（見た目のちがい）も特性の1つ。その種類のデビにだけ付いて、ほとんどは共通の枠を使うよ。'};
+const dcatOf=t=>t.sk?'s':t.ty===4?'c':(t.ty===10||t.ty===11||t.ty===12)?'m':'r'+t.ty;
+const DEVMAT_BY_T={}; for(const [s,[t]] of Object.entries(DATA.devmat)) if(DEV[s]) DEVMAT_BY_T[t]=DEV[s].n;
+const SEASON_BY_T={}; DATA.season.forEach(([nm,t])=>SEASON_BY_T[t]=1);
+function dexSub(t){
+  const a=[], g=slotOf(t.ty);
+  if(t.sk) a.push(skinName(t)+'だけ');
+  a.push(g==='r'?TYPEN[t.ty]+'の枠':SLOTN[g]+'の枠');
+  if(ITEM['a'+t.id]) a.push('動物：'+ITEM['a'+t.id].label);
+  if(FURN_LABEL[t.id]&&t.ty===11) a.push('家具：'+FURN_LABEL[t.id]);
+  if(DATA.fish[t.id]){const n=DATA.fish[t.id]; a.push('材料に魚：'+(n.length>3?n.slice(0,3).join('・')+`など${n.length}種`:n.join('・')));}
+  if(DEVMAT_BY_T[t.id]) a.push(`材料に${DEVMAT_BY_T[t.id]}を入れると付く`);
+  if(SEASON_BY_T[t.id]) a.push('シーズン誘発剤で付く');
+  if(t.ty===12) a.push('混沌変異誘発剤で付く');
+  if(t.cf===0) a.push('融合で引き継げない');
+  return a.join('・');
+}
+const dexChip=t=>t.sk?['色違い','c-psi']:t.ty===10?['動物から','c-atk']:t.ty===11?['家具から','c-atk']:t.ty===12?['混沌','c-def']:t.q===3?['良い','c-gold']:t.q===2?['ふつう','c-mid']:['ハズレ','c-bad'];
+const dexCard=t=>{const [cl,cc]=dexChip(t); return `<article class="word"><header><b>${esc(t.n)}</b><span class="chip ${cc}">${cl}</span></header><p>${esc(t.tx)}</p><p class="sub">${esc(dexSub(t))}</p></article>`;};
+let dcat='c', dlimit=60;
+function renderDex(){
+  const q=$('#dq').value.trim();
+  $('#dcats').innerHTML=DCATS.map(([k,v])=>`<button data-dc="${k}" aria-pressed="${!q&&dcat===k}">${v}（${TRL.filter(t=>dcatOf(t)===k).length}）</button>`).join('');
+  let list;
+  if(q){
+    const ord=Object.fromEntries(DCATS.map(([k],i)=>[k,i]));
+    list=TRL.filter(t=>t.n.includes(q)||t.tx.includes(q)||dexSub(t).includes(q)).sort((a,b)=>ord[dcatOf(a)]-ord[dcatOf(b)]||(+a.id)-(+b.id));
+    $('#dnote').textContent=`「${q}」で探した結果：${list.length}こ`;
+  }else{list=TRL.filter(t=>dcatOf(t)===dcat); $('#dnote').textContent=DNOTE[dcat];}
+  const shown=list.slice(0,dlimit);
+  $('#dlist').innerHTML=shown.length?shown.map(dexCard).join(''):`<p class="empty">「${esc(q)}」に当てはまる特性は見つからなかったよ。</p>`;
+  $('#dmore').innerHTML=list.length>dlimit?`<button class="btn sub" id="dMore">もっと見る（あと${list.length-dlimit}こ）</button>`:'';
+  phrase($('#dlist')); phrase($('#dnote'));
+}
+$('#dcats').addEventListener('click',e=>{const b=e.target.closest('button[data-dc]'); if(!b) return; dcat=b.dataset.dc; dlimit=60; $('#dq').value=''; renderDex();});
+$('#dmore').addEventListener('click',e=>{if(e.target.closest('#dMore')){dlimit+=60; renderDex();}});
+$('#dq').addEventListener('input',()=>{dlimit=60; renderDex();});
+$('#dcount').textContent=TRL.length+'こ';
+
+/* ===== クイズ（正解は1つ目。出すときに並びをまぜる） ===== */
+const qq=(q,a,b,e)=>({q,a:[a,b],c:0,e});
+const QS=[
+ qq('融合で親にしたデビは、融合のあとどうなる？','残る（融合回数が1へる）','消える','親（主素材）は消えないよ。そのかわり、残りの融合回数が1へる。'),
+ qq('材料に入れたデビは、融合を中止したら？','戻ってこない','戻ってくる','材料は融合を始めた瞬間に消える。中止しても戻らないので、入れる前によく確かめよう。'),
+ qq('親が2体とも同じ種類（誘発剤なし）。生まれるのは？','100%その種類','50%でちがう種類','くじは親1体1000ずつ。2体とも同じ種類なら、その種類のくじしかないので100%。'),
+ qq('親が別々の種類で、材料はなし。それぞれが生まれる確率は？','50%ずつ','親Aが100%','親1体1000ずつのくじなので、1000対1000で50%ずつ。'),
+ qq('親Aと親Bが別々の種類。材料に親Aと同じ種類のデビを1体入れると、親Aの種類は？','約67%','50%のまま','親A 1000＋材料 1000＝2000、親B 1000。2000÷3000で約67%になるよ。'),
+ qq('片方の親だけが持っている特性。何もしないと、子に残る確率は？','50%','100%','1体0.5点なので合計0.5点。1点より少ないので、そのまま50%。'),
+ qq('両方の親が同じ特性を持っている。子に残る確率は？','100%','50%','0.5＋0.5＝1点で100%。欲しい特性は両方の親に持たせるのが基本だよ。'),
+ qq('片方の親だけが持つ特性を残しやすくしたい。材料に入れるのは？','無特性のデビ','ハズレ特性のデビ','無特性のデビは1体ごとに、その場の全部の特性に＋0.1点。3体で0.8点＝80%になるよ。'),
+ qq('1つの枠に付く特性はいくつまで？','1個','2個','共通・タイプ・変異の枠ごとに1個まで。同じ枠の特性どうしは取り合いになる。'),
+ qq('領地デビと戦闘デビで融合して、戦闘デビが生まれた。親の領地の特性は？','消える','残る','タイプの枠の特性は、生まれたデビのタイプと合わないと消えるよ。'),
+ qq('動物や家具を材料に入れると、特性が付く枠は？','変異の枠','共通の枠','動物・家具の特性は変異の枠。融合でしか手に入らない枠だよ。'),
+ qq('融合ポッドは、領地にいくつ建てられる？','1台だけ','3台まで','融合ポッドは領地に1台だけ。テックで建てられるよ。'),
+ qq('上級回復剤なしだと、融合にかかる時間は？','5分','1時間','ふつうは5分。上級回復剤を入れると短くなる（最短1分35秒）。'),
+ qq('「5/5」ってどういう意味？','異能5・活性5','融合回数が5回','異能レベル5・活性レベル5のこと。いちばん強い状態だよ。'),
+ qq('異能5の親どうしで融合。子が異能5になる確率は？','90%','100%','親と同じが40%ずつ＋「高いほう＋1」（5より上にならないので5）が10%で90%。のこりは4か3になる。'),
+ qq('異能5と異能2の親で融合。子が異能2になる確率は？','40%','1%','親Bと同じが40%。片方が低いと40%でそっちになるので、親は2体とも高レベルにしよう。'),
+ qq('活性4と活性2の親で融合。子の活性が1になることは？','ない','ある','活性は、低いほうの親より下がらない。だから1にはならないよ。'),
+ qq('材料の枠はいくつ？','3つ','10こ','材料の枠は3つ。動物も1匹で1枠使うよ。'),
+ qq('色違いの見た目は、融合ではどうあつかわれる？','特性の1つ','特性とは関係ない','色違いは特性あつかいで、枠を1つ使うよ。'),
+ qq('材料に入れたデビが持っている特性は何点ぶん？','1体0.5点','0点（材料の特性は関係ない）','材料のデビの特性も、親と同じで1体0.5点。だから材料からも特性を引き継げるよ。'),
+ qq('融合回数が0になったデビは？','材料にはできる','何にも使えない','親にはできないけど、材料にはできる。特性を持っていれば0.5点ぶん引き継げるよ。'),
+ qq('融合ポッドを使えるのは？','領地の持ち主だけ','領地に来た人なら誰でも','融合ポッドを使えるのは領地の持ち主だけだよ。'),
+ qq('同じ枠に、親Aは特性X、親Bは特性Y。子に付く確率は？','Xが50%・Yが50%','Xが100%','0.5点と0.5点で合計1点。割合で分けて50%ずつになるよ。'),
+ qq('異能レベルは何を表している？','デビの強さ','回復の速さ','異能レベルは強さ。回復の速さは活性レベルだよ。')
+];
+const MQ=[
+ qq('無特性のデビを3体材料に入れると、その場の特性は何点ふえる？','＋0.3点','＋1.5点','無特性1体で全部の特性に＋0.1点。3体で＋0.3点だよ。'),
+ qq('片方の親だけが欲しい特性。材料に無特性3体。残る確率は？','80%','100%','0.5＋0.3＝0.8点。1点より少ないので、そのまま80%。'),
+ qq('親2体は無特性。材料に欲しい特性のデビ1体＋無特性2体。残る確率は？','70%','50%','材料のデビの特性も0.5点。無特性2体で＋0.2点、合計0.7点で70%。'),
+ qq('ハズレ特性を消したいとき、無特性の材料は？','入れない','たくさん入れる','無特性を入れると、ハズレの点数まで上がって残りやすくなっちゃう。消したいときは入れないのがコツ。'),
+ qq('特性2つのうち、片方だけ残したい（材料なし）。確率は？','25%','50%','欲しい特性が残る50%×ハズレが消える50%で25%だよ。'),
+ qq('25%の融合。80%の人が当たるまで、だいたい何回？','6回','2回','外れる確率は75%。6回続けて外れるのは約18%なので、6回で80%以上の人が当たるよ。'),
+ qq('戦闘デビの無特性を集めやすいのは？','ささやくローンウルフ','栄枯の種','ささやくローンウルフは戦闘デビ（モノリス・フォングを周回）。栄枯の種は創作物デビだよ。'),
+ qq('釣りで集められる、戦闘デビの無特性は？','極寒クラゲ','デンキウナギ','極寒クラゲは戦闘、デンキウナギは領地。どちらも5〜10匹に1匹くらい無特性で釣れる。'),
+ qq('見た目は無特性でも、縦長のひし形のアイコンが付いているデビは？','無特性あつかいにならない','無特性あつかいになる','シナリオ専用スキルが付いていると、無特性の＋0.1点はもらえないよ。'),
+ qq('ほとんどの色違いが使う枠は？','共通の枠','変異の枠','ほとんどの色違いは共通の枠。だから同じ枠のふつうの特性と取り合いになる。'),
+ qq('願いのグリーン・ドラゴンとありふれるパワー2。同じデビに両方付く？','付かない（どちらか1つ）','両方付く','どちらも共通の枠なので、1つの枠に1個まで。どちらか1つだけだよ。'),
+ qq('両方の親が同じ色違い（同じ種類どうし）。色違いが残る確率は？','100%','50%','0.5＋0.5＝1点で100%。'),
+ qq('色違いの親から、ちがう種類のデビが生まれた。色違いは？','消える','残る','色違いは、生まれたデビが同じ種類のときだけ残るよ。'),
+ qq('オオカミを2匹材料に入れると、ムーンレイドが付く確率は？','100%','50%','動物1匹で0.5点。2匹で1点になって100%だよ。'),
+ qq('オオカミ1匹とクマ1匹を一緒に材料に入れると？','変異の枠を取り合って50%ずつ','両方付く','どちらも変異の枠なので取り合い。0.5点と0.5点で50%ずつだよ。'),
+ qq('宇宙飛行魚に専用の色違いを付けたい。材料に入れるのは？','魚','家具','魚を材料に入れると、魚の種類ごとにちがう宇宙飛行魚の色違いが付くよ。'),
+ qq('ミスターウィッシュに「願いのグリーン・ドラゴン」を付けたい。材料に入れるデビは？','グリーン・ドラゴン','レッド・ドラゴン','グリーン・ドラゴンを材料に入れると、生まれたミスターウィッシュにこの色違いが付く（0.5点ぶん）。'),
+ qq('銃で戦うビルド。戦闘デビの特性はどっち？','神射手','サイキックボーイ','神射手は銃器DMG＋5%。サイキックボーイは状態異常DMG＋5%なので、エレメント系のビルド向けだよ。'),
+ qq('エレメント（状態異常）で戦うビルド。戦闘デビの特性はどっち？','サイキックボーイ','神射手','サイキックボーイは状態異常DMG＋5%。神射手は銃器DMG用だよ。'),
+ qq('戦闘デビに「活気を刺激する」が付いた。戦闘では？','マイナス','プラス','活気を刺激するは、戦闘デビだと異常エネルギー回復−5%。必殺技の回転が遅くなるよ。'),
+ qq('縁の下の力持ち（領地）の効果は？','エネルギーと活躍度の消費間隔＋20%','銃器DMG＋5%','縁の下の力持ちは領地デビの特性。働いても疲れにくくなる。'),
+ qq('死闘の前夜（創作物）の効果は？','生産間隔−15%','資源の上限＋30%','死闘の前夜は生産間隔−15%。資源の上限＋30%はベンティだよ。'),
+ qq('家具の「照明」を材料に入れると付く特性は？','ひらめき','音楽の共鳴','照明はひらめき（収容条件の「照明」を満たす）。音楽の共鳴は家庭用ジュークボックスだよ。'),
+ qq('コピーで生まれた子の、残りの融合回数は？','1回','0回','融合で生まれた子も融合回数は1。だから次の親にしてくり返せるよ。')
+];
+const AQ=[
+ qq('100%ルートでは、欲しい特性ごとに何体用意する？','2体','1体','同じ特性を2つそろえると0.5＋0.5＝1点で100%。だから2体ずつ用意するよ。'),
+ qq('親Aと材料のデビが同じ特性（同じ枠にほかの特性なし）。残る確率は？','100%','50%','親でも材料でも1体0.5点。2体で1点になって100%だよ。'),
+ qq('100%ルートで材料の枠が足りなくなったとき、はさむターンは？','圧縮','リセット','同じ組み合わせの個体をもう1体作る「圧縮」ターンをはさむよ。'),
+ qq('特性がそろったあと、レベルだけ上げたい。もう片方の親は？','異能・活性の高い無特性','ハズレ特性のデビ','材料に同じ特性セットの個体を入れれば、特性は100%のまま。もう片方の親を高レベルの無特性にして、レベルだけ回すよ。'),
+ qq('ハズレ追い出しで、共通の枠は色違い1.2点・ハズレ0.7点。色違いが付く確率は？','約63%','約37%','1.2÷1.9で約63%。ハズレが付くのは約37%だよ。'),
+ qq('色違いの親でハズレを追い出すワザ。欲しい特性＋色違いだけの子ができる確率は？','約44%','約25%','共通の枠の約63%×タイプの枠の70%で約44%。ふつうに消すと25%なので、だいぶ上がる。'),
+ qq('色違いの親でハズレを追い出すワザが使えないタイプは？','創作物','領地','親にする色違いは釣れるデビ（領地はデンキウナギ、戦闘は極寒クラゲ）。創作物は釣れないので、25%のやり方になるよ。'),
+ qq('種族変異誘発剤1個のくじの数は？','5000','1000','種族変異誘発剤は1個で5000。親1体の5倍だよ。'),
+ qq('同じ種類の親2体に、別の種類の種族変異誘発剤を1個。誘発剤の種類になる確率は？','約71%','50%','5000÷(1000＋1000＋5000)で約71%。'),
+ qq('混沌変異誘発剤で混沌版が生まれた。混沌の特性は？','100%付く','50%で付く','混沌の特性は誘発剤1個で1点。ほかに混沌の枠の特性はないので100%付くよ。'),
+ qq('混沌版になっても、親から引き継いだ異能・活性は？','ふつうに引き継がれる','全部1にもどる','混沌変異誘発剤を使っても、特性・異能・活性はふつうに引き継がれるよ。'),
+ qq('シーズン誘発剤で付けた色違い。次の融合で引き継げる？','引き継げない','引き継げる','シーズン誘発剤の色違いは、融合で引き継げないよ。'),
+ qq('シーズン誘発剤を入れるのは、どの融合がいい？','いちばん最後の融合','いちばん最初の融合','色違いが引き継げないので、最後の融合で付けよう。'),
+ qq('憂鬱つきの蝶の夢に、異形との共生の誘発剤を2個。色違いが付く確率は？','80%','66.7%','誘発剤1個で1点、2個で2点。憂鬱の0.5点と取り合って 2÷2.5＝80%。1個なら66.7%。'),
+ qq('検証では、戦闘デビの活性5は活性1より必殺技の回復が何%速い？','25%','5%','活性1が0あつかいで、1つ上がるごとに5%。活性5は＋25%だよ。'),
+ qq('検証では、戦闘デビの「活気を刺激する」は活性でいうと実質どれくらい？','−1','＋2','活気を刺激するは実質 活性−1。ありふれるパワー2は実質＋2だよ。'),
+ qq('検証では、戦闘デビに陳腐2が付くと必殺技の回転は？','実質10%速くなった','10%遅くなった','エネルギー上限が減るぶん早くたまるので、回転は実質10%速くなった。ハズレだけど戦闘デビなら悪くない。'),
+ qq('検証では、収容条件を3つとも満たすと必殺技の回転は？','約23.5%速くなった','変わらなかった','約23.5%速くなった（活性4.7ぶん）。大事なデビは収容条件もそろえよう。'),
+ qq('異次元の収容で、親2体が同じ技を持っていると？','100%残る','50%で残る','同じ技を両方の親が持っていると100%残り続ける。いらない技は早めに消そう。'),
+ qq('異次元の収容での「無特性あつかい」は？','特性なし＋技なし','特性なしだけでOK','異次元の収容では、技も持っていないことが条件（必殺技は数えない）。'),
+ qq('異次元の収容のグレード（S/A/B）は、融合で？','引き継がれない','引き継がれる','グレードは逆位エネルギーランク。融合では引き継がれないよ。'),
+ qq('スキル変異誘発剤を2個入れると、技が付く確率は？','100%','50%','1個で50%、2個で100%。'),
+ qq('異次元の収容で、融合で生まれた子の異能・活性を確かめるには？','カバンで見る','融合結果の画面で見る','融合結果の画面では異能・活性が見えないので、カバンで確認しよう。')
+];
+const QB={b:QS,m:MQ,a:AQ};
+let qz=null;
+const QN=12;
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+function newQuiz(lv){lv=lv||(qz&&qz.lv)||st.qlv||'b'; if(!QB[lv]) lv='b'; st.qlv=lv; save(); const Q=QB[lv]; qz={lv,order:shuffle(Q.map((_,i)=>i)).slice(0,QN),i:0,res:[],answered:false,flip:Q.map(()=>Math.random()<.5)}; renderQuiz();}
+const qTabs=()=>`<div class="lvtabs">${Object.entries(LV).map(([k,v])=>`<button data-qlv="${k}" aria-pressed="${qz.lv===k}"><b>${v.n}</b><small>${QN}問${st.qb[k]!=null?'・ベスト '+st.qb[k]:''}</small></button>`).join('')}</div>`;
+function renderQuiz(){
+  if(!qz) newQuiz();
+  const el=$('#quiz');
+  const dots=`<div class="dots">${qz.order.map((_,k)=>`<i class="${k<qz.res.length?(qz.res[k]?'ok':'ng'):(k===qz.i?'now':'')}"></i>`).join('')}</div>`;
+  if(qz.i>=qz.order.length){
+    const sc=qz.res.filter(Boolean).length, tot=qz.order.length;
+    if(st.qb[qz.lv]==null||sc>st.qb[qz.lv]){st.qb[qz.lv]=sc;save();}
+    const msg=sc===tot?'満点！もう融合マスターだね。':sc>=9?'すごい！ほとんどわかってる。':sc>=6?'いい感じ！まちがえたところをレッスンで見直そう。':'まずはレッスンを読んでから、もう一回やってみよう。';
+    el.innerHTML=qTabs()+`<div class="qhead"><span class="eyebrow">RESULT</span>${dots}</div><div class="qend"><div class="screen"><p class="lab2">SCORE</p><div class="score">${sc}<small> / ${tot}</small></div></div><p style="font-family:var(--f-pop);font-size:19px">${msg}</p><p style="font-size:14px;color:var(--muted)">${LV[qz.lv].n}のベスト：${st.qb[qz.lv]} / ${tot}</p><div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center"><button class="btn pink" id="qAgain">もう一回</button><a class="btn sub" href="#lesson">レッスンを見る</a><a class="btn sub" href="#calc">けいさん機で試す</a></div></div>`;
+    phrase(el); $('#qAgain').onclick=()=>newQuiz(qz.lv); return;
+  }
+  const qi=qz.order[qz.i], Q=QB[qz.lv][qi], fl=qz.flip[qi];
+  const idx=fl?[1,0]:[0,1];
+  el.innerHTML=qTabs()+`<div class="qhead"><span class="eyebrow">${LV[qz.lv].n} · Q${qz.i+1} / ${qz.order.length}</span>${dots}</div>
+   <p class="qtext">${Q.q}</p><p class="qsit">2つのうち、合うほうを選んでね。</p>
+   <div class="qopts">${idx.map(k=>`<button data-k="${k}">${Q.a[k]}</button>`).join('')}</div><div id="qx"></div>`; phrase(el);
+  el.querySelectorAll('.qopts button').forEach(b=>b.onclick=()=>{
+    if(qz.answered) return; qz.answered=true;
+    const k=+b.dataset.k, ok=k===Q.c; qz.res.push(ok);
+    el.querySelectorAll('.qopts button').forEach(x=>{x.disabled=true; if(+x.dataset.k===Q.c) x.classList.add('right'); else if(x===b) x.classList.add('wrong');});
+    $('#qx').innerHTML=`<div class="qexp"><p class="big ${ok?'ok':'ng'}">${ok?'せいかい！':'ざんねん…'}</p><p>${Q.e}</p></div><div class="qnext"><button class="btn pink" id="qNext">${qz.i+1<qz.order.length?'次の問題 →':'結果を見る →'}</button></div>`;
+    phrase($('#qx')); if(ok&&window.sparkle) sparkle(b); $('#qNext').onclick=()=>{qz.i++;qz.answered=false;renderQuiz();};
+    $('#qNext').focus({preventScroll:true});
+  });
+}
+
+/* ===== 用語集 ===== */
+const WCC={base:'c-psi',fuse:'c-atk',trait:'c-kw',item:'c-def',srv:'c-mid'};
+let wcat='all';
+function renderWords(){
+  $('#wcats').innerHTML=[['all','すべて'],...Object.entries(CATN)].map(([k,v])=>`<button data-c="${k}" aria-pressed="${wcat===k}">${v}</button>`).join('');
+  $$('#wcats button').forEach(b=>b.onclick=()=>{wcat=b.dataset.c;renderWords();});
+  const q=$('#wq').value.trim();
+  const list=WORDS.filter(w=>(wcat==='all'||w[1]===wcat)&&(!q||w[0].includes(q)||w[2].includes(q)));
+  $('#wlist').innerHTML=list.length?list.map(w=>`<article class="word" id="w-${w[0]}"><header><b>${w[0]}</b><span class="chip ${WCC[w[1]]}">${CATN[w[1]]}</span></header><p>${w[2]}</p></article>`).join(''):`<p class="empty">「${esc(q)}」に当てはまる言葉はまだないよ。</p>`; phrase($('#wlist'));
+}
+$('#wq').addEventListener('input',renderWords);
+
+/* 用語ポップアップ */
+let lastFocus=null;
+function openTerm(t){
+  const w=WMAP[t]; if(!w) return; lastFocus=document.activeElement;
+  $('#sheetT').textContent=w[0]; $('#sheetD').textContent=w[2]; $('#sheetMore').dataset.w=w[0];
+  phrase($('#sheetD')); $('#sheet').hidden=false; $('#sheetX').focus();
+}
+const closeTerm=()=>{$('#sheet').hidden=true; if(lastFocus) lastFocus.focus({preventScroll:true});};
+$('#sheetX').onclick=closeTerm;
+$('#sheet').addEventListener('click',e=>{if(e.target.id==='sheet') closeTerm();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#sheet').hidden) closeTerm();});
+$('#sheetMore').addEventListener('click',e=>{
+  e.preventDefault(); const t=e.currentTarget.dataset.w; $('#sheet').hidden=true;
+  wcat='all'; $('#wq').value=''; location.hash='words'; renderWords();
+  setTimeout(()=>{const c=document.getElementById('w-'+t); if(c){c.scrollIntoView({behavior:RMq?'auto':'smooth',block:'center'}); c.classList.add('flash'); setTimeout(()=>c.classList.remove('flash'),1300);}},60);
+});
+
+/* ===== 進み具合・ページ切り替え ===== */
+function renderProg(){
+  const d=st.dn, all=LES.length+MID.length+ADV.length, done=d.b.length+d.m.length+d.a.length;
+  $('#progTxt').textContent=`初級 ${d.b.length}/${LES.length}・中級 ${d.m.length}/${MID.length}・上級 ${d.a.length}/${ADV.length}`+(st.qb.b!=null||st.qb.m!=null||st.qb.a!=null?`　クイズのベスト ${['b','m','a'].map(k=>LV[k].n+' '+(st.qb[k]??'-')).join('・')}`:'');
+  $('#progBar').style.width=(done/all*100)+'%';
+  $('#startBtn').textContent=done===0?'初級からはじめる':'つづきから';
+}
+const VIEWS=['home','lesson','calc','dex','quiz','words'];
+function route(){
+  let v=location.hash.slice(1); if(!VIEWS.includes(v)) v='home';
+  if(!$('#ed').hidden){$('#ed').hidden=true; ED=null; document.documentElement.classList.remove('ed-open');}
+  VIEWS.forEach(k=>{$('#v-'+k).hidden=k!==v;});
+  $$('.tabs a[data-v]').forEach(a=>{if(a.dataset.v===v) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');});
+  if(v==='lesson') renderLesson(false);
+  if(v==='calc') renderCalc();
+  if(v==='dex') renderDex();
+  if(v==='quiz') renderQuiz();
+  if(v==='words') renderWords();
+  if(v==='home') renderProg();
+  phrase($('#v-'+v)); window.scrollTo(0,0);
+}
+$('#startBtn').addEventListener('click',()=>{for(const k of ['b','m','a']){const L=LV[k].les.length, d=st.dn[k]; if(d.length<L){st.lv=k; for(let i=1;i<=L;i++){if(!d.includes(i)){st.sp[k]=i;break;}} break;}} save();});
+addEventListener('hashchange',route);
+renderProg(); route();
+})();
+</script>
+
+</body>
+</html>
