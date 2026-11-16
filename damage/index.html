@@ -30,6 +30,11 @@
 .askbox a{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;padding:12px 16px;border:2.5px solid currentColor;border-radius:14px;text-decoration:none;color:inherit;background:rgba(255,255,255,.55)}
 .askbox b{font-size:16px}
 .askbox span{font-size:14px}
+.gback{margin-left:auto;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:2.5px solid currentColor;border-radius:999px;color:inherit;text-decoration:none;font-weight:800;font-size:13.5px;white-space:nowrap;flex:none}
+.gback svg{width:12px;height:12px}
+.gback:hover{background:rgba(127,127,127,.15)}
+body.pro .gback{color:#d8c6a2;border:1px solid #c9a063;border-radius:4px;font-family:var(--f-pop);font-weight:700}
+@media (max-width:560px){.gback{padding:6px 9px}.gback span{display:none}.top .brand b{white-space:nowrap;font-size:17px!important}body.pro .top .brand b{letter-spacing:.08em!important}.top .wrap{gap:8px}}
 </style>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -990,6 +995,7 @@ body:not(.pro) .spec b{-webkit-text-stroke:.4px currentColor}
     <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="12" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="16" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 1v7M16 24v7M1 16h7M24 16h7" stroke="currentColor" stroke-width="2"/></svg>
     <div><b>ダメージラボ</b><span>ワンスヒューマン ダメージ計算・非公式</span></div>
   </div>
+  <a class="gback" href="https://yukhoeonce.github.io/" aria-label="ガイドへ戻る"><svg viewBox="0 0 8 8" aria-hidden="true" shape-rendering="crispEdges"><path fill="currentColor" d="M3 1h1v1H3zM2 2h1v1H2zM1 3h6v2H1zM2 5h1v1H2zM3 6h1v1H3z"/></svg><span>ガイドへ戻る</span></a>
   <div class="mode" role="group" aria-label="表示モード">
     <button type="button" id="mBeg" aria-pressed="true">初心者<small>結果だけ</small></button>
     <button type="button" id="mPro" aria-pressed="false">プロ<small>式・比較も</small></button>
@@ -1088,6 +1094,7 @@ body:not(.pro) .spec b{-webkit-text-stroke:.4px currentColor}
       <div class="fine">
         <p>ゲーム内のダミーで、実弾・クリ・弱点、スプレッドガン、バウンス、パワーサージ、フロストボルテックス、火傷（最大スタックまで）、不安定爆弾を測り、式と一致しました。表示は四捨五入です。不安定爆弾はダミーで式より約1割低く出たので×0.9で計算していて、1回ごとに±5%ほどばらつきます。<b>確認待ち</b>の攻撃（爆弾の特殊な派生・特殊弾・武器固有の範囲ダメージなど）はまだ確かめていない予想の式で、初心者モードでは表示しません。近接武器は未検証のため載せていません。確認待ちの攻撃の数字を知っている人は、<a href="https://yukhoeonce.github.io/ask/" target="_blank" rel="noopener">わかる人教えて！</a>から教えてね。</p>
         <p>シナリオごとの攻略・素材は <a href="https://yukhoeonce.github.io/">OnceHumanシナリオガイド</a> にまとめています。</p>
+        <p>ほかの講座：<a href="https://yukhoeonce.github.io/mod/">MOD講座</a> ・ <a href="https://yukhoeonce.github.io/devi/">デビ融合講座</a> ・ <a href="https://yukhoeonce.github.io/animal/">動物講座</a></p>
         <p>非公式のファンツールです。© NetEase / Starry Studio</p>
       </div>
     </section>
