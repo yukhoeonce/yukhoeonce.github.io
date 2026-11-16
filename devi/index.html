@@ -669,6 +669,21 @@ html.ed-open{overflow:hidden}
   .dfig .pod-core.sm{width:52px;height:52px}
   .dfig .pod-core.sm b{font-size:12px}
 }
+
+/* 色違いはデビごとにたたむ */
+#dlist .skg{grid-column:1/-1;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:3px 3px 0 var(--sh)}
+#dlist .skg>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:11px 14px;font-size:15.5px}
+#dlist .skg>summary::-webkit-details-marker{display:none}
+#dlist .skg>summary::before{content:'▸';color:var(--muted);transition:transform .15s}
+#dlist .skg[open]>summary::before{transform:rotate(90deg)}
+#dlist .skg .skn{margin-left:auto;font-size:13px;font-weight:700;color:var(--muted);background:var(--bg,#fff4dc);border-radius:99px;padding:1px 10px}
+#dlist .skl{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;padding:0 12px 12px}
+#dlist .skl .word{box-shadow:none;border-width:2px}
+@media (max-width:520px){
+  #dlist .skg{border-width:2px;box-shadow:2px 2px 0 var(--sh)}
+  #dlist .skg>summary{padding:10px 12px;font-size:14.5px}
+  #dlist .skl{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:0 8px 8px}
+}
 </style>
 </head>
 <body>
@@ -1862,7 +1877,7 @@ const DNOTE={c:'共通の枠の特性。どのタイプのデビにも付くよ�
  r2:'領地デビだけに付く特性。働き方やエネルギーの減り方が変わる。',
  r1:'創作物デビだけに付く特性。生産のスピードや量が変わる。',
  m:'動物・家具を材料に入れると付く変異の枠の特性と、混沌変異誘発剤で付く混沌の特性。',
- s:'色違い（見た目のちがい）も特性の1つ。その種類のデビにだけ付いて、ほとんどは共通の枠を使うよ。'};
+ s:'色違い（見た目のちがい）も特性の1つ。その種類のデビにだけ付いて、ほとんどは共通の枠を使うよ。デビの名前を押すと、その色違いが開くよ。'};
 const dcatOf=t=>t.sk?'s':t.ty===4?'c':(t.ty===10||t.ty===11||t.ty===12)?'m':'r'+t.ty;
 const DEVMAT_BY_T={}; for(const [s,[t]] of Object.entries(DATA.devmat)) if(DEV[s]) DEVMAT_BY_T[t]=DEV[s].n;
 const SEASON_BY_T={}; DATA.season.forEach(([nm,t])=>SEASON_BY_T[t]=1);
@@ -1880,7 +1895,7 @@ function dexSub(t){
   return a.join('・');
 }
 const dexChip=t=>t.sk?['色違い','c-psi']:t.ty===10?['動物から','c-atk']:t.ty===11?['家具から','c-atk']:t.ty===12?['混沌','c-def']:t.q===3?['良い','c-gold']:t.q===2?['ふつう','c-mid']:['ハズレ','c-bad'];
-const dexCard=t=>{const [cl,cc]=dexChip(t); return `<article class="word"><header><b>${esc(t.n)}</b><span class="chip ${cc}">${cl}</span></header><p>${esc(t.tx)}</p><p class="sub">${dexSub(t).split('・').map(x=>`<span class="ib">${esc(x)}</span>`).join('・')}</p><button type="button" class="fbtn" data-fb="${t.id}">名前・効果がちがう？</button></article>`;};
+const dexCard=(t,g)=>{const [cl,cc]=dexChip(t); let nm=t.n, sub=dexSub(t).split('・'); if(g){if(nm.startsWith(g)){const r=nm.slice(g.length).replace(/^\s*[-－ー]\s*/,''); if(r&&r!==nm.slice(g.length)) nm=r;} sub=sub.filter(x=>x!==g+'だけ');} return `<article class="word"><header><b>${esc(nm)}</b>${g?'':`<span class="chip ${cc}">${cl}</span>`}</header><p>${esc(t.tx)}</p><p class="sub">${sub.map(x=>`<span class="ib">${esc(x)}</span>`).join('・')}</p><button type="button" class="fbtn" data-fb="${t.id}">名前・効果がちがう？</button></article>`;};
 /* 特性ごとの意見（みんなの装備の意見ボックスに届く） */
 const FBCFG={url:'https://uybgscjkahdcmvkmpdbb.supabase.co',key:'sb_publishable_IVZ4IdQZn4KIt_qahKepRQ_tN2bNJBv'};
 let fbTr=null, fbLast=null;
@@ -1912,6 +1927,11 @@ function renderDex(){
     list=TRL.filter(t=>t.n.includes(q)||t.tx.includes(q)||dexSub(t).includes(q)).sort((a,b)=>ord[dcatOf(a)]-ord[dcatOf(b)]||(+a.id)-(+b.id));
     $('#dnote').textContent=`「${q}」で探した結果：${list.length}こ`;
   }else{list=TRL.filter(t=>dcatOf(t)===dcat); $('#dnote').textContent=DNOTE[dcat];}
+  if(!q&&dcat==='s'){
+    const G=new Map(); list.forEach(t=>{const k=skinName(t)||'そのほか'; if(!G.has(k)) G.set(k,[]); G.get(k).push(t);});
+    $('#dlist').innerHTML=[...G].map(([k,a])=>`<details class="skg"><summary><b>${esc(k)}</b><span class="skn">${a.length}こ</span></summary><div class="skl">${a.map(t=>dexCard(t,k)).join('')}</div></details>`).join('');
+    $('#dmore').innerHTML=''; phrase($('#dlist')); phrase($('#dnote')); return;
+  }
   const shown=list.slice(0,dlimit);
   $('#dlist').innerHTML=shown.length?shown.map(dexCard).join(''):`<p class="empty">「${esc(q)}」に当てはまる特性は見つからなかったよ。</p>`;
   $('#dmore').innerHTML=list.length>dlimit?`<button class="btn sub" id="dMore">もっと見る（あと${list.length-dlimit}こ）</button>`:'';
