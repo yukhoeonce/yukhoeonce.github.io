@@ -628,6 +628,20 @@ html.ed-open{overflow:hidden}
   .pod-mats{grid-template-columns:minmax(0,1fr)}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* 特性の意見 */
+.word{position:relative}
+.fbtn{align-self:flex-start;margin-top:2px;padding:4px 10px;border:2px dashed var(--line);border-radius:999px;background:transparent;color:var(--ink-2);font-weight:700;font-size:12.5px;cursor:pointer}
+.fbtn:hover{background:var(--surface)}
+.fbbox{max-width:480px}
+.fb-now{font-size:14px;line-height:1.55;margin:0 0 10px;padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:var(--surface)}
+.fb-now small{color:var(--ink-2)}
+.fbf{display:flex;flex-direction:column;gap:6px}
+.fbf label{font-weight:800;font-size:14px}
+.fbf input,.fbf textarea{width:100%;box-sizing:border-box;border:2.5px solid var(--line);border-radius:12px;padding:9px 12px;font:inherit;font-size:16px;background:#fff;color:var(--ink);resize:vertical}
+.fb-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
+.fb-msg{font-size:13.5px;font-weight:700}
+.fb-msg.ok{color:#1f8a5b}
+.fb-msg.ng{color:#c2334f}
 </style>
 </head>
 <body>
@@ -757,6 +771,20 @@ html.ed-open{overflow:hidden}
   </div>
 </div>
 
+<div class="sheet" id="fbs" hidden>
+  <div class="card box fbbox" role="dialog" aria-modal="true" aria-labelledby="fbT">
+    <header><b id="fbT">特性について教えて</b><button class="x" id="fbX" aria-label="閉じる">×</button></header>
+    <p class="fb-now" id="fbNow"></p>
+    <div class="fbf">
+      <label for="fbName">ゲームでの正しい名前（わかれば）</label>
+      <input id="fbName" type="text" maxlength="60" autocomplete="off" placeholder="例：ゲーム内の表示どおりに">
+      <label for="fbMemo">メモ（効果の文がちがう、など）</label>
+      <textarea id="fbMemo" rows="3" maxlength="150" placeholder="なくてもOK"></textarea>
+    </div>
+    <p class="mini">送った内容は管理人だけが読むよ。名前や連絡先は書かないでね。</p>
+    <div class="fb-foot"><span class="fb-msg" id="fbMsg" role="status"></span><button type="button" class="btn pink" id="fbSend">送る</button></div>
+  </div>
+</div>
 <div class="sheet" id="sheet" hidden>
   <div class="card box" role="dialog" aria-modal="true" aria-labelledby="sheetT">
     <header><b id="sheetT"></b><button class="x" id="sheetX" aria-label="閉じる">×</button></header>
@@ -1823,7 +1851,28 @@ function dexSub(t){
   return a.join('・');
 }
 const dexChip=t=>t.sk?['色違い','c-psi']:t.ty===10?['動物から','c-atk']:t.ty===11?['家具から','c-atk']:t.ty===12?['混沌','c-def']:t.q===3?['良い','c-gold']:t.q===2?['ふつう','c-mid']:['ハズレ','c-bad'];
-const dexCard=t=>{const [cl,cc]=dexChip(t); return `<article class="word"><header><b>${esc(t.n)}</b><span class="chip ${cc}">${cl}</span></header><p>${esc(t.tx)}</p><p class="sub">${esc(dexSub(t))}</p></article>`;};
+const dexCard=t=>{const [cl,cc]=dexChip(t); return `<article class="word"><header><b>${esc(t.n)}</b><span class="chip ${cc}">${cl}</span></header><p>${esc(t.tx)}</p><p class="sub">${esc(dexSub(t))}</p><button type="button" class="fbtn" data-fb="${t.id}">名前・効果がちがう？</button></article>`;};
+/* 特性ごとの意見（みんなの装備の意見ボックスに届く） */
+const FBCFG={url:'https://uybgscjkahdcmvkmpdbb.supabase.co',key:'sb_publishable_IVZ4IdQZn4KIt_qahKepRQ_tN2bNJBv'};
+let fbTr=null, fbLast=null;
+function fbDev(){let d=''; try{d=localStorage.getItem('devi_dev')||'';}catch(e){} if(!/^[0-9a-f]{32}$/.test(d)){const a=new Uint8Array(16); crypto.getRandomValues(a); d=[...a].map(x=>x.toString(16).padStart(2,'0')).join(''); try{localStorage.setItem('devi_dev',d);}catch(e){}} return d;}
+function openFbs(id,btn){fbTr=TR[id]; if(!fbTr) return; fbLast=btn; $('#fbNow').innerHTML=`いまの表示：<b>${esc(fbTr.n)}</b><br><small>${esc(fbTr.tx)}</small>`; $('#fbName').value=''; $('#fbMemo').value=''; $('#fbMsg').textContent=''; $('#fbMsg').className='fb-msg'; $('#fbSend').disabled=false; $('#fbs').hidden=false; $('#fbName').focus();}
+function closeFbs(){if($('#fbs').hidden) return; $('#fbs').hidden=true; if(fbLast) fbLast.focus({preventScroll:true});}
+async function sendFbs(){
+  const nm=$('#fbName').value.trim(), memo=$('#fbMemo').value.trim(), m=$('#fbMsg');
+  if(!nm&&!memo){m.className='fb-msg ng'; m.textContent='名前かメモのどちらかを書いてね'; return;}
+  const body=(`【デビ図鑑】${fbTr.n}（ID ${fbTr.id}）\n正しい名前：${nm||'-'}\nメモ：${memo||'-'}`).slice(0,300);
+  $('#fbSend').disabled=true; m.className='fb-msg'; m.textContent='送ってるよ…';
+  try{
+    const r=await fetch(FBCFG.url+'/rest/v1/rpc/post_feedback',{method:'POST',headers:{apikey:FBCFG.key,Authorization:'Bearer '+FBCFG.key,'Content-Type':'application/json'},body:JSON.stringify({p_dev:fbDev(),p_cat:'other',p_text:body,p_lang:'ja'})});
+    if(!r.ok){const t=await r.text(); throw new Error(/too_many/.test(t)?'送りすぎみたい。少し時間をあけてね':/site_full/.test(t)?'今日はたくさん届いたので、また明日送ってね':'送れなかった…（'+r.status+'）');}
+    m.className='fb-msg ok'; m.textContent='送ったよ、ありがとう！';
+  }catch(e){$('#fbSend').disabled=false; m.className='fb-msg ng'; m.textContent=e.message&&!/fetch/i.test(e.message)?e.message:'送れなかった…。ネットにつながってるか確かめてね';}
+}
+$('#fbX').onclick=closeFbs; $('#fbSend').onclick=sendFbs;
+$('#fbs').addEventListener('click',e=>{if(e.target.id==='fbs') closeFbs();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#fbs').hidden) closeFbs();});
+$('#dlist').addEventListener('click',e=>{const b=e.target.closest('[data-fb]'); if(b) openFbs(b.dataset.fb,b);});
 let dcat='c', dlimit=60;
 function renderDex(){
   const q=$('#dq').value.trim();
@@ -1994,6 +2043,7 @@ function renderProg(){
 const VIEWS=['home','lesson','calc','dex','quiz','words'];
 function route(){
   let v=location.hash.slice(1); if(!VIEWS.includes(v)) v='home';
+  $('#fbs').hidden=true;
   if(!$('#ed').hidden){$('#ed').hidden=true; ED=null; document.documentElement.classList.remove('ed-open');}
   VIEWS.forEach(k=>{$('#v-'+k).hidden=k!==v;});
   $$('.tabs a[data-v]').forEach(a=>{if(a.dataset.v===v) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');});
