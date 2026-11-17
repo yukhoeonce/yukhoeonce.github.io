@@ -694,6 +694,12 @@ html.ed-open{overflow:hidden}
   #dlist .skg .skn{font-size:11px;padding:0 6px}
   #dlist .skl{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:0 8px 8px}
 }
+/* スマホの「ためしてみよう」：見出しは1行、ボタンは小さめで横に並べる */
+@media (max-width:520px){
+  .seg{gap:6px}
+  .seg > span{flex-basis:100%;min-width:0;font-size:13.5px}
+  .seg button{padding:5px 12px;font-size:13.5px}
+}
 </style>
 </head>
 <body>
@@ -1343,13 +1349,14 @@ const ADV=[
  <ul>
   <li>異次元の大猫・レッド・ドラゴン・冬の精・ミスターウィッシュ・ミニチュア特異点の5種類。親だけなら1個で約71%で混沌版になり、混沌の特性が100%付く。</li>
   <li>特性・異能・活性はふつうに引き継がれる。生まれた${T('混沌デビ')}は融合回数0なので、それ以上は融合できない（混沌・蝶の夢は例外っぽい）。</li>
+  <li><b>混沌・蝶の夢</b>は見た目が変わるだけ。混沌の特性も色違いの特性も付かないので、今までどおりの特性をそのまま付けられるよ。</li>
  </ul>
  <h3>シーズン誘発剤：色違いを付ける</h3>
  <ul>
   <li>月の予兆・逆行する星・異形との共生・グラビティアビスの4シーズン。決まったデビに、1個につき1点で色違いを付ける。</li>
   <li>同じ枠にほかの特性があると取り合い。例：憂鬱つきの蝶の夢に1個で66.7%、2個で80%。</li>
   <li>この色違いは<b>融合で引き継げない</b>。だから、いちばん最後の融合で誘発剤を入れて付けよう。</li>
-  <li>イベントで、通常サーバーでももらえることがある（例：2026年11月のイベント「異常現象の輪」の蝶の夢）。</li>
+  <li>イベントで、通常サーバーでももらえることがある。</li>
  </ul>
  <div class="btnrow">${pbtn('mut','けいさん機で試す（種族変異）')}${pbtn('season','けいさん機で試す（シーズン）')}</div>`},
 {t:'活性と必殺技の回転',h:()=>`
@@ -1477,7 +1484,7 @@ function phrase(root){
 /* ===== レッスンの「ためしてみよう」 ===== */
 const segVal=id=>{const b=document.querySelector('#'+id+' [aria-pressed="true"]'); return b?b.dataset.v:null;};
 const bindSeg=(id,fn)=>{const el=document.getElementById(id); if(!el) return; el.querySelectorAll('button').forEach(b=>b.onclick=()=>{el.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b))); fn();});};
-const meter=(label,p,hl)=>`<div class="meter"><span>${label}</span><span class="bar"><i style="width:${Math.max(0,Math.min(100,p*100))}%;${hl?'background:var(--mint)':''}"></i></span><span class="v">${pct(p)}</span></div>`;
+const meter=(label,p,hl)=>`<div class="meter"><span>${label}</span><span class="bar"><i style="width:${Math.max(0,Math.min(100,p*100))}%;${hl?`background:${hl===true?'var(--mint)':hl}`:''}"></i></span><span class="v">${pct(p)}</span></div>`;
 function gauge(parts){
   parts=parts.filter(p=>p.v>1e-9);
   const tot=parts.reduce((a,p)=>a+p.v,0), W=Math.max(1,tot);
@@ -1488,9 +1495,9 @@ function bindLesson(){
     const up=()=>{
       const same=segVal('kB')==='same', m=+segVal('kM'), x=+segVal('kX');
       const A=1000+(same?1000:0)+m*1000, B=same?0:1000, X=x*5000, tot=A+B+X;
-      let h=`<p class="why-line">くじ箱の中身（1マス＝くじ1000こ）</p>`+tickets([['a','A',A/1000],['b','B',B/1000],['x','誘',X/1000]].filter(x=>x[2]>0))+meter('親Aの種類',A/tot,true);
-      if(!same) h+=meter('親Bの種類',B/tot);
-      if(X) h+=meter('誘発剤の種類',X/tot);
+      let h=`<p class="why-line">くじ箱の中身（1マス＝くじ1000こ）</p>`+tickets([['a','A',A/1000],['b','B',B/1000],['x','誘',X/1000]].filter(x=>x[2]>0))+meter('親Aの種類',A/tot);
+      if(!same) h+=meter('親Bの種類',B/tot,true);
+      if(X) h+=meter('誘発剤の種類',X/tot,'var(--lemon)');
       h+=`<p class="why-line">くじの数：親Aの種類 ${A}${!same?`、親Bの種類 ${B}`:''}${X?`、誘発剤の種類 ${X}`:''}（合計 ${tot}）</p>`;
       $('#kOut').innerHTML=h; phrase($('#kOut'));
     };
