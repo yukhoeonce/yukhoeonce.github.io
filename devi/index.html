@@ -719,6 +719,22 @@ html.ed-open{overflow:hidden}
   #dlist .skgrid{grid-template-columns:minmax(0,1fr)}
 }
 @media (max-width:360px){#dlist .fbtn{font-size:10px;padding:3px 5px;letter-spacing:-.05em}}
+/* スマホでは列の多い表をカード表示に（名前が途中で折れないように） */
+@media (max-width:520px){
+  .xtab.cards,.xtab.cards tbody,.xtab.cards tr,.xtab.cards td{display:block;width:auto}
+  .xtab.cards thead{display:none}
+  .xtab.cards tr{border:2px solid var(--line);border-radius:12px;padding:8px 12px;margin:0 0 8px;background:var(--surface)}
+  .xtab.cards td{border:0;padding:2px 0;white-space:normal!important;text-align:left}
+  .xtab.cards td:first-child{font-weight:700;font-size:15.5px}
+  .xtab.cards td:not(:first-child)::before{content:attr(data-l) "：";color:var(--muted);font-size:12.5px}
+  .xtab.cards tr:nth-child(even){background:var(--surface)}
+}
+.nw{white-space:nowrap}
+@media (max-width:520px){
+  .rules li{grid-template-columns:28px minmax(0,1fr);gap:9px;padding:10px 11px}
+  .rules li::before{width:28px;height:28px;font-size:14px}
+  .xtab:not(.cards) td:first-child{min-width:6em}
+}
 </style>
 </head>
 <body>
@@ -1181,7 +1197,7 @@ const MID=[
    tok({k:'b',tag:'材料',nm:'無特性デビ',trs:[['n','特性なし']]}),OP('＝'),
    `<span class="bonus">その場の全部の特性に<strong>＋0.1点</strong></span>`)}
  <h3>集めやすいデビ</h3>
- <div class="scroll"><table class="xtab"><thead><tr><th>デビ</th><th>タイプ</th><th>集め方</th></tr></thead><tbody>
+ <div class="scroll"><table class="xtab cards"><thead><tr><th>デビ</th><th>タイプ</th><th>集め方</th></tr></thead><tbody>
   <tr><td>のっぽキノコ</td><td>領地</td><td><b>おすすめ</b>。畑でキノコを育てると、一定の確率で手に入る</td></tr>
   <tr><td>悪臭タマネギ</td><td>戦闘</td><td><b>おすすめ</b>。畑でタマネギを育てると、一定の確率で手に入る</td></tr>
   <tr><td>異次元の大猫</td><td>領地</td><td>集めやすい定番</td></tr>
@@ -1224,7 +1240,7 @@ const MID=[
  </ol>
  <figure class="dfig"><div class="g22">
   <span></span><span class="g22h">ハズレ<br>残る 50%</span><span class="g22h">ハズレ<br>消える 50%</span>
-  <span class="g22h">★欲しい特性<br>残る 50%</span><span class="g22c">★＋ハズレ<strong>25%</strong></span><span class="g22c win">★だけ！<strong>25%</strong></span>
+  <span class="g22h">★欲しい特性<br>残る 50%</span><span class="g22c">★＋<br>ハズレ<strong>25%</strong></span><span class="g22c win">★だけ！<strong>25%</strong></span>
   <span class="g22h">★欲しい特性<br>消える 50%</span><span class="g22c">ハズレだけ<strong>25%</strong></span><span class="g22c">なにもなし<strong>25%</strong></span>
  </div><figcaption>特性2つが別々の枠にあるとき（材料なし）。ほしい形は4マスのうち1マス＝25%</figcaption></figure>
  <h3>欲しい1つだけ残る確率</h3>
@@ -1273,7 +1289,7 @@ const MID=[
  <details class="dex"><summary>家具の特性（${FURNS.length}）</summary><div class="dexlist">${rowsHTML(FURNS)}<div class="kwgroup">ほかの家具（ソファ・本棚・絵など）は、効果のない見た目だけの特性になる。</div></div></details>
  <h3>融合でしか出ない色違い</h3>
  <p>決まったデビを材料に入れると、生まれた子に専用の見た目（色違い）が付く。0.5点ぶんなので、ほかに何もなければ50%。</p>
- <div class="scroll"><table class="xtab"><thead><tr><th>生まれるデビ</th><th>材料に入れるもの</th><th>色違い</th><th>効果</th></tr></thead><tbody>
+ <div class="scroll"><table class="xtab cards"><thead><tr><th>生まれるデビ</th><th>材料に入れるもの</th><th>色違い</th><th>効果</th></tr></thead><tbody>
   <tr><td>黄衣の王（ミニ）</td><td>スペースキューブ</td><td>星喰い異形</td><td>エネルギー回復＋10%</td></tr>
   <tr><td>ミスターウィッシュ</td><td>グリーン・ドラゴン</td><td>願いのグリーン・ドラゴン</td><td>エネルギー回復＋15%</td></tr>
   <tr><td>冬の精</td><td>悪臭タマネギ</td><td>春の訪れ</td><td>活躍度上限＋35</td></tr>
@@ -1444,8 +1460,13 @@ function renderLesson(scroll){
   $('#les').innerHTML=`<p class="eyebrow">${L.n} · STEP ${i} / ${n}</p><h2>${l.t}</h2><div class="body">${l.h()}${i===n?L.fin():''}</div>
    <div class="foot">${i>1?`<button class="btn sub" data-nav="${i-1}">← もどる</button>`:'<span></span>'}
    ${i<n?`<button class="btn pink" data-next="${i}">${isDone?'次へ →':'わかった！次へ →'}</button>`:last}</div>`;
-  renderToc(); bindLesson(); phrase($('#les')); fixFlows($('#les'));
+  renderToc(); bindLesson(); cardTabs($('#les')); phrase($('#les')); fixFlows($('#les'));
   if(scroll){const top=$('#v-lesson').getBoundingClientRect().top+scrollY-90; if(scrollY>top) scrollTo({top,behavior:RMq?'auto':'smooth'});}
+}
+/* スマホでは表をカードにするので、各マスに見出しを持たせる */
+function cardTabs(root){
+  if(!root) return;
+  root.querySelectorAll('.xtab.cards').forEach(t=>{const hs=[...t.querySelectorAll('thead th')].map(th=>th.textContent); t.querySelectorAll('tbody tr').forEach(tr=>[...tr.children].forEach((td,i)=>td.dataset.l=hs[i]||''));});
 }
 /* 図の矢印：子のカードが次の行に回ったら、矢印を下向き（▼）にして1行使う */
 function fixFlows(root){
@@ -1481,21 +1502,38 @@ document.addEventListener('click',e=>{
 const isH=c=>c>='ぁ'&&c<='ゟ';
 const AFTER='、。）」』！？…・：';
 const BEFORE='（「『';
+const brkAt=(a,b)=>(AFTER.includes(a)&&!AFTER.includes(b))||(BEFORE.includes(b)&&!BEFORE.includes(a))||(isH(a)&&!isH(b)&&!AFTER.includes(b)&&b!=='ー'&&!/[\s]/.test(b));
+/* 「＋15%」「40〜45%」「50%で」などは途中で折り返さない */
+const NUMG=/[＋−]?\d[\d.,]*%?(?:[〜＝÷×＋−]\d[\d.,]*%?)*[点体回個匹]?[ぁ-ゟ、。）]?|[＋＝][^\d\s<]/g;
+function glue(p,f){
+  let last=0;
+  for(const m of p.matchAll(NUMG)){
+    if(m[0].length<2||/^\d+$/.test(m[0])) continue;
+    if(m.index>last) f.appendChild(document.createTextNode(p.slice(last,m.index)));
+    const sp=document.createElement('span'); sp.className='nw'; sp.textContent=m[0]; f.appendChild(sp); last=m.index+m[0].length;
+  }
+  if(last<p.length) f.appendChild(document.createTextNode(p.slice(last)));
+}
 function phrase(root){
   if(!root) return;
-  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement.closest('.formula,script,style,input,select,option,textarea,.np')?NodeFilter.FILTER_REJECT:(n.nodeValue.length>3?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP)});
+  const skip=n=>n.parentElement.closest('.formula,script,style,input,select,option,textarea,.np,.nw');
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>skip(n)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
   const nodes=[]; while(w.nextNode()) nodes.push(w.currentNode);
+  let prev='';
   for(const n of nodes){
-    const s=n.nodeValue; const parts=[]; let last=0;
+    const s=n.nodeValue; if(!s.trim()){prev='';continue;}
+    /* 太字などの境目（<b>2体ずつ</b>用意する）でも区切れるように */
+    const head=prev&&brkAt(prev,s[0])&&!(n.previousSibling&&n.previousSibling.nodeName==='WBR')&&!(!n.previousSibling&&n.parentElement.previousSibling&&n.parentElement.previousSibling.nodeName==='WBR');
+    prev=s[s.length-1];
+    const parts=[]; let last=0;
     for(let i=0;i<s.length-1;i++){
-      const a=s[i], b=s[i+1];
-      const brk=(AFTER.includes(a)&&!AFTER.includes(b))||(BEFORE.includes(b)&&!BEFORE.includes(a))||(isH(a)&&!isH(b)&&!AFTER.includes(b)&&b!=='ー'&&!/[\s]/.test(b));
-      if(brk){parts.push(s.slice(last,i+1)); last=i+1;}
+      if(brkAt(s[i],s[i+1])){parts.push(s.slice(last,i+1)); last=i+1;}
     }
-    if(!parts.length) continue;
+    if(!parts.length&&!head&&!/\d|[＋＝]/.test(s)) continue;
     parts.push(s.slice(last));
     const f=document.createDocumentFragment();
-    parts.forEach((p,k)=>{if(k) f.appendChild(document.createElement('wbr')); f.appendChild(document.createTextNode(p));});
+    if(head) f.appendChild(document.createElement('wbr'));
+    parts.forEach((p,k)=>{if(k) f.appendChild(document.createElement('wbr')); glue(p,f);});
     n.parentNode.replaceChild(f,n);
   }
 }
@@ -2015,7 +2053,6 @@ const MQ=[
  qq('親2体は無特性。材料に欲しい特性のデビ1体＋無特性2体。残る確率は？','70%','50%','材料のデビの特性も0.5点。無特性2体で＋0.2点、合計0.7点で70%。'),
  qq('ハズレ特性を消したいとき、無特性の材料は？','入れない','たくさん入れる','無特性を入れると、ハズレの点数まで上がって残りやすくなっちゃう。消したいときは入れないのがコツ。'),
  qq('特性2つのうち、片方だけ残したい（材料なし）。確率は？','25%','50%','欲しい特性が残る50%×ハズレが消える50%で25%だよ。'),
- qq('25%の融合。80%の人が当たるまで、だいたい何回？','6回','2回','外れる確率は75%。6回続けて外れるのは約18%なので、6回で80%以上の人が当たるよ。'),
  qq('戦闘デビの無特性を集めやすいのは？','ささやくローンウルフ','栄枯の種','ささやくローンウルフは戦闘デビ（モノリス・フォングを周回）。栄枯の種は創作物デビだよ。'),
  qq('釣りで集められる、戦闘デビの無特性は？','極寒クラゲ','デンキウナギ','極寒クラゲは戦闘、デンキウナギは領地。どちらも5〜10匹に1匹くらい無特性で釣れる。'),
  qq('見た目は無特性でも、縦長のひし形のアイコンが付いているデビは？','無特性あつかいにならない','無特性あつかいになる','シナリオ専用スキルが付いていると、無特性の＋0.1点はもらえないよ。'),
@@ -2031,8 +2068,6 @@ const MQ=[
  qq('エレメント（状態異常）で戦うビルド。戦闘デビの特性はどっち？','サイキックボーイ','神射手','サイキックボーイは状態異常DMG＋5%。神射手は銃器DMG用だよ。'),
  qq('戦闘デビに「活気を刺激する」が付いた。戦闘では？','マイナス','プラス','活気を刺激するは、戦闘デビだと異常エネルギー回復−5%。必殺技の回転が遅くなるよ。'),
  qq('縁の下の力持ち（領地）の効果は？','エネルギーと活躍度の消費間隔＋20%','銃器DMG＋5%','縁の下の力持ちは領地デビの特性。働いても疲れにくくなる。'),
- qq('死闘の前夜（創作物）の効果は？','生産間隔−15%','資源の上限＋30%','死闘の前夜は生産間隔−15%。資源の上限＋30%はベンティだよ。'),
- qq('家具の「照明」を材料に入れると付く特性は？','ひらめき','音楽の共鳴','照明はひらめき（収容条件の「照明」を満たす）。音楽の共鳴は家庭用ジュークボックスだよ。'),
  qq('コピーで生まれた子の、残りの融合回数は？','1回','0回','融合で生まれた子も融合回数は1。だから次の親にしてくり返せるよ。')
 ];
 const AQ=[
@@ -2040,20 +2075,12 @@ const AQ=[
  qq('親Aと材料のデビが同じ特性（同じ枠にほかの特性なし）。残る確率は？','100%','50%','親でも材料でも1体0.5点。2体で1点になって100%だよ。'),
  qq('100%ルートで材料の枠が足りなくなったとき、はさむターンは？','圧縮','リセット','同じ組み合わせの個体をもう1体作る「圧縮」ターンをはさむよ。'),
  qq('特性がそろったあと、レベルだけ上げたい。もう片方の親は？','異能・活性の高い無特性','ハズレ特性のデビ','材料に同じ特性セットの個体を入れれば、特性は100%のまま。もう片方の親を高レベルの無特性にして、レベルだけ回すよ。'),
- qq('ハズレ追い出しで、共通の枠は色違い1.2点・ハズレ0.7点。色違いが付く確率は？','約63%','約37%','1.2÷1.9で約63%。ハズレが付くのは約37%だよ。'),
- qq('色違いの親でハズレを追い出すワザ。欲しい特性＋色違いだけの子ができる確率は？','約44%','約25%','共通の枠の約63%×タイプの枠の70%で約44%。ふつうに消すと25%なので、だいぶ上がる。'),
  qq('色違いの親でハズレを追い出すワザが使えないタイプは？','創作物','領地','親にする色違いは釣れるデビ（領地はデンキウナギ、戦闘は極寒クラゲ）。創作物は釣れないので、25%のやり方になるよ。'),
  qq('種族変異誘発剤1個のくじの数は？','5000','1000','種族変異誘発剤は1個で5000。親1体の5倍だよ。'),
- qq('同じ種類の親2体に、別の種類の種族変異誘発剤を1個。誘発剤の種類になる確率は？','約71%','50%','5000÷(1000＋1000＋5000)で約71%。'),
- qq('混沌変異誘発剤で混沌版が生まれた。混沌の特性は？','100%付く','50%で付く','混沌の特性は誘発剤1個で1点。ほかに混沌の枠の特性はないので100%付くよ。'),
+ qq('親2体は同じ種類。そこに別の種類の種族変異誘発剤を1個入れた。誘発剤の種類が生まれる確率は？','約71%','50%','5000÷(1000＋1000＋5000)で約71%。'),
  qq('混沌版になっても、親から引き継いだ異能・活性は？','ふつうに引き継がれる','全部1にもどる','混沌変異誘発剤を使っても、特性・異能・活性はふつうに引き継がれるよ。'),
  qq('シーズン誘発剤で付けた色違い。次の融合で引き継げる？','引き継げない','引き継げる','シーズン誘発剤の色違いは、融合で引き継げないよ。'),
  qq('シーズン誘発剤を入れるのは、どの融合がいい？','いちばん最後の融合','いちばん最初の融合','色違いが引き継げないので、最後の融合で付けよう。'),
- qq('憂鬱つきの蝶の夢に、異形との共生の誘発剤を2個。色違いが付く確率は？','80%','66.7%','誘発剤1個で1点、2個で2点。憂鬱の0.5点と取り合って 2÷2.5＝80%。1個なら66.7%。'),
- qq('検証では、戦闘デビの活性5は活性1より必殺技の回復が何%速い？','25%','5%','活性1が0あつかいで、1つ上がるごとに5%。活性5は＋25%だよ。'),
- qq('検証では、戦闘デビの「活気を刺激する」は活性でいうと実質どれくらい？','−1','＋2','活気を刺激するは実質 活性−1。ありふれるパワー2は実質＋2だよ。'),
- qq('検証では、戦闘デビに陳腐2が付くと必殺技の回転は？','実質10%速くなった','10%遅くなった','エネルギー上限が減るぶん早くたまるので、回転は実質10%速くなった。ハズレだけど戦闘デビなら悪くない。'),
- qq('検証では、収容条件を3つとも満たすと必殺技の回転は？','約23.5%速くなった','変わらなかった','約23.5%速くなった（活性4.7ぶん）。大事なデビは収容条件もそろえよう。'),
  qq('異次元の収容で、親2体が同じ技を持っていると？','100%残る','50%で残る','同じ技を両方の親が持っていると100%残り続ける。いらない技は早めに消そう。'),
  qq('異次元の収容での「無特性あつかい」は？','特性なし＋技なし','特性なしだけでOK','異次元の収容では、技も持っていないことが条件（必殺技は数えない）。'),
  qq('異次元の収容のグレード（S/A/B）は、融合で？','引き継がれない','引き継がれる','グレードは逆位エネルギーランク。融合では引き継がれないよ。'),
