@@ -694,6 +694,12 @@ html.ed-open{overflow:hidden}
   #dlist .skg .skn{font-size:11px;padding:0 6px}
   #dlist .skl{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:0 8px 8px}
 }
+/* スマホの「ためしてみよう」：見出しは1行、ボタンは小さめで横に並べる */
+@media (max-width:520px){
+  .seg{gap:6px}
+  .seg > span{flex-basis:100%;min-width:0;font-size:13.5px}
+  .seg button{padding:5px 12px;font-size:13.5px}
+}
 </style>
 </head>
 <body>
@@ -1478,7 +1484,7 @@ function phrase(root){
 /* ===== レッスンの「ためしてみよう」 ===== */
 const segVal=id=>{const b=document.querySelector('#'+id+' [aria-pressed="true"]'); return b?b.dataset.v:null;};
 const bindSeg=(id,fn)=>{const el=document.getElementById(id); if(!el) return; el.querySelectorAll('button').forEach(b=>b.onclick=()=>{el.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b))); fn();});};
-const meter=(label,p,hl)=>`<div class="meter"><span>${label}</span><span class="bar"><i style="width:${Math.max(0,Math.min(100,p*100))}%;${hl?'background:var(--mint)':''}"></i></span><span class="v">${pct(p)}</span></div>`;
+const meter=(label,p,hl)=>`<div class="meter"><span>${label}</span><span class="bar"><i style="width:${Math.max(0,Math.min(100,p*100))}%;${hl?`background:${hl===true?'var(--mint)':hl}`:''}"></i></span><span class="v">${pct(p)}</span></div>`;
 function gauge(parts){
   parts=parts.filter(p=>p.v>1e-9);
   const tot=parts.reduce((a,p)=>a+p.v,0), W=Math.max(1,tot);
@@ -1489,9 +1495,9 @@ function bindLesson(){
     const up=()=>{
       const same=segVal('kB')==='same', m=+segVal('kM'), x=+segVal('kX');
       const A=1000+(same?1000:0)+m*1000, B=same?0:1000, X=x*5000, tot=A+B+X;
-      let h=`<p class="why-line">くじ箱の中身（1マス＝くじ1000こ）</p>`+tickets([['a','A',A/1000],['b','B',B/1000],['x','誘',X/1000]].filter(x=>x[2]>0))+meter('親Aの種類',A/tot,true);
-      if(!same) h+=meter('親Bの種類',B/tot);
-      if(X) h+=meter('誘発剤の種類',X/tot);
+      let h=`<p class="why-line">くじ箱の中身（1マス＝くじ1000こ）</p>`+tickets([['a','A',A/1000],['b','B',B/1000],['x','誘',X/1000]].filter(x=>x[2]>0))+meter('親Aの種類',A/tot);
+      if(!same) h+=meter('親Bの種類',B/tot,true);
+      if(X) h+=meter('誘発剤の種類',X/tot,'var(--lemon)');
       h+=`<p class="why-line">くじの数：親Aの種類 ${A}${!same?`、親Bの種類 ${B}`:''}${X?`、誘発剤の種類 ${X}`:''}（合計 ${tot}）</p>`;
       $('#kOut').innerHTML=h; phrase($('#kOut'));
     };
