@@ -700,6 +700,25 @@ html.ed-open{overflow:hidden}
   .seg > span{flex-basis:100%;min-width:0;font-size:13.5px}
   .seg button{padding:5px 12px;font-size:13.5px}
 }
+/* 検索らんがせまいスマホ（320px）ではみ出さないように */
+.words-head .search{min-width:0;width:100%}
+/* スマホ全体の見直し（2026-11-17） */
+.part p b{display:inline;font-size:inherit}
+@media (max-width:520px){
+  .xtab{min-width:0;font-size:14px}
+  .xtab th,.xtab td{padding:8px 6px}
+  .xtab th{font-size:12.5px}
+  .formula{white-space:normal;font-size:15px;line-height:1.8}
+  .meter{grid-template-columns:auto minmax(60px,1fr) 3.6em;gap:6px;font-size:13px}
+  #dlist .fbtn{font-size:10.5px;padding:3px 6px;white-space:nowrap;letter-spacing:-.02em;max-width:100%}
+  .xtab th:nth-child(2),.xtab td:nth-child(2){white-space:nowrap}
+}
+@media (max-width:360px){
+  .slot{flex-direction:column;align-items:flex-start;gap:4px}
+  .slot b{white-space:nowrap;font-size:13px}
+  #dlist .skgrid{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:360px){#dlist .fbtn{font-size:10px;padding:3px 5px;letter-spacing:-.05em}}
 </style>
 </head>
 <body>
@@ -855,7 +874,7 @@ html.ed-open{overflow:hidden}
 <footer class="site gut">
   <div class="wrap">
     <span>非公式のファンサイトです。ゲームの名称・内容の権利は © NetEase / Starry Studio に帰属します。</span>
-    <span>確率はゲーム内の融合プレビューと同じ考え方で計算していますが、アップデートで変わることがあります。いちばん新しい内容はゲーム内の表示を見てね。</span>
+    <span>確率はゲーム内の融合プレビューと同じ考え方で計算していますが、アップデートで変わることがあります。いちばん新しい内容は<span style="white-space:nowrap">ゲーム内の表示を見てね。</span></span>
     <span><a href="https://yukhoeonce.github.io/">OnceHumanシナリオガイド</a> ・ <a href="https://yukhoeonce.github.io/mod/">MOD講座</a> ・ <a href="https://yukhoeonce.github.io/damage/">ダメージラボ</a> ・ <a href="https://yukhoeonce.github.io/builds/">みんなの装備</a> ・ <a href="https://yukhoeonce.github.io/animal/">動物講座</a> ・ <a href="https://yukhoeonce.github.io/ask/">わかる人教えて！</a></span>
   </div>
 </footer>
