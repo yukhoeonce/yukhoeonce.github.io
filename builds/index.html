@@ -294,6 +294,8 @@ h3::before{content:"";width:10px;height:10px;background:var(--pink);border:2px s
 .tile.d .dic{width:44px;height:44px}
 .tile.d b{font-size:14px;overflow-wrap:normal;word-break:normal}
 html[lang="en"] .tile.d b{overflow-wrap:break-word}
+.tile.d{position:relative}
+.tile .newb{position:absolute;top:-8px;right:-5px;font-family:var(--f-dot);font-style:normal;font-size:12px;line-height:1;letter-spacing:.06em;padding:3px 6px 2px;background:var(--pink);color:var(--on-pop);border:1.5px solid var(--line);border-radius:6px;pointer-events:none}
 .dpanel .opt .bar span{background:var(--lav,#c9b3ff)}
 
 .panel h4{align-items:center}
@@ -667,6 +669,7 @@ const slotsL=()=>{AS=AS0.map(([s,l])=>[s,EL()?EN.SLOT[s]:l]);MS=MS0.map(([s,l])=
 const wName=w=>EL()?(EN.W[w.id]||w.name):w.name, tName=t=>EL()?(EN.TYPE[t]||t):t, kwN=k=>EL()?(EN.KWN[k]||k):(D.KWN[k]||k), setN=id=>EL()?(EN.SETS[id]||SETBY[id].n):SETBY[id].n;
 const ACOL=AS0.map(([s])=>'a_'+s), MCOL=MS0.map(([s])=>'m_'+s), COLS=['id','created_at','updated_at','weapon',...ACOL,...MCOL];
 // 戦闘デビ（1投稿1体）。DBに d_combat 列がまだ無いときは読まずに動く
+const DNEW=new Set(['statue']); // 新しく実装されたデビに「New」バッジ
 const DV=typeof DEVI!=='undefined'?DEVI:[], DVBY=Object.fromEntries(DV.map(d=>[d.id,d])), DIM=typeof DIMG!=='undefined'?DIMG:{};
 let HASD=true;
 const dName=id=>DVBY[id]?(EL()?DVBY[id].en:DVBY[id].n):'';
@@ -833,7 +836,7 @@ function pickWeapon(){
 }
 function pickDevi(){
   const v=cur.d_combat||'';
-  let h=`<div class="tiles">${DV.map(d=>`<button type="button" class="tile d" data-pick="d_combat" data-v="${d.id}" aria-pressed="${v===d.id}">${dIcon(d.id)}<b>${esc(dName(d.id))}</b></button>`).join('')}</div>`;
+  let h=`<div class="tiles">${DV.map(d=>`<button type="button" class="tile d" data-pick="d_combat" data-v="${d.id}" aria-pressed="${v===d.id}">${dIcon(d.id)}<b>${esc(dName(d.id))}</b>${DNEW.has(d.id)?'<i class="newb">New</i>':''}</button>`).join('')}</div>`;
   h+=`<div class="tiles" style="margin-top:12px"><button type="button" class="tile clear" data-pick="d_combat" data-v=""><b>${T('空けておく','Leave empty')}</b><small>${T('わからない・使ってない','Unknown / none')}</small></button></div>`;
   openDlg(T('戦闘デビを選ぶ','Choose a combat Deviation'),h);
 }
