@@ -68,7 +68,7 @@ main{padding-block:24px 48px}
 .c-psi{background:var(--psi-soft);color:var(--psi);border-color:var(--psi)}
 .c-def{background:var(--def-soft);color:var(--def);border-color:var(--def)}
 .c-kw{background:var(--wait-soft);color:var(--wait);border-color:var(--wait)}
-.note{border:2px dashed var(--line);border-radius:12px;padding:12px 14px;background:var(--field);font-size:15px}
+.note{border:2px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--field);font-size:15px}
 .note b{font-family:var(--f-pop);font-weight:400}
 
 /* ===== ホーム ===== */
@@ -221,7 +221,7 @@ details.dex summary::-webkit-details-marker{display:none}
 .qopts button.wrong{background:var(--ng-soft);border-color:var(--ng);color:var(--ng)}
 .qopts button:disabled{cursor:default}
 .qopts button small{display:block;font-size:12px;font-weight:700;color:var(--ink-2);margin-top:2px}
-.qexp{margin-top:16px;padding:14px;border:2px dashed var(--line);border-radius:12px;background:var(--surface)}
+.qexp{margin-top:16px;padding:14px;border:2px solid var(--line);border-radius:12px;background:var(--surface)}
 .qexp .big{font-family:var(--f-pop);font-size:20px}
 .qexp .big.ok{color:var(--ok)}.qexp .big.ng{color:var(--ng)}
 .qexp p{font-size:15px;margin-top:4px}
@@ -499,7 +499,7 @@ html.ed-open{overflow:hidden}
 .ed-slot + .ed-slot{margin-top:8px}
 .ed-slot.c{background:var(--wait-soft)}.ed-slot.r{background:var(--atk-soft)}.ed-slot.m{background:var(--psi-soft)}
 .ed-slot .es-h{margin:0;font-weight:800;font-size:14px}
-.teff2{font-size:13px;color:var(--ink-2);line-height:1.6;padding:6px 10px;border:1.5px dashed var(--muted);border-radius:8px;background:var(--surface)}
+.teff2{font-size:13px;color:var(--ink-2);line-height:1.6;padding:6px 10px;border:1.5px solid var(--muted);border-radius:8px;background:var(--surface)}
 .teff2 strong{color:var(--ink)}
 .kind4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 .k4{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 6px;border:2.5px solid var(--line);border-radius:12px;background:var(--surface);font-weight:800;font-size:13px;line-height:1.3;text-align:center}
@@ -519,7 +519,7 @@ html.ed-open{overflow:hidden}
 .dfig{margin:0;display:flex;flex-direction:column;gap:8px}
 .dfig figcaption{font-size:13.5px;color:var(--ink-2);text-align:center;line-height:1.6}
 .fig-h{margin:0;font-weight:800;font-size:14px}
-.flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 6px;padding:14px 10px;border:2.5px dashed var(--line);border-radius:16px;background:var(--surface)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 6px;padding:14px 10px;border:2.5px solid var(--line);border-radius:16px;background:var(--surface)}
 .op{font-family:var(--f-pop);font-size:22px;line-height:1;color:var(--ink-2);padding:0 2px}
 .tok{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:84px;max-width:150px;padding:8px 8px 9px;border:2.5px solid var(--line);border-radius:14px;background:var(--field);box-shadow:3px 3px 0 var(--sh);text-align:center;color:var(--ink)}
 .tok .tk-tag{font-family:var(--f-dot);font-size:12px;line-height:1.35;padding:0 6px;border:2px solid var(--line);border-radius:6px;background:var(--surface)}
@@ -544,7 +544,7 @@ html.ed-open{overflow:hidden}
 .pod-core.sm::before{inset:5px}
 .pod-core b small{display:block;font-family:var(--f-dot);font-size:12px;text-align:center}
 .pod-core.sm b{font-size:14px;text-align:center;line-height:1.2}
-.clash{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;padding:14px 10px;border:2.5px dashed var(--line);border-radius:16px;background:var(--surface)}
+.clash{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;padding:14px 10px;border:2.5px solid var(--line);border-radius:16px;background:var(--surface)}
 .cl-in{display:flex;flex-direction:column;gap:6px}
 .tchip{font-size:13px;font-weight:800;padding:4px 10px;border:2px solid var(--line);border-radius:10px;box-shadow:2px 2px 0 var(--sh)}
 .tchip.c{background:var(--wait-soft)}.tchip.r{background:var(--atk-soft)}.tchip.m{background:var(--psi-soft)}
@@ -729,7 +729,7 @@ html.ed-open{overflow:hidden}
 
 /* ===== つくり方ナビ ===== */
 .nv-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px 16px;padding:16px;margin:12px 0}
-.nv-f{display:flex;flex-direction:column;gap:4px;font-weight:700;font-size:14px}
+.nv-f{display:flex;flex-direction:column;justify-content:flex-end;gap:4px;font-weight:700;font-size:14px}
 .nv-f select{font:inherit;font-weight:700;font-size:15px;padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:var(--field);color:var(--ink);max-width:100%}
 .nv-f.sm span{font-size:13px;color:var(--ink-2)}
 .nv-lv{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:14px}
@@ -739,6 +739,13 @@ html.ed-open{overflow:hidden}
 .nv-calc p{margin:0;font-weight:700}
 .nv-bar{width:100%;height:14px;border:2px solid var(--line);border-radius:999px;overflow:hidden;background:var(--field)}
 .nv-bar i{display:block;height:100%;background:var(--lemon);transition:width .2s}
+.nv-have{grid-column:1/-1}
+.nv-hh{margin:0 0 6px;font-weight:700;font-size:14px}
+.nv-have table{border-collapse:separate;border-spacing:8px 6px;margin:0 -8px}
+.nv-have th{text-align:left;font-size:13px;color:var(--ink-2);font-weight:700;vertical-align:middle}
+.nv-have tr:first-child th{font-size:12px}
+.nv-have td{text-align:center;color:var(--ink-2)}
+.nv-have select{font:inherit;font-weight:700;font-size:15px;padding:7px 8px;border:2px solid var(--line);border-radius:10px;background:var(--field);color:var(--ink);min-width:84px}
 .nv-adv{grid-column:1/-1;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--ink-2);font-weight:700}
 .nv-sum{padding:14px 16px;margin:12px 0;background:var(--field)}
 .nv-sum ul,.nv-li{margin:8px 0;padding-left:1.2em;line-height:1.8}
@@ -2441,13 +2448,13 @@ function nvPlan(){
   const fz=[];
   if(T.length===2){
     const [c,y]=[T[0][1],T[1][1]];
-    fz.push({ttl:`${trShort(TR[c])}と${trShort(TR[y])}をまとめる（1体目）`,cfg:{p:[P0(S,{c}),P0(S,{c})],m:[MD(S,{r:y}),MD(S,{r:y}),MD(S)],goal:{c,r:y}},
+    fz.push({ttl:`${trShort(TR[c])}と${trShort(TR[y])}をまとめる（1体目）`,cfg:{p:[NT(P0(S,{c}),'★あとで材料にする'),NT(P0(S,{c}),'★あとで材料にする')],m:[MD(S,{r:y}),MD(S,{r:y}),MD(S)],goal:{c,r:y}},
       txt:`${trShort(TR[c])}持ち2体を親に、${trShort(TR[y])}持ち2体を材料に。どちらも0.5＋0.5で1点＝100%。`});
-    fz.push({ttl:`${trShort(TR[c])}と${trShort(TR[y])}をまとめる（2体目）`,cfg:{p:[P0(S,{r:y}),P0(S,{r:y})],m:[MD(S,{c}),MD(S,{c}),MD(S)],goal:{c,r:y}},
+    fz.push({ttl:`${trShort(TR[c])}と${trShort(TR[y])}をまとめる（2体目）`,cfg:{p:[P0(S,{r:y}),P0(S,{r:y})],m:[NT(MD(S,{c}),'★1体目で親にした子'),NT(MD(S,{c}),'★1体目で親にした子'),MD(S)],goal:{c,r:y}},
       txt:`今度は${trShort(TR[y])}持ちを親に、${trShort(TR[c])}持ちを材料に。これで同じ特性セットが2体そろう。`});
   }
   if(it){
-    fz.push({ttl:`${trShort(TR[Mt])}を足す`,cfg:{p:[P0(S,set),P0(S,set)],m:[MI(NV.m),MI(NV.m),MD(S)],goal:full},
+    fz.push({ttl:`${trShort(TR[Mt])}を足す`,cfg:{p:[NT(P0(S,set),T.length===2?'1体目でできた子':'回数が残ってる子'),NT(P0(S,set),T.length===2?'2体目でできた子':'回数が残ってる子')],m:[MI(NV.m),MI(NV.m),MD(S)],goal:full},
       txt:`${T.length?'同じ特性セットの2体を親に、':'無特性2体を親に、'}${itemShort(it)}を2つ材料に（1つで0.5点、2つで1点＝100%）。`});
   }
   fz.forEach(f=>{f.r=nvRun(f.cfg); fuse+=1; blank+=1; steps.push(Object.assign({k:'fuse'},f));});
@@ -2459,12 +2466,14 @@ function nvPlan(){
   fuse+=ex.exp; blank+=Math.ceil(ex.exp)*3;
   return {S,D,T,it,Mt,full,steps,fuse,blank,anim:it?4:0};
 }
+const NT=(o,t)=>Object.assign(o,{note:t});
 const nvTok=(o,role,showLv)=>{
   if(o.k==='item') return tok({k:'i',tag:role,nm:itemShort(ITEM[o.it]),trs:[['m',trShort(TR[ITEM[o.it].trait])]]});
   const trs=['c','r','m'].filter(g=>o[g]).map(g=>[g,trShort(TR[o[g]])]);
   const lv=showLv&&o.dg?`異能${o.dg}・活性${o.bl}`:'';
-  if(!trs.length) return tok({k:'b',tag:role,nm:'無特性',lv:role.startsWith('親')?lv:''});
-  return tok({k:role.startsWith('親')?'p':'m',tag:role,nm:DEV[o.sp].n,trs,lv:role.startsWith('親')?lv:''});
+  const isP=role.startsWith('親');
+  if(!trs.length) return tok({k:'b',tag:role,nm:'無特性',lv:isP?lv:'',note:o.note||''});
+  return tok({k:isP?'p':'m',tag:role,nm:DEV[o.sp].n,trs,lv:isP?lv:'',note:o.note||(isP?'融合回数が残ってる子':'融合回数0でもOK')});
 };
 const nvFlow=(cfg,r,cap,lv)=>{
   const parts=[nvTok(cfg.p[0],'親A',lv),OP('＋'),nvTok(cfg.p[1],'親B',lv)];
@@ -2493,12 +2502,11 @@ function renderNavi(){
    <label class="nv-f"><span>共通の枠（金）</span><select data-nv="c">${trSel('c')}</select></label>
    <label class="nv-f"><span>${TYPEN[D.t]}の枠（金）</span><select data-nv="r">${trSel('r')}</select></label>
    <label class="nv-f"><span>変異の枠（動物・家具）</span><select data-nv="m">${muSel}</select></label>
-   ${NV.c?`<label class="nv-f sm"><span>共通の特性を持ってる${esc(D.n)}</span><select data-nv="hc">${hSel('hc')}</select></label>`:''}
-   ${NV.adv&&NV.c&&NV.hc>0?`<label class="nv-f sm"><span>そのうち融合回数が残ってる</span><select data-nv="hc1">${cSel('hc1',NV.hc)}</select></label>`:''}
-   ${NV.r?`<label class="nv-f sm"><span>${TYPEN[D.t]}の特性を持ってる${esc(D.n)}</span><select data-nv="hr">${hSel('hr')}</select></label>`:''}
-   ${NV.adv&&NV.r&&NV.hr>0?`<label class="nv-f sm"><span>そのうち融合回数が残ってる</span><select data-nv="hr1">${cSel('hr1',NV.hr)}</select></label>`:''}
-   ${NV.adv&&NV.c&&NV.r?`<label class="nv-f sm"><span>共通と${TYPEN[D.t]}を両方持ってる${esc(D.n)}</span><select data-nv="hxy">${hSel('hxy')}</select></label>`:''}
-   ${NV.adv&&NV.c&&NV.r?`<label class="nv-f sm"><span>そのうち融合回数が残ってる</span><select data-nv="hxy1">${cSel('hxy1',NV.hxy)}</select></label>`:''}
+   ${(NV.c||NV.r)?`<div class="nv-have"><p class="nv-hh">持ってる${esc(D.n)}の数</p><table><tr><th></th><th>持ってる</th>${NV.adv?'<th>そのうち融合回数が残ってる</th>':''}</tr>
+    ${NV.c?`<tr><th>共通の特性だけ</th><td><select data-nv="hc">${hSel('hc')}</select></td>${NV.adv?`<td>${NV.hc>0?`<select data-nv="hc1">${cSel('hc1',NV.hc)}</select>`:'-'}</td>`:''}</tr>`:''}
+    ${NV.r?`<tr><th>${TYPEN[D.t]}の特性だけ</th><td><select data-nv="hr">${hSel('hr')}</select></td>${NV.adv?`<td>${NV.hr>0?`<select data-nv="hr1">${cSel('hr1',NV.hr)}</select>`:'-'}</td>`:''}</tr>`:''}
+    ${NV.adv&&NV.c&&NV.r?`<tr><th>共通＋${TYPEN[D.t]}の2つ持ち</th><td><select data-nv="hxy">${hSel('hxy')}</select></td><td>${NV.hxy>0?`<select data-nv="hxy1">${cSel('hxy1',NV.hxy)}</select>`:'-'}</td></tr>`:''}
+   </table></div>`:''}
    <div class="nv-f sm"><span>今の特性持ちのレベル</span><div class="nv-lv">異能<select data-nv="sdg">${lvSel('sdg')}</select>活性<select data-nv="sbl">${lvSel('sbl')}</select></div></div>
    <div class="nv-f sm"><span>レベル上げに使う無特性</span><div class="nv-lv">異能<select data-nv="pdg">${lvSel('pdg')}</select>活性<select data-nv="pbl">${lvSel('pbl')}</select></div></div>
    <div class="nv-adv"><button type="button" class="btn sm${NV.adv?'':' sub'}" data-nvadv="1">${NV.adv?'詳しく入れるをやめる':'詳しく入れる（融合回数・2つ持ち）'}</button>${NV.adv?'<span>融合回数が0の子も、素材としては使えるよ。</span>':''}</div>
@@ -2564,16 +2572,16 @@ function renderNavi(){
       steps.push({k:'copy',g,t,h,need,k1:g===X[0]?1:0,cfg,cfgB,r,rB,e}); });
     if(T2){
       steps.push({k:'fuse',ttl:`${nX}と${nY}をまとめる`,txt:`親は「${nX}持ち（融合回数が残ってるもの）＋無特性」。素材に${nX}持ち1体と${nY}持ち2体。どちらの枠も0.5＋0.5以上で100%。`,
-        cfg:{p:[P0(S,xs),P0(S)],m:[MD(S,xs),MD(S,ys),MD(S,ys)],goal:set}});
+        cfg:{p:[NT(P0(S,xs),'★回数が残ってる子（このあと材料にする）'),P0(S)],m:[MD(S,xs),MD(S,ys),MD(S,ys)],goal:set}});
       steps.push({k:'fuse',ttl:`${nX}・${nY}持ちをもう1体作る`,txt:`今作った子と無特性を親に、素材に${nX}持ちと${nY}持ちを1体ずつ。これで同じ特性セットが2体になる（親にした方は融合回数0になるけど、素材に使える）。`,
-        cfg:{p:[P0(S,set),P0(S)],m:[MD(S,xs),MD(S,ys),MD(S)],goal:set}});
+        cfg:{p:[NT(P0(S,set),'◆前のSTEPで生まれた子'),P0(S)],m:[NT(MD(S,xs),'★前のSTEPで親Aにした子でOK（回数0）'),MD(S,ys),MD(S)],goal:set}});
     }
     if(P.it){
       steps.push({k:'fuse',ttl:`${trShort(TR[P.Mt])}を足す`,txt:`${T2?'新しい方の2つ持ち':nX+'持ち（融合回数が残ってるもの）'}と無特性を親に、素材に${T2?'融合回数0の2つ持ち':nX+'持ち'}と${itemShort(P.it)}を2つ。全部の枠が100%になる。`,
-        cfg:{p:[P0(S,set),P0(S)],m:[MD(S,set),MI(P.m||NV.m),MI(P.m||NV.m)],goal:P.full}});
+        cfg:{p:[NT(P0(S,set),T2?'前のSTEPで生まれた子':'回数が残ってる子'),P0(S)],m:[NT(MD(S,set),T2?'◆前のSTEPで親Aにした子（回数0）':'回数0でもOK'),MI(P.m||NV.m),MI(P.m||NV.m)],goal:P.full}});
     }
     if(route==='f'){
-      const T2b=P.T.length===2, fm=T2b?(P.it?[MD(S,P.full),MD(S,set),MI(NV.m)]:[MD(S,set),MD(S,set),MD(S)]):[MD(S,P.full),MD(S,xs),MI(NV.m)];
+      const T2b=P.T.length===2, fm=T2b?(P.it?[NT(MD(S,P.full),'前のSTEPでできた子'),NT(MD(S,set),'回数0の2つ持ち'),MI(NV.m)]:[NT(MD(S,set),'前のSTEPまでの2体（回数0でOK）'),NT(MD(S,set),'前のSTEPまでの2体（回数0でOK）'),MD(S)]):[NT(MD(S,P.full),'前のSTEPでできた子'),MD(S,xs),MI(NV.m)];
       steps.push({k:'fuse',ttl:'5/5の無特性2体で仕上げる',txt:`親は2体とも5/5の無特性。素材に${T2b?(P.it?'さっき作った完成品・融合回数0の2つ持ち・'+itemShort(P.it)+'1つ':'2つ持ち2体と無特性1体'):'完成品・'+nX+'持ち・'+itemShort(P.it)+'1つ'}を入れる。特性は素材から100%入って、異能・活性は親の5/5を引きつぐ（子が5/5になるのは約${pct(lvDist('dg',5,5)[5]*lvDist('bl',5,5)[5])}）。`,
         cfg:{p:[P0(S),P0(S)],m:fm,goal:P.full},lv:1});
     }
