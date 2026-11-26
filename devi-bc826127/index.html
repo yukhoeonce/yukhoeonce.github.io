@@ -736,6 +736,10 @@ html.ed-open{overflow:hidden}
 .nv-lv select{padding:6px 8px}
 .nv-note{margin:12px 0;padding:10px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface);font-size:14px;font-weight:700}
 #navi.nv-still *{animation:none!important}
+.nv-how{padding:14px 16px;margin:12px 0}
+.nv-how summary{cursor:pointer;font-size:16px}
+.nv-hl{margin:8px 0 10px;padding-left:1.4em;display:flex;flex-direction:column;gap:6px;font-size:14.5px;line-height:1.7}
+.nv-how p{margin:6px 0 0}
 .nv-calc{padding:16px;margin:14px 0;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
 .nv-calc p{margin:0;font-weight:700}
 .nv-bar{width:100%;height:14px;border:2px solid var(--line);border-radius:999px;overflow:hidden;background:var(--field)}
@@ -2380,7 +2384,8 @@ function nvKey(P){
   const T=P.T.map(([g,t,h,h1])=>[g,t,h,h1]), xy=(NV.adv&&T.length===2)?{n:NV.hxy,n1:Math.min(NV.hxy1,NV.hxy)}:{n:0,n1:0};
   return {T,xy,k:JSON.stringify([T,P.Mt,NV.sdg,NV.sbl,NV.pdg,NV.pbl,xy])};
 }
-let NVJOB=null;
+let NVJOB=null, NVHOW=true;
+document.addEventListener('toggle',e=>{ if(e.target.classList&&e.target.classList.contains('nv-how')) NVHOW=e.target.open; },true);
 function nvStart(){
   const P=nvPlan(); if(!P) return; const {T,xy,k}=nvKey(P), Mt=P.Mt;
   const jobs=[['a',simA,null,null]];
@@ -2498,6 +2503,23 @@ function renderNavi(still){
   const lvSel=k=>[1,2,3,4,5].map(n=>opt(n,n,NV[k]===n)).join('');
   let h=`<div class="calc-head"><p class="eyebrow">FUSION NAVI</p><h2>つくり方ナビ</h2>
   <p>作りたいデビと、欲しい金色の特性をえらぶと、<b>いろんな作り方をくらべて、融合の回数が少ないもの</b>の手順を出すよ。お試し版なので、数字は目安にしてね。</p></div>
+  <details class="card nv-how"${NVHOW?' open':''}><summary><b>使い方</b>（はじめての人はひらいてね）</summary>
+   <ol class="nv-hl">
+    <li><b>作りたいデビ</b>をえらぶ。</li>
+    <li><b>欲しい金色の特性</b>を枠ごとにえらぶ。いらない枠は「なし」のままでOK。変異の枠は、動物や家具を材料に入れて付ける特性だよ。</li>
+    <li><b>持ってる数</b>を入れる。その特性を持ってる${esc(D.n)}が何体いるか。融合回数が0の子も数えてね（親にはなれないけど、材料には使える）。「2つ持ち」は、共通とタイプの両方の特性を持ってる子。</li>
+    <li><b>レベル</b>を入れる。今持ってる特性持ちの異能・活性と、レベル上げに使う無特性の異能・活性。わからなければそのままでOK。</li>
+    <li><b>「この内容で計算する」</b>を押す。3秒くらいで結果が出るよ。</li>
+   </ol>
+   <p><b>結果の見かた</b></p>
+   <ul class="nv-hl">
+    <li>「ルートくらべ」の表で、作り方ごとの融合回数や、使う無特性の数をくらべられる。</li>
+    <li>気になる作り方の「〇〇の手順」ボタンを押すと、下にその手順が出る。STEP 1から順番にやってね。</li>
+    <li>図の<b>親A・親B</b>は融合ポッドの左右、<b>材料1〜3</b>は真ん中に入れるデビや動物・家具。</li>
+    <li>★や◆の印は「同じ子」の目印。前のSTEPで親にした子を、次のSTEPで材料に使うときに付いてるよ。</li>
+    <li>「けいさん機で開く」を押すと、そのSTEPの組み合わせを、けいさん機でくわしく確かめられる。</li>
+   </ul>
+  </details>
   <div class="card nv-form">
    <label class="nv-f"><span>作りたいデビ</span><select data-nv="sp">${spSel}</select></label>
    <label class="nv-f"><span>共通の枠（金）</span><select data-nv="c">${trSel('c')}</select></label>
@@ -2546,12 +2568,13 @@ function renderNavi(still){
     ${P.it?`<li>${esc(itemShort(P.it))}：<b>約${R.an}つ</b></li>`:''}
   </ul><p class="mini">特性持ちも無特性も、ぜんぶ<b>${esc(D.n)}</b>でそろえる前提だよ。親を同じ種類にすると、生まれる種類が100%そろう。</p></div>`;
   if(RT.length>1){
-    h+=`<div class="card nv-cmp"><b>ルートくらべ</b>（${RT.length}つの作り方を、それぞれ700回ためしに融合してみた平均）
+    h+=`<div class="card nv-cmp"><b>ルートくらべ</b>（${RT.length}つの作り方を、それぞれ何百回もためしに融合してみた平均）
     <table><tr><th>作り方</th><th>融合</th><th>運悪い時</th><th>無特性</th>${P.it?`<th>${P.it.k[0]==='a'?'動物':'家具'}</th>`:''}</tr>
     ${RT.map(([k,l])=>{const r=RS[k];return `<tr class="${route===k?'on':''}"><td>${esc(l)}${rec===k?'<span class="nv-best">回数少なめ</span>':''}${few===k&&few!==rec?'<span class="nv-best">無特性少なめ</span>':''}${fewA===k&&fewA!==rec?`<span class="nv-best">${P.it.k[0]==='a'?'動物':'家具'}少なめ</span>`:''}${k==='t'?'<span class="nv-best sub">参考</span>':''}${(()=>{const d=RT.find(([k2])=>k2!==k&&RT.findIndex(x=>x[0]===k2)<RT.findIndex(x=>x[0]===k)&&Math.abs(RS[k2].fz-r.fz)<0.3&&Math.abs(RS[k2].bl-r.bl)<1&&Math.abs(RS[k2].an-r.an)<1);return d?`<br><small>（${esc(d[1])}とほぼ同じ結果）</small>`:'';})()}</td><td class="n">${Math.ceil(r.fz)}回</td><td class="n">${r.f90}回</td><td class="n">${r.bl}体</td>${P.it?`<td class="n">${r.an}つ</td>`:''}</tr>`;}).join('')}
     </table>
     <p class="mini">数字は平均。「運悪い時」は10回に1回くらいの悪いパターン。${hidden.length?`ほかに${hidden.map(k=>({s:'「無特性を節約する組み方」',t:'「66.7%説（持ち主2体ぶんで失敗しない説）」',l:'「5/5の無特性を親にしつづける組み方」'})[k]).join('と')}も試したけど、上の作り方とほぼ同じ結果だったので省いたよ。`:''}</p>
     <ul class="nv-li mini">${RT.map(([k,l,d])=>`<li><b>${esc(l)}</b>：${esc(d)}</li>`).join('')}</ul>
+    <p class="mini"><b>見たい作り方のボタンを押すと、下にその手順が出るよ。</b></p>
     <div class="btnrow">${RT.map(([k,l])=>`<button type="button" class="btn sm${route===k?'':' sub'}" data-nvroute="${k}">${esc(l)}の手順</button>`).join('')}</div></div>`;
   }
   let steps=P.steps;
