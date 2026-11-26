@@ -2547,7 +2547,7 @@ function renderNavi(){
   if(RT.length>1){
     h+=`<div class="card nv-cmp"><b>ルートくらべ</b>（${RT.length}つの作り方を、それぞれ700回ためしに融合してみた平均）
     <table><tr><th>作り方</th><th>融合</th><th>運悪い時</th><th>無特性</th>${P.it?`<th>${P.it.k[0]==='a'?'動物':'家具'}</th>`:''}</tr>
-    ${RT.map(([k,l])=>{const r=RS[k];return `<tr class="${route===k?'on':''}"><td>${esc(l)}${rec===k?'<span class="nv-best">おすすめ</span>':''}${few===k&&few!==rec?'<span class="nv-best">無特性少なめ</span>':''}${fewA===k&&fewA!==rec?`<span class="nv-best">${P.it.k[0]==='a'?'動物':'家具'}少なめ</span>`:''}${k==='t'?'<span class="nv-best sub">参考</span>':''}${(()=>{const d=RT.find(([k2])=>k2!==k&&RT.findIndex(x=>x[0]===k2)<RT.findIndex(x=>x[0]===k)&&Math.abs(RS[k2].fz-r.fz)<0.3&&Math.abs(RS[k2].bl-r.bl)<1&&Math.abs(RS[k2].an-r.an)<1);return d?`<br><small>（${esc(d[1])}とほぼ同じ結果）</small>`:'';})()}</td><td class="n">${Math.ceil(r.fz)}回</td><td class="n">${r.f90}回</td><td class="n">${r.bl}体</td>${P.it?`<td class="n">${r.an}つ</td>`:''}</tr>`;}).join('')}
+    ${RT.map(([k,l])=>{const r=RS[k];return `<tr class="${route===k?'on':''}"><td>${esc(l)}${rec===k?'<span class="nv-best">回数少なめ</span>':''}${few===k&&few!==rec?'<span class="nv-best">無特性少なめ</span>':''}${fewA===k&&fewA!==rec?`<span class="nv-best">${P.it.k[0]==='a'?'動物':'家具'}少なめ</span>`:''}${k==='t'?'<span class="nv-best sub">参考</span>':''}${(()=>{const d=RT.find(([k2])=>k2!==k&&RT.findIndex(x=>x[0]===k2)<RT.findIndex(x=>x[0]===k)&&Math.abs(RS[k2].fz-r.fz)<0.3&&Math.abs(RS[k2].bl-r.bl)<1&&Math.abs(RS[k2].an-r.an)<1);return d?`<br><small>（${esc(d[1])}とほぼ同じ結果）</small>`:'';})()}</td><td class="n">${Math.ceil(r.fz)}回</td><td class="n">${r.f90}回</td><td class="n">${r.bl}体</td>${P.it?`<td class="n">${r.an}つ</td>`:''}</tr>`;}).join('')}
     </table>
     <p class="mini">数字は平均。「運悪い時」は10回に1回くらいの悪いパターン。${hidden.length?`ほかに${hidden.map(k=>({s:'「無特性を節約する組み方」',t:'「66.7%説（持ち主2体ぶんで失敗しない説）」',l:'「5/5の無特性を親にしつづける組み方」'})[k]).join('と')}も試したけど、上の作り方とほぼ同じ結果だったので省いたよ。`:''}</p>
     <ul class="nv-li mini">${RT.map(([k,l,d])=>`<li><b>${esc(l)}</b>：${esc(d)}</li>`).join('')}</ul>
@@ -2621,7 +2621,7 @@ function renderNavi(){
       NVCFG.push(s.cfg);
       const nms=P.T.map(([g,t])=>trShort(TR[t])).concat(P.Mt&&s.rt!=='g'?[trShort(TR[P.Mt])]:[]).join('・');
       h+=`<div class="card nv-step"><p class="nv-no">STEP ${n}</p><h3>${esc(nms)}をまとめる（${esc(s.rn)}）</h3>
-      <p>特性持ちどうしを親にして、無特性${P.it&&s.rt!=='g'?'や'+esc(itemShort(P.it)):''}を材料に入れる。1回目のおすすめの組み方はこれ。</p>
+      <p>特性持ちどうしを親にして、無特性${P.it&&s.rt!=='g'?'や'+esc(itemShort(P.it)):''}を材料に入れる。1回目の組み方の一例はこれ。成功率が低めに見えても、失敗した子に欲しい特性が1つでも付けば次の親になれるし、親にした子も材料に回せるから、手持ちが1体ずつでも進められるよ。</p>
       ${nvFlow(s.cfg,s.r)}
       <p class="nv-p">全部そろう確率 <b>${pct(s.r.p)}</b></p>
       <ul class="nv-li">
