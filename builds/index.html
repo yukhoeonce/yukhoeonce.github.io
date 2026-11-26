@@ -1094,6 +1094,7 @@ function sparks(el){if(RM||!el)return;const r=el.getBoundingClientRect(),cols=['
   tk.id='ticker';document.querySelector('.top').after(tk)})();
 // いただいた意見で直したこと（新しい順。黄色いバーに上から2つまで流れる）
 const FIXLOG=[
+  {d:'11/26',ja:'調整設計図の欄を追加したよ！間違ってたり足りなかったら教えてね',en:'Added Calibration Blueprints! Let us know if anything is wrong or missing'},
   {d:'11/26',ja:'意見ありがとう！「ブレイドズボン」の名前を直したよ',en:'Thanks for the feedback! Fixed the name of Sharp Blade Pants'},
 ];
 function tickerText(){const fx=FIXLOG.slice(0,2).map(f=>'📢 '+f.d+' '+T(f.ja,f.en)+' ✦ ').join('');$('ticker').innerHTML='<div>'+(fx+T('★ みんなの装備 ✦ 武器を押すと人気の防具とMODが％で出るよ ♪ 自分の装備も選ぶだけで投稿できる ◆ 1武器につき1構成まで ✦ ','★ COMMUNITY BUILDS ✦ Tap a weapon to see popular armor and mods ♪ Share your own build in a few taps ◆ One build per weapon ✦ ')+T('💡 意見はいつでも募集中 ✦ ','💡 Feedback always welcome ✦ ')).repeat(6)+'</div>'}
