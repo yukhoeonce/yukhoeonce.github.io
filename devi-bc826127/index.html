@@ -735,6 +735,10 @@ html.ed-open{overflow:hidden}
 .nv-lv{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:14px}
 .nv-lv select{padding:6px 8px}
 .nv-note{margin:12px 0;padding:10px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface);font-size:14px;font-weight:700}
+.nv-calc{padding:16px;margin:14px 0;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.nv-calc p{margin:0;font-weight:700}
+.nv-bar{width:100%;height:14px;border:2px solid var(--line);border-radius:999px;overflow:hidden;background:var(--field)}
+.nv-bar i{display:block;height:100%;background:var(--lemon);transition:width .2s}
 .nv-adv{grid-column:1/-1;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--ink-2);font-weight:700}
 .nv-sum{padding:14px 16px;margin:12px 0;background:var(--field)}
 .nv-sum ul,.nv-li{margin:8px 0;padding-left:1.2em;line-height:1.8}
@@ -2368,7 +2372,38 @@ function nvKey(P){
   const T=P.T.map(([g,t,h,h1])=>[g,t,h,h1]), xy=(NV.adv&&T.length===2)?{n:NV.hxy,n1:Math.min(NV.hxy1,NV.hxy)}:{n:0,n1:0};
   return {T,xy,k:JSON.stringify([T,P.Mt,NV.sdg,NV.sbl,NV.pdg,NV.pbl,xy])};
 }
-let NVWAIT=0;
+let NVJOB=null;
+function nvStart(){
+  const P=nvPlan(); if(!P) return; const {T,xy,k}=nvKey(P), Mt=P.Mt;
+  const jobs=[['a',simA,null,null]];
+  if(T.length){ [['b',{}],['s',{save:1}],['t',{trust:1}],['l',{lv:1}]].forEach(([n,o])=>jobs.push([n,simB,o,()=>({first:simBFirst(T,Mt)})]));
+    if(Mt) jobs.push(['g',simG,null,()=>({first:simGFirst(T,Mt),stage:1})]);
+    if(T.length===2||Mt){ jobs.push(['m',simM,null,null]); jobs.push(['f',simF,null,null]); } }
+  const per=Math.max(250,Math.floor(3000/jobs.length)), res={k}, job={k,jobs,i:0,acc:null,t:0};
+  NVJOB=job;
+  const finish=a=>{ const avg=x=>x.reduce((p,q)=>p+q,0)/x.length, q9=x=>{const s=[...x].sort((p,q)=>p-q); return s[Math.min(s.length-1,Math.floor(s.length*.9))];}; return {fz:avg(a.fz),fz90:q9(a.fz),bl:avg(a.bl),an:avg(a.an)}; };
+  const tick=()=>{
+    if(NVJOB!==job) return;
+    const t0=Date.now();
+    SXY=xy; SLV={sdg:NV.sdg,sbl:NV.sbl,pdg:NV.pdg,pbl:NV.pbl};
+    while(job.i<jobs.length&&Date.now()-t0<35){
+      const [n,fn,o,ex]=jobs[job.i];
+      if(!job.acc) job.acc={fz:[],bl:[],an:[],ms:0};
+      SIMO=Object.assign({trust:0,save:0,lv:0},o||{});
+      const s0=Date.now();
+      try{ for(let r=0;r<10;r++){ const x=fn(T,Mt); job.acc.fz.push(x.fz); job.acc.bl.push(x.bl); job.acc.an.push(x.an); } }
+      finally{ job.acc.ms+=Date.now()-s0; }
+      const N=job.acc.fz.length;
+      if(N>=1500||(N>=150&&job.acc.ms>per)||(N>=30&&job.acc.ms>per*3)){
+        res[n]=Object.assign({st:finish(job.acc)},ex?ex():{}); job.acc=null; job.i++;
+      }
+      SIMO={trust:0,save:0,lv:0};
+    }
+    const pg=document.getElementById('nv-prog'); if(pg) pg.style.width=Math.round(job.i/jobs.length*100)+'%';
+    if(job.i<jobs.length) setTimeout(tick,0); else { NVSIM=res; NVJOB=null; renderNavi(); }
+  };
+  renderNavi(); setTimeout(tick,30);
+}
 function nvSim(P){
   const {T,xy,k}=nvKey(P);
   SXY=xy;
@@ -2463,14 +2498,17 @@ function renderNavi(){
    ${NV.r?`<label class="nv-f sm"><span>${TYPEN[D.t]}の特性を持ってる${esc(D.n)}</span><select data-nv="hr">${hSel('hr')}</select></label>`:''}
    ${NV.adv&&NV.r&&NV.hr>0?`<label class="nv-f sm"><span>そのうち融合回数が残ってる</span><select data-nv="hr1">${cSel('hr1',NV.hr)}</select></label>`:''}
    ${NV.adv&&NV.c&&NV.r?`<label class="nv-f sm"><span>共通と${TYPEN[D.t]}を両方持ってる${esc(D.n)}</span><select data-nv="hxy">${hSel('hxy')}</select></label>`:''}
-   ${NV.adv&&NV.c&&NV.r&&NV.hxy>0?`<label class="nv-f sm"><span>そのうち融合回数が残ってる</span><select data-nv="hxy1">${cSel('hxy1',NV.hxy)}</select></label>`:''}
+   ${NV.adv&&NV.c&&NV.r?`<label class="nv-f sm"><span>そのうち融合回数が残ってる</span><select data-nv="hxy1">${cSel('hxy1',NV.hxy)}</select></label>`:''}
    <div class="nv-f sm"><span>今の特性持ちのレベル</span><div class="nv-lv">異能<select data-nv="sdg">${lvSel('sdg')}</select>活性<select data-nv="sbl">${lvSel('sbl')}</select></div></div>
    <div class="nv-f sm"><span>レベル上げに使う無特性</span><div class="nv-lv">異能<select data-nv="pdg">${lvSel('pdg')}</select>活性<select data-nv="pbl">${lvSel('pbl')}</select></div></div>
    <div class="nv-adv"><button type="button" class="btn sm${NV.adv?'':' sub'}" data-nvadv="1">${NV.adv?'詳しく入れるをやめる':'詳しく入れる（融合回数・2つ持ち）'}</button>${NV.adv?'<span>融合回数が0の子も、素材としては使えるよ。</span>':''}</div>
   </div>`;
   const P=nvPlan(); NVCFG=[];
   if(!P){ h+=`<p class="nv-empty">欲しい特性を1つ以上えらんでね。</p>`; el.innerHTML=h; return; }
-  if(NVSIM.k!==nvKey(P).k){ h+=`<p class="nv-empty">けいさん中…（いろんな作り方をためしてるよ）</p>`; el.innerHTML=h; clearTimeout(NVWAIT); NVWAIT=setTimeout(()=>{ nvSim(nvPlan()); renderNavi(); },40); return; }
+  if(NVSIM.k!==nvKey(P).k){
+    if(NVJOB&&NVJOB.k===nvKey(P).k) h+=`<div class="card nv-calc"><p><b>けいさん中…</b> いろんな作り方を何百回もためしてるよ（3秒くらい）</p><div class="nv-bar"><i id="nv-prog" style="width:${Math.round(NVJOB.i/NVJOB.jobs.length*100)}%"></i></div></div>`;
+    else { NVJOB=null; h+=`<div class="card nv-calc"><p>入力ができたら、ボタンを押してね。${NVSIM.k?'（入力が変わったので、もう一回計算してね）':''}</p><button type="button" class="btn" data-nvgo="1">この内容で計算する</button></div>`; }
+    el.innerHTML=h; return; }
   const SM=nvSim(P), LP=P.steps[P.steps.length-1], ex=LP.ex.exp;
   const tot=r=>r?{fz:r.fz,f90:r.fz90,bl:Math.round(r.bl),an:Math.round(r.an)}:null;
   const RT=[['a','100%ルート','特性持ちをコピーでふやしてから、100%の融合だけでまとめる。手間は多いけど、まとめる所で失敗しない。'],
@@ -2629,6 +2667,7 @@ function renderNavi(){
   el.innerHTML=h;
 }
 document.addEventListener('change',e=>{const x=e.target.closest&&e.target.closest('[data-nv]'); if(!x) return; const k=x.dataset.nv; NV[k]=['sp','c','r','m'].includes(k)?x.value:+x.value; nvSave(); renderNavi();});
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-nvgo]'); if(!b) return; nvStart();});
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-nvadv]'); if(!b) return; NV.adv=NV.adv?0:1; nvSave(); renderNavi();});
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-nvroute]'); if(!b) return; NV.route=b.dataset.nvroute; nvSave(); renderNavi();});
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-nvcalc]'); if(!b) return; const c=NVCFG[+b.dataset.nvcalc]; if(!c) return; CS={p:clone(c.p),m:clone(c.m),goal:clone(c.goal),view:NV.sp,why:false,preset:'',ui:2}; st.cs=CS; save(); location.hash='calc';});
