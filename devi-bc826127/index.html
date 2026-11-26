@@ -2590,15 +2590,15 @@ function renderNavi(){
     else steps.push(LP);
   }
   {
-    const z1={p:[P0(S,{dg:5,bl:3}),P0(S,{dg:3,bl:5})],m:[MD(S),MD(S),MD(S)],goal:{}}, zr=nvRun(z1);
+    const z1={p:[P0(S,{dg:5,bl:3}),P0(S,{dg:3,bl:5})],m:[],goal:{}}, zr=nvRun(z1);
     NVCFG.push(z1); const zi=NVCFG.length-1;
     const p1=lvDist('dg',5,3)[5]*lvDist('bl',3,5)[5], p2=lvDist('dg',5,5)[5]*lvDist('bl',5,5)[5];
     h+=`<details class="card nv-step"><summary><b>5/5の無特性がないとき</b>（ひらくと作り方）</summary>
-    <p>「異能5の無特性」と「活性5の無特性」を親にすると、1回で5/5になるのが約${pct(p1)}。素材には同じ種類（${esc(D.n)}）の無特性を入れておくと、種類もそろいやすい。</p>
+    <p>「異能5の無特性」と「活性5の無特性」を親にすると、1回で5/5になるのが約${pct(p1)}。親が2体とも${esc(D.n)}なら、<b>材料はなしでOK</b>（生まれる種類も${esc(D.n)}になる）。</p>
     ${nvFlow(z1,zr,'',true)}
     <ul class="nv-li">
      <li>活性は下がらないけど、異能はまれに下がることがあるらしい。</li>
-     <li>親の片方がちがう種類だと、生まれる種類は半々。素材に${esc(D.n)}を3体入れると約80%まで上がる。</li>
+     <li>親の片方がちがう種類のときだけ、生まれる種類は半々になる。そのときは材料に${esc(D.n)}の無特性を3体入れると約80%まで上がる。</li>
      <li>5/5が2体できたら、その2体を親にすると次も5/5になりやすい（約${pct(p2)}）。5/5の無特性はこうやってふやせる。</li>
     </ul>
     <div class="btnrow">${nvBtn(zi)}</div></details>`;
