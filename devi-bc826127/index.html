@@ -735,6 +735,7 @@ html.ed-open{overflow:hidden}
 .nv-lv{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:14px}
 .nv-lv select{padding:6px 8px}
 .nv-note{margin:12px 0;padding:10px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface);font-size:14px;font-weight:700}
+#navi.nv-still *{animation:none!important}
 .nv-calc{padding:16px;margin:14px 0;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
 .nv-calc p{margin:0;font-weight:700}
 .nv-bar{width:100%;height:14px;border:2px solid var(--line);border-radius:999px;overflow:hidden;background:var(--field)}
@@ -2483,8 +2484,8 @@ const nvFlow=(cfg,r,cap,lv)=>{
 };
 const nvBtn=(i,l)=>`<button type="button" class="btn sub sm" data-nvcalc="${i}">${l||'けいさん機で開く'}</button>`;
 let NVCFG=[];
-function renderNavi(){
-  const el=$('#navi'); if(!el) return;
+function renderNavi(still){
+  const el=$('#navi'); if(!el) return; el.classList.toggle('nv-still',!!still);
   const S=NV.sp, D=DEV[S];
   ['c','r'].forEach(g=>{if(NV[g]&&!nvOk(NV[g],g,S)) NV[g]='';});
   const MUS=nvMuts(); if(NV.m&&!MUS.some(it=>it.k===NV.m)) NV.m='';
@@ -2674,10 +2675,10 @@ function renderNavi(){
   h+=`<div class="note"><b>注意</b>　通常サーバーの計算だよ。異次元の収容の技や誘発剤の上限などはまだ入れてないので、ちがったら教えてね。</div>`;
   el.innerHTML=h;
 }
-document.addEventListener('change',e=>{const x=e.target.closest&&e.target.closest('[data-nv]'); if(!x) return; const k=x.dataset.nv; NV[k]=['sp','c','r','m'].includes(k)?x.value:+x.value; nvSave(); renderNavi();});
+document.addEventListener('change',e=>{const x=e.target.closest&&e.target.closest('[data-nv]'); if(!x) return; const k=x.dataset.nv; NV[k]=['sp','c','r','m'].includes(k)?x.value:+x.value; nvSave(); renderNavi(true);});
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-nvgo]'); if(!b) return; nvStart();});
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-nvadv]'); if(!b) return; NV.adv=NV.adv?0:1; nvSave(); renderNavi();});
-document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-nvroute]'); if(!b) return; NV.route=b.dataset.nvroute; nvSave(); renderNavi();});
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-nvroute]'); if(!b) return; NV.route=b.dataset.nvroute; nvSave(); renderNavi(true);});
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-nvcalc]'); if(!b) return; const c=NVCFG[+b.dataset.nvcalc]; if(!c) return; CS={p:clone(c.p),m:clone(c.m),goal:clone(c.goal),view:NV.sp,why:false,preset:'',ui:2}; st.cs=CS; save(); location.hash='calc';});
 
 const VIEWS=['home','lesson','calc','navi','dex','quiz','words'];
