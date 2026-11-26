@@ -352,6 +352,7 @@ html[lang="en"] .tile.d b{overflow-wrap:break-word}
       <div class="box step"><h2><span class="no">2</span><span data-en="Armor">防具</span></h2><p class="sub" data-en="For each slot, pick the armor set or a key gear piece. Only one key gear.">セット防具の名前か、主要防具を部位ごとに選んでね。主要防具は1つだけ。</p><div class="slots" id="pA"></div><p class="setsum" id="setsum"></p></div>
       <div class="box step"><h2><span class="no">3</span><span data-en="Mods (main effect)">MOD（メイン効果）</span></h2><p class="sub" data-en="Pick the mod on each slot.">部位ごとに付けているMODを選んでね。</p><div class="slots" id="pM"></div></div>
       <div class="box step"><h2><span class="no">4</span><span data-en="Combat Deviation (optional)">戦闘デビ（なくてもOK）</span></h2><p class="sub" data-en="Pick the combat Deviation you use with this weapon (only one at a time).">この武器と一緒に使っている戦闘デビを1体選んでね（戦闘デビは1体だけ）。</p><div class="slots" id="pD"></div></div>
+      <div class="box step" id="calBox"><h2><span class="no">5</span><span data-en="Calibration Blueprint (optional)">調整設計図（なくてもOK）</span></h2><p class="sub" data-en="Pick the style and the extra stat (besides Weapon ATK). No numbers needed.">スタイルと、攻撃力のほかに付いているサブ効果を選んでね（数値はいらないよ）。</p><div class="slots" id="pC"></div></div>
       <label class="note" id="admPostWrap" hidden style="display:flex;gap:8px;align-items:center;cursor:pointer"><input type="checkbox" id="admPost"> <span><b>管理者として投稿</b>（回数制限なし・同じ武器でも上書きせず毎回追加。合言葉は「管理」タブで入れたもの）</span></label>
       <div class="submit"><button type="button" class="btn" id="mkCard">ビルドカードを作る</button><button type="button" class="btn pink" id="send" data-en="Post this build">この装備を投稿する</button><button type="button" class="btn sub" id="reset" data-en="Clear">選び直す</button><span class="msg" id="msg" role="status"></span></div>
       <p class="note" data-en="You can post <b>one build per weapon</b> from this device. Posting the same weapon again replaces it. Posts and updates are limited to <b>8 per hour and 30 per day</b>. Posts are anonymous.">この端末からは<b>武器ごとに1つ</b>だけ投稿できるよ。同じ武器でもう一度投稿すると上書きになる。投稿・上書きは<b>1時間に8回、1日30回まで</b>。投稿は名前なしで、誰が投稿したかは表示されないよ。</p>
@@ -676,6 +677,21 @@ const DV=typeof DEVI!=='undefined'?DEVI:[], DVBY=Object.fromEntries(DV.map(d=>[d
 let HASD=true;
 const dName=id=>DVBY[id]?(EL()?DVBY[id].en:DVBY[id].n):'';
 const dIcon=id=>DIM[id]?`<img class="dic" src="${DIM[id]}" alt="" loading="lazy">`:`<span class="dic none" aria-hidden="true">${esc((dName(id)||'?')[0])}</span>`;
+// 調整設計図（1投稿にスタイル1つ＋サブ1つ）。DBに c_style 列がまだ無いときは読まずに動く
+const CST={precise:['精密','Precision'],rapid:['速射','Rapid Shot'],portable:['携帯','Portable'],frugal:['節約','Frugal'],boost:['推進','Boost'],heavy:['ヘビー','Heavy'],light:['ライト','Light'],assault:['突撃','Assault'],vanguard:['先制','Vanguard'],energy:['エネルギー','Energy'],steady:['安定','Steady'],overflow:['オーバーフロー','Overflow']};
+const CSUB={crit:['クリティカル確率','Crit Rate'],critdmg:['クリティカルDMG','Crit DMG'],weak:['弱点DMG','Weakspot DMG'],elem:['エレメントDMG','Elemental DMG']};
+const CE={precise:['攻撃力+25%・射程+40%・射撃速度-10%','ATK +25%, Range +40%, Fire Rate -10%'],frugal:['外したら1発自動装填・次の命中で攻撃力+15%','Auto-reload 1 round on a miss, next hit ATK +15%'],boost:['装填ごとに次の命中のキーワード発生率+40%','Each reload: next hit keyword chance +40%'],vanguard:['空マガジンでリロード→最初の命中でキーワード確定','Reload on empty: first hit always triggers keyword'],energy:['被ダメで1発自動装填・攻撃力+10%','Auto-reload 1 round when hit, ATK +10%']};
+const CALT={
+ 'ハンドガン':[['precise'],['rapid','射撃速度+25%・マガジン+40%・攻撃力-15%','Fire Rate +25%, Magazine +40%, ATK -15%'],['portable','エイム中の移動速度+50%・持ち替え速度+50%','ADS move speed +50%, Swap speed +50%'],['frugal'],['boost']],
+ 'ショットガン':[['rapid','射撃速度+25%・構え速度+50%・攻撃力-10%','Fire Rate +25%, ADS speed +50%, ATK -10%'],['light','リロード効率+40%・マガジン-25%','Reload +40%, Magazine -25%'],['heavy','マガジン+60%・リロード効率-10%','Magazine +60%, Reload -10%'],['boost']],
+ 'サブマシンガン':[['assault','攻撃力+20%・マガジン-25%・命中精度-50%','ATK +20%, Magazine -25%, Accuracy -50%'],['heavy','マガジン+60%・リロード効率-10%','Magazine +60%, Reload -10%'],['light','リロード効率+40%・マガジン-25%','Reload +40%, Magazine -25%'],['vanguard'],['energy']],
+ 'ライフル':[['precise'],['rapid','射撃速度+20%・リロード効率+10%・攻撃力-10%','Fire Rate +20%, Reload +10%, ATK -10%'],['heavy','マガジン+75%・リロード効率-10%','Magazine +75%, Reload -10%'],['vanguard'],['energy']],
+ 'スナイパー':[['precise'],['rapid','ボルト速度+50%・攻撃の後隙-50%・攻撃力-10%','Bolt speed +50%, Recovery -50%, ATK -10%'],['portable','射撃中の移動速度+50%・構え速度+50%','Move speed while firing +50%, ADS speed +50%'],['steady','安定性+75%・被弾時の揺れを軽減','Stability +75%, Less flinch when hit'],['frugal']],
+ 'ライトマシンガン':[['assault','攻撃力+25%・マガジン-30%・安定性-50','ATK +25%, Magazine -30%, Stability -50'],['rapid','射撃速度+10%・2秒撃ち続けるとさらに+10%','Fire Rate +10%, +10% more after 2s of firing'],['steady','安定性+40%・しゃがみ撃ちで+60%','Stability +40%, +60% when crouching'],['overflow','リロード時に追加の弾を装填（追加弾は攻撃力+8%）','Extra rounds on reload (ATK +8%)'],['vanguard']],
+ '弓':[['precise','攻撃力+12.5%・射程+20%・リロード効率-25%','ATK +12.5%, Range +20%, Reload -25%'],['portable','引く速度アップ・持ち替え速度+35%','Faster draw, Swap speed +35%'],['rapid','連射しやすくなる','Faster shooting']]};
+let HASC=true;
+const calList=w=>((WBY[w]&&CALT[WBY[w].type])||[]).map(([id,ja,en])=>({id,e:ja?(EL()?en:ja):(CE[id]?(EL()?CE[id][1]:CE[id][0]):'')}));
+const csName=id=>CST[id]?(EL()?CST[id][1]:CST[id][0])+T('スタイル',''):'', cbName=id=>CSUB[id]?(EL()?CSUB[id][1]:CSUB[id][0]):'';
 const KWVAR={spread:'--k-spread',frost:'--k-frost',surge:'--k-surge',burn:'--k-burn',bounce:'--k-bounce',mark:'--k-mark',bomber:'--k-bomber',rapid:'--k-rapid',wburst:'--k-wburst'};
 const kwTag=k=>`<span class="kw" style="--kc:var(${KWVAR[k]||'--muted'})">${esc(kwN(k))}</span>`;
 const split=n=>{const i=n.indexOf(' - ');return i<0?['',n]:[n.slice(0,i),n.slice(i+3)]};
@@ -691,8 +707,8 @@ function itemKw(col,id){if(!id)return '';if(col.startsWith('a_'))return KEYBY[id
 function mismatch(w,col,id){const k=itemKw(col,id);if(!k)return false;const wk=(WBY[w]||{}).kw||[];return wk.length>0&&!wk.includes(k)}
 
 // ===== 通信 =====
-const ERR_EN={fb_short:'Please write at least 5 characters',fb_long:'Please keep it within 300 characters',bad_device:'Device info looks wrong. Please reload the page',bad_weapon:'No weapon selected',bad_armor:'That armor cannot go in that slot',bad_mod:'That mod cannot go in that slot',two_keys:'Only one key gear, please',too_few:'Pick at least 4',too_many:'Too many posts (limit: 8 per hour, 30 per day). Please wait a bit and try again',site_full:'The site reached today\'s post limit. Please come back tomorrow',bad_pass:'Wrong password',bad_devi:'That Deviation cannot be chosen'};
-const ERR={fb_short:'5文字以上で書いてね',fb_long:'300文字以内にしてね',bad_device:'端末の情報がおかしいみたい。ページを読み込み直してね',bad_weapon:'武器が選べていないみたい',bad_armor:'その部位に付けられない防具が入ってるよ',bad_mod:'その部位に付けられないMODが入ってるよ',two_keys:'主要防具は1つだけにしてね',too_few:'4つ以上選んでね',too_many:'投稿が多すぎるみたい（1時間に8回・1日30回まで）。少し時間をおいてからにしてね',site_full:'今日はサイト全体の投稿が上限に達したよ。明日また来てね',bad_pass:'合言葉がちがうよ',bad_devi:'そのデビは選べないよ'};
+const ERR_EN={fb_short:'Please write at least 5 characters',fb_long:'Please keep it within 300 characters',bad_device:'Device info looks wrong. Please reload the page',bad_weapon:'No weapon selected',bad_armor:'That armor cannot go in that slot',bad_mod:'That mod cannot go in that slot',two_keys:'Only one key gear, please',too_few:'Pick at least 4',too_many:'Too many posts (limit: 8 per hour, 30 per day). Please wait a bit and try again',site_full:'The site reached today\'s post limit. Please come back tomorrow',bad_pass:'Wrong password',bad_devi:'That Deviation cannot be chosen',bad_calib:'That blueprint cannot be chosen'};
+const ERR={fb_short:'5文字以上で書いてね',fb_long:'300文字以内にしてね',bad_device:'端末の情報がおかしいみたい。ページを読み込み直してね',bad_weapon:'武器が選べていないみたい',bad_armor:'その部位に付けられない防具が入ってるよ',bad_mod:'その部位に付けられないMODが入ってるよ',two_keys:'主要防具は1つだけにしてね',too_few:'4つ以上選んでね',too_many:'投稿が多すぎるみたい（1時間に8回・1日30回まで）。少し時間をおいてからにしてね',site_full:'今日はサイト全体の投稿が上限に達したよ。明日また来てね',bad_pass:'合言葉がちがうよ',bad_devi:'そのデビは選べないよ',bad_calib:'その調整設計図は選べないよ'};
 async function api(path,opt={}){
   const h={'apikey':CONFIG.key,'Content-Type':'application/json'};
   if(/^eyJ/.test(CONFIG.key))h.Authorization='Bearer '+CONFIG.key;
@@ -711,19 +727,21 @@ const Store={
   async list(w){
     if(!LIVE)return ls.get(DEMO_KEY,[]).filter(p=>p.weapon===w);
     const q=c=>api('builds?select='+c.join(',')+'&weapon=eq.'+encodeURIComponent(w)+'&order=updated_at.desc&limit=5000');
+    if(HASD&&HASC)try{return await q([...COLS,'d_combat','c_style','c_sub'])}catch(e){if(!/c_style|c_sub/.test(e.message))throw e;HASC=false}
     if(HASD)try{return await q([...COLS,'d_combat'])}catch(e){if(!/d_combat/.test(e.message))throw e;HASD=false}
     return q(COLS);
   },
   async post(b){
     if(!LIVE){const all=ls.get(DEMO_KEY,[]),dev=devId(),i=all.findIndex(p=>p.dev===dev&&p.weapon===b.weapon);const row={...b,dev,updated_at:new Date().toISOString()};if(i>=0)all[i]=row;else all.push(row);ls.set(DEMO_KEY,all);return i>=0?'updated':'new'}
-    const a={p_dev:devId(),p_weapon:b.weapon,p_lang:LANG};[...ACOL,...MCOL].forEach(c=>a['p_'+c]=b[c]||null);if(b.d_combat)a.p_d_combat=b.d_combat;
-    try{return await rpc('post_build',a)}catch(e){if(!/p_lang|p_d_combat|schema cache/.test(e.message))throw e;
+    const a={p_dev:devId(),p_weapon:b.weapon,p_lang:LANG};[...ACOL,...MCOL].forEach(c=>a['p_'+c]=b[c]||null);if(b.d_combat)a.p_d_combat=b.d_combat;if(b.c_style)a.p_c_style=b.c_style;if(b.c_sub)a.p_c_sub=b.c_sub;
+    try{return await rpc('post_build',a)}catch(e){if(!/p_lang|p_d_combat|p_c_s|schema cache/.test(e.message))throw e;
+      if(a.p_c_style||a.p_c_sub)throw new Error(T('調整設計図の欄の準備がまだみたい（空けると投稿できるよ）','Calibration slot is not ready yet (leave it empty to post)'));
       if(a.p_d_combat)throw new Error(T('デビ欄の準備がまだみたい（デビを空けると投稿できるよ）','Deviation slot is not ready yet (leave it empty to post)'));
       delete a.p_lang;return rpc('post_build',a)}
   },
   async adminPost(b,pass){
     if(!LIVE){const all=ls.get(DEMO_KEY,[]);all.push({...b,dev:'admin-'+Date.now()+Math.random(),updated_at:new Date().toISOString()});ls.set(DEMO_KEY,all);return 'new'}
-    const a={p_pass:pass,p_weapon:b.weapon};[...ACOL,...MCOL].forEach(c=>a['p_'+c]=b[c]||null);if(b.d_combat)a.p_d_combat=b.d_combat;return rpc('admin_post_build',a);
+    const a={p_pass:pass,p_weapon:b.weapon};[...ACOL,...MCOL].forEach(c=>a['p_'+c]=b[c]||null);if(b.d_combat)a.p_d_combat=b.d_combat;if(b.c_style)a.p_c_style=b.c_style;if(b.c_sub)a.p_c_sub=b.c_sub;return rpc('admin_post_build',a);
   },
   async delMine(w){
     if(!LIVE){const dev=devId();ls.set(DEMO_KEY,ls.get(DEMO_KEY,[]).filter(p=>!(p.dev===dev&&p.weapon===w)));return true}
@@ -779,6 +797,10 @@ async function openW(id){
   const DT=tally(ok,id,'d_combat');
   const devPanel=`<h3>${T('戦闘デビ <small>この武器と一緒に使われているデビ</small>','Combat Deviation <small>Deviations used with this weapon</small>')}</h3>
   <div class="cols"><div class="panel dpanel"><h4>${T('戦闘デビ','Combat Deviation')}<small>${EL()?'of '+DT.n:DT.n+'件中'}</small></h4>${DT.n?optRows(DT,dName,dIcon,5):`<div class="nodata">${HASD?T('まだデビ入りの投稿がないよ','No posts with a Deviation yet'):T('デビ欄は準備中だよ','Deviation slot coming soon')}</div>`}</div></div>`;
+  const CL=calList(id), CS=tally(ok,id,'c_style'), CB=tally(ok,id,'c_sub');
+  const calPanel=CL.length?`<h3>${T('調整設計図 <small>よく使われているスタイルとサブ効果</small>','Calibration Blueprint <small>Popular styles and extra stats</small>')}</h3>
+  <div class="cols"><div class="panel"><h4>${T('スタイル','Style')}<small>${EL()?'of '+CS.n:CS.n+'件中'}</small></h4>${CS.n?optRows(CS,csName):`<div class="nodata">${HASC?T('まだ調整設計図入りの投稿がないよ','No posts with a blueprint yet'):T('調整設計図の欄は準備中だよ','Calibration slot coming soon')}</div>`}</div>
+  <div class="panel"><h4>${T('サブ効果','Extra stat')}<small>${EL()?'of '+CB.n:CB.n+'件中'}</small></h4>${CB.n?optRows(CB,cbName):`<div class="nodata">${T('まだなし','None yet')}</div>`}</div></div>`:'';
   const combos=new Map(),keys=new Map();let nc=0;
   ok.forEach(r=>{const x=setCombo(r);if(x.combo){combos.set(x.combo,(combos.get(x.combo)||0)+1);nc++}const k=x.key&&!mismatch(id,'a_x',x.key)?x.key:(x.key?null:'(none)');if(k)keys.set(k,(keys.get(k)||0)+1)});
   const nk=[...keys.values()].reduce((a,b)=>a+b,0);
@@ -797,6 +819,7 @@ async function openW(id){
   <h3>${T('MODでいちばん多いもの <small>部位ごとに一番使われているMOD</small>','Top mods <small>Most used mod on each slot</small>')}</h3>
   <div class="best">${best}</div>
   ${devPanel}
+  ${calPanel}
   <h3>${T('防具 <small>セットの組み合わせと主要防具</small>','Armor <small>Set combinations and key gear</small>')}</h3>
   <div class="cols"><div class="panel"><h4>${T('セットの組み合わせ','Set combinations')}<small>${EL()?'of '+nc:nc+'件中'}</small></h4>${optRows(comboT,x=>x)}</div>
   <div class="panel"><h4>${T('主要防具','Key gear')}<small>${EL()?'of '+nk:nk+'件中'}</small></h4>${optRows(keyT,x=>x==='(none)'?T('主要防具なし','No key gear'):aName(x))}</div></div>
@@ -826,6 +849,9 @@ function renderForm(){
   $('pM').innerHTML=MS.map(([s,l])=>{const v=cur['m_'+s],bad=w&&mismatch(w.id,'m_'+s,v);return `<button type="button" class="pick ${v?'set':'unset'}${bad?' bad':''}" data-slot="m_${s}">${pix(s)}<span class="tx"><span class="sl">${l}</span><span class="v">${v?esc(mName(v)):T('タップして選ぶ','Choose')}</span></span></button>`}).join('');
   const dv=cur.d_combat&&DVBY[cur.d_combat]?cur.d_combat:'';
   $('pD').innerHTML=`<button type="button" class="pick ${dv?'set':'unset'}" data-slot="d_combat">${dv?dIcon(dv):'<span class="dic none" aria-hidden="true">？</span>'}<span class="tx"><span class="sl">${T('戦闘デビ','Combat Deviation')}</span><span class="v">${dv?esc(dName(dv)):T('タップして選ぶ','Choose')}</span></span></button>`;
+  const cl=calList(cur.weapon);$('calBox').hidden=!cl.length;
+  if(cl.length){const st=cl.find(x=>x.id===cur.c_style), sb=CSUB[cur.c_sub]?cur.c_sub:'';
+    $('pC').innerHTML=`<button type="button" class="pick ${st?'set':'unset'}" data-slot="c_style"><span class="tx"><span class="sl">${T('スタイル','Style')}</span><span class="v">${st?esc(csName(st.id)):T('タップして選ぶ','Choose')}</span></span></button><button type="button" class="pick ${sb?'set':'unset'}" data-slot="c_sub"><span class="tx"><span class="sl">${T('サブ効果','Extra stat')}</span><span class="v">${sb?esc(cbName(sb)):T('タップして選ぶ','Choose')}</span></span></button>`}
   const sc=setCombo(cur).combo;$('setsum').textContent=sc?T('セット効果：','Set bonus: ')+sc:'';
   ls.set('bs_draft',cur);
 }
@@ -842,8 +868,17 @@ function pickDevi(){
   h+=`<div class="tiles" style="margin-top:12px"><button type="button" class="tile clear" data-pick="d_combat" data-v=""><b>${T('空けておく','Leave empty')}</b><small>${T('わからない・使ってない','Unknown / none')}</small></button></div>`;
   openDlg(T('戦闘デビを選ぶ','Choose a combat Deviation'),h);
 }
+function pickCal(col){
+  const v=cur[col]||'', st=col==='c_style';
+  const list=st?calList(cur.weapon).map(x=>[x.id,csName(x.id),x.e]):Object.keys(CSUB).map(k=>[k,cbName(k),'']);
+  let h=st?'':`<p class="sub" style="margin:0 0 10px">${T('攻撃力（34〜50%）はどの設計図にも付いているので、もう1つの効果を選んでね。','Every blueprint has Weapon ATK (34-50%). Pick the other stat.')}</p>`;
+  h+=`<div class="tiles">${list.map(([id,n,e])=>`<button type="button" class="tile" data-pick="${col}" data-v="${id}" aria-pressed="${v===id}"><b>${esc(n)}</b>${e?`<small>${esc(e)}</small>`:''}</button>`).join('')}</div>`;
+  h+=`<div class="tiles" style="margin-top:12px"><button type="button" class="tile clear" data-pick="${col}" data-v=""><b>${T('空けておく','Leave empty')}</b><small>${T('わからない・使ってない','Unknown / none')}</small></button></div>`;
+  openDlg(st?T('調整設計図のスタイルを選ぶ','Choose a blueprint style'):T('調整設計図のサブ効果を選ぶ','Choose the extra stat'),h);
+}
 function pickSlot(col){
   if(col==='d_combat')return pickDevi();
+  if(col==='c_style'||col==='c_sub')return pickCal(col);
   const w=WBY[cur.weapon], v=cur[col], isA=col.startsWith('a_'), s=col.slice(2), label=(isA?AS:MS).find(x=>x[0]===s)[1];
   const tile=(id,n,sub)=>`<button type="button" class="tile" data-pick="${col}" data-v="${id}" aria-pressed="${v===id}"><b>${esc(n)}</b>${sub?`<small>${sub}</small>`:''}</button>`;
   let h='';
@@ -863,7 +898,7 @@ function pickSlot(col){
   openDlg(EL()?(isA?'Choose armor: ':'Choose mod: ')+label:label+(isA?'の防具':'のMOD')+'を選ぶ',h);
 }
 function choose(col,v){
-  if(col==='weapon'){cur.weapon=v;const m=ls.get('bs_mine',{});if(m[v]){cur={...m[v],weapon:v};toast(T('前に投稿した内容を読み込んだよ','Loaded your previous post'))}}
+  if(col==='weapon'){cur.weapon=v;const m=ls.get('bs_mine',{});if(m[v]){cur={...m[v],weapon:v};toast(T('前に投稿した内容を読み込んだよ','Loaded your previous post'))}if(cur.c_style&&!calList(v).some(x=>x.id===cur.c_style))delete cur.c_style;if(!calList(v).length)delete cur.c_sub}
   else{
     if(v&&KEYBY[v]){const other=AS.find(([s])=>'a_'+s!==col&&KEYBY[cur['a_'+s]]);if(other){toast(T('主要防具は1つだけなので、'+other[1]+'の主要防具を外したよ','Only one key gear: removed the one on '+other[1]));delete cur['a_'+other[0]]}}
     if(v)cur[col]=v;else delete cur[col];
@@ -963,6 +998,7 @@ function seedDemo(){
       const keys=D.KEYS.filter(k=>w.kw.includes(k.kw));if(keys.length&&Math.random()<.8){const k=pick(keys);r['a_'+k.slot]=k.id}
       MS.forEach(([s])=>{const L=D.MODS[s].filter(m=>!m.kw||w.kw.includes(m.kw));if(L.length&&Math.random()<.9)r['m_'+s]=Math.random()<.6?L[0].id:pick(L).id});
       if(Math.random()<.85)r.d_combat=pick(w.kw.includes('burn')?['reddragon','bigeye','reddragon','butterfly']:w.kw.includes('frost')?['polarjelly','winterspirit','polarjelly']:w.kw.includes('surge')?['thundermander','thundermander','butterfly']:['butterfly','butterfly','butterfly','lonewolf','lonewolf','lifespirit','snapshot','mrwish','voodoo']);
+      {const cl=calList(wid);if(cl.length&&Math.random()<.8){r.c_style=Math.random()<.5?cl[0].id:pick(cl).id;r.c_sub=pick(['crit','crit','critdmg','weak','elem'])}}
       if(i===13)r.m_mask=(D.MODS.mask.find(m=>m.kw&&!w.kw.includes(m.kw))||{}).id;
       all.push(r);
     }
@@ -982,6 +1018,7 @@ $('pW').addEventListener('click',pickWeapon);
 $('pA').addEventListener('click',e=>{const b=e.target.closest('[data-slot]');if(b)pickSlot(b.dataset.slot)});
 $('pM').addEventListener('click',e=>{const b=e.target.closest('[data-slot]');if(b)pickSlot(b.dataset.slot)});
 $('pD').addEventListener('click',e=>{const b=e.target.closest('[data-slot]');if(b)pickSlot(b.dataset.slot)});
+$('pC').addEventListener('click',e=>{const b=e.target.closest('[data-slot]');if(b)pickSlot(b.dataset.slot)});
 $('dBody').addEventListener('click',e=>{const b=e.target.closest('[data-pick]');if(b)choose(b.dataset.pick,b.dataset.v)});
 $('dClose').addEventListener('click',closeDlg);
 $('dlg').addEventListener('click',e=>{if(e.target===$('dlg'))closeDlg()});
