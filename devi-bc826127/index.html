@@ -747,6 +747,8 @@ html.ed-open{overflow:hidden}
 .nv-tip{display:flex;align-items:center;gap:10px;padding:8px 10px;border:2px solid var(--line);border-radius:12px;background:var(--field);font-size:13.5px;font-weight:700}
 .nv-tip .px16{width:32px;height:32px;flex:none}
 .nv-lvbox{grid-column:1/-1}
+.nv-yn{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 8px}
+.nv-lvmore summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--ink-2);margin:4px 0 8px}
 .nv-lvhelp{margin:0 0 8px;font-size:13px;color:var(--ink-2);font-weight:700;line-height:1.6}
 .nv-lvrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
 .nv-lvc{display:flex;flex-direction:column;gap:4px;padding:10px 12px;border:2px solid var(--line);border-radius:12px;background:var(--field)}
@@ -2521,7 +2523,7 @@ function renderNavi(still){
   let h=`<div class="calc-head"><p class="eyebrow">FUSION NAVI</p><h2>つくり方ナビ</h2>
   <p>作りたいデビと、欲しい金色の特性をえらぶと、<b>いろんな作り方をくらべて、融合の回数が少ないもの</b>の手順を出すよ。お試し版なので、数字は目安にしてね。</p></div>
   <details class="card nv-how"${NVHOW?' open':''}><summary><b>使い方</b>（はじめての人はひらいてね）</summary>
-   <div class="nv-steps">${[['devi','デビをえらぶ','作りたいデビ'],['star','金の特性をえらぶ','いらない枠は「なし」でOK'],['chest','持ってる数を入れる','融合回数0の子も数える'],['level','異能・活性を入れる','わからなければそのまま'],['pod','計算する','ボタンを押して3秒']].map(([ic,t,d],i)=>`<div class="nv-st"><span class="nv-no2">${i+1}</span>${NVPX[ic]}<b>${t}</b><small>${d}</small></div>`).join('')}</div>
+   <div class="nv-steps">${[['devi','デビをえらぶ','作りたいデビ'],['star','金の特性をえらぶ','いらない枠は「なし」でOK'],['chest','持ってる数を入れる','融合回数0の子も数える'],['level','5/5の子がいるか答える','わからなければ「いいえ」'],['pod','計算する','ボタンを押して3秒']].map(([ic,t,d],i)=>`<div class="nv-st"><span class="nv-no2">${i+1}</span>${NVPX[ic]}<b>${t}</b><small>${d}</small></div>`).join('')}</div>
    <p class="nv-hh2">結果の見かた</p>
    <div class="nv-tips">${[['table','表で作り方をくらべる'],['tap','「〇〇の手順」で下に手順'],['pod','親A・Bは左右、材料は真ん中'],['star','★◆は同じ子のしるし'],['calc','けいさん機でくわしく見る']].map(([ic,t])=>`<div class="nv-tip">${NVPX[ic]}<span>${t}</span></div>`).join('')}</div>
   </details>
@@ -2535,12 +2537,14 @@ function renderNavi(still){
     ${NV.r?`<tr><th>${TYPEN[D.t]}の特性だけ</th><td><select data-nv="hr">${hSel('hr')}</select></td>${NV.adv?`<td>${NV.hr>0?`<select data-nv="hr1">${cSel('hr1',NV.hr)}</select>`:'-'}</td>`:''}</tr>`:''}
     ${NV.adv&&NV.c&&NV.r?`<tr><th>共通＋${TYPEN[D.t]}の2つ持ち</th><td><select data-nv="hxy">${hSel('hxy')}</select></td><td>${NV.hxy>0?`<select data-nv="hxy1">${cSel('hxy1',NV.hxy)}</select>`:'-'}</td></tr>`:''}
    </table></div>`:''}
-   <div class="nv-lvbox"><p class="nv-hh">異能・活性（1〜5の数字）</p>
-    <p class="nv-lvhelp">デビの詳しい画面に出てる「異能」「活性」の数字だよ。生まれる子は親の数字を引きつぐから、最後に5/5にするときの回数に関係する。わからなければ、そのままでOK。</p>
+   <div class="nv-lvbox"><p class="nv-hh">特性なしで「異能5・活性5」の${esc(D.n)}を持ってる？</p>
+    <div class="nv-yn"><button type="button" class="btn sm${NV.pdg===5&&NV.pbl===5?'':' sub'}" data-nv55="1">持ってる</button><button type="button" class="btn sm${NV.pdg===5&&NV.pbl===5?' sub':''}" data-nv55="0">持ってない・わからない</button></div>
+    <p class="nv-lvhelp">持ってると、最後の仕上げが早くなるよ。持ってなくても大丈夫（作り方が下に出る）。</p>
+    <details class="nv-lvmore"><summary>数字を細かく入れる（わかる人だけ）</summary>
     <div class="nv-lvrow">
-     <div class="nv-lvc"><b>欲しい特性を持ってる${esc(D.n)}</b><small>何体かいるなら、だいたいの数字でOK</small><div class="nv-lv">異能<select data-nv="sdg">${lvSel('sdg')}</select>活性<select data-nv="sbl">${lvSel('sbl')}</select></div></div>
-     <div class="nv-lvc"><b>特性なし（無特性）の${esc(D.n)}で、一番数字が高い子</b><small>最後にもう片方の親にして、数字を上げるのに使う</small><div class="nv-lv">異能<select data-nv="pdg">${lvSel('pdg')}</select>活性<select data-nv="pbl">${lvSel('pbl')}</select></div></div>
-    </div></div>
+     <div class="nv-lvc"><b>欲しい特性を持ってる${esc(D.n)}の数字</b><div class="nv-lv">異能<select data-nv="sdg">${lvSel('sdg')}</select>活性<select data-nv="sbl">${lvSel('sbl')}</select></div></div>
+     <div class="nv-lvc"><b>特性なしの${esc(D.n)}で、一番高い数字</b><div class="nv-lv">異能<select data-nv="pdg">${lvSel('pdg')}</select>活性<select data-nv="pbl">${lvSel('pbl')}</select></div></div>
+    </div></details></div>
    <div class="nv-adv"><span>融合回数が0の子も、素材としては使えるよ。</span></div>
   </div>`;
   const P=nvPlan(); NVCFG=[];
@@ -2708,6 +2712,7 @@ function renderNavi(still){
   el.innerHTML=h;
 }
 document.addEventListener('change',e=>{const x=e.target.closest&&e.target.closest('[data-nv]'); if(!x) return; const k=x.dataset.nv; NV[k]=['sp','c','r','m'].includes(k)?x.value:+x.value; nvSave(); renderNavi(true);});
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-nv55]'); if(!b) return; const v=b.dataset.nv55==='1'?5:3; NV.pdg=v; NV.pbl=v; nvSave(); renderNavi(true);});
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-nvgo]'); if(!b) return; nvStart();});
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-nvadv]'); if(!b) return; NV.adv=NV.adv?0:1; nvSave(); renderNavi();});
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-nvroute]'); if(!b) return; NV.route=b.dataset.nvroute; nvSave(); renderNavi(true);});
