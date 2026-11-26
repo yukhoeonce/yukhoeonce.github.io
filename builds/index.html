@@ -678,7 +678,7 @@ let HASD=true;
 const dName=id=>DVBY[id]?(EL()?DVBY[id].en:DVBY[id].n):'';
 const dIcon=id=>DIM[id]?`<img class="dic" src="${DIM[id]}" alt="" loading="lazy">`:`<span class="dic none" aria-hidden="true">${esc((dName(id)||'?')[0])}</span>`;
 // 調整設計図（1投稿にスタイル1つ＋サブ1つ）。DBに c_style 列がまだ無いときは読まずに動く
-const CST={precise:['精密','Precision'],rapid:['速射','Rapid Shot'],portable:['携帯','Portable'],frugal:['節約','Frugal'],boost:['推進','Boost'],heavy:['ヘビー','Heavy'],light:['ライト','Light'],assault:['突撃','Assault'],vanguard:['先制','Vanguard'],energy:['エネルギー','Energy'],steady:['安定','Steady'],overflow:['オーバーフロー','Overflow']};
+const CST={precise:['精密','Precision'],rapid:['速射','Rapid Shot'],portable:['携帯','Portable'],frugal:['節約','Frugal'],boost:['推進','Boost'],heavy:['ヘビー','Heavy'],light:['ライト','Light'],assault:['突撃','Assault'],vanguard:['先制','Vanguard'],energy:['エネルギー','Energy'],steady:['安定','Steady'],overflow:['漲り','Overflow']};
 const CSUB={crit:['クリティカル確率','Crit Rate'],critdmg:['クリティカルDMG','Crit DMG'],weak:['弱点DMG','Weakspot DMG'],elem:['エレメントDMG','Elemental DMG']};
 const CE={precise:['攻撃力+25%・射程+40%・射撃速度-10%','ATK +25%, Range +40%, Fire Rate -10%'],frugal:['外したら1発自動装填・次の命中で攻撃力+15%','Auto-reload 1 round on a miss, next hit ATK +15%'],boost:['装填ごとに次の命中のキーワード発生率+40%','Each reload: next hit keyword chance +40%'],vanguard:['空マガジンでリロード→最初の命中でキーワード確定','Reload on empty: first hit always triggers keyword'],energy:['被ダメで1発自動装填・攻撃力+10%','Auto-reload 1 round when hit, ATK +10%']};
 const CALT={
@@ -687,8 +687,8 @@ const CALT={
  'サブマシンガン':[['assault','攻撃力+20%・マガジン-25%・命中精度-50%','ATK +20%, Magazine -25%, Accuracy -50%'],['heavy','マガジン+60%・リロード効率-10%','Magazine +60%, Reload -10%'],['light','リロード効率+40%・マガジン-25%','Reload +40%, Magazine -25%'],['vanguard'],['energy']],
  'ライフル':[['precise'],['rapid','射撃速度+20%・リロード効率+10%・攻撃力-10%','Fire Rate +20%, Reload +10%, ATK -10%'],['heavy','マガジン+75%・リロード効率-10%','Magazine +75%, Reload -10%'],['vanguard'],['energy']],
  'スナイパー':[['precise'],['rapid','ボルト速度+50%・攻撃の後隙-50%・攻撃力-10%','Bolt speed +50%, Recovery -50%, ATK -10%'],['portable','射撃中の移動速度+50%・構え速度+50%','Move speed while firing +50%, ADS speed +50%'],['steady','安定性+75%・被弾時の揺れを軽減','Stability +75%, Less flinch when hit'],['frugal']],
- 'ライトマシンガン':[['assault','攻撃力+25%・マガジン-30%・安定性-50','ATK +25%, Magazine -30%, Stability -50'],['rapid','射撃速度+10%・2秒撃ち続けるとさらに+10%','Fire Rate +10%, +10% more after 2s of firing'],['steady','安定性+40%・しゃがみ撃ちで+60%','Stability +40%, +60% when crouching'],['overflow','リロード時に追加の弾を装填（追加弾は攻撃力+8%）','Extra rounds on reload (ATK +8%)'],['vanguard']],
- '弓':[['precise','攻撃力+12.5%・射程+20%・リロード効率-25%','ATK +12.5%, Range +20%, Reload -25%'],['portable','引く速度アップ・持ち替え速度+35%','Faster draw, Swap speed +35%'],['rapid','連射しやすくなる','Faster shooting']]};
+ 'ライトマシンガン':[['assault','攻撃力+25%・マガジン-30%・命中精度-50','ATK +25%, Magazine -30%, Accuracy -50'],['rapid','射撃速度+10%・命中精度-50%・2秒撃ち続けるとさらに+10%','Fire Rate +10%, Accuracy -50%, +10% more after 2s of firing'],['steady','安定性+40%・しゃがみ撃ちで+60%','Stability +40%, +60% when crouching'],['overflow','リロード時、直近20秒に撃った数の50%を追加装填（追加弾は攻撃力+10%）','On reload, add 50% of shots fired in the last 20s as extra rounds (ATK +10%)'],['vanguard']],
+ '弓':[['precise','攻撃力+12.5%・射程+20%・リロード効率-15%','ATK +12.5%, Range +20%, Reload -15%'],['portable','弓を引く速度+50%・機動性+50%・持ち替え速度+50%','Draw speed +50%, Mobility +50%, Swap speed +50%']]};
 let HASC=true;
 const calList=w=>((WBY[w]&&CALT[WBY[w].type])||[]).map(([id,ja,en])=>({id,e:ja?(EL()?en:ja):(CE[id]?(EL()?CE[id][1]:CE[id][0]):'')}));
 const csName=id=>CST[id]?(EL()?CST[id][1]:CST[id][0])+T('スタイル',''):'', cbName=id=>CSUB[id]?(EL()?CSUB[id][1]:CSUB[id][0]):'';
