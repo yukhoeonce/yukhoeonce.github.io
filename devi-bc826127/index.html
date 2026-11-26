@@ -734,6 +734,8 @@ html.ed-open{overflow:hidden}
 .nv-f.sm span{font-size:13px;color:var(--ink-2)}
 .nv-lv{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:14px}
 .nv-lv select{padding:6px 8px}
+.nv-note{margin:12px 0;padding:10px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface);font-size:14px;font-weight:700}
+.nv-adv{grid-column:1/-1;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--ink-2);font-weight:700}
 .nv-sum{padding:14px 16px;margin:12px 0;background:var(--field)}
 .nv-sum ul,.nv-li{margin:8px 0;padding-left:1.2em;line-height:1.8}
 .nv-step{padding:16px;margin:14px 0}
@@ -2167,7 +2169,7 @@ function renderProg(){
   $('#startBtn').textContent=done===0?'初級からはじめる':'つづきから';
 }
 /* ===== つくり方ナビ ===== */
-const NVD={sp:NEKO,c:'',r:'',m:'',hc:1,hr:1,sdg:3,sbl:3,pdg:5,pbl:5,route:''};
+const NVD={sp:NEKO,c:'',r:'',m:'',hc:1,hr:1,hc1:1,hr1:1,hxy:0,hxy1:0,adv:0,sdg:3,sbl:3,pdg:5,pbl:5,route:''};
 let NV=Object.assign({},NVD,(st.nv&&typeof st.nv==='object')?st.nv:{});
 if(!DEV[NV.sp]||!DEV[NV.sp].par) NV.sp=NEKO;
 const nvSave=()=>{st.nv=NV; save();};
@@ -2210,7 +2212,7 @@ function simPts(par,mats,g){
   for(const k in pts) pts[k]+=.1*nob;
   return pts;
 }
-let SIMO={trust:0,save:0,lv:0}, SLV={sdg:3,sbl:3,pdg:5,pbl:5};
+let SIMO={trust:0,save:0,lv:0}, SLV={sdg:3,sbl:3,pdg:5,pbl:5}, SXY={n:0,n1:0};
 const BLK=()=>({dg:SLV.pdg,bl:SLV.pbl});
 function sampDist(m){ let r=Math.random(); for(let k=1;k<5;k++){ if(r<m[k]) return k; r-=m[k]; } return 5; }
 function simLv(a,b){ const A=a&&a.dg?a:BLK(), B=b&&b.dg?b:BLK(); return {dg:sampDist(lvDist('dg',A.dg,B.dg)),bl:sampDist(lvDist('bl',A.bl,B.bl))}; }
@@ -2239,7 +2241,10 @@ function simRoll(par,mats){
   return ch;
 }
 const has=(d,want)=>SL.every(g=>!want[g]||d[g]===want[g]);
-function simInit(T){ const inv=[]; T.forEach(([g,t,h])=>{ for(let i=0;i<Math.max(1,h);i++) inv.push({[g]:t,c:g==='c'?t:'',r:g==='r'?t:'',m:'',cnt:1,dg:SLV.sdg,bl:SLV.sbl}); }); return inv; }
+function simInit(T){ const inv=[], xy=T.length===2?SXY.n:0;
+  T.forEach(([g,t,h,h1])=>{ if(h1==null) h1=h; const n=(h===0&&xy>0)?0:Math.max(1,h); for(let i=0;i<n;i++) inv.push({[g]:t,c:g==='c'?t:'',r:g==='r'?t:'',m:'',cnt:(h===0||i<h1)?1:0,dg:SLV.sdg,bl:SLV.sbl}); });
+  for(let i=0;i<xy;i++) inv.push({c:T[0][1],r:T[1][1],m:'',cnt:i<SXY.n1?1:0,dg:SLV.sdg,bl:SLV.sbl});
+  return inv; }
 function simCopy(S0,g,t,wantCnt1){
   const {inv}=S0, h1=inv.filter(d=>d[g]===t&&d.cnt>=1), h0=inv.filter(d=>d[g]===t&&d.cnt<1);
   let child;
@@ -2360,7 +2365,8 @@ function simStats(fn,T,Mt,N){
 
 let NVSIM={k:''};
 function nvSim(P){
-  const T=P.T.map(([g,t,h])=>[g,t,h]), k=JSON.stringify([T,P.Mt,NV.sdg,NV.sbl,NV.pdg,NV.pbl]);
+  const T=P.T.map(([g,t,h,h1])=>[g,t,h,h1]), xy=(NV.adv&&T.length===2)?{n:NV.hxy,n1:Math.min(NV.hxy1,NV.hxy)}:{n:0,n1:0}, k=JSON.stringify([T,P.Mt,NV.sdg,NV.sbl,NV.pdg,NV.pbl,xy]);
+  SXY=xy;
   if(NVSIM.k!==k){
     SLV={sdg:NV.sdg,sbl:NV.sbl,pdg:NV.pdg,pbl:NV.pbl};
     const run=o=>{ SIMO=Object.assign({trust:0,save:0,lv:0},o); try{ return {st:simStats(simB,T,P.Mt,700),first:simBFirst(T,P.Mt)}; } finally{ SIMO={trust:0,save:0,lv:0}; } };
@@ -2374,8 +2380,8 @@ function nvSim(P){
 const nvObj=(S,o,par)=>{ if(o.k==='blank') return MD(S); if(o.k==='anim') return MI(NV.m); const x={}; ['c','r','m'].forEach(g=>{if(o[g]) x[g]=o[g];}); return par?P0(S,x):MD(S,x); };
 function nvPlan(){
   const S=NV.sp, D=DEV[S], T=[];
-  if(NV.c&&nvOk(NV.c,'c',S)) T.push(['c',NV.c,NV.hc]);
-  if(NV.r&&nvOk(NV.r,'r',S)) T.push(['r',NV.r,NV.hr]);
+  if(NV.c&&nvOk(NV.c,'c',S)) T.push(['c',NV.c,NV.hc,NV.adv?Math.min(NV.hc1,NV.hc):NV.hc]);
+  if(NV.r&&nvOk(NV.r,'r',S)) T.push(['r',NV.r,NV.hr,NV.adv?Math.min(NV.hr1,NV.hr):NV.hr]);
   const it=NV.m&&ITEM[NV.m]?ITEM[NV.m]:null, Mt=it?it.trait:'';
   if(!T.length&&!it) return null;
   const set={}; T.forEach(([g,t])=>set[g]=t);
@@ -2438,7 +2444,7 @@ function renderNavi(){
   const spSel=[3,2,1].map(t=>`<optgroup label="${TYPEN[t]}">${byT[t].map(d=>opt(d.id,d.n,d.id===S)).join('')}</optgroup>`).join('');
   const trSel=g=>opt('','なし（この枠はえらばない）',!NV[g])+nvList(g,S).map(x=>opt(x.id,x.n+(x.sk?'（色違い）':NV_EXTRA.includes(x.id)?'（灰色・戦闘デビは必殺技が早く回る）':''),x.id===NV[g])).join('');
   const muSel=opt('','なし',!NV.m)+MUS.map(it=>opt(it.k,`${trShort(TR[it.trait])}（${itemShort(it)}）`,it.k===NV.m)).join('');
-  const hSel=k=>[0,1,2,3,4].map(n=>opt(n,n===4?'4体以上':n+'体',NV[k]===n)).join('');
+  const hSel=k=>[0,1,2,3,4].map(n=>opt(n,n===4?'4体以上':n+'体',NV[k]===n)).join(''), cSel=(k,mx)=>Array.from({length:mx+1},(_,n)=>opt(n,n+'体',Math.min(NV[k],mx)===n)).join('');
   const lvSel=k=>[1,2,3,4,5].map(n=>opt(n,n,NV[k]===n)).join('');
   let h=`<div class="calc-head"><p class="eyebrow">FUSION NAVI</p><h2>つくり方ナビ</h2>
   <p>作りたいデビと、欲しい金色の特性をえらぶと、<b>いろんな作り方をくらべて、融合の回数が少ないもの</b>の手順を出すよ。お試し版なので、数字は目安にしてね。</p></div>
@@ -2448,9 +2454,14 @@ function renderNavi(){
    <label class="nv-f"><span>${TYPEN[D.t]}の枠（金）</span><select data-nv="r">${trSel('r')}</select></label>
    <label class="nv-f"><span>変異の枠（動物・家具）</span><select data-nv="m">${muSel}</select></label>
    ${NV.c?`<label class="nv-f sm"><span>共通の特性を持ってる${esc(D.n)}</span><select data-nv="hc">${hSel('hc')}</select></label>`:''}
+   ${NV.adv&&NV.c&&NV.hc>0?`<label class="nv-f sm"><span>そのうち融合回数が残ってる</span><select data-nv="hc1">${cSel('hc1',NV.hc)}</select></label>`:''}
    ${NV.r?`<label class="nv-f sm"><span>${TYPEN[D.t]}の特性を持ってる${esc(D.n)}</span><select data-nv="hr">${hSel('hr')}</select></label>`:''}
+   ${NV.adv&&NV.r&&NV.hr>0?`<label class="nv-f sm"><span>そのうち融合回数が残ってる</span><select data-nv="hr1">${cSel('hr1',NV.hr)}</select></label>`:''}
+   ${NV.adv&&NV.c&&NV.r?`<label class="nv-f sm"><span>共通と${TYPEN[D.t]}を両方持ってる${esc(D.n)}</span><select data-nv="hxy">${hSel('hxy')}</select></label>`:''}
+   ${NV.adv&&NV.c&&NV.r&&NV.hxy>0?`<label class="nv-f sm"><span>そのうち融合回数が残ってる</span><select data-nv="hxy1">${cSel('hxy1',NV.hxy)}</select></label>`:''}
    <div class="nv-f sm"><span>今の特性持ちのレベル</span><div class="nv-lv">異能<select data-nv="sdg">${lvSel('sdg')}</select>活性<select data-nv="sbl">${lvSel('sbl')}</select></div></div>
    <div class="nv-f sm"><span>レベル上げに使う無特性</span><div class="nv-lv">異能<select data-nv="pdg">${lvSel('pdg')}</select>活性<select data-nv="pbl">${lvSel('pbl')}</select></div></div>
+   <div class="nv-adv"><button type="button" class="btn sm${NV.adv?'':' sub'}" data-nvadv="1">${NV.adv?'詳しく入れるをやめる':'詳しく入れる（融合回数・2つ持ち）'}</button>${NV.adv?'<span>融合回数が0の子も、素材としては使えるよ。</span>':''}</div>
   </div>`;
   const P=nvPlan(); NVCFG=[];
   if(!P){ h+=`<p class="nv-empty">欲しい特性を1つ以上えらんでね。</p>`; el.innerHTML=h; return; }
@@ -2540,6 +2551,7 @@ function renderNavi(){
     </ul>
     <div class="btnrow">${nvBtn(zi)}</div></details>`;
   }
+  if(NV.adv&&NV.c&&NV.r&&NV.hxy>0&&'amfg'.includes(route)) h+=`<p class="nv-note">2つ持ちがもういるので、下の手順で「ふやす」「まとめる」は、持ってる2つ持ちで足りる分だけとばしてOK。上の表の回数は、持ってる2つ持ちも使う前提で数えてるよ。</p>`;
   let n=0;
   steps.forEach(s=>{
     n++;
@@ -2611,6 +2623,7 @@ function renderNavi(){
   el.innerHTML=h;
 }
 document.addEventListener('change',e=>{const x=e.target.closest&&e.target.closest('[data-nv]'); if(!x) return; const k=x.dataset.nv; NV[k]=['sp','c','r','m'].includes(k)?x.value:+x.value; nvSave(); renderNavi();});
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-nvadv]'); if(!b) return; NV.adv=NV.adv?0:1; nvSave(); renderNavi();});
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-nvroute]'); if(!b) return; NV.route=b.dataset.nvroute; nvSave(); renderNavi();});
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-nvcalc]'); if(!b) return; const c=NVCFG[+b.dataset.nvcalc]; if(!c) return; CS={p:clone(c.p),m:clone(c.m),goal:clone(c.goal),view:NV.sp,why:false,preset:'',ui:2}; st.cs=CS; save(); location.hash='calc';});
 
