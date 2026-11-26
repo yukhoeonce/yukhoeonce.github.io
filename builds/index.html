@@ -108,6 +108,8 @@ main{padding-block:22px 40px}
 .fbta{width:100%;box-sizing:border-box;min-height:130px;font:inherit;padding:10px 12px;border:2.5px solid var(--line);border-radius:12px;background:var(--field,var(--surface));color:var(--ink);resize:vertical}
 .fbmeta{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--muted);margin:4px 0 12px}
 .fbl{display:grid;gap:8px;margin-top:8px}.fbl .fi{display:block;background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 12px}.fbl .tg{display:inline-block;font-size:12px;font-weight:700;border:1.5px solid var(--line);border-radius:999px;padding:0 8px;margin-right:6px;background:var(--lemon,#ffe27a)}
+.fbl .rp{margin-top:6px;font-size:14px;background:var(--mint,#9be8d4);border:1.5px solid var(--line);border-radius:10px;padding:6px 10px;white-space:pre-wrap;overflow-wrap:anywhere}.fbl .rpf textarea{width:100%;box-sizing:border-box;font:inherit;font-size:14px;margin-top:6px;padding:6px 8px;border:2px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
+.fbr{display:grid;gap:10px}.fbr .q{font-size:13px;color:var(--muted);white-space:pre-wrap;overflow-wrap:anywhere}.fbr .a{background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:10px 12px;white-space:pre-wrap;overflow-wrap:anywhere;font-weight:700}
 .fbl .tx{white-space:pre-wrap;overflow-wrap:anywhere;margin-top:4px;font-size:15px}
 .chip{border:2px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 12px;font-size:14px;font-weight:700}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
@@ -241,7 +243,7 @@ main,.ticker{position:relative;z-index:1}
 .brand .cas::before,.brand .cas::after{border-style:dashed;animation:spin 3s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .ticker{overflow:hidden;border-bottom:2px solid var(--line);background:var(--lemon);white-space:nowrap}
-.ticker div{display:inline-block;padding:4px 0;font-family:var(--f-dot);font-size:14px;color:var(--on-pop);animation:tick 30s linear infinite}
+.ticker div{display:inline-block;padding:4px 0;font-family:var(--f-dot);font-size:14px;color:var(--on-pop);animation:tick 55s linear infinite}
 @keyframes tick{to{transform:translateX(-50%)}}
 @keyframes pop{from{opacity:0;transform:translateY(16px) scale(.95) rotate(-1deg)}}
 @keyframes grow{from{width:0}}
@@ -661,7 +663,7 @@ async function loadFb(){
 function renderFb(){
   const all=fbRows,L=all.filter(x=>fbF==='all'||x.cat===fbF);$('fbCnt').textContent=all.length+'件';
   $('fbF').innerHTML=[['all','すべて'],...FBL.map(([k,j])=>[k,j])].map(([k,j])=>`<button type="button" class="chip" data-fbf="${k}" aria-pressed="${k===fbF}">${j} ${k==='all'?all.length:all.filter(x=>x.cat===k).length}</button>`).join('');
-  $('fbList').innerHTML=L.map(x=>`<div class="fi"><span class="tg">${(FBL.find(c=>c[0]===x.cat)||FBC[3])[1]}</span><small>${new Date(x.created_at).toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}　${x.lang==='en'?'英語':'日本語'}</small><div class="tx">${esc(x.body)}</div><div class="acts"><button type="button" class="btn small sub" data-fbdel="${x.id}">消す</button></div></div>`).join('')||'<p class="nodata">まだ意見はないよ</p>';
+  $('fbList').innerHTML=L.map(x=>`<div class="fi"><span class="tg">${(FBL.find(c=>c[0]===x.cat)||FBC[3])[1]}</span><small>${new Date(x.created_at).toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}　${x.lang==='en'?'英語':'日本語'}</small><div class="tx">${esc(x.body)}</div>${x.reply?`<div class="rp"><b>返事済み</b>（${new Date(x.replied_at).toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}）${esc(x.reply)}</div>`:''}<div class="rpf"><textarea maxlength="300" rows="2" id="rp${x.id}" placeholder="送った人への返事（例：直しました、ありがとう！）">${esc(x.reply||'')}</textarea></div><div class="acts"><button type="button" class="btn small" data-fbrep="${x.id}">${x.reply?'返事を書き直す':'返事を送る'}</button><button type="button" class="btn small sub" data-fbdel="${x.id}">消す</button></div></div>`).join('')||'<p class="nodata">まだ意見はないよ</p>';
 }
 const AS0=D.ASLOT, MS0=D.MSLOT;  // [[id,名前]]
 let AS=AS0, MS=MS0;
@@ -1005,6 +1007,22 @@ $('dBody').addEventListener('click',e=>{const c=e.target.closest('[data-fbcat]')
 $('dBody').addEventListener('input',e=>{if(e.target.id==='fbTx')$('fbN').textContent=e.target.value.length+'/300'});
 $('v-admin').addEventListener('click',e=>{const f=e.target.closest('[data-fbf]');if(f){fbF=f.dataset.fbf;renderFb()}const d=e.target.closest('[data-fbdel]');if(d&&armed(d)){FB.del(+d.dataset.fbdel).then(loadFb).catch(er=>{$('fbAMsg').className='msg ng';$('fbAMsg').textContent=er.message})}});
 $('aLoad').addEventListener('click',loadFb);
+$('v-admin').addEventListener('click',e=>{const b=e.target.closest('[data-fbrep]');if(!b)return;const id=+b.dataset.fbrep,t=$('rp'+id).value.trim();b.disabled=true;
+  rpc('fb_reply',{p_pass:$('aPass').value,p_id:id,p_text:t}).then(()=>{toast(t?'返事を送ったよ（送った人が次に開いたときに届く）':'返事を取り消したよ');return loadFb()}).catch(er=>{b.disabled=false;$('fbAMsg').className='msg ng';$('fbAMsg').textContent=/fb_reply/.test(er.message)?'返事の準備がまだみたい（Supabaseで feedback-reply.sql を実行してね）':er.message})});
+// 自分が送った意見への返事を受け取る（みんなの装備とデビ融合講座の端末IDで確認）
+async function checkReplies(){
+  if(!LIVE)return;
+  const devs=[];const a=ls.get('bs_dev','');if(/^[0-9a-f]{32}$/.test(a))devs.push(a);
+  try{const b=localStorage.getItem('devi_dev')||'';if(/^[0-9a-f]{32}$/.test(b)&&!devs.includes(b))devs.push(b)}catch(e){}
+  if(!devs.length)return;
+  let rows=[];try{rows=await rpc('fb_my_replies',{p_devs:devs})}catch(e){return}
+  const seen=ls.get('bs_fb_seen',{}),nw=(rows||[]).filter(r=>seen[r.id]!==r.replied_at);
+  if(!nw.length||!$('dlg').hidden)return;
+  openDlg(T('💌 意見へのお返事が届いたよ','💌 A reply to your feedback'),`<div class="fbr">${nw.map(r=>`<div><div class="q">${T('あなたの意見','Your feedback')}：${esc(r.body)}</div><div class="a">${esc(r.reply)}</div></div>`).join('')}<p class="note" style="margin:0">${T('送ってくれてありがとう！','Thank you for your feedback!')}</p><div><button type="button" class="btn pink" id="fbSeen">OK</button></div></div>`);
+  const mark=()=>{const s2=ls.get('bs_fb_seen',{});nw.forEach(r=>s2[r.id]=r.replied_at);ls.set('bs_fb_seen',s2)};mark();
+}
+$('dBody').addEventListener('click',e=>{if(e.target.id==='fbSeen')closeDlg()});
+setTimeout(checkReplies,1500);
 $('sBody').addEventListener('click',e=>{const b=e.target.closest('[data-xrec]');if(b)showRec(b.dataset.xrec)});
 $('dBody').addEventListener('click',e=>{const b=e.target.closest('[data-rmode]');if(!b)return;recMode=b.dataset.rmode;const st=$('dBody').scrollTop;showRec(b.dataset.rw);$('dBody').scrollTop=st});
 $('demoClear').addEventListener('click',()=>{ls.set(DEMO_KEY,[]);ls.set('bs_mine',{});renderMine();loadCounts();toast('お試しデータを消したよ')});
@@ -1037,7 +1055,11 @@ function sparks(el){if(RM||!el)return;const r=el.getBoundingClientRect(),cols=['
     e.style.fontSize=(18+(i*7)%26)+'px';e.style.animationDelay=(-i*0.8)+'s';e.style.animationDuration=(7+i%5)+'s';fx.appendChild(e)});
   const tk=document.createElement('div');tk.className='ticker';tk.setAttribute('aria-hidden','true');
   tk.id='ticker';document.querySelector('.top').after(tk)})();
-function tickerText(){$('ticker').innerHTML='<div>'+T('★ みんなの装備 ✦ 武器を押すと人気の防具とMODが％で出るよ ♪ 自分の装備も選ぶだけで投稿できる ◆ 1武器につき1構成まで ✦ ','★ COMMUNITY BUILDS ✦ Tap a weapon to see popular armor and mods ♪ Share your own build in a few taps ◆ One build per weapon ✦ ').repeat(6)+'</div>'}
+// いただいた意見で直したこと（新しい順。黄色いバーに上から2つまで流れる）
+const FIXLOG=[
+  {d:'11/26',ja:'意見ありがとう！「ブレイドズボン」の名前を直したよ',en:'Thanks for the feedback! Fixed the name of Sharp Blade Pants'},
+];
+function tickerText(){const fx=FIXLOG.slice(0,2).map(f=>'📢 '+f.d+' '+T(f.ja,f.en)+' ✦ ').join('');$('ticker').innerHTML='<div>'+(fx+T('★ みんなの装備 ✦ 武器を押すと人気の防具とMODが％で出るよ ♪ 自分の装備も選ぶだけで投稿できる ◆ 1武器につき1構成まで ✦ ','★ COMMUNITY BUILDS ✦ Tap a weapon to see popular armor and mods ♪ Share your own build in a few taps ◆ One build per weapon ✦ ')+T('💡 意見はいつでも募集中 ✦ ','💡 Feedback always welcome ✦ ')).repeat(6)+'</div>'}
 function applyLang(){
   document.documentElement.lang=LANG;
   document.querySelectorAll('[data-en]').forEach(e=>{if(e.dataset.ja===undefined)e.dataset.ja=e.innerHTML;e.innerHTML=EL()?e.dataset.en:e.dataset.ja});
