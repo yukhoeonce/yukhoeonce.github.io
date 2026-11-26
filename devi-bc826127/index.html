@@ -2269,14 +2269,14 @@ function simA(T,Mt){
 }
 function simBest(inv,p1s,want,Mt,bb,ex){
   let best=null; const pairs=[]; const wk=Object.keys(want), sc=d=>wk.filter(g=>d[g]===want[g]).length;
-  p1s=p1s.filter(d=>sc(d)>0).sort((x,y)=>sc(y)-sc(x)).slice(0,6);
+  p1s=p1s.filter(d=>sc(d)>0).sort((x,y)=>(sc(y)-sc(x))||(x.dg+x.bl<y.dg+y.bl?1:-1)).slice(0,4);
   const carr=inv.filter(d=>d!==ex&&sc(d)>0).sort((x,y)=>(x.cnt-y.cnt)||(sc(y)-sc(x)));
   for(let i=0;i<p1s.length;i++) for(const q of [...p1s.slice(i+1),null]) pairs.push([p1s[i],q]);
   if(bb) pairs.push([{blk:1},null]);
   for(const [a,q] of pairs){
       const b=q||{};
       const pool=[{k:'blank'}]; if(Mt) pool.push({k:'anim',m:Mt});
-      carr.filter(d=>d!==a&&d!==q).slice(0,6).forEach(d=>pool.push(d));
+      carr.filter(d=>d!==a&&d!==q).slice(0,5).forEach(d=>pool.push(d));
       for(let x=0;x<pool.length;x++)for(let y=x;y<pool.length;y++)for(let z=y;z<pool.length;z++){
         const ms=[pool[x],pool[y],pool[z]]; const dv=ms.filter(m=>m.k!=='blank'&&m.k!=='anim');
         if(new Set(dv).size!==dv.length) continue;
@@ -2358,14 +2358,19 @@ function simGFirst(T,Mt){
   const inv=simInit(T); return simBest(inv,inv.filter(d=>d.cnt>=1),want,'',true);
 }
 function simStats(fn,T,Mt,N){
-  const fz=[],bl=[],an=[]; for(let i=0;i<N;i++){const r=fn(T,Mt); fz.push(r.fz); bl.push(r.bl); an.push(r.an);}
+  const fz=[],bl=[],an=[], t0=Date.now(); for(let i=0;i<N;i++){ if((i>=100&&Date.now()-t0>120)||(i>=20&&Date.now()-t0>500)) break;const r=fn(T,Mt); fz.push(r.fz); bl.push(r.bl); an.push(r.an);}
   const avg=a=>a.reduce((x,y)=>x+y,0)/a.length, q=(a,p)=>{const s=[...a].sort((x,y)=>x-y); return s[Math.min(s.length-1,Math.floor(s.length*p))];};
   return {fz:avg(fz),fz90:q(fz,.9),bl:avg(bl),an:avg(an)};
 }
 
 let NVSIM={k:''};
+function nvKey(P){
+  const T=P.T.map(([g,t,h,h1])=>[g,t,h,h1]), xy=(NV.adv&&T.length===2)?{n:NV.hxy,n1:Math.min(NV.hxy1,NV.hxy)}:{n:0,n1:0};
+  return {T,xy,k:JSON.stringify([T,P.Mt,NV.sdg,NV.sbl,NV.pdg,NV.pbl,xy])};
+}
+let NVWAIT=0;
 function nvSim(P){
-  const T=P.T.map(([g,t,h,h1])=>[g,t,h,h1]), xy=(NV.adv&&T.length===2)?{n:NV.hxy,n1:Math.min(NV.hxy1,NV.hxy)}:{n:0,n1:0}, k=JSON.stringify([T,P.Mt,NV.sdg,NV.sbl,NV.pdg,NV.pbl,xy]);
+  const {T,xy,k}=nvKey(P);
   SXY=xy;
   if(NVSIM.k!==k){
     SLV={sdg:NV.sdg,sbl:NV.sbl,pdg:NV.pdg,pbl:NV.pbl};
@@ -2465,6 +2470,7 @@ function renderNavi(){
   </div>`;
   const P=nvPlan(); NVCFG=[];
   if(!P){ h+=`<p class="nv-empty">欲しい特性を1つ以上えらんでね。</p>`; el.innerHTML=h; return; }
+  if(NVSIM.k!==nvKey(P).k){ h+=`<p class="nv-empty">けいさん中…（いろんな作り方をためしてるよ）</p>`; el.innerHTML=h; clearTimeout(NVWAIT); NVWAIT=setTimeout(()=>{ nvSim(nvPlan()); renderNavi(); },40); return; }
   const SM=nvSim(P), LP=P.steps[P.steps.length-1], ex=LP.ex.exp;
   const tot=r=>r?{fz:r.fz,f90:r.fz90,bl:Math.round(r.bl),an:Math.round(r.an)}:null;
   const RT=[['a','100%ルート','特性持ちをコピーでふやしてから、100%の融合だけでまとめる。手間は多いけど、まとめる所で失敗しない。'],
