@@ -759,6 +759,12 @@ html.ed-open{overflow:hidden}
 .nv-br{margin:8px 0;padding:8px 12px;border:2px solid var(--line);border-radius:12px;background:var(--field)}
 .nv-br summary{cursor:pointer;font-size:14.5px}
 .nv-br[open]{background:var(--surface)}
+.nv-brs,.nv-br summary{word-break:normal;overflow-wrap:break-word}
+.nv-br summary{list-style:none;padding-left:1.2em;text-indent:-1.2em;line-height:1.6}
+.nv-br summary::-webkit-details-marker{display:none}
+.nv-br summary::before{content:"▶";display:inline-block;width:1.2em;text-indent:0;font-size:.8em;transition:transform .15s}
+.nv-br[open] summary::before{transform:rotate(90deg)}
+@media(max-width:600px){#navi{word-break:normal;overflow-wrap:break-word}#navi .mini{font-size:14px;line-height:1.7}.nv-br summary{font-size:15px}}
 .nv-rtd summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--ink-2);margin:6px 0}
 @media (max-width:600px){
  .nv-steps{grid-template-columns:1fr;gap:8px}
