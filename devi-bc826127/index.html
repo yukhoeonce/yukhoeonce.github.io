@@ -1445,7 +1445,7 @@ const ADV=[
  <p>生まれるのはウナギ（クラゲ）なので、特性の保管・コピー用だよ。創作物タイプは釣れないので、今までどおり25%のやり方になる。</p>
  <div class="btnrow">${pbtn('purge','けいさん機で試す（44%）')}</div>`},
 {t:'誘発剤のつかいかた',h:()=>`
- <p>誘発剤は材料に入れるアイテム。2個入れると効果も2倍になるよ。同じ誘発剤は1つの枠に重ねられるので、枠の節約にもなる。</p>
+ <p>誘発剤は材料に入れるアイテム。2個入れると効果も2倍になるよ。同じ誘発剤は1つの枠に3個まで重ねられるので、枠の節約にもなる。</p>
  <h3>種族変異誘発剤：種類を変える</h3>
  <ul>
   <li>1個でその種類に5000のくじ。親と関係ない種類でも、親2体（同じ種類）なら 5000÷7000＝<b>約71%</b>。2個なら約83%。</li>
@@ -1960,7 +1960,7 @@ function secMut(o){
    <p class="teff2">${mutNote(MUT[o.mu])}</p></div>`;
 }
 function secCnt(o){
-  return `<div class="ed-sec"><h4><span class="n">③</span>個数</h4><div class="cnt big"><button type="button" id="ed-dec" data-cnt2="-1" aria-label="へらす"${o.n<=1?' disabled':''}>−</button><output>${o.n}</output><button type="button" id="ed-inc" data-cnt2="1" aria-label="ふやす"${o.n>=10?' disabled':''}>＋</button></div><p class="mini">同じものは1つの枠に重ねられるよ。重ねるほど上がり方は小さくなるので、2〜3個で十分なことが多い。</p></div>`;
+  return `<div class="ed-sec"><h4><span class="n">③</span>個数</h4><div class="cnt big"><button type="button" id="ed-dec" data-cnt2="-1" aria-label="へらす"${o.n<=1?' disabled':''}>−</button><output>${o.n}</output><button type="button" id="ed-inc" data-cnt2="1" aria-label="ふやす"${o.n>=3?' disabled':''}>＋</button></div><p class="mini">同じものは1つの枠に3個まで重ねられるよ。重ねるほど上がり方は小さくなる。</p></div>`;
 }
 function renderEd(first){
   const body=$('#edBody'), sc=first?0:body.scrollTop, isP=ED[0]==='p', j=+ED.slice(1), o=edObj();
@@ -1997,7 +1997,7 @@ $('#edBody').addEventListener('click',e=>{
   else if(d.k4!=null){if(o.k===d.k4) return; CS.m[j]=d.k4==='dev'?MD(CS.p[0].sp):d.k4==='item'?MI(ITEM.a1000002?'a1000002':ITEMG[0][1][0]):d.k4==='mut'?MU(MUTG[0][1][0]):NONE();}
   else if(d.it){o.it=d.it;}
   else if(d.mu){o.mu=d.mu;}
-  else if(d.cnt2){o.n=Math.max(1,Math.min(10,(o.n||1)+(+d.cnt2)));}
+  else if(d.cnt2){o.n=Math.max(1,Math.min(3,(o.n||1)+(+d.cnt2)));}
   else return;
   CS.preset=''; renderCalc(b.id);
 });
