@@ -771,6 +771,41 @@ html.ed-open{overflow:hidden}
 .nv-br[open] summary::before{content:"▼"}
 @media(max-width:600px){#navi{word-break:normal;overflow-wrap:break-word}#navi .mini{font-size:14px;line-height:1.7}.nv-br summary{font-size:15px}}
 .nv-brt{margin:2px 0 6px;font-size:14px}
+.wz-card{padding:18px 18px 16px;margin:12px 0}
+.wz-q{margin:0 0 10px;font-size:20px;font-weight:800;line-height:1.5}
+.wz-help{margin:-4px 0 12px;font-size:14px;color:var(--ink-2)}
+.wz-warn{margin:10px 0 0;font-size:13.5px;color:var(--ng);font-weight:700}
+.wz-sel{font:inherit;font-weight:700;font-size:16px;padding:10px 12px;border:2.5px solid var(--line);border-radius:12px;background:var(--field);color:var(--ink);width:100%;max-width:420px}
+.wz-l{display:flex;flex-direction:column;gap:4px;margin:0 0 12px;font-weight:700;font-size:14px}
+.wz-big{display:grid;gap:10px}
+.wz-big.two{grid-template-columns:1fr 1fr}
+.wz-choice{display:flex;align-items:center;gap:14px;padding:14px 16px;border:2.5px solid var(--line);border-radius:16px;background:var(--surface);color:var(--ink);box-shadow:3px 3px 0 var(--sh);font:inherit;text-align:left;cursor:pointer}
+.wz-choice .px16{width:44px;height:44px;flex:none}
+.wz-choice span{display:flex;flex-direction:column;line-height:1.4}
+.wz-choice b{font-size:17px}.wz-choice small{font-size:13px;color:var(--ink-2)}
+.wz-choice.on{background:var(--lemon);color:var(--on-pop)}
+.wz-choice:active,.wz-num:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--sh)}
+.wz-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0 0}
+.wz-back{font:inherit;font-weight:700;font-size:14px;padding:6px 12px;border:2px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);cursor:pointer}
+.wz-mode{font-weight:800;font-size:14px}
+.wz-dots{display:flex;gap:6px;margin-left:auto}
+.wz-dots i{width:10px;height:10px;border-radius:50%;border:2px solid var(--line);background:var(--surface)}
+.wz-dots i.done{background:var(--ink-2)}.wz-dots i.on{background:var(--pink)}
+.wz-row{margin:0 0 14px}.wz-row>b{display:block;margin-bottom:6px;font-size:15px}
+.wz-sub{margin:8px 0 6px;font-size:13.5px;color:var(--ink-2);font-weight:700}
+.wz-nums,.wz-kd{display:flex;flex-wrap:wrap;gap:6px}
+.wz-kd{margin:-4px 0 14px}
+.wz-num{font:inherit;font-weight:800;font-size:15px;padding:8px 14px;border:2.5px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);box-shadow:2px 2px 0 var(--sh);cursor:pointer}
+.wz-num.on{background:var(--lemon);color:var(--on-pop)}
+.wz-num.bad.on{background:var(--pink)}
+.wz-foot{display:flex;justify-content:flex-end;margin-top:14px}
+.wz-foot .btn[disabled]{opacity:.45;cursor:not-allowed}
+.wz-resbar{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0}
+.wz-mini{font:inherit;font-size:13px;font-weight:700;padding:5px 12px;border:2px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);cursor:pointer;white-space:nowrap}
+.wz-res .nv-form,.wz-res .nv-how,.wz-res .calc-head,.wz-res .nv-calc .btn{display:none!important}
+#navi.wz-res:not(.wz-cmp) .nv-cmp{display:none}
+@media(max-width:600px){.wz-q{font-size:17px}.wz-card{padding:14px}.wz-choice{padding:12px}.wz-choice .px16{width:36px;height:36px}.wz-choice b{font-size:15px}.wz-num{font-size:14px;padding:7px 11px}}
+
 .nv-modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:4px 0 14px}
 .nv-mode{display:flex;align-items:center;gap:10px;padding:10px 12px;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);box-shadow:3px 3px 0 var(--sh);font:inherit;text-align:left;cursor:pointer}
 .nv-mode .px16{width:36px;height:36px;flex:none}
@@ -1005,7 +1040,8 @@ details.nv-step summary{cursor:pointer;font-size:16px}
 
   <!-- ===== つくり方ナビ ===== -->
   <section class="view" id="v-navi" hidden>
-    <div id="nvmode"></div>
+    <div id="wz"></div>
+    <div id="nvmode" hidden></div>
     <div id="navi"></div>
     <div id="erase" hidden></div>
     <div id="copy" hidden></div>
@@ -1099,6 +1135,19 @@ details.nv-step summary{cursor:pointer;font-size:16px}
 .intro form{display:flex;justify-content:center;margin-top:10px}
 .intro-link{background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer}
 @media(max-width:600px){.intro{padding:16px 16px 14px;font-size:14px}.intro h2{font-size:18px}.intro ul{font-size:13px}}
+
+/* 1問ずつ版: けいさん機ボタンなし・改行・STEPジャンプ */
+.wz-res [data-nvcalc],.wz-res [data-ercalc],.wz-res [data-cpcalc]{display:none!important}
+.wz-res .btnrow:not(:has(button:not([data-nvcalc]):not([data-ercalc]):not([data-cpcalc]))){display:none}
+@supports (word-break:auto-phrase){.wz-res h3,.wz-res h4,.wz-res .nv-sum b,.wz-q{word-break:auto-phrase;text-wrap:balance}
+.wz-res p,.wz-res li,.wz-help{word-break:auto-phrase}}
+@supports (word-break:auto-phrase){.wz-res p b,.wz-res li b{display:inline-block}}
+.wz-jump{position:sticky;z-index:15;display:flex;gap:6px;align-items:center;overflow-x:auto;scrollbar-width:none;margin:0 -4px 12px;padding:8px 4px;background:var(--bg);border-bottom:2.5px solid var(--line)}
+.wz-jump::-webkit-scrollbar{display:none}
+.wz-jump span{flex:none;font-family:var(--f-dot);font-size:12px;color:var(--ink-2);margin-right:2px}
+.wz-jump button{flex:none;min-width:34px;height:30px;padding:0 10px;border:2px solid var(--line);border-radius:999px;background:var(--surface);font:inherit;font-weight:800;font-size:13px;color:var(--ink);cursor:pointer}
+.wz-jump button.on{background:var(--lemon);color:var(--on-pop)}
+.wz-res .nv-step,.wz-res .nv-sum,.wz-res .er-opt,.wz-res details.card{scroll-margin-top:var(--wzjt,140px)}
 </style>
 <script>
 (()=>{const K='devi-intro-v1', d=document.getElementById('intro'); if(!d) return;
@@ -2878,7 +2927,7 @@ function renderNavi(still){
       <ul class="nv-li">
        <li>失敗しても、生まれた子が欲しい特性を1つでも持っていれば、次の親に使える。</li>
        <li>親にしたデビは融合回数が0になるけど、特性があるなら<b>材料</b>に回すと点が足される。</li>
-       <li>${s.rt==='l'?'毎回、<b>片方の親を5/5の無特性</b>にして、成功率と「子が5/5になる確率」がどちらも高い組み方をえらぶ。そろった時にはもう5/5に近いので、レベル上げが少ない。':s.rt==='s'?'毎回、<b>成功率が高くて無特性をあまり使わない組み方</b>をえらぶ。特性持ちの子や親にしたデビを材料に回すと、無特性を節約できるよ。':'毎回、手持ちの中で<b>いちばん成功率が高い組み方</b>をえらぶ。けいさん機で材料を入れかえて、数字が一番高いのを探してね。'}</li>
+       <li>${s.rt==='l'?'毎回、<b>片方の親を5/5の無特性</b>にして、成功率と「子が5/5になる確率」がどちらも高い組み方をえらぶ。そろった時にはもう5/5に近いので、レベル上げが少ない。':s.rt==='s'?'毎回、<b>成功率が高くて無特性をあまり使わない組み方</b>をえらぶ。特性持ちの子や親にしたデビを材料に回すと、無特性を節約できるよ。':'毎回、手持ちの中で<b>いちばん成功率が高い組み方</b>をえらぶ。'}</li>
        ${s.rt==='t'?'<li>このルートは「持ち主2体ぶんで1点あれば失敗しない」説で計算してる。表示が66.7%の所で失敗することもあるかも。</li>':''}
        <li>${s.rt==='g'?'そろった子が<b>融合回数の残ってる状態で2体</b>できたら、次のSTEPで動物・家具を足す。':'全部そろった子ができて、同じ特性セットを持つデビ（融合回数0でOK）がもう1体あれば、次のレベル上げへ。'}</li>
       </ul>
@@ -3147,6 +3196,152 @@ document.addEventListener('change',e=>{const x=e.target.closest&&e.target.closes
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-cpgo]'); if(!b) return; CPGO=cpKey(); renderCopy(false); const r=$('#copy .er-opt')||$('#copy .nv-empty'); if(r) r.scrollIntoView({behavior:'smooth',block:'start'});});
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-cpcalc]'); if(!b) return; const c=CPCFG[+b.dataset.cpcalc]; if(!c) return; CS={p:clone(c.p),m:clone(c.m),goal:clone(c.goal),view:CP.sp,why:false,preset:'',ui:2}; st.cs=CS; save(); location.hash='calc';});
 
+
+/* ===== 1問ずつナビ（お試し） ===== */
+let WZ=Object.assign({mode:'',step:0,cmp:0},(st.wz&&typeof st.wz==='object')?st.wz:{});
+const wzSave=()=>{st.wz=WZ; save();};
+const WZSTEPS={make:['sp','gold','have','lv','res'],erase:['sp','tr','have','res'],copy:['sp','tr','have','res']};
+const WZT={make:'好きなデビを作る',erase:'ハズレを消す',copy:'特性をコピーする'};
+function wzSpSel(cur,attr){
+  const byT={1:[],2:[],3:[]}; SPECIES.forEach(d=>byT[d.t].push(d));
+  const opt=(v,l,on)=>`<option value="${esc(v)}"${on?' selected':''}>${esc(l)}</option>`;
+  return `<select class="wz-sel" ${attr}>${[3,2,1].map(t=>`<optgroup label="${TYPEN[t]}デビ">${byT[t].map(d=>opt(d.id,d.n,d.id===cur)).join('')}</optgroup>`).join('')}</select>`;
+}
+const wzNum=(k,v,mx,obj)=>`<div class="wz-nums">${Array.from({length:mx+1},(_,i)=>`<button type="button" class="wz-num${v===i?' on':''}" data-wzn="${k}" data-v="${i}">${i===4&&mx===4?'4体以上':i+'体'}</button>`).join('')}</div>`;
+function renderWz(){
+  const el=$('#wz'); if(!el) return;
+  const ids=['navi','erase','copy']; ids.forEach(k=>{ const d=$('#'+k); d.hidden=true; d.classList.remove('wz-res','wz-cmp'); });
+  const opt=(v,l,on)=>`<option value="${esc(v)}"${on?' selected':''}>${esc(l)}</option>`;
+  if(!WZ.mode){
+    const M=[['make','devi','好きなデビを作る','欲しい特性をそろえて、レベル5⁠/⁠5まで育てたい'],['erase','pod','ハズレを消す','いらない特性が付いちゃった子を直したい'],['copy','chest','特性をコピーする','同じ特性の子をふやしたい']];
+    el.innerHTML=`<div class="calc-head"><p class="eyebrow">FUSION NAVI</p><h2>つくり方ナビ</h2><p>質問に答えていくと、融合の手順が出るよ。</p></div>
+     <div class="card wz-card"><p class="wz-q">何がしたい？</p><div class="wz-big">${M.map(([k,ic,t,d])=>`<button type="button" class="wz-choice" data-wzmode="${k}">${NVPX[ic]||''}<span><b>${t}</b><small>${d}</small></span></button>`).join('')}</div></div>`;
+    return;
+  }
+  const steps=WZSTEPS[WZ.mode], step=steps[Math.min(WZ.step,steps.length-1)], n=Math.min(WZ.step,steps.length-1);
+  const dots=`<div class="wz-dots">${steps.map((x,i)=>`<i class="${i<n?'done':i===n?'on':''}"></i>`).join('')}</div>`;
+  const head=`<div class="wz-top"><button type="button" class="wz-back" data-wzback>← もどる</button><span class="wz-mode">${WZT[WZ.mode]}</span>${dots}</div>`;
+  let body='', next=true, nextLab='つぎへ';
+  const M=WZ.mode;
+  if(step==='sp'){
+    const cur=M==='make'?NV.sp:M==='erase'?ER.sp:CP.sp;
+    body=`<p class="wz-q">どのデビ？</p>${wzSpSel(cur,'data-wzsp')}`;
+  }
+  else if(step==='gold'){
+    const S=NV.sp, D=DEV[S];
+    const sel=g=>`<select class="wz-sel" data-wzv="nv:${g}">${opt('','いらない',!NV[g])}${nvList(g,S).map(x=>opt(x.id,x.n+(x.sk?'（色違い）':''),x.id===NV[g])).join('')}</select>`;
+    const MUS=nvMuts();
+    body=`<p class="wz-q">どの特性を付けたい？</p><p class="wz-help">いらない枠は「いらない」のままでOK。</p>
+     <label class="wz-l"><span>共通の金特性</span>${sel('c')}</label>
+     <label class="wz-l"><span>${TYPEN[D.t]}の金特性</span>${sel('r')}</label>
+     <label class="wz-l"><span>動物・家具の特性</span><select class="wz-sel" data-wzv="nv:m">${opt('','いらない',!NV.m)}${MUS.map(it=>opt(it.k,`${trShort(TR[it.trait])}（${itemShort(it)}）`,it.k===NV.m)).join('')}</select></label>`;
+    next=!!(NV.c||NV.r||NV.m);
+    if(!next) body+=`<p class="wz-warn">1つ以上えらんでね。</p>`;
+  }
+  else if(step==='have'&&M==='make'){
+    const rows=[['c','hc','hc1'],['r','hr','hr1']].filter(([g])=>NV[g]), spn=esc(DEV[NV.sp].n), two=NV.c&&NV.r;
+    body=`<p class="wz-q">その特性を持ってる子は何体いる？</p><p class="wz-help">融合回数が0の子も数えてね（材料に使えるよ）。</p>`+
+      (rows.length?rows.map(([g,h,h1])=>`<div class="wz-row"><b>${esc(trShort(TR[NV[g]]))}${two?'だけ':''}の${spn}</b>${wzNum('nv:'+h,NV[h],4)}${NV[h]>0?`<p class="wz-sub">そのうち、融合回数が残ってるのは？</p>${wzNum('nv:'+h1,Math.min(NV[h1],NV[h]),Math.min(4,NV[h]))}`:''}</div>`).join('')+(two?`<div class="wz-row"><b>${esc(trShort(TR[NV.c]))}と${esc(trShort(TR[NV.r]))}を2つとも持ってる${spn}</b>${wzNum('nv:hxy',NV.hxy||0,4)}${NV.hxy>0?`<p class="wz-sub">そのうち、融合回数が残ってるのは？</p>${wzNum('nv:hxy1',Math.min(NV.hxy1||0,NV.hxy),Math.min(4,NV.hxy))}`:''}</div>`:''):`<p class="wz-help">金特性はえらんでないから、ここはとばしてOK。</p>`);
+  }
+  else if(step==='lv'){
+    body=`<p class="wz-q">特性なしで「異能5・活性5」の${esc(DEV[NV.sp].n)}を持ってる？</p><p class="wz-help">持ってると、最後の仕上げが早くなるよ。</p>
+     <div class="wz-big two"><button type="button" class="wz-choice${NV.pdg===5&&NV.pbl===5?' on':''}" data-wz55="1"><span><b>持ってる</b></span></button><button type="button" class="wz-choice${NV.pdg===5&&NV.pbl===5?'':' on'}" data-wz55="0"><span><b>持ってない・わからない</b></span></button></div>`;
+    nextLab='手順を出す';
+  }
+  else if(step==='tr'&&M==='erase'){
+    const S=ER.sp, D=DEV[S];
+    const L=g=>erList(g,S), grp=g=>g==='m'?[['動物・家具',L(g)]]:[['良い特性',L(g).filter(x=>!x.sk&&x.q===3)],['ふつうの特性',L(g).filter(x=>!x.sk&&x.q===2)],['ハズレ特性',L(g).filter(x=>!x.sk&&x.q===1)],['色違い',L(g).filter(x=>x.sk)]];
+    const sel=g=>`<select class="wz-sel" data-wzv="er:${g}">${opt('','なし',!ER[g])}${grp(g).filter(([,a])=>a.length).map(([l,a])=>`<optgroup label="${l}">${a.map(x=>opt(x.id,x.n,x.id===ER[g])).join('')}</optgroup>`).join('')}</select>`;
+    const kd=g=>ER[g]?`<div class="wz-kd"><button type="button" class="wz-num${ER['k'+g]?' on':''}" data-wzk="${g}" data-v="1">残す</button><button type="button" class="wz-num bad${ER['k'+g]?'':' on'}" data-wzk="${g}" data-v="0">消す</button></div>`:'';
+    body=`<p class="wz-q">その子に付いてる特性は？</p><p class="wz-help">付いてる特性をえらんで、消したいものは「消す」にしてね。</p>
+     ${[['c','共通の枠'],['r',TYPEN[D.t]+'の枠'],['m','変異の枠']].map(([g,l])=>`<label class="wz-l"><span>${l}</span>${sel(g)}</label>${kd(g)}`).join('')}`;
+    next=['c','r','m'].some(g=>ER[g]&&!ER['k'+g]);
+    if(!next) body+=`<p class="wz-warn">消したい特性を1つ以上「消す」にしてね。</p>`;
+  }
+  else if(step==='have'&&M==='erase'){
+    const nm=g=>esc(trShort(TR[ER[g]]));
+    body=`<p class="wz-q">手持ちを教えてね</p>
+     <div class="wz-row"><b>この子の融合回数は残ってる？</b><div class="wz-nums"><button type="button" class="wz-num${ER.cnt?' on':''}" data-wzn="er:cnt" data-v="1">残ってる</button><button type="button" class="wz-num${ER.cnt?'':' on'}" data-wzn="er:cnt" data-v="0">0回</button></div></div>
+     <div class="wz-row"><b>同じ特性セットの子（回数あり）はいる？</b><div class="wz-nums"><button type="button" class="wz-num${ER.cp?'':' on'}" data-wzn="er:cp" data-v="0">いない</button><button type="button" class="wz-num${ER.cp?' on':''}" data-wzn="er:cp" data-v="1">いる</button></div></div>
+     ${ER.c&&ER.kc?`<div class="wz-row"><b>${nm('c')}だけを持つ子は？</b>${wzNum('er:hc',ER.hc,2)}</div>`:''}
+     ${ER.r&&ER.kr?`<div class="wz-row"><b>${nm('r')}だけを持つ子は？</b>${wzNum('er:hr',ER.hr,2)}</div>`:''}`;
+    nextLab='消し方を出す';
+  }
+  else if(step==='tr'&&M==='copy'){
+    const S=CP.sp, D=DEV[S];
+    const all=[['c','共通'],['r',TYPEN[D.t]],['m','変異']].map(([g,l])=>[g,l,erList(g,S).filter(x=>x.cf!==0)]);
+    body=`<p class="wz-q">どの特性をふやしたい？</p><select class="wz-sel" data-wzcp>${opt('','えらんでね',!CP.t)}${all.map(([g,l,a])=>a.length?`<optgroup label="${l}の枠">${a.map(x=>opt(g+':'+x.id,x.n+(x.sk?'（色違い）':''),CP.g===g&&CP.t===x.id)).join('')}</optgroup>`:'').join('')}</select>`;
+    next=!!CP.t;
+  }
+  else if(step==='have'&&M==='copy'){
+    if(CP.g==='m'){ body=`<p class="wz-q">${esc(trShort(TR[CP.t]))}は動物・家具から付けるよ</p><p class="wz-help">${erItem(CP.t)?esc(itemShort(ITEM[erItem(CP.t)]))+'を材料にするから、持ってる数はいらないよ。':''}</p>`; }
+    else body=`<p class="wz-q">${esc(trShort(TR[CP.t]))}を持ってる子は何体いる？</p>
+      <div class="wz-row"><b>融合回数が残ってる子</b>${wzNum('cp:h1',CP.h1,3)}</div>
+      <div class="wz-row"><b>融合回数0の子</b>${wzNum('cp:h0',CP.h0,3)}</div>`;
+    next=CP.g==='m'||CP.h1+CP.h0>0; nextLab='コピーの仕方を出す';
+    if(!next) body+=`<p class="wz-warn">1体もいないとコピーできないよ。まず野生でつかまえてね。</p>`;
+  }
+  if(step==='res'){
+    el.innerHTML=`${head}<div class="wz-resbar"><button type="button" class="wz-mini" data-wzredo>✎ 答えをなおす</button><button type="button" class="wz-mini" data-wzreset>↺ 最初から</button>${M==='make'?`<button type="button" class="wz-mini" data-wzcmp>${WZ.cmp?'くらべるをとじる':'ほかの作り方'}</button>`:''}</div>`;
+    const tgt=$('#'+(M==='make'?'navi':M)); tgt.hidden=false; tgt.classList.add('wz-res'); if(WZ.cmp) tgt.classList.add('wz-cmp');
+    if(M==='make'){ renderNavi(true); const P=nvPlan(); if(P&&NVSIM.k!==nvKey(P).k&&!(NVJOB&&NVJOB.k===nvKey(P).k)) nvStart(); }
+    else if(M==='erase'){ ERGO=erKey(); renderErase(false); }
+    else { CPGO=cpKey(); renderCopy(false); }
+    return;
+  }
+  el.innerHTML=`${head}<div class="card wz-card">${body}<div class="wz-foot"><button type="button" class="btn" data-wznext${next?'':' disabled'}>${nextLab}</button></div></div>`;
+}
+const wzStill=()=>{ const c=$('#wz .wz-card'); if(c) c.style.animation='none'; };
+document.addEventListener('click',e=>{
+  const t=e.target.closest&&e.target.closest('[data-wzmode],[data-wzback],[data-wznext],[data-wzn],[data-wzk],[data-wz55],[data-wzredo],[data-wzreset],[data-wzcmp]'); if(!t) return;
+  const d=t.dataset, steps=WZ.mode?WZSTEPS[WZ.mode]:[];
+  if(d.wzmode!=null){ WZ.mode=d.wzmode; WZ.step=0; }
+  else if(d.wzback!=null){ if(WZ.step>0) WZ.step--; else WZ.mode=''; }
+  else if(d.wznext!=null){ if(t.disabled) return; WZ.step=Math.min(steps.length-1,WZ.step+1); if(WZ.mode==='make'&&steps[WZ.step]==='have'&&!NV.c&&!NV.r) WZ.step++; }
+  else if(d.wzredo!=null){ WZ.step=Math.max(0,steps.length-2); }
+  else if(d.wzreset!=null){ WZ.mode=''; WZ.step=0; }
+  else if(d.wzcmp!=null){ WZ.cmp=WZ.cmp?0:1; wzSave(); const m=$('#navi'); if(m) m.classList.toggle('wz-cmp',!!WZ.cmp); t.textContent=WZ.cmp?'くらべるをとじる':'ほかの作り方'; wzJump(); return; }
+  else{
+    if(d.wzn!=null){ const [o,k]=d.wzn.split(':'), v=+d.v, O=o==='nv'?NV:o==='er'?ER:CP; O[k]=v; if(o==='nv'&&(k==='hc'||k==='hr'||k==='hxy')) O[k+'1']=v; }
+    if(d.wzk!=null){ ER['k'+d.wzk]=+d.v; }
+    if(d.wz55!=null){ const v=d.wz55==='1'?5:3; NV.pdg=v; NV.pbl=v; }
+    nvSave(); erSave(); cpSave(); wzSave(); renderWz(); wzStill(); return;
+  }
+  nvSave(); erSave(); cpSave(); wzSave(); renderWz(); window.scrollTo({top:0});
+});
+document.addEventListener('change',e=>{
+  const x=e.target; if(!x.closest||!x.closest('#wz')) return; const d=x.dataset;
+  if(d.wzsp!=null){ const M=WZ.mode; if(M==='make'){ NV.sp=x.value; NV.c=NV.r=''; } else if(M==='erase'){ ER.sp=x.value; ER.c=ER.r=ER.m=''; } else { CP.sp=x.value; CP.t=''; } }
+  else if(d.wzv){ const [o,g]=d.wzv.split(':'); if(o==='nv') NV[g]=x.value; else { ER[g]=x.value; if(x.value) ER['k'+g]=TR[x.value].q===1?0:1; } }
+  else if(d.wzcp!=null){ const [g,t]=x.value.split(':'); CP.g=g||'r'; CP.t=t||''; }
+  nvSave(); erSave(); cpSave(); renderWz(); wzStill();
+});
+
+
+try{ if(!document.documentElement.lang) document.documentElement.lang="ja"; }catch(e){}
+function wzJump(){
+  const M=WZ.mode; if(!M) return; const tgt=$('#'+(M==='make'?'navi':M)); if(!tgt||!tgt.classList.contains('wz-res')) return;
+  const old=tgt.querySelector(':scope > .wz-jump'); if(old) old.remove();
+  const items=[];
+  if(M==='make'){
+    const sum=tgt.querySelector('.nv-sum'); if(sum) items.push([sum,'目安']);
+    tgt.querySelectorAll('.nv-step').forEach(c=>{ if(c.closest('.nv-cmp')&&!WZ.cmp) return; const n=c.querySelector('.nv-no'); items.push([c,n?n.textContent.replace(/[^0-9]/g,''):/おまけ/.test(c.textContent.slice(0,30))?'おまけ':'準備']); });
+  } else tgt.querySelectorAll('.er-opt').forEach((c,i)=>items.push([c,'組み方'+(i+1)]));
+  if(items.length<2) return;
+  const bar=document.createElement('div'); bar.className='wz-jump';
+  bar.innerHTML=`<span>${M==='make'?'STEP':'とぶ'}</span>`+items.map(([,l],i)=>`<button type="button" data-wzj="${i}">${esc(l)}</button>`).join('');
+  const top=$('.top'); const th=top&&getComputedStyle(top).position==='sticky'?top.getBoundingClientRect().height:0;
+  bar.style.top=th+'px'; tgt.style.setProperty('--wzjt',(th+60)+'px');
+  bar.addEventListener('click',e=>{ const b=e.target.closest('[data-wzj]'); if(!b) return; const it=items[+b.dataset.wzj]; if(it){ if(it[0].tagName==='DETAILS') it[0].open=true; it[0].scrollIntoView({behavior:'smooth',block:'start'}); } });
+  tgt.prepend(bar); WZJ={items,bar};
+}
+let WZJ=null;
+window.addEventListener('scroll',()=>{ if(!WZJ||!WZJ.bar.isConnected) return; const lim=WZJ.bar.getBoundingClientRect().bottom+20; let k=0; WZJ.items.forEach(([el],i)=>{ if(el.getBoundingClientRect().top<=lim) k=i; }); WZJ.bar.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('on',i===k)); },{passive:true});
+{ const _rn=renderNavi, _re=renderErase, _rc=renderCopy;
+  renderNavi=function(...a){ const r=_rn.apply(this,a); wzJump(); return r; };
+  renderErase=function(...a){ const r=_re.apply(this,a); wzJump(); return r; };
+  renderCopy=function(...a){ const r=_rc.apply(this,a); wzJump(); return r; }; }
+
 const VIEWS=['home','lesson','calc','navi','dex','quiz','words'];
 function route(){
   let v=location.hash.slice(1); if(v==='erase'||v==='copy'){ NVM=v; st.nvm=v; save(); v='navi'; } if(!VIEWS.includes(v)) v='home';
@@ -3156,7 +3351,7 @@ function route(){
   $$('.tabs a[data-v]').forEach(a=>{if(a.dataset.v===v) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');});
   if(v==='lesson') renderLesson(false);
   if(v==='calc') renderCalc();
-  if(v==='navi') renderModes();
+  if(v==='navi') renderWz();
   if(v==='dex') renderDex();
   if(v==='quiz') renderQuiz();
   if(v==='words') renderWords();
