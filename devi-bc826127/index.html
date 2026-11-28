@@ -116,7 +116,7 @@ main{padding-block:24px 48px}
 .les h2{font-size:clamp(22px,3.4vw,30px);margin-block:4px 14px}
 .les .body{display:flex;flex-direction:column;gap:16px;max-width:42em}
 .les .body > p{font-size:16.5px}
-.les .foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:28px;padding-top:18px;border-top:2.5px dashed var(--line)}
+.les .foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:28px;padding-top:18px;border-top:2.5px solid var(--line)}
 .les h3{font-size:17px;margin-top:6px}
 
 /* MODカードの見本 */
@@ -144,10 +144,10 @@ details.dex summary::after{content:"＋";font-family:var(--f-dot)}
 details.dex[open] summary::after{content:"－"}
 details.dex summary::-webkit-details-marker{display:none}
 .dexlist{padding:0 14px 12px;display:flex;flex-direction:column;gap:6px}
-.dexrow{display:grid;grid-template-columns:minmax(0,11em) minmax(0,1fr);gap:4px 12px;font-size:14px;padding-top:6px;border-top:1.5px dashed var(--muted)}
+.dexrow{display:grid;grid-template-columns:minmax(0,11em) minmax(0,1fr);gap:4px 12px;font-size:14px;padding-top:6px;border-top:1.5px solid var(--muted)}
 .dexrow b{font-weight:800}
 .dexrow span{color:var(--ink-2)}
-.kwgroup{padding-top:6px;border-top:1.5px dashed var(--muted);font-size:14px}
+.kwgroup{padding-top:6px;border-top:1.5px solid var(--muted);font-size:14px}
 .kwgroup b{display:inline-block;margin-right:6px}
 
 .types{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
@@ -189,7 +189,7 @@ details.dex summary::-webkit-details-marker{display:none}
 
 .xtab{width:100%;border-collapse:collapse;font-size:16px;min-width:520px}
 .xtab td:first-child{font-weight:700}
-.xtab th,.xtab td{color:var(--ink);border-bottom:1.5px dashed var(--muted);padding:10px 8px;text-align:left;vertical-align:top}
+.xtab th,.xtab td{color:var(--ink);border-bottom:1.5px solid var(--muted);padding:10px 8px;text-align:left;vertical-align:top}
 .xtab th{font-weight:700;color:var(--ink-2);font-size:14px}
 .scroll{overflow-x:auto}
 
@@ -431,7 +431,7 @@ main,footer.site,.ticker{position:relative;z-index:1}
 .pc-child .pcc-t{display:flex;flex-direction:column;min-width:0;flex:1}
 .pc-child small{font-size:12px;font-weight:700}
 .pc-child b{font-size:17px;line-height:1.35}
-.pc-child .pcc-g{display:flex;flex-direction:column;align-items:flex-end;padding-left:12px;border-left:2px dashed var(--line)}
+.pc-child .pcc-g{display:flex;flex-direction:column;align-items:flex-end;padding-left:12px;border-left:2px solid var(--line)}
 .pc-child .pcc-g b{font-family:var(--f-dot);font-weight:400;font-size:22px}
 /* 結果 */
 .frow{display:grid;grid-template-columns:3.4em minmax(0,1fr);gap:8px;align-items:center}
@@ -463,7 +463,7 @@ main,footer.site,.ticker{position:relative;z-index:1}
 .trow.none .nm{color:var(--muted);font-weight:700}
 .star{width:32px;height:32px;border:2px solid var(--line);border-radius:8px;background:var(--surface);font-size:15px;line-height:1;padding:0;color:var(--muted)}
 .star[aria-pressed="true"]{background:var(--lemon);color:var(--on-pop);box-shadow:2px 2px 0 var(--sh)}
-.why{font-size:12.5px;color:var(--ink-2);line-height:1.7;border-top:1.5px dashed var(--muted);padding-top:6px;font-variant-numeric:tabular-nums}
+.why{font-size:12.5px;color:var(--ink-2);line-height:1.7;border-top:1.5px solid var(--muted);padding-top:6px;font-variant-numeric:tabular-nums}
 .goal{padding:10px 12px;border:2.5px solid var(--line);border-radius:12px;background:var(--lilac);color:var(--on-pop);font-size:14px;display:flex;flex-direction:column;gap:2px}
 .goal .gv{font-family:var(--f-dot);font-size:28px;line-height:1.2}
 .goal.off{background:var(--field);color:var(--ink-2)}
@@ -476,7 +476,7 @@ html.ed-open{overflow:hidden}
 .ed .edbox b{font-family:inherit;font-weight:800;font-size:inherit}
 .ed .edbox header b{font-family:var(--f-pop);font-weight:400;font-size:19px}
 .edbody{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:18px;padding:2px 4px 8px 2px}
-.edfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:2px dashed var(--line);padding-top:10px}
+.edfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:2px solid var(--line);padding-top:10px}
 .edfoot .mini{font-weight:700}
 .ed-sec{display:flex;flex-direction:column;gap:8px}
 .ed-sec > h4{margin:0;display:flex;align-items:center;gap:8px;font-size:16px;flex-wrap:wrap}
@@ -951,7 +951,7 @@ details.nv-step summary{cursor:pointer;font-size:16px}
 </style>
 <header class="top gut">
   <div class="wrap">
-    <a class="brand" href="#home"><span class="cas pod-ic" aria-hidden="true"></span><span><b>デビ融合講座</b><small>ONCE HUMAN · 初級から上級まで</small></span></a>
+    <a class="brand" href="#home"><span class="cas pod-ic" aria-hidden="true"></span><span><b>デビ融合講座</b><small>ONCE HUMAN · 融合の基本</small></span></a>
     <nav class="tabs" aria-label="ページ">
       <a href="#home" data-v="home">はじめに</a>
       <a href="#lesson" data-v="lesson">レッスン</a>
@@ -974,36 +974,36 @@ details.nv-step summary{cursor:pointer;font-size:16px}
       <div>
         <p class="eyebrow">ONCE HUMAN FUSION GUIDE</p>
         <h1>デビ融合、<em>どう組めばいいの？</em></h1>
-        <p class="lead">ワンスヒューマンのデビエーション融合を、初級・中級・上級の3つのレベルでまとめた講座だよ。読んで、けいさん機で確かめて、最後はクイズで力だめし。</p>
+        <p class="lead">ワンスヒューマンのデビエーション融合の、基本の知識をまとめた講座だよ。読んで、けいさん機やつくり方ナビで試して、最後はクイズで力だめし。</p>
         <div class="acts">
-          <a class="btn pink" href="#lesson" id="startBtn">初級からはじめる</a>
+          <a class="btn pink" href="#lesson" id="startBtn">レッスンをはじめる</a>
           <a class="btn sub" href="#calc">けいさん機をつかう</a>
         </div>
-        <div class="prog"><span id="progTxt">初級 0/6</span><span class="bar"><i id="progBar"></i></span></div>
+        <div class="prog"><span id="progTxt">基本 0/8</span><span class="bar"><i id="progBar"></i></span></div>
       </div>
       <div class="card pod">
         <p class="lab">融合ポッドに入れるもの（押すと説明へ）</p>
         <div class="pod-grid">
           <button class="slot" data-go="b2" data-ic="DEVI"><b>親（主素材）</b><span>消えない・融合回数が1へる</span></button>
           <div class="pod-core" aria-hidden="true"><b>融合</b></div>
-          <button class="slot" data-go="b5" data-ic="DEVI"><b>親（主素材）</b><span>同じ特性なら100%</span></button>
+          <button class="slot" data-go="b2" data-ic="DEVI"><b>親（主素材）</b><span>2体えらぶ</span></button>
           <div class="pod-mats">
-            <button class="slot" data-go="b3" data-ic="MAT"><b>材料</b><span>同じ種類で出やすく</span></button>
-            <button class="slot" data-go="m1" data-ic="BLANK"><b>材料</b><span>無特性で残りやすく</span></button>
-            <button class="slot" data-go="m5" data-ic="FLASK"><b>材料</b><span>動物・家具・誘発剤</span></button>
+            <button class="slot" data-go="b4" data-ic="MAT"><b>材料</b><span>同じ種類で出やすく</span></button>
+            <button class="slot" data-go="b2" data-ic="BLANK"><b>材料</b><span>始めたら消える</span></button>
+            <button class="slot" data-go="b7" data-ic="FLASK"><b>材料</b><span>動物・家具・誘発剤</span></button>
           </div>
           <p class="pod-arrow" aria-hidden="true">▼ ▼ ▼</p>
-          <button class="slot w" data-go="b3" data-ic="EGG"><b>生まれるデビ</b><span>種類・特性・異能・活性が決まる</span></button>
+          <button class="slot w" data-go="b3" data-ic="EGG"><b>生まれるデビ</b><span>確率は融合画面で見られる</span></button>
         </div>
       </div>
     </div>
 
     <div class="paths">
-      <a class="card path" href="#lesson"><span class="eyebrow"><span>LESSON</span><span>初級・中級・上級</span></span><h3>3つのレベルのレッスン</h3><p>初級で融合のルール、中級で特性のコピーとハズレ消し、上級で100%ルートと誘発剤まで。</p></a>
+      <a class="card path" href="#lesson"><span class="eyebrow"><span>LESSON</span><span>基本</span></span><h3>基本のレッスン</h3><p>デビのタイプ、融合ポッドの使い方、特性の枠、色違い、動物・家具の特性まで。</p></a>
       <a class="card path" href="#calc"><span class="eyebrow"><span>CALC</span><span>本物の名前で</span></span><h3>融合けいさん機</h3><p>「やりたいこと」を選んで、カードを押して親と材料を変えるだけ。生まれるデビと特性の確率が図で出るよ。</p></a>
       <a class="card path" href="#navi"><span class="eyebrow"><span>NAVI</span><span>お試し版</span></span><h3>つくり方ナビ</h3><p>作りたいデビと金色の特性をえらぶと、5/5まで作る手順と、だいたいの回数が出るよ。</p></a>
       <a class="card path" href="#dex"><span class="eyebrow"><span>TRAITS</span><span id="dcount">—</span></span><h3>特性図鑑</h3><p>共通・戦闘・領地・創作物・変異・色違い。特性の効果を名前や言葉で探せるよ。</p></a>
-      <a class="card path" href="#quiz"><span class="eyebrow"><span>QUIZ</span><span>3レベル・毎回12問</span></span><h3>2択クイズ</h3><p>たくさんの問題から毎回12問がランダムに出るよ。答えると解説で答え合わせ。</p></a>
+      <a class="card path" href="#quiz"><span class="eyebrow"><span>QUIZ</span><span>毎回12問</span></span><h3>2択クイズ</h3><p>たくさんの問題から毎回12問がランダムに出るよ。答えると解説で答え合わせ。</p></a>
       
     </div>
   </section>
@@ -1150,6 +1150,8 @@ details.nv-step summary{cursor:pointer;font-size:16px}
 .wz-jump button{flex:none;min-width:34px;height:30px;padding:0 10px;border:2px solid var(--line);border-radius:999px;background:var(--surface);font:inherit;font-weight:800;font-size:13px;color:var(--ink);cursor:pointer}
 .wz-jump button.on{background:var(--lemon);color:var(--on-pop)}
 .wz-res .nv-step,.wz-res .nv-sum,.wz-res .er-opt,.wz-res details.card{scroll-margin-top:var(--wzjt,140px)}
+
+.lvtabs:has(>button:only-child){display:none}
 </style>
 <script>
 (()=>{const K='devi-intro-v1', d=document.getElementById('intro'); if(!d) return;
@@ -1171,7 +1173,7 @@ details.nv-step summary{cursor:pointer;font-size:16px}
     e.style.fontSize=(18+(i*7)%26)+'px';e.style.animationDelay=(-i*0.8)+'s';e.style.animationDuration=(7+i%5)+'s';fx.appendChild(e)});
   const top=document.querySelector('.top');
   if(top){const tk=document.createElement('div');tk.className='ticker';tk.setAttribute('aria-hidden','true');
-    const s='★ デビ融合講座 ✦ 欲しい特性は両方の親に ✦ 無特性3体で80% ♪ 材料は戻ってこないよ ✿ 親は2体とも高レベルに ◆ 色違いも特性だよ ';
+    const s='★ デビ融合講座 ✦ 融合は5分 ✦ 親は残るよ ♪ 材料は戻ってこないよ ✿ 確率は融合画面でチェック ◆ 色違いも特性だよ ';
     tk.innerHTML='<div>'+s.repeat(6)+'</div>';top.after(tk)}
   // ドット絵アイコン
   const P={DEVI:['..####..','.######.','##.##.##','########','########','########','#.#..#.#','........'],
@@ -1683,10 +1685,144 @@ function PRACTICE(tip,preset){return `
   <ol><li>上の「けいさん機」を開く</li><li>親2体と材料を選ぶ（プリセットもあるよ）</li><li>${tip}</li></ol>
   <button class="btn" data-preset="${preset}">けいさん機を開く →</button>
  </div>`;}
+/* ===== 基本だけのレッスン ===== */
+const BASIC=[
+{t:'デビってなに？',h:()=>`
+ <p>デビエーション（略して${T('デビエーション','デビ')}）は、収容して一緒に戦ったり、領地で働いたりしてくれる不思議な生き物だよ。</p>
+ <h3>デビは3つのタイプ</h3>
+ <div class="roles">
+  <div class="role"><span class="role-top"><span class="role-ic" style="background:#ff9fbd">${pix('SWORD')}</span><span class="chip c-atk">戦闘</span></span><b>一緒に戦う</b><p>連れて歩くと戦ってくれて、特性でプレイヤーも強くなる。例：蝶の使者、ささやくローンウルフ</p></div>
+  <div class="role"><span class="role-top"><span class="role-ic" style="background:#9be8d4">${pix('PICK')}</span><span class="chip c-psi">領地</span></span><b>資源を集めてくる</b><p>領地で働いて、鉱石などを持ち帰ってくる。例：異次元の大猫、デンキウナギ</p></div>
+  <div class="role"><span class="role-top"><span class="role-ic" style="background:#c9b3ff">${pix('GEAR')}</span><span class="chip c-def">創作物</span></span><b>資源を作る</b><p>領地に置いておくと、少しずつ資源を作ってくれる。例：栄枯の種、スペースキューブ</p></div>
+ </div>
+ <h3>1体ずつちがうところ</h3>
+ ${DEVCARD()}
+ <div class="parts">
+  <div class="part"><span class="k">① 枠に付いている効果</span><b>${T('特性')}</b><p>おまけの効果。良いものもハズレもある。</p></div>
+  <div class="part"><span class="k">② 強さ</span><b>${T('異能レベル')}</b><p>1〜5。高いほど強い。</p></div>
+  <div class="part"><span class="k">③ 回復の速さ</span><b>${T('活性レベル')}</b><p>1〜5。エネルギーなどの回復が速くなる。</p></div>
+ </div>
+ <p>同じ種類のデビでも、特性とレベルは1体ずつちがう。<b>融合</b>は、この特性とレベルを自分好みにそろえるための仕組みだよ。</p>
+ <div class="note"><b>ポイント</b>　よく「${T('5/5')}」と言うのは、異能5・活性5のこと。いちばん強い状態だよ。</div>`},
+{t:'融合ってなに？',h:()=>`
+ <p>融合は、デビ2体を<b>親</b>にして、新しいデビを1体生み出す仕組みだよ。</p>
+ ${flow('親は残って、材料は消える。生まれた子は、次の融合の親にもなれるよ。',
+   tok({k:'p',tag:'親A',nm:'デビ',note:'残る（融合回数−1）'}),OP('＋'),
+   tok({k:'p',tag:'親B',nm:'デビ',note:'残る（融合回数−1）'}),OP('＋'),
+   tok({k:'m',tag:'材料',nm:'最大3種類',stamp:'消える',gone:1}),OP('→'),
+   POD('融合','5分'),OP('→'),
+   tok({k:'child',tag:'子',nm:'新しいデビ',note:'融合回数1'}))}
+ <h3>まずは融合ポッドを建てる</h3>
+ <ul>
+  <li>${T('融合ポッド')}は、テックで建てられる。領地に<b>1台だけ</b>。</li>
+  <li>使えるのは領地の持ち主だけ。エターナランドとレイドゾーンでは使えない。</li>
+ </ul>
+ <h3>入れるもの</h3>
+ <div class="parts">
+  <div class="part"><span class="k">${T('主素材')}</span><b>親 2体</b><p>融合しても<b>消えない</b>。そのかわり、残りの${T('融合回数')}が1へる（ほとんどのデビは1回だけ）。</p></div>
+  <div class="part"><span class="k">${T('融合材料')}</span><b>最大3種類</b><p>デビ・動物・家具・誘発剤など。<b>始めた瞬間に消える</b>。中止しても戻ってこない。</p></div>
+  <div class="part"><span class="k">時間</span><b>5分</b><p>どのデビでも5分（2026年4月のアップデートから）。</p></div>
+ </div>
+ <h3>親にできないデビ</h3>
+ <ul>
+  <li>融合回数が0のデビ（<b>材料にはできる</b>）</li>
+  <li>${T('混沌デビ')}、イベント限定のデビ（犬3種・カマイタチ・ツッパニャン・モモチョ・ピエロ・ガーディアンなど）</li>
+  <li>キャラに連携しているデビ</li>
+ </ul>
+ <div class="note"><b>ポイント</b>　融合で生まれた子も、残りの融合回数は1。だから子を次の親にして、融合をつなげていけるよ。</div>`},
+{t:'融合画面の見方',h:()=>`
+ <p>融合ポッドに親と材料を入れると、<b>生まれる子の種類と特性の確率（%）</b>が画面に出るよ。</p>
+ <ul>
+  <li>入れるものを変えると、%も変わる。</li>
+  <li>材料は融合を始めた瞬間に消えるので、始める前に%をよく確かめよう。</li>
+ </ul>
+ <div class="note"><b>このサイトについて</b>　確率がどう決まるか（融合のしくみ）は、まだ勉強中なのでレッスンにはのせていないよ。数字はゲームの融合画面がいちばん正確。けいさん機やつくり方ナビの数字は、目安として使ってね。</div>`},
+{t:'何のデビが生まれる？',h:()=>`
+ <p>生まれるデビの種類は、親と材料で決まるよ。</p>
+ <ul>
+  <li>親が2体とも同じ種類なら、その種類が生まれる（ほかの種類の誘発剤を入れないとき）。</li>
+  <li>親がちがう種類なら、どちらかの種類が生まれる。</li>
+  <li>材料に親と同じ種類のデビを入れたり、${T('種族変異誘発剤')}を入れたりすると、その種類が出やすくなる。</li>
+ </ul>
+ <div class="note"><b>ポイント</b>　どれくらい出やすいかは、融合画面の%で確かめてね。</div>`},
+{t:'特性と枠',h:()=>`
+ <p>${T('特性')}には「枠」があって、<b>1つの枠に1個まで</b>しか付かないよ。</p>
+ <div class="tslots">
+  <div class="tslot big c"><small>どのデビにも</small><b>${T('共通枠','共通の枠')}</b><p>例：予備エネルギー、ありふれるパワー、元気いっぱい</p></div>
+  <div class="tslot big r"><small>タイプ専用</small><b>${T('タイプ枠','タイプの枠')}</b><p>戦闘・領地・創作物それぞれ専用。例：神射手（戦闘）、縁の下の力持ち（領地）、死闘の前夜（創作物）</p></div>
+  <div class="tslot big m"><small>融合だけ</small><b>${T('変異枠','変異の枠')}</b><p>動物・家具を材料に入れると付く。例：ムーンレイド、ひらめき</p></div>
+ </div>
+ ${clash([['c','特性X（親A）'],['c','特性Y（親B）']],['c','共通の枠（1つだけ）','XかYのどちらか'],'同じ枠の特性どうしは取り合いになる')}
+ <p>生まれたデビのタイプと合わない<b>タイプの枠の特性は消える</b>。たとえば戦闘デビの子には、領地の特性は残らないよ。</p>
+ ${flow('戦闘デビが生まれたときは、領地の特性が消える',
+   tok({k:'p',tag:'親A',nm:'領地デビ',col:'#9be8d4',trs:[['r','縁の下の力持ち']]}),OP('＋'),
+   tok({k:'p',tag:'親B',nm:'戦闘デビ',trs:[['r','神射手']]}),OP('→'),
+   tok({k:'child',tag:'子（戦闘）',nm:'戦闘デビ',trs:[['r','神射手'],['n','縁の下の力持ち ✕']]}))}
+ <div class="note"><b>色違いも特性</b>　${T('色違い')}の見た目も特性あつかいで、枠を1つ使う。ほとんどは共通の枠だよ（くわしくは「色違いも特性」で）。</div>`},
+{t:'色違いも特性',h:()=>`
+ <p>${T('色違い')}の見た目は、<b>特性の1つ</b>としてあつかわれるよ。</p>
+ <ul>
+  <li>ほとんどの色違いは<b>共通の枠</b>を使う。だから同じ枠のふつうの特性と取り合いになる（例：願いのグリーン・ドラゴンとありふれるパワー2は、どちらか1つ）。</li>
+  <li>ムーンダイヤ（異次元の大猫）は領地の枠。禁断の島で増えた色違い7種（ブロークンガール - セーラー服など）や満月の賛歌 - 星月夜は、タイプの枠を使う。</li>
+  <li>生まれたデビが<b>同じ種類のときだけ</b>残る。ちがう種類が生まれたら消える。</li>
+ </ul>
+ ${flow('色違いは「見た目の特性」。ふつうの特性と同じように枠を1つ使う',
+   tok({k:'p',nm:'デンキウナギ',col:'#9be8d4',trs:[['n','ふつうの見た目']]}),
+   tok({k:'p',nm:'デンキウナギ',col:'#ffe27a',tag:'色違い',trs:[['c','金色の稲妻（共通の枠）']]}))}
+`},
+{t:'動物・家具・魚で付く特性',h:()=>`
+ <p>${T('変異枠','変異の枠')}の特性は、融合でしか手に入らない。動物や家具を材料に入れると付くよ。</p>
+ <ul>
+  <li>動物・家具は<b>1つで材料の枠を1つ</b>使う。</li>
+  <li>ちがう動物を一緒に入れると、変異の枠を取り合う（付くのはどちらか1つ）。</li>
+ </ul>
+ ${flow('動物を材料に入れると、変異の枠に特性が付く',
+   tok({k:'p',tag:'親A',nm:'デビ'}),OP('＋'),tok({k:'p',tag:'親B',nm:'デビ'}),OP('＋'),
+   tok({k:'i',tag:'材料',nm:'オオカミ'}),OP('→'),
+   tok({k:'child',tag:'子',trs:[['m','ムーンレイド']]}))}
+ ${clash([['m','ムーンレイド（オオカミ）'],['m','パワープレイ（クマ）']],['m','変異の枠（1つだけ）','付くのはどちらか1つ'],'ちがう動物を一緒に入れると、同じ変異の枠を取り合う')}
+ <p class="mini">動物の特性は、付いたデビが<b>戦闘か、領地・創作物か</b>で効果が変わるよ（戦闘デビは同期中に効く）。一部のデビは見た目も変わる。子どもの動物・ウサギ・キツネは材料にできないよ。</p>  <details class="dex"><summary>動物の特性（${ANIMALS.length}）</summary><div class="dexlist">${rowsHTML(ANIMALS)}</div></details>
+ <details class="dex"><summary>家具の特性（${FURNS.length}）</summary><div class="dexlist">${rowsHTML(FURNS)}<div class="kwgroup">ほかの家具（ソファ・本棚・絵など）は、効果のない見た目だけの特性になる。</div></div></details>
+ <h3>融合でしか出ない色違い</h3>
+ <p>決まったデビを材料に入れると、生まれた子に専用の見た目（色違い）が付く。</p>
+ <div class="scroll"><table class="xtab cards"><thead><tr><th>生まれるデビ</th><th>材料に入れるもの</th><th>色違い</th><th>効果</th></tr></thead><tbody>
+  <tr><td>黄衣の王（ミニ）</td><td>スペースキューブ</td><td>星喰い異形</td><td>エネルギー回復＋10%</td></tr>
+  <tr><td>ミスターウィッシュ</td><td>グリーン・ドラゴン</td><td>願いのグリーン・ドラゴン</td><td>エネルギー回復＋15%</td></tr>
+  <tr><td>冬の精</td><td>悪臭タマネギ</td><td>春の訪れ</td><td>活躍度上限＋35</td></tr>
+  <tr><td>ミニチュア特異点</td><td>炎の精霊</td><td>バーストメルト</td><td>活躍度上限＋35</td></tr>
+  <tr><td>宇宙飛行魚</td><td>魚（種類ごとに別の見た目）</td><td>○○宇宙飛行魚 - ピチピチ</td><td>2%でエサを持ち帰る</td></tr>
+  <tr><td>宇宙飛行魚</td><td>極寒クラゲ</td><td>極寒クラゲ飛行士</td><td>領地で酷暑耐性＋5</td></tr>
+  <tr><td>宇宙飛行魚</td><td>デンキウナギ</td><td>デンキウナギ宇宙飛行魚</td><td>光の好みが満たされる</td></tr>
+ </tbody></table></div>
+ <div class="note"><b>ポイント</b>　ミニチュア特異点は今は手に入りにくい（闇鍋収容箱か、異次元の収容のショップ）。</div>
+`},
+{t:'異次元の収容だけのこと',h:()=>`
+ <p>シナリオ「${T('異次元の収容')}」のサーバーは、融合のルールが少し多いよ。ほかのシナリオで遊ぶなら読み飛ばしてOK。</p>
+ <ul>
+  <li>特性は5種類。共通・タイプ・変異はどのシナリオでも効く。「異次元」（召喚したときの攻撃力・HPなどが上がる）と「混沌」は、このシナリオでだけ効く。</li>
+  <li>${T('技（スキル）')}は最大3つ。親2体が同じ技を持っていると100%残り続けるので、いらない技は早めに消そう。生まれる種類が覚えられない技は消えるので、欲しい技だけを移せる（例：ビッグ・アイの技をレッド・ドラゴンへ）。3つを超えると、その中からランダムで3つ。融合画面で100%の技は必ず残り、50%の技はランダム。3級の技は、野生で捕まえたデビからしか手に入らないと言われているよ。</li>
+  <li>無特性あつかいは「特性なし＋技なし」（必殺技は数えない）。釣った子は技を覚えていないので使いやすい（寒いエリアは極寒クラゲ、それ以外はデンキウナギ）。</li>
+  <li>${T('種族変異誘発剤')}：ボスを倒して勝利のバッジ → 4体のボスのショップで種コード（1日3つまで）→ 拠点で誘発剤にする（共生レベル8から）。誘発剤で生まれた子は特性も技もない＝無特性。レッド・ドラゴンはこのサーバーでは野生にいないので、この方法で作る。</li>
+  <li>${T('スキル変異誘発剤')}：1個で50%、2個で100%。</li>
+  <li>${T('混沌変異誘発剤')}：混沌ボス（カオスの試練、共生レベル9から）を5回倒すと1個ぶん。</li>
+  <li>グレード S/A/B は「${T('逆位エネルギーランク')}」。融合では引き継がれない。</li>
+  <li>融合結果の画面では異能・活性が見えないので、カバンで確認しよう。</li>
+ </ul>
+ <div class="note"><b>けいさん機について</b>　けいさん機は通常サーバーの計算だよ。異次元・技の枠は入っていない。</div>`}
+];
+const BASICFIN=()=>`
+ <h3>基本のまとめ</h3>
+ <ol class="rules">
+  <li><div>親2体＋材料（最大3種類）で、新しいデビが1体生まれる。親は残って、材料は消える。</div></li>
+  <li><div>確率（%）は融合画面に出る。始める前によく確かめよう。</div></li>
+  <li><div>特性は枠ごとに1個まで。タイプが合わない特性は消える。</div></li>
+  <li><div>色違いも特性。動物・家具を材料に入れると、変異の枠の特性が付く。</div></li>
+ </ol>
+ <div class="note"><b>このあとは</b>　融合のしくみ（確率の決まり方や、特性の残し方）は、まだ勉強中なのでのせていないよ。わかってきたら追加していくね。</div>`;
 /* ===== レッスンの進め方 ===== */
-const LV={b:{n:'初級',sub:'はじめての人',les:LES,fin:FINAL},m:{n:'中級',sub:'もっと上手に',les:MID,fin:MIDFIN},a:{n:'上級',sub:'完ぺきを目指す',les:ADV,fin:ADVFIN}};
+const LV={b:{n:'基本',sub:'まずはここから',les:BASIC,fin:BASICFIN}};
 if(!LV[st.lv]) st.lv='b';
-for(const k of ['b','m','a']){
+for(const k of Object.keys(LV)){
   const n=LV[k].les.length;
   st.dn[k]=st.dn[k].filter(x=>Number.isInteger(x)&&x>=1&&x<=n);
   if(!(Number.isInteger(st.sp[k])&&st.sp[k]>=1&&st.sp[k]<=n)) st.sp[k]=1;
@@ -2337,7 +2473,25 @@ const AQ=[
  qq('スキル変異誘発剤を2個入れると、技が付く確率は？','100%','50%','1個で50%、2個で100%。'),
  qq('異次元の収容で、融合で生まれた子の異能・活性を確かめるには？','カバンで見る','融合結果の画面で見る','融合結果の画面では異能・活性が見えないので、カバンで確認しよう。')
 ];
-const QB={b:QS,m:MQ,a:AQ};
+const QS2=[
+ qq('融合で親にしたデビは、融合のあとどうなる？','残る（融合回数が1へる）','消える','親（主素材）は消えないよ。そのかわり、残りの融合回数が1へる。'),
+ qq('材料に入れたデビは、融合を中止したら？','戻ってこない','戻ってくる','材料は融合を始めた瞬間に消える。中止しても戻らないので、入れる前によく確かめよう。'),
+ qq('融合ポッドは、領地にいくつ建てられる？','1台だけ','3台まで','融合ポッドは領地に1台だけ。テックで建てられるよ。'),
+ qq('融合ポッドを使えるのは？','領地の持ち主だけ','領地に来た人なら誰でも','融合ポッドを使えるのは領地の持ち主だけだよ。'),
+ qq('融合にかかる時間は？','5分','1時間','どのデビでも5分だよ。'),
+ qq('材料の枠はいくつ？','3つ','10こ','材料の枠は3つ。動物も1匹で1枠使うよ。'),
+ qq('融合回数が0になったデビは？','材料にはできる','何にも使えない','親にはできないけど、材料にはできるよ。'),
+ qq('「5/5」ってどういう意味？','異能5・活性5','融合回数が5回','異能レベル5・活性レベル5のこと。いちばん強い状態だよ。'),
+ qq('異能レベルは何を表している？','デビの強さ','回復の速さ','異能レベルは強さ。回復の速さは活性レベルだよ。'),
+ qq('活性レベルが高いと？','エネルギーなどの回復が速い','融合回数がふえる','活性レベルは回復の速さ。高いほど速く回復するよ。'),
+ qq('領地で働いて、鉱石などを持ち帰ってくるのはどのタイプ？','領地デビ','創作物デビ','領地デビは資源を集めてくる。創作物デビは領地に置くと資源を作ってくれるよ。'),
+ qq('1つの枠に付く特性はいくつまで？','1個','2個','共通・タイプ・変異の枠ごとに1個まで。同じ枠の特性どうしは取り合いになる。'),
+ qq('領地デビと戦闘デビで融合して、戦闘デビが生まれた。親の領地の特性は？','消える','残る','タイプの枠の特性は、生まれたデビのタイプと合わないと消えるよ。'),
+ qq('動物や家具を材料に入れると、特性が付く枠は？','変異の枠','共通の枠','動物・家具の特性は変異の枠。融合でしか手に入らない枠だよ。'),
+ qq('色違いの見た目は、融合ではどうあつかわれる？','特性の1つ','特性とは関係ない','色違いは特性あつかいで、枠を1つ使うよ。'),
+ qq('生まれる子の種類や特性の確率は、どこで見られる？','融合ポッドの画面','見る方法はない','親と材料を入れると、融合ポッドの画面に%が出るよ。始める前に確かめよう。')
+];
+const QB={b:QS2};
 let qz=null;
 const QN=12;
 const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
@@ -2400,10 +2554,10 @@ $('#sheetMore').addEventListener('click',e=>{
 
 /* ===== 進み具合・ページ切り替え ===== */
 function renderProg(){
-  const d=st.dn, all=LES.length+MID.length+ADV.length, done=d.b.length+d.m.length+d.a.length;
-  $('#progTxt').textContent=`初級 ${d.b.length}/${LES.length}・中級 ${d.m.length}/${MID.length}・上級 ${d.a.length}/${ADV.length}`+(st.qb.b!=null||st.qb.m!=null||st.qb.a!=null?`　クイズのベスト ${['b','m','a'].map(k=>LV[k].n+' '+(st.qb[k]??'-')).join('・')}`:'');
+  const d=st.dn, all=BASIC.length, done=d.b.length;
+  $('#progTxt').textContent=`基本 ${d.b.length}/${BASIC.length}`+(st.qb.b!=null?`　クイズのベスト ${st.qb.b}`:'');
   $('#progBar').style.width=(done/all*100)+'%';
-  $('#startBtn').textContent=done===0?'初級からはじめる':'つづきから';
+  $('#startBtn').textContent=done===0?'レッスンをはじめる':'つづきから';
 }
 /* ===== つくり方ナビ ===== */
 const NVD={sp:NEKO,c:'',r:'',m:'',hc:1,hr:1,hc1:1,hr1:1,hxy:0,hxy1:0,ex:[],rd:null,adv:0,sdg:3,sbl:3,pdg:5,pbl:5,route:''};
@@ -3360,7 +3514,7 @@ function route(){
   if(v==='home') renderProg();
   phrase($('#v-'+v)); window.scrollTo(0,0);
 }
-$('#startBtn').addEventListener('click',()=>{for(const k of ['b','m','a']){const L=LV[k].les.length, d=st.dn[k]; if(d.length<L){st.lv=k; for(let i=1;i<=L;i++){if(!d.includes(i)){st.sp[k]=i;break;}} break;}} save();});
+$('#startBtn').addEventListener('click',()=>{for(const k of Object.keys(LV)){const L=LV[k].les.length, d=st.dn[k]; if(d.length<L){st.lv=k; for(let i=1;i<=L;i++){if(!d.includes(i)){st.sp[k]=i;break;}} break;}} save();});
 addEventListener('hashchange',route);
 renderProg(); route();
 })();
