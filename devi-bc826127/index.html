@@ -39,6 +39,9 @@ h1,h2,h3{font-family:var(--f-pop);font-weight:400;text-wrap:balance;line-height:
 p{margin:0}
 .gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .wrap{max-width:1040px;margin:0 auto}
+@media (min-width:1300px){.wrap{max-width:1320px}.lesson{grid-template-columns:280px minmax(0,1fr)}#les .body{max-width:none}#les .body>p,#les .body>ul,#les .body>ol{max-width:56em}}
+@media (min-width:1000px){#wz .wz-big:not(.two){grid-template-columns:repeat(3,minmax(0,1fr))}#wz .wz-big:not(.two) .wz-choice{flex-direction:column;align-items:flex-start;padding:18px}}
+.nw{font-style:normal;white-space:nowrap}
 
 /* ===== ヘッダー ===== */
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:3px solid var(--line);box-shadow:0 4px 0 var(--band)}
@@ -296,7 +299,7 @@ main,footer.site,.ticker{position:relative;z-index:1}
 .les .body>*:nth-child(2){animation-delay:.04s}.les .body>*:nth-child(3){animation-delay:.08s}.les .body>*:nth-child(4){animation-delay:.12s}.les .body>*:nth-child(5){animation-delay:.16s}.les .body>*:nth-child(n+6){animation-delay:.2s}
 .les h3{display:flex;align-items:center;gap:8px}
 .les h3::before{content:"";width:10px;height:10px;background:var(--pink);border:2px solid var(--line);flex:none}
-.les h3::after{content:"";flex:1;border-top:2px dotted rgba(59,35,64,.3)}
+.les h3::after{content:"";flex:1;border-top:2px solid rgba(59,35,64,.2)}
 /* PC: 背景の動きで文字の重なりレイヤーができて文字がぼやけるので、マウス操作の画面では背景を止める */
 @media (hover:hover) and (pointer:fine){body{animation:none}.rfx i{animation:none}}
 /* 部位のドット絵アイコン */
@@ -3369,7 +3372,7 @@ function renderWz(){
   const ids=['navi','erase','copy']; ids.forEach(k=>{ const d=$('#'+k); d.hidden=true; d.classList.remove('wz-res','wz-cmp'); });
   const opt=(v,l,on)=>`<option value="${esc(v)}"${on?' selected':''}>${esc(l)}</option>`;
   if(!WZ.mode){
-    const M=[['make','devi','好きなデビを作る','欲しい特性をそろえて、レベル5⁠/⁠5まで育てたい'],['erase','pod','ハズレを消す','いらない特性が付いちゃった子を直したい'],['copy','chest','特性をコピーする','同じ特性の子をふやしたい']];
+    const M=[['make','devi','好きなデビを作る','欲しい特性をそろえて、レベル<em class="nw">5/5</em>まで育てたい'],['erase','pod','ハズレを消す','いらない特性が付いちゃった子を直したい'],['copy','chest','特性をコピーする','同じ特性の子をふやしたい']];
     el.innerHTML=`<div class="calc-head"><p class="eyebrow">FUSION NAVI</p><h2>つくり方ナビ</h2><p>質問に答えていくと、融合の手順が出るよ。</p></div>
      <div class="card wz-card"><p class="wz-q">何がしたい？</p><div class="wz-big">${M.map(([k,ic,t,d])=>`<button type="button" class="wz-choice" data-wzmode="${k}">${NVPX[ic]||''}<span><b>${t}</b><small>${d}</small></span></button>`).join('')}</div></div>`;
     return;
