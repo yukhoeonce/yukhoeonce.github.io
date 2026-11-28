@@ -730,7 +730,7 @@ html.ed-open{overflow:hidden}
 /* ===== つくり方ナビ ===== */
 .nv-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px 16px;padding:16px;margin:12px 0}
 .nv-f{display:flex;flex-direction:column;justify-content:flex-end;gap:4px;font-weight:700;font-size:14px}
-.nv-f select{font:inherit;font-weight:700;font-size:15px;padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:var(--field);color:var(--ink);max-width:100%}
+.nv-f select,.er-slot select,.er-have select{font:inherit;font-weight:700;font-size:15px;padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:var(--field);color:var(--ink);max-width:100%}
 .nv-f.sm span{font-size:13px;color:var(--ink-2)}
 .nv-lv{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:14px}
 .nv-lv select{padding:6px 8px}
@@ -771,6 +771,20 @@ html.ed-open{overflow:hidden}
 .nv-br[open] summary::before{content:"▼"}
 @media(max-width:600px){#navi{word-break:normal;overflow-wrap:break-word}#navi .mini{font-size:14px;line-height:1.7}.nv-br summary{font-size:15px}}
 .nv-brt{margin:2px 0 6px;font-size:14px}
+.er-slots{display:grid;gap:10px;grid-column:1/-1}
+.er-slot{display:grid;grid-template-columns:7em minmax(0,420px) auto;justify-content:start;gap:6px 8px;align-items:center}
+.er-slot>span{font-weight:700;font-size:14px}
+.er-slot select{min-width:0;width:100%}
+.er-kd{display:flex;gap:4px}
+.er-kd .btn{padding:5px 10px;font-size:13px}
+.er-have{grid-column:1/-1}
+.er-have table{border-collapse:separate;border-spacing:8px 6px;margin:0 -8px}
+.er-have th{text-align:left;font-size:13px;color:var(--ink-2);font-weight:700;vertical-align:middle}
+.er-have select{min-width:110px}
+.er-opt{padding:14px 16px;margin:12px 0}
+.er-opt h3{margin:0 0 6px;font-size:17px}
+.er-opt .nv-li{margin:8px 0}
+@media(max-width:600px){.er-slot{grid-template-columns:5.5em 1fr}.er-kd{grid-column:1/-1;justify-content:flex-end}.er-opt{padding:10px 12px}.er-opt h3{font-size:15px}#erase{word-break:normal;overflow-wrap:break-word}#erase .er-opt p,#erase .er-opt li{font-size:13.5px}}
 .nv-rtd summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--ink-2);margin:6px 0}
 @media (max-width:600px){
  .nv-steps{grid-template-columns:1fr;gap:8px}
@@ -806,6 +820,25 @@ html.ed-open{overflow:hidden}
  #navi .nv-br .flow .tk-trs{gap:2px}
  #navi .nv-br .flow .tk-trs i,#navi .nv-br .flow .tk-lv,#navi .nv-br .flow .tk-note{font-size:8.5px;line-height:1.25;padding:0 2px;border-width:1px;border-radius:4px}
  #navi .nv-br .flow .tk-note{padding:0;border:0}
+ #erase .flow{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;padding:8px 6px}
+ #erase .flow>.op{display:none}
+ #erase .flow>.tok{grid-column:span 2;min-width:0;max-width:none;width:auto;justify-self:stretch;padding:6px 4px;gap:2px}
+ #erase .flow>.tok:nth-child(1),#erase .flow>.tok:nth-child(3){grid-column:span 3}
+ #erase .flow>.tok:last-child{grid-column:1/-1}
+ #erase .flow .tk-ic{width:30px;height:30px}
+ #erase .flow .tk-nm{font-size:11px}
+ #erase .flow .tk-trs i,#erase .flow .tk-lv,#erase .flow .tk-note{font-size:10px}
+ #erase .flow{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:5px 4px;border-width:2px;border-radius:10px}
+ #erase .flow>.tok,#erase .flow>.tok:nth-child(1),#erase .flow>.tok:nth-child(3){grid-column:span 1;padding:3px 2px 4px;gap:1px;border-width:2px;border-radius:8px;box-shadow:2px 2px 0 var(--sh)}
+ #erase .flow>.tok:last-child{grid-column:1/-1;flex-direction:row;flex-wrap:wrap;justify-content:center;gap:2px 6px;padding:4px 6px}
+ #erase .flow>.tok:last-child .tk-trs{flex-direction:row;flex-wrap:wrap;justify-content:center;width:auto}
+ #erase .flow .tk-tag{font-size:8.5px;padding:0 3px;border-width:1.5px;border-radius:4px}
+ #erase .flow .tk-ic{width:22px;height:22px;border-width:2px;border-radius:7px}
+ #erase .flow .tk-ic svg{width:15px;height:15px}
+ #erase .flow .tk-nm{font-size:8.5px;line-height:1.25}
+ #erase .flow .tk-trs{gap:2px}
+ #erase .flow .tk-trs i,#erase .flow .tk-lv,#erase .flow .tk-note{font-size:8.5px;line-height:1.25;padding:0 2px;border-width:1px;border-radius:4px}
+ #erase .flow .tk-note{padding:0;border:0}
  #navi .nv-br .btnrow{gap:6px}
  #navi .nv-br .btnrow .btn{font-size:12px;padding:6px 10px}
  #navi .nv-step{padding:12px}
@@ -858,6 +891,7 @@ details.nv-step summary{cursor:pointer;font-size:16px}
       <a href="#lesson" data-v="lesson">レッスン</a>
       <a href="#calc" data-v="calc">けいさん機</a>
       <a href="#navi" data-v="navi">つくり方ナビ</a>
+      <a href="#erase" data-v="erase">ハズレ消し</a>
       <a href="#dex" data-v="dex">特性図鑑</a>
       <a href="#quiz" data-v="quiz">クイズ</a>
       <a href="#words" data-v="words">用語集</a>
@@ -944,6 +978,11 @@ details.nv-step summary{cursor:pointer;font-size:16px}
   <!-- ===== つくり方ナビ ===== -->
   <section class="view" id="v-navi" hidden>
     <div id="navi"></div>
+  </section>
+
+  <!-- ===== ハズレ消しナビ ===== -->
+  <section class="view" id="v-erase" hidden>
+    <div id="erase"></div>
   </section>
 
   <!-- ===== 特性図鑑 ===== -->
@@ -2875,7 +2914,122 @@ document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-nvroute]'); if(!b) return; NV.route=b.dataset.nvroute; nvSave(); renderNavi(true);});
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-nvcalc]'); if(!b) return; const c=NVCFG[+b.dataset.nvcalc]; if(!c) return; CS={p:clone(c.p),m:clone(c.m),goal:clone(c.goal),view:NV.sp,why:false,preset:'',ui:2}; st.cs=CS; save(); location.hash='calc';});
 
-const VIEWS=['home','lesson','calc','navi','dex','quiz','words'];
+
+/* ===== ハズレ消しナビ ===== */
+const ERD={sp:NEKO,c:'',r:'',m:'',kc:1,kr:1,km:1,cnt:1,cp:0,hc:0,hr:0};
+let ER=Object.assign({},ERD,(st.er&&typeof st.er==='object')?st.er:{}); if(!DEV[ER.sp]||!DEV[ER.sp].par) ER.sp=NEKO;
+const erSave=()=>{st.er=ER; save();};
+const erList=(g,S)=>TRL.filter(x=>!(x.sk&&!x.sk.includes(S))&&(g==='c'?x.ty===4:g==='m'?(x.ty===10||x.ty===11):x.ty===DEV[S].t));
+const erItem=t=>ITEM['a'+t]?'a'+t:ITEM['f'+t]?'f'+t:'';
+function erRun(cfg,S){
+  const keep=CS; CS={p:cfg.p,m:cfg.m,goal:cfg.goal,view:'',why:false,preset:'',ui:2};
+  let out={p:0,rows:[]};
+  try{ const R=compute(), T=traitsFor(R,S); out.p=goalProb(T)*((R.sp.find(x=>x.s===S)||{p:0}).p);
+    out.rows=Object.entries(cfg.goal).map(([g,t])=>{const o=T.G[g]; if(t==='') return [g,'',o?o.empty:1]; const r=o&&o.rows.find(x=>x.t===t); return [g,t,r?r.p:0];});
+  }catch(e){}
+  CS=keep; return out;
+}
+function erSearch(S){
+  const set={}, goal={}, keep={}, er=[];
+  ['c','r','m'].forEach(g=>{ if(!ER[g]||!TR[ER[g]]) return; set[g]=ER[g]; if(ER['k'+g]){goal[g]=ER[g]; keep[g]=ER[g];} else {goal[g]=''; er.push(g);} });
+  const tgtP=NT(P0(S,set),'消したい子'), tgtM=NT(MD(S,set),'消したい子（材料なので消える）');
+  const cpP=NT(P0(S,set),'同じ特性の子'), cpM=NT(MD(S,set),'同じ特性の子（材料なので消える）');
+  const pairs=[];
+  if(ER.cnt) pairs.push({p:[tgtP,P0(S)],t:'p'});
+  if(ER.cnt&&ER.cp) pairs.push({p:[tgtP,cpP],t:'p',c:'p'});
+  if(ER.cp) pairs.push({p:[cpP,P0(S)],c:'p'});
+  pairs.push({p:[P0(S),P0(S)]});
+  const res=[];
+  for(const pr of pairs){
+    const pool=[{k:'none',o:NONE(),n:3,cost:0},{k:'b',o:MD(S),n:3,cost:1}];
+    if(pr.t!=='p') pool.push({k:'t',o:tgtM,n:1,cost:6});
+    if(ER.cp&&pr.c!=='p') pool.push({k:'cp',o:cpM,n:1,cost:4});
+    if(keep.c&&ER.hc) pool.push({k:'hc',o:NT(MD(S,{c:keep.c}),'この特性だけの子'),n:ER.hc,cost:2});
+    if(keep.r&&ER.hr) pool.push({k:'hr',o:NT(MD(S,{r:keep.r}),'この特性だけの子'),n:ER.hr,cost:2});
+    if(keep.m&&erItem(keep.m)) pool.push({k:'a',o:MI(erItem(keep.m)),n:3,cost:.5});
+    const pick=(i,left,cur)=>{
+      if(left===0||i>=pool.length){ if(left===0) evalCfg(cur); return; }
+      for(let n=Math.min(left,pool[i].n);n>=0;n--){ pick(i+1,left-n,cur.concat(Array(n).fill(pool[i]))); }
+    };
+    const evalCfg=ms=>{
+      const used=ms.map(x=>x.k);
+      if(pr.t!=='p'&&!used.includes('t')) return;
+      const m=ms.map(x=>clone(x.o)).sort((a,b)=>(a.k===''?1:0)-(b.k===''?1:0));
+      const cfg={p:clone(pr.p),m,goal:clone(goal)}, r=erRun(cfg,S);
+      const cost=ms.reduce((t,x)=>t+x.cost,0)+pr.p.filter(o=>!o.c&&!o.r&&!o.m).length;
+      res.push({cfg,r,cost,used,tp:pr.t==='p',cpP:pr.c==='p'});
+    };
+    pick(0,3,[]);
+  }
+  res.sort((a,b)=>(b.r.p-a.r.p)||(a.cost-b.cost));
+  const outs=[], bestP=Math.max(0,...res.filter(x=>x.tp).map(x=>x.r.p)); let minC=Infinity;
+  for(const x of res){ if(x.r.p<=0) continue; if(!x.tp&&x.used.includes('t')&&x.r.p<=bestP+1e-9) continue; if(x.cost>=minC-1e-9) continue; minC=x.cost; outs.push(x); if(outs.length>=3) break; }
+  return {outs,er,keep,set};
+}
+let ERCFG=[];
+function erFlow(cfg,r){
+  const parts=[nvTok(cfg.p[0],'親A'),OP('＋'),nvTok(cfg.p[1],'親B')];
+  cfg.m.forEach((m,j)=>{ if(m.k) parts.push(OP('＋'),nvTok(m,'材料'+(j+1))); });
+  const trs=r.rows.map(([g,t,p])=>t?[g,trShort(TR[t])+' '+pct(p)]:['n',trShort(TR[ER[g]])+'が消える '+pct(p)]);
+  parts.push(OP('→'),tok({k:'child',tag:'子',trs}));
+  return flow('',...parts);
+}
+function renderErase(){
+  const el=$('#erase'); if(!el) return;
+  const S=ER.sp, D=DEV[S];
+  ['c','r','m'].forEach(g=>{ if(ER[g]&&!erList(g,S).some(x=>x.id===ER[g])) ER[g]=''; });
+  const opt=(v,l,on)=>`<option value="${esc(v)}"${on?' selected':''}>${esc(l)}</option>`;
+  const byT={1:[],2:[],3:[]}; SPECIES.forEach(d=>byT[d.t].push(d));
+  const spSel=[3,2,1].map(t=>`<optgroup label="${TYPEN[t]}">${byT[t].map(d=>opt(d.id,d.n,d.id===S)).join('')}</optgroup>`).join('');
+  const trSel=g=>{ const L=erList(g,S); const grp=g==='m'?[['動物・家具',L]]:[['良い特性',L.filter(x=>!x.sk&&x.q===3)],['ふつうの特性',L.filter(x=>!x.sk&&x.q===2)],['ハズレ特性',L.filter(x=>!x.sk&&x.q===1)],['色違い',L.filter(x=>x.sk)]];
+    return opt('','なし',!ER[g])+grp.filter(([,a])=>a.length).map(([l,a])=>`<optgroup label="${l}">${a.map(x=>opt(x.id,x.n,x.id===ER[g])).join('')}</optgroup>`).join(''); };
+  const slotRow=(g,lab)=>`<div class="er-slot"><span>${lab}</span><select data-er="${g}">${trSel(g)}</select>${ER[g]?`<div class="er-kd"><button type="button" class="btn sm${ER['k'+g]?'':' sub'}" data-erk="${g}" data-erv="1">残す</button><button type="button" class="btn sm${ER['k'+g]?' sub':''}" data-erk="${g}" data-erv="0">消す</button></div>`:'<div></div>'}</div>`;
+  const nm=g=>trShort(TR[ER[g]]);
+  const cnt=k=>[0,1,2].map(n=>opt(n,n+'体',ER[k]===n)).join('');
+  let h=`<div class="calc-head"><p class="eyebrow">ERASE NAVI</p><h2>ハズレ消しナビ</h2>
+  <p>いらない特性が付いちゃった子の、<b>いらない特性だけを消す組み方</b>を、成功率が高い順に出すよ。お試し版なので、数字は目安にしてね。</p></div>
+  <div class="card nv-form">
+   <label class="nv-f"><span>デビの種類</span><select data-er="sp">${spSel}</select></label>
+   <div class="er-slots"><p class="nv-hh">その子に付いてる特性（残すか消すかもえらぶ）</p>
+    ${slotRow('c','共通の枠')}${slotRow('r',TYPEN[D.t]+'の枠')}${slotRow('m','変異の枠')}</div>
+   <div class="er-have"><p class="nv-hh">ほかに持ってるもの</p><table>
+    <tr><th>この子の融合回数</th><td><select data-er="cnt">${opt(1,'残ってる',ER.cnt===1)}${opt(0,'0回',ER.cnt===0)}</select></td></tr>
+    <tr><th>同じ特性セットの子（回数あり）</th><td><select data-er="cp">${opt(0,'いない',!ER.cp)}${opt(1,'いる',!!ER.cp)}</select></td></tr>
+    ${ER.c&&ER.kc?`<tr><th>${esc(nm('c'))}だけを持つ子</th><td><select data-er="hc">${cnt('hc')}</select></td></tr>`:''}
+    ${ER.r&&ER.kr?`<tr><th>${esc(nm('r'))}だけを持つ子</th><td><select data-er="hr">${cnt('hr')}</select></td></tr>`:''}
+   </table><p class="mini">「〇〇だけを持つ子」は材料に使うので、融合回数0でもOK。${ER.m&&ER.km&&erItem(ER.m)?`変異の枠の${esc(nm('m'))}は、${esc(itemShort(ITEM[erItem(ER.m)]))}を材料にして残す前提で計算するよ。`:''}</p></div>
+  </div>`;
+  ERCFG=[];
+  const ers=['c','r','m'].filter(g=>ER[g]&&!ER['k'+g]);
+  if(!ers.length){ h+=`<p class="nv-empty">消したい特性を1つ以上えらんで、「消す」にしてね。</p>`; el.innerHTML=h; return; }
+  const nocf=ers.filter(g=>TR[ER[g]].cf===0);
+  const R=erSearch(S);
+  if(nocf.length) h+=`<div class="note"><b>${nocf.map(nm).map(esc).join('・')}</b>は融合で引き継げない特性だから、ふつうに融合するだけで消えるよ。</div>`;
+  if(!R.outs.length){ h+=`<p class="nv-empty">この手持ちだと組み方が見つからなかったよ。けいさん機で試してみてね。</p>`; el.innerHTML=h; return; }
+  h+=`<p class="mini" style="margin:14px 0 0">成功率がいちばん高い組み方と、材料が少なくてすむ組み方を出してるよ。成功＝残したい特性が残って、消したい特性が全部消えること。</p>`;
+  R.outs.forEach((x,i)=>{
+    ERCFG.push(x.cfg);
+    const blanks=x.cfg.m.filter(m=>m.k==='dev'&&!m.c&&!m.r&&!m.m).length, tries=x.r.p>0?Math.ceil(1/x.r.p):0;
+    const li=[];
+    if(x.tp) li.push('消したい子は<b>親</b>なので、融合しても消えないよ（融合回数が1へる）。失敗しても、回数が残ってればもう一回ためせる。');
+    else if(x.used.includes('t')) li.push('消したい子は<b>材料</b>なので、融合すると消えるよ。失敗すると元にもどせないから、先にコピーしておくと安心。');
+    if(x.cpP) li.push('同じ特性セットの子を親にしてるよ（こっちも融合回数が1へる）。');
+    if(!blanks&&R.er.length) li.push('無特性の材料は入れてないよ。入れると、消したい特性の点数まで上がっちゃうから。');
+    if(x.used.includes('hc')||x.used.includes('hr')) li.push('「この特性だけの子」を材料にすると、残したい特性だけ点数が上がって残りやすくなる。');
+    if(x.used.includes('a')) li.push('動物・家具を材料にすると、変異の枠の特性が残りやすくなる。');
+    h+=`<div class="card er-opt"><h3>組み方${i+1}（成功率 ${pct(x.r.p)}）</h3>${erFlow(x.cfg,x.r)}
+     <p class="mini">平均で${tries}回くらい融合すれば1回成功する計算だよ。</p><ul class="nv-li">${li.map(t=>`<li>${t}</li>`).join('')}</ul>
+     <div class="btnrow"><button type="button" class="btn sub sm" data-ercalc="${i}">けいさん機で開く</button></div></div>`;
+  });
+  if(ers.includes('c')&&(D.t===2||D.t===3)) h+=`<div class="note"><b>ほかのやり方</b>　共通の枠のハズレは、釣れる色違い（${D.t===2?'デンキウナギ':'極寒クラゲ'}）を親にして追い出すやり方もあるよ（上級レッスン「色違いの親でハズレを追い出す」）。生まれるのは${D.t===2?'ウナギ':'クラゲ'}になるので、特性の保管用になる。</div>`;
+  el.innerHTML=h;
+}
+document.addEventListener('change',e=>{const x=e.target.closest&&e.target.closest('[data-er]'); if(!x) return; const k=x.dataset.er; ER[k]=['sp','c','r','m'].includes(k)?x.value:+x.value;
+  if(['c','r','m'].includes(k)&&ER[k]) ER['k'+k]=TR[ER[k]].q===1?0:1; erSave(); renderErase();});
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-erk]'); if(!b) return; ER['k'+b.dataset.erk]=+b.dataset.erv; erSave(); renderErase();});
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-ercalc]'); if(!b) return; const c=ERCFG[+b.dataset.ercalc]; if(!c) return; CS={p:clone(c.p),m:clone(c.m),goal:clone(c.goal),view:ER.sp,why:false,preset:'',ui:2}; st.cs=CS; save(); location.hash='calc';});
+
+const VIEWS=['home','lesson','calc','navi','erase','dex','quiz','words'];
 function route(){
   let v=location.hash.slice(1); if(!VIEWS.includes(v)) v='home';
   $('#fbs').hidden=true;
@@ -2885,6 +3039,7 @@ function route(){
   if(v==='lesson') renderLesson(false);
   if(v==='calc') renderCalc();
   if(v==='navi') renderNavi();
+  if(v==='erase') renderErase();
   if(v==='dex') renderDex();
   if(v==='quiz') renderQuiz();
   if(v==='words') renderWords();
