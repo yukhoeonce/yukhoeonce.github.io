@@ -1008,12 +1008,42 @@ details.nv-step summary{cursor:pointer;font-size:16px}
 
 <footer class="site gut">
   <div class="wrap">
-    <span>非公式のファンサイトです。ゲームの名称・内容の権利は © NetEase / Starry Studio に帰属します。</span>
+    <span>非公式のファンサイトです。ゲームの名称・内容の権利は © NetEase / Starry Studio に帰属します。 <button type="button" class="intro-link" data-intro-open>このサイトについて</button></span>
     <span>確率はゲーム内の融合プレビューと同じ考え方で計算していますが、アップデートで変わることがあります。いちばん新しい内容は<span style="white-space:nowrap">ゲーム内の表示を見てね。</span></span>
     <span><a href="https://yukhoeonce.github.io/">OnceHumanシナリオガイド</a> ・ <a href="https://yukhoeonce.github.io/mod/">MOD講座</a> ・ <a href="https://yukhoeonce.github.io/damage/">ダメージラボ</a> ・ <a href="https://yukhoeonce.github.io/builds/">みんなの装備</a></span>
   </div>
 </footer>
 
+<dialog id="intro" class="intro" aria-labelledby="intro-h">
+  <h2 id="intro-h">はじめに</h2>
+  <p>このサイトは、デビ融合を勉強中のプレイヤーが、自分用にまとめたノートを公開しているものです（非公式）。</p>
+  <ul>
+    <li>確率や数字は、ゲームのデータやみんなの検証をもとにした目安です</li>
+    <li>作り方は、いろんなやり方の中の一例としてのせています</li>
+    <li>まだ勉強中なので、まちがいや古い情報があるかもしれません</li>
+  </ul>
+  <p>「ここ違うよ」「こういうやり方もあるよ」があれば、教えてもらえるとうれしいです。</p>
+  <form method="dialog"><button class="btn" value="ok">読んだ</button></form>
+</dialog>
+<style>
+.intro{max-width:min(460px,calc(100vw - 32px));padding:20px 22px 18px;border:2.5px solid var(--line);border-radius:18px;background:var(--surface);color:var(--ink);box-shadow:5px 5px 0 var(--sh);font-size:15px;line-height:1.75}
+.intro::backdrop{background:rgba(40,28,50,.45)}
+.intro h2{margin:0 0 8px;font-size:20px}
+.intro p{margin:0 0 8px}
+.intro ul{margin:0 0 10px;padding-left:1.3em;display:flex;flex-direction:column;gap:4px;font-size:14px}
+.intro form{display:flex;justify-content:center;margin-top:10px}
+.intro-link{background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer}
+@media(max-width:600px){.intro{padding:16px 16px 14px;font-size:14px}.intro h2{font-size:18px}.intro ul{font-size:13px}}
+</style>
+<script>
+(()=>{const K='devi-intro-v1', d=document.getElementById('intro'); if(!d) return;
+  const open=()=>{try{d.showModal()}catch(e){d.setAttribute('open','')}};
+  d.addEventListener('close',()=>{try{localStorage.setItem(K,'1')}catch(e){}});
+  document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('[data-intro-open]')) open();});
+  let seen=false; try{seen=localStorage.getItem(K)==='1'}catch(e){}
+  if(!seen) setTimeout(open,300);
+})();
+</script>
 <div class="rfx" aria-hidden="true"></div>
 <script>
 (()=>{
