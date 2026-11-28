@@ -770,6 +770,7 @@ html.ed-open{overflow:hidden}
 .nv-br summary::before{content:"▶";display:inline-block;width:1.2em;text-indent:0;font-size:.8em}
 .nv-br[open] summary::before{content:"▼"}
 @media(max-width:600px){#navi{word-break:normal;overflow-wrap:break-word}#navi .mini{font-size:14px;line-height:1.7}.nv-br summary{font-size:15px}}
+.nv-brt{margin:2px 0 6px;font-size:14px}
 .nv-rtd summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--ink-2);margin:6px 0}
 @media (max-width:600px){
  .nv-steps{grid-template-columns:1fr;gap:8px}
@@ -791,6 +792,22 @@ html.ed-open{overflow:hidden}
  #navi .flow .tk-ic{width:30px;height:30px}
  #navi .flow .tk-nm{font-size:11px}
  #navi .flow .tk-trs i,#navi .flow .tk-lv,#navi .flow .tk-note{font-size:10px}
+ #navi .nv-br{padding:6px 8px}
+ #navi .nv-br .nv-brh{font-size:13px;margin:6px 0 2px}
+ #navi .nv-br .nv-brt{font-size:12px;line-height:1.55;margin:0 0 4px}
+ #navi .nv-br .flow{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:5px 4px;border-width:2px;border-radius:10px}
+ #navi .nv-br .flow>.tok,#navi .nv-br .flow>.tok:nth-child(1),#navi .nv-br .flow>.tok:nth-child(3){grid-column:span 1;padding:3px 2px 4px;gap:1px;border-width:2px;border-radius:8px;box-shadow:2px 2px 0 var(--sh)}
+ #navi .nv-br .flow>.tok:last-child{grid-column:1/-1;flex-direction:row;flex-wrap:wrap;justify-content:center;gap:2px 6px;padding:4px 6px}
+ #navi .nv-br .flow>.tok:last-child .tk-trs{flex-direction:row;flex-wrap:wrap;justify-content:center;width:auto}
+ #navi .nv-br .flow .tk-tag{font-size:8.5px;padding:0 3px;border-width:1.5px;border-radius:4px}
+ #navi .nv-br .flow .tk-ic{width:22px;height:22px;border-width:2px;border-radius:7px}
+ #navi .nv-br .flow .tk-ic svg{width:15px;height:15px}
+ #navi .nv-br .flow .tk-nm{font-size:8.5px;line-height:1.25}
+ #navi .nv-br .flow .tk-trs{gap:2px}
+ #navi .nv-br .flow .tk-trs i,#navi .nv-br .flow .tk-lv,#navi .nv-br .flow .tk-note{font-size:8.5px;line-height:1.25;padding:0 2px;border-width:1px;border-radius:4px}
+ #navi .nv-br .flow .tk-note{padding:0;border:0}
+ #navi .nv-br .btnrow{gap:6px}
+ #navi .nv-br .btnrow .btn{font-size:12px;padding:6px 10px}
  #navi .nv-step{padding:12px}
  #navi .nv-step p,#navi .nv-step li{font-size:14px}
 }
@@ -991,12 +1008,42 @@ details.nv-step summary{cursor:pointer;font-size:16px}
 
 <footer class="site gut">
   <div class="wrap">
-    <span>非公式のファンサイトです。ゲームの名称・内容の権利は © NetEase / Starry Studio に帰属します。</span>
+    <span>非公式のファンサイトです。ゲームの名称・内容の権利は © NetEase / Starry Studio に帰属します。 <button type="button" class="intro-link" data-intro-open>このサイトについて</button></span>
     <span>確率はゲーム内の融合プレビューと同じ考え方で計算していますが、アップデートで変わることがあります。いちばん新しい内容は<span style="white-space:nowrap">ゲーム内の表示を見てね。</span></span>
     <span><a href="https://yukhoeonce.github.io/">OnceHumanシナリオガイド</a> ・ <a href="https://yukhoeonce.github.io/mod/">MOD講座</a> ・ <a href="https://yukhoeonce.github.io/damage/">ダメージラボ</a> ・ <a href="https://yukhoeonce.github.io/builds/">みんなの装備</a></span>
   </div>
 </footer>
 
+<dialog id="intro" class="intro" aria-labelledby="intro-h">
+  <h2 id="intro-h">はじめに</h2>
+  <p>このサイトは、デビ融合を勉強中のプレイヤーが、自分用にまとめたノートを公開しているものです（非公式）。</p>
+  <ul>
+    <li>確率や数字は、ゲームのデータやみんなの検証をもとにした目安です</li>
+    <li>作り方は、いろんなやり方の中の一例としてのせています</li>
+    <li>まだ勉強中なので、まちがいや古い情報があるかもしれません</li>
+  </ul>
+  <p>「ここ違うよ」「こういうやり方もあるよ」があれば、教えてもらえるとうれしいです。</p>
+  <form method="dialog"><button class="btn" value="ok">読んだ</button></form>
+</dialog>
+<style>
+.intro{max-width:min(460px,calc(100vw - 32px));padding:20px 22px 18px;border:2.5px solid var(--line);border-radius:18px;background:var(--surface);color:var(--ink);box-shadow:5px 5px 0 var(--sh);font-size:15px;line-height:1.75}
+.intro::backdrop{background:rgba(40,28,50,.45)}
+.intro h2{margin:0 0 8px;font-size:20px}
+.intro p{margin:0 0 8px}
+.intro ul{margin:0 0 10px;padding-left:1.3em;display:flex;flex-direction:column;gap:4px;font-size:14px}
+.intro form{display:flex;justify-content:center;margin-top:10px}
+.intro-link{background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;cursor:pointer}
+@media(max-width:600px){.intro{padding:16px 16px 14px;font-size:14px}.intro h2{font-size:18px}.intro ul{font-size:13px}}
+</style>
+<script>
+(()=>{const K='devi-intro-v1', d=document.getElementById('intro'); if(!d) return;
+  const open=()=>{try{d.showModal()}catch(e){d.setAttribute('open','')}};
+  d.addEventListener('close',()=>{try{localStorage.setItem(K,'1')}catch(e){}});
+  document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('[data-intro-open]')) open();});
+  let seen=false; try{seen=localStorage.getItem(K)==='1'}catch(e){}
+  if(!seen) setTimeout(open,300);
+})();
+</script>
 <div class="rfx" aria-hidden="true"></div>
 <script>
 (()=>{
@@ -2468,7 +2515,8 @@ function nvBranches(P,route){
       const nx=miss.length?null:simBest(inv,p1s,want,Mt,SIMO.lv), cl=x=>Math.min(4,x), cnt=f=>inv.filter(f).length, one=f=>inv.filter(d=>f(d)&&d.cnt>=1).length;
       const hm=d=>want.m&&d.m===want.m, isC=d=>!hm(d)&&want.c&&d.c===want.c&&!(want.r&&d.r===want.r), isR=d=>!hm(d)&&want.r&&d.r===want.r&&!(want.c&&d.c===want.c), isX=d=>!hm(d)&&want.c&&want.r&&d.c===want.c&&d.r===want.r;
       const redo={hc:cl(cnt(isC)),hc1:cl(one(isC)),hr:cl(cnt(isR)),hr1:cl(one(isR)),hxy:cl(cnt(isX)),hxy1:cl(one(isX)),ex:inv.filter(hm).map(d=>({c:d.c||'',r:d.r||'',m:d.m,cnt:d.cnt>=1?1:0})),rt:route};
-      outs.push(Object.assign(nx&&nx.p>0?{got,pr,nx}:{got,pr,copy:(miss[0]||T[0])},{redo}));
+      const cp=miss[0]||T[0], cps=inv.filter(d=>d[cp[0]]===cp[1]&&d.cnt<1).sort((x,y)=>SL.filter(k=>x[k]).length-SL.filter(k=>y[k]).length)[0]||null;
+      outs.push(Object.assign(nx&&nx.p>0?{got,pr,nx}:{got,pr,copy:cp,cps},{redo}));
     }
     return {outs,want};
   } finally{ SIMO={trust:0,save:0,lv:0}; }
@@ -2476,21 +2524,26 @@ function nvBranches(P,route){
 
 function nvBranchHtml(P,rt,S){
   const B=nvBranches(P,rt); if(!B||B.outs.length<2) return '';
-  const nm=g=>trShort(TR[B.want[g]]), keys=Object.keys(B.want), tagO=(ob,o)=>o.src==='p'?NT(ob,'★STEP 1で親にした子（回数0）'):o.src==='c'?NT(ob,'◆STEP 1で生まれた子'):ob;
+  const nm=g=>trShort(TR[B.want[g]]), keys=Object.keys(B.want), tagO=(ob,o)=>o.src==='p'?NT(ob,'★STEP1の親（回数0）'):o.src==='c'?NT(ob,'◆STEP1の子'):ob;
   const items=B.outs.map(o=>{
     const miss=keys.filter(g=>!o.got.includes(g));
     const lab=o.done?'全部そろった':!o.got.length?'欲しい特性が1つも付かなかった':o.got.map(nm).join('と')+'が付いた';
     const sub=o.done||!o.got.length?'':`（${miss.map(nm).join('と')}は付かなかった）`;
     let body;
-    if(o.done) body='<p>成功！そのまま次のSTEP（5/5になるまでレベル上げ）へ進んでね。</p>';
-    else if(o.copy) body=`<p>つぎは、${esc(nm(o.copy[0]))}を持った子をコピーで1体ふやすところから。親は無特性2体、材料に「★STEP 1で親にした子」を入れればOK（材料の特性は融合回数0でも効く）。</p>`;
+    if(o.done) body='<p class="nv-brt">成功！そのまま次のSTEP（5/5になるまでレベル上げ）へ進んでね。</p>';
+    else if(o.copy&&o.cps){
+      const g=o.copy[0], cfg={p:[P0(S),P0(S)],m:[tagO(nvObj(S,o.cps),o.cps),MD(S),MD(S)],goal:{[g]:o.copy[1]}};
+      NVCFG.push(cfg); const r=nvRun(cfg);
+      body=`<p class="nv-brh">つぎは${esc(nm(g))}をコピーでふやす（付く確率 <b>${pct(r.p)}</b>）</p><p class="nv-brt">${esc(nm(g))}を持ってて回数が残ってる子がいないから、★の子を材料にしてコピーするよ。</p>${nvFlow(cfg,r)}<div class="btnrow">${o.redo?`<button type="button" class="btn sm" data-nvredo="${NVREDO.push(o.redo)-1}">この結果から続きを計算</button>`:''}${nvBtn(NVCFG.length-1)}</div>`;
+    }
+    else if(o.copy) body=`<p>つぎは、${esc(nm(o.copy[0]))}を持った子を1体見つけてくるところから。</p>`;
     else if(o.nx){
       const n=o.nx, cfg={p:[n.a.blk?P0(S):tagO(nvObj(S,n.a,1),n.a),n.q?tagO(nvObj(S,n.q,1),n.q):P0(S)],m:n.ms.map(m=>m.k==='blank'||m.k==='anim'?nvObj(S,m):tagO(nvObj(S,m),m)),goal:P.full};
       NVCFG.push(cfg); const r=nvRun(cfg);
       body=`<p class="nv-brh">つぎの融合の一例（全部そろう確率 <b>${pct(r.p)}</b>）</p>${nvFlow(cfg,r)}`;
       body+=`<div class="btnrow">${o.redo?`<button type="button" class="btn sm" data-nvredo="${NVREDO.push(o.redo)-1}">この結果から続きを計算</button>`:''}${nvBtn(NVCFG.length-1)}</div>`;
     } else body='<p>手持ちに合う組み方が見つからなかったよ。けいさん機で組み合わせを試してみてね。</p>';
-    if(o.copy&&o.redo) body+=`<div class="btnrow"><button type="button" class="btn sm" data-nvredo="${NVREDO.push(o.redo)-1}">この結果から続きを計算</button></div>`;
+    if(o.copy&&!o.cps&&o.redo) body+=`<div class="btnrow"><button type="button" class="btn sm" data-nvredo="${NVREDO.push(o.redo)-1}">この結果から続きを計算</button></div>`;
     return `<details class="nv-br"><summary><b>${esc(lab)}</b>${esc(sub)} <span class="nv-brp">約${pct(o.pr)}</span></summary>${body}</details>`;
   }).join('');
   return `<div class="nv-brs"><p class="nv-hh2">STEP 1の結果で、つぎが変わるよ</p>
