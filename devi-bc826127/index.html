@@ -771,6 +771,16 @@ html.ed-open{overflow:hidden}
 .nv-br[open] summary::before{content:"▼"}
 @media(max-width:600px){#navi{word-break:normal;overflow-wrap:break-word}#navi .mini{font-size:14px;line-height:1.7}.nv-br summary{font-size:15px}}
 .nv-brt{margin:2px 0 6px;font-size:14px}
+.nv-modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:4px 0 14px}
+.nv-mode{display:flex;align-items:center;gap:10px;padding:10px 12px;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);box-shadow:3px 3px 0 var(--sh);font:inherit;text-align:left;cursor:pointer}
+.nv-mode .px16{width:36px;height:36px;flex:none}
+.nv-mode span{display:flex;flex-direction:column;line-height:1.35}
+.nv-mode b{font-size:15px}.nv-mode small{font-size:12px;color:var(--ink-2)}
+.nv-mode.on{background:var(--lemon);color:var(--on-pop)}.nv-mode.on small{color:var(--on-pop)}
+.nv-mode:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--sh)}
+.nv-sub{margin-top:0}.nv-sub p{margin-top:0}
+#copy{word-break:normal}
+@media(max-width:600px){.nv-modes{gap:6px}.nv-mode{flex-direction:column;align-items:center;text-align:center;gap:4px;padding:8px 4px}.nv-mode .px16{width:28px;height:28px}.nv-mode b{font-size:12.5px}.nv-mode small{display:none}}
 .er-slots{display:grid;gap:10px;grid-column:1/-1}
 .er-slot{display:grid;grid-template-columns:7em minmax(0,420px) auto;justify-content:start;gap:6px 8px;align-items:center}
 .er-slot>span{font-weight:700;font-size:14px}
@@ -839,6 +849,25 @@ html.ed-open{overflow:hidden}
  #erase .flow .tk-trs{gap:2px}
  #erase .flow .tk-trs i,#erase .flow .tk-lv,#erase .flow .tk-note{font-size:8.5px;line-height:1.25;padding:0 2px;border-width:1px;border-radius:4px}
  #erase .flow .tk-note{padding:0;border:0}
+ #copy .flow{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;padding:8px 6px}
+ #copy .flow>.op{display:none}
+ #copy .flow>.tok{grid-column:span 2;min-width:0;max-width:none;width:auto;justify-self:stretch;padding:6px 4px;gap:2px}
+ #copy .flow>.tok:nth-child(1),#copy .flow>.tok:nth-child(3){grid-column:span 3}
+ #copy .flow>.tok:last-child{grid-column:1/-1}
+ #copy .flow .tk-ic{width:30px;height:30px}
+ #copy .flow .tk-nm{font-size:11px}
+ #copy .flow .tk-trs i,#copy .flow .tk-lv,#copy .flow .tk-note{font-size:10px}
+ #copy .flow{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:5px 4px;border-width:2px;border-radius:10px}
+ #copy .flow>.tok,#copy .flow>.tok:nth-child(1),#copy .flow>.tok:nth-child(3){grid-column:span 1;padding:3px 2px 4px;gap:1px;border-width:2px;border-radius:8px;box-shadow:2px 2px 0 var(--sh)}
+ #copy .flow>.tok:last-child{grid-column:1/-1;flex-direction:row;flex-wrap:wrap;justify-content:center;gap:2px 6px;padding:4px 6px}
+ #copy .flow>.tok:last-child .tk-trs{flex-direction:row;flex-wrap:wrap;justify-content:center;width:auto}
+ #copy .flow .tk-tag{font-size:8.5px;padding:0 3px;border-width:1.5px;border-radius:4px}
+ #copy .flow .tk-ic{width:22px;height:22px;border-width:2px;border-radius:7px}
+ #copy .flow .tk-ic svg{width:15px;height:15px}
+ #copy .flow .tk-nm{font-size:8.5px;line-height:1.25}
+ #copy .flow .tk-trs{gap:2px}
+ #copy .flow .tk-trs i,#copy .flow .tk-lv,#copy .flow .tk-note{font-size:8.5px;line-height:1.25;padding:0 2px;border-width:1px;border-radius:4px}
+ #copy .flow .tk-note{padding:0;border:0}
  #navi .nv-br .btnrow{gap:6px}
  #navi .nv-br .btnrow .btn{font-size:12px;padding:6px 10px}
  #navi .nv-step{padding:12px}
@@ -891,7 +920,6 @@ details.nv-step summary{cursor:pointer;font-size:16px}
       <a href="#lesson" data-v="lesson">レッスン</a>
       <a href="#calc" data-v="calc">けいさん機</a>
       <a href="#navi" data-v="navi">つくり方ナビ</a>
-      <a href="#erase" data-v="erase">ハズレ消し</a>
       <a href="#dex" data-v="dex">特性図鑑</a>
       <a href="#quiz" data-v="quiz">クイズ</a>
       <a href="#words" data-v="words">用語集</a>
@@ -977,12 +1005,10 @@ details.nv-step summary{cursor:pointer;font-size:16px}
 
   <!-- ===== つくり方ナビ ===== -->
   <section class="view" id="v-navi" hidden>
+    <div id="nvmode"></div>
     <div id="navi"></div>
-  </section>
-
-  <!-- ===== ハズレ消しナビ ===== -->
-  <section class="view" id="v-erase" hidden>
-    <div id="erase"></div>
+    <div id="erase" hidden></div>
+    <div id="copy" hidden></div>
   </section>
 
   <!-- ===== 特性図鑑 ===== -->
@@ -2707,8 +2733,7 @@ function renderNavi(still){
   const muSel=opt('','なし',!NV.m)+MUS.map(it=>opt(it.k,`${trShort(TR[it.trait])}（${itemShort(it)}）`,it.k===NV.m)).join('');
   const hSel=k=>[0,1,2,3,4].map(n=>opt(n,n===4?'4体以上':n+'体',NV[k]===n)).join(''), cSel=(k,mx)=>Array.from({length:mx+1},(_,n)=>opt(n,n+'体',Math.min(NV[k],mx)===n)).join('');
   const lvSel=k=>[1,2,3,4,5].map(n=>opt(n,n,NV[k]===n)).join('');
-  let h=`<div class="calc-head"><p class="eyebrow">FUSION NAVI</p><h2>つくり方ナビ</h2>
-  <p>作りたいデビと、欲しい金色の特性をえらぶと、<b>いろんな作り方をくらべて、融合の回数が少ないもの</b>の手順を出すよ。お試し版なので、数字は目安にしてね。</p></div>
+  let h=`<div class="calc-head nv-sub"><p>作りたいデビと、欲しい金色の特性をえらぶと、<b>いろんな作り方をくらべて、融合の回数が少ないもの</b>の手順を出すよ。お試し版なので、数字は目安にしてね。</p></div>
   <details class="card nv-how"${NVHOW?' open':''}><summary><b>使い方</b>（はじめての人はひらいてね）</summary>
    <div class="nv-steps">${[['devi','デビをえらぶ','作りたいデビ'],['star','金の特性をえらぶ','いらない枠は「なし」でOK'],['chest','持ってる数を入れる','融合回数0の子も数える'],['level','5/5の子がいるか答える','わからなければ「いいえ」'],['pod','計算する','ボタンを押して3秒']].map(([ic,t,d],i)=>`<div class="nv-st"><span class="nv-no2">${i+1}</span>${NVPX[ic]}<b>${t}</b><small>${d}</small></div>`).join('')}</div>
    <p class="nv-hh2">結果の見かた</p>
@@ -2986,8 +3011,7 @@ function renderErase(){
   const slotRow=(g,lab)=>`<div class="er-slot"><span>${lab}</span><select data-er="${g}">${trSel(g)}</select>${ER[g]?`<div class="er-kd"><button type="button" class="btn sm${ER['k'+g]?'':' sub'}" data-erk="${g}" data-erv="1">残す</button><button type="button" class="btn sm${ER['k'+g]?' sub':''}" data-erk="${g}" data-erv="0">消す</button></div>`:'<div></div>'}</div>`;
   const nm=g=>trShort(TR[ER[g]]);
   const cnt=k=>[0,1,2].map(n=>opt(n,n+'体',ER[k]===n)).join('');
-  let h=`<div class="calc-head"><p class="eyebrow">ERASE NAVI</p><h2>ハズレ消しナビ</h2>
-  <p>いらない特性が付いちゃった子の、<b>いらない特性だけを消す組み方</b>を、成功率が高い順に出すよ。お試し版なので、数字は目安にしてね。</p></div>
+  let h=`<div class="calc-head nv-sub"><p>いらない特性が付いちゃった子の、<b>いらない特性だけを消す組み方</b>を、成功率が高い順に出すよ。お試し版なので、数字は目安にしてね。</p></div>
   <div class="card nv-form">
    <label class="nv-f"><span>デビの種類</span><select data-er="sp">${spSel}</select></label>
    <div class="er-slots"><p class="nv-hh">その子に付いてる特性（残すか消すかもえらぶ）</p>
@@ -3029,17 +3053,102 @@ document.addEventListener('change',e=>{const x=e.target.closest&&e.target.closes
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-erk]'); if(!b) return; ER['k'+b.dataset.erk]=+b.dataset.erv; erSave(); renderErase();});
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-ercalc]'); if(!b) return; const c=ERCFG[+b.dataset.ercalc]; if(!c) return; CS={p:clone(c.p),m:clone(c.m),goal:clone(c.goal),view:ER.sp,why:false,preset:'',ui:2}; st.cs=CS; save(); location.hash='calc';});
 
-const VIEWS=['home','lesson','calc','navi','erase','dex','quiz','words'];
+
+/* ===== ナビのモード切り替え（作る／ハズレ消し／コピー） ===== */
+let NVM=['make','erase','copy'].includes(st.nvm)?st.nvm:'make';
+function renderModes(){
+  const bar=$('#nvmode'); if(!bar) return;
+  const M=[['make','devi','好きなデビを作る','特性をそろえて5/5まで'],['erase','pod','ハズレを消す','いらない特性だけ消す'],['copy','chest','特性をコピーする','同じ特性の子をふやす']];
+  bar.innerHTML=`<div class="calc-head nv-mh"><p class="eyebrow">FUSION NAVI</p><h2>つくり方ナビ</h2><p>やりたいことをえらんでね。</p></div>
+   <div class="nv-modes" role="tablist">${M.map(([k,ic,t,d])=>`<button type="button" role="tab" class="nv-mode${NVM===k?' on':''}" aria-selected="${NVM===k}" data-nvm="${k}">${NVPX[ic]||''}<span><b>${t}</b><small>${d}</small></span></button>`).join('')}</div>`;
+  $('#navi').hidden=NVM!=='make'; $('#erase').hidden=NVM!=='erase'; $('#copy').hidden=NVM!=='copy';
+  if(NVM==='make') renderNavi(); else if(NVM==='erase') renderErase(); else renderCopy();
+}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-nvm]'); if(!b) return; NVM=b.dataset.nvm; st.nvm=NVM; save(); renderModes();});
+
+const CPD={sp:NEKO,g:'r',t:'',h1:1,h0:0};
+let CP=Object.assign({},CPD,(st.cp&&typeof st.cp==='object')?st.cp:{}); if(!DEV[CP.sp]||!DEV[CP.sp].par) CP.sp=NEKO;
+const cpSave=()=>{st.cp=CP; save();};
+let CPCFG=[];
+function cpSearch(S){
+  const g=CP.g, t=CP.t, goal={[g]:t}, item=g==='m'?erItem(t):'';
+  const hP=NT(P0(S,{[g]:t}),'特性を持ってる子'), res=[];
+  const pairs=[];
+  if(g!=='m'){ if(CP.h1>=1) pairs.push({p:[hP,P0(S)],n1:1}); if(CP.h1>=2) pairs.push({p:[hP,clone(hP)],n1:2}); }
+  pairs.push({p:[P0(S),P0(S)],n1:0});
+  for(const pr of pairs){
+    const left1=Math.max(0,CP.h1-pr.n1);
+    const pool=[{k:'none',o:NONE(),n:3,cost:0},{k:'b',o:MD(S),n:3,cost:1}];
+    if(g!=='m'&&CP.h0+left1>0) pool.push({k:'h',o:NT(MD(S,{[g]:t}),'特性を持ってる子（材料なので消える）'),n:Math.min(3,CP.h0+left1),cost:3});
+    if(item) pool.push({k:'a',o:MI(item),n:3,cost:.5});
+    const pick=(i,left,cur)=>{ if(left===0||i>=pool.length){ if(left===0) ev(cur); return; } for(let n=Math.min(left,pool[i].n);n>=0;n--) pick(i+1,left-n,cur.concat(Array(n).fill(pool[i]))); };
+    const ev=ms=>{ const m=ms.map(x=>clone(x.o)).sort((a,b)=>(a.k===''?1:0)-(b.k===''?1:0)); const cfg={p:clone(pr.p),m,goal:clone(goal)}, r=erRun(cfg,S);
+      const cost=ms.reduce((a,x)=>a+x.cost,0)+pr.p.filter(o=>!o[g]).length+pr.n1*.5; res.push({cfg,r,cost,used:ms.map(x=>x.k),n1:pr.n1}); };
+    pick(0,3,[]);
+  }
+  res.sort((a,b)=>(b.r.p-a.r.p)||(a.cost-b.cost));
+  const outs=[]; let minC=Infinity;
+  for(const x of res){ if(x.r.p<=0||x.cost>=minC-1e-9) continue; minC=x.cost; outs.push(x); if(outs.length>=3) break; }
+  return outs;
+}
+function renderCopy(){
+  const el=$('#copy'); if(!el) return;
+  const S=CP.sp, D=DEV[S];
+  const opt=(v,l,on)=>`<option value="${esc(v)}"${on?' selected':''}>${esc(l)}</option>`;
+  const byT={1:[],2:[],3:[]}; SPECIES.forEach(d=>byT[d.t].push(d));
+  const spSel=[3,2,1].map(t=>`<optgroup label="${TYPEN[t]}">${byT[t].map(d=>opt(d.id,d.n,d.id===S)).join('')}</optgroup>`).join('');
+  const all=[['c','共通'],['r',TYPEN[D.t]],['m','変異']].map(([g,l])=>[g,l,erList(g,S).filter(x=>x.cf!==0)]);
+  if(CP.t&&!all.some(([g,,a])=>g===CP.g&&a.some(x=>x.id===CP.t))) CP.t='';
+  const trSel=opt('','えらんでね',!CP.t)+all.map(([g,l,a])=>a.length?`<optgroup label="${l}の枠">${a.map(x=>opt(g+':'+x.id,x.n+(x.sk?'（色違い）':''),CP.g===g&&CP.t===x.id)).join('')}</optgroup>`:'').join('');
+  const n=(k,mx)=>Array.from({length:mx+1},(_,i)=>opt(i,i+'体',CP[k]===i)).join('');
+  let h=`<div class="card nv-form">
+   <label class="nv-f"><span>デビの種類</span><select data-cp="sp">${spSel}</select></label>
+   <label class="nv-f"><span>ふやしたい特性</span><select data-cp="t">${trSel}</select></label>
+   ${CP.t&&CP.g!=='m'?`<div class="er-have"><p class="nv-hh">その特性を持ってる${esc(D.n)}</p><table>
+    <tr><th>融合回数が残ってる子</th><td><select data-cp="h1">${n('h1',3)}</select></td></tr>
+    <tr><th>融合回数0の子</th><td><select data-cp="h0">${n('h0',3)}</select></td></tr></table>
+    <p class="mini">回数0の子は、材料としてなら使えるよ。</p></div>`:''}
+   ${CP.t&&CP.g==='m'&&erItem(CP.t)?`<p class="mini" style="grid-column:1/-1">変異の枠の特性は、${esc(itemShort(ITEM[erItem(CP.t)]))}を材料にして付けるよ。</p>`:''}
+  </div>`;
+  CPCFG=[];
+  if(!CP.t){ h+=`<p class="nv-empty">ふやしたい特性をえらんでね。</p>`; el.innerHTML=h; return; }
+  if(CP.g!=='m'&&CP.h1+CP.h0===0){ h+=`<p class="nv-empty">その特性を持ってる子が1体もいないと、コピーできないよ。まずは野生でつかまえるか、ほかの人と交換してね。</p>`; el.innerHTML=h; return; }
+  const outs=cpSearch(S);
+  if(!outs.length){ h+=`<p class="nv-empty">組み方が見つからなかったよ。けいさん機で試してみてね。</p>`; el.innerHTML=h; return; }
+  h+=`<p class="mini" style="margin:14px 0 0">成功率がいちばん高い組み方と、材料が少なくてすむ組み方を出してるよ。</p>`;
+  outs.forEach((x,i)=>{
+    CPCFG.push(x.cfg);
+    const li=[], blanks=x.cfg.m.filter(m=>m.k==='dev'&&!m.c&&!m.r&&!m.m).length;
+    if(x.n1===2) li.push('両方の親が同じ特性を持ってるから100%。親は2体とも残るよ（融合回数が1ずつへる）。');
+    else if(x.n1===1) li.push('特性を持ってる子は<b>親</b>なので消えないよ（融合回数が1へる）。');
+    if(x.used.includes('h')) li.push('材料にした特性持ちの子は消えるよ。融合回数0の子を材料に回すのがむだがない。');
+    if(blanks) li.push(`無特性の材料は1体ごとに、その場の特性全部に＋0.1点。${blanks}体で＋${(blanks/10).toFixed(1)}点。`);
+    if(x.used.includes('a')) li.push('動物・家具は1つで0.5点。2つで1点＝100%。');
+    h+=`<div class="card er-opt"><h3>組み方${i+1}（成功率 ${pct(x.r.p)}）</h3>${erFlow2(x.cfg,x.r)}<ul class="nv-li">${li.map(t=>`<li>${t}</li>`).join('')}</ul>
+     <div class="btnrow"><button type="button" class="btn sub sm" data-cpcalc="${i}">けいさん機で開く</button></div></div>`;
+  });
+  el.innerHTML=h;
+}
+function erFlow2(cfg,r){
+  const parts=[nvTok(cfg.p[0],'親A'),OP('＋'),nvTok(cfg.p[1],'親B')];
+  cfg.m.forEach((m,j)=>{ if(m.k) parts.push(OP('＋'),nvTok(m,'材料'+(j+1))); });
+  parts.push(OP('→'),tok({k:'child',tag:'子',trs:r.rows.map(([g,t,p])=>[g,trShort(TR[t])+' '+pct(p)])}));
+  return flow('',...parts);
+}
+document.addEventListener('change',e=>{const x=e.target.closest&&e.target.closest('[data-cp]'); if(!x) return; const k=x.dataset.cp;
+  if(k==='sp') CP.sp=x.value; else if(k==='t'){ const [g,t]=x.value.split(':'); CP.g=g||'r'; CP.t=t||''; } else CP[k]=+x.value; cpSave(); renderCopy();});
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-cpcalc]'); if(!b) return; const c=CPCFG[+b.dataset.cpcalc]; if(!c) return; CS={p:clone(c.p),m:clone(c.m),goal:clone(c.goal),view:CP.sp,why:false,preset:'',ui:2}; st.cs=CS; save(); location.hash='calc';});
+
+const VIEWS=['home','lesson','calc','navi','dex','quiz','words'];
 function route(){
-  let v=location.hash.slice(1); if(!VIEWS.includes(v)) v='home';
+  let v=location.hash.slice(1); if(v==='erase'||v==='copy'){ NVM=v; st.nvm=v; save(); v='navi'; } if(!VIEWS.includes(v)) v='home';
   $('#fbs').hidden=true;
   if(!$('#ed').hidden){$('#ed').hidden=true; ED=null; document.documentElement.classList.remove('ed-open');}
   VIEWS.forEach(k=>{$('#v-'+k).hidden=k!==v;});
   $$('.tabs a[data-v]').forEach(a=>{if(a.dataset.v===v) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');});
   if(v==='lesson') renderLesson(false);
   if(v==='calc') renderCalc();
-  if(v==='navi') renderNavi();
-  if(v==='erase') renderErase();
+  if(v==='navi') renderModes();
   if(v==='dex') renderDex();
   if(v==='quiz') renderQuiz();
   if(v==='words') renderWords();
