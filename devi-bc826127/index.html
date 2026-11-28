@@ -735,7 +735,7 @@ html.ed-open{overflow:hidden}
 .nv-lv{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:14px}
 .nv-lv select{padding:6px 8px}
 .nv-note{margin:12px 0;padding:10px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface);font-size:14px;font-weight:700}
-#navi.nv-still *{animation:none!important}
+#navi.nv-still *,#erase.nv-still *,#copy.nv-still *{animation:none!important}
 .nv-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:12px 0 6px}
 .nv-st{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:14px 8px 12px;border:2.5px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:3px 3px 0 var(--sh)}
 .nv-st .px16{width:56px;height:56px;image-rendering:pixelated}
@@ -2999,8 +2999,10 @@ function erFlow(cfg,r){
   parts.push(OP('→'),tok({k:'child',tag:'子',trs}));
   return flow('',...parts);
 }
-function renderErase(){
-  const el=$('#erase'); if(!el) return;
+let ERGO='';
+const erKey=()=>JSON.stringify(ER);
+function renderErase(still){
+  const el=$('#erase'); if(!el) return; el.classList.toggle('nv-still',!!still);
   const S=ER.sp, D=DEV[S];
   ['c','r','m'].forEach(g=>{ if(ER[g]&&!erList(g,S).some(x=>x.id===ER[g])) ER[g]=''; });
   const opt=(v,l,on)=>`<option value="${esc(v)}"${on?' selected':''}>${esc(l)}</option>`;
@@ -3026,6 +3028,7 @@ function renderErase(){
   ERCFG=[];
   const ers=['c','r','m'].filter(g=>ER[g]&&!ER['k'+g]);
   if(!ers.length){ h+=`<p class="nv-empty">消したい特性を1つ以上えらんで、「消す」にしてね。</p>`; el.innerHTML=h; return; }
+  if(ERGO!==erKey()){ h+=`<div class="card nv-calc"><p>入力ができたら、ボタンを押してね。${ERGO?'（入力が変わったので、もう一回押してね）':''}</p><button type="button" class="btn" data-ergo="1">消し方を探す</button></div>`; el.innerHTML=h; return; }
   const nocf=ers.filter(g=>TR[ER[g]].cf===0);
   const R=erSearch(S);
   if(nocf.length) h+=`<div class="note"><b>${nocf.map(nm).map(esc).join('・')}</b>は融合で引き継げない特性だから、ふつうに融合するだけで消えるよ。</div>`;
@@ -3049,8 +3052,9 @@ function renderErase(){
   el.innerHTML=h;
 }
 document.addEventListener('change',e=>{const x=e.target.closest&&e.target.closest('[data-er]'); if(!x) return; const k=x.dataset.er; ER[k]=['sp','c','r','m'].includes(k)?x.value:+x.value;
-  if(['c','r','m'].includes(k)&&ER[k]) ER['k'+k]=TR[ER[k]].q===1?0:1; erSave(); renderErase();});
-document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-erk]'); if(!b) return; ER['k'+b.dataset.erk]=+b.dataset.erv; erSave(); renderErase();});
+  if(['c','r','m'].includes(k)&&ER[k]) ER['k'+k]=TR[ER[k]].q===1?0:1; erSave(); renderErase(true);});
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-ergo]'); if(!b) return; ERGO=erKey(); renderErase(false); const r=$('#erase .er-opt')||$('#erase .nv-empty'); if(r) r.scrollIntoView({behavior:'smooth',block:'start'});});
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-erk]'); if(!b) return; ER['k'+b.dataset.erk]=+b.dataset.erv; erSave(); renderErase(true);});
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-ercalc]'); if(!b) return; const c=ERCFG[+b.dataset.ercalc]; if(!c) return; CS={p:clone(c.p),m:clone(c.m),goal:clone(c.goal),view:ER.sp,why:false,preset:'',ui:2}; st.cs=CS; save(); location.hash='calc';});
 
 
@@ -3091,8 +3095,10 @@ function cpSearch(S){
   for(const x of res){ if(x.r.p<=0||x.cost>=minC-1e-9) continue; minC=x.cost; outs.push(x); if(outs.length>=3) break; }
   return outs;
 }
-function renderCopy(){
-  const el=$('#copy'); if(!el) return;
+let CPGO='';
+const cpKey=()=>JSON.stringify(CP);
+function renderCopy(still){
+  const el=$('#copy'); if(!el) return; el.classList.toggle('nv-still',!!still);
   const S=CP.sp, D=DEV[S];
   const opt=(v,l,on)=>`<option value="${esc(v)}"${on?' selected':''}>${esc(l)}</option>`;
   const byT={1:[],2:[],3:[]}; SPECIES.forEach(d=>byT[d.t].push(d));
@@ -3113,6 +3119,7 @@ function renderCopy(){
   CPCFG=[];
   if(!CP.t){ h+=`<p class="nv-empty">ふやしたい特性をえらんでね。</p>`; el.innerHTML=h; return; }
   if(CP.g!=='m'&&CP.h1+CP.h0===0){ h+=`<p class="nv-empty">その特性を持ってる子が1体もいないと、コピーできないよ。まずは野生でつかまえるか、ほかの人と交換してね。</p>`; el.innerHTML=h; return; }
+  if(CPGO!==cpKey()){ h+=`<div class="card nv-calc"><p>入力ができたら、ボタンを押してね。${CPGO?'（入力が変わったので、もう一回押してね）':''}</p><button type="button" class="btn" data-cpgo="1">コピーの仕方を探す</button></div>`; el.innerHTML=h; return; }
   const outs=cpSearch(S);
   if(!outs.length){ h+=`<p class="nv-empty">組み方が見つからなかったよ。けいさん機で試してみてね。</p>`; el.innerHTML=h; return; }
   h+=`<p class="mini" style="margin:14px 0 0">成功率がいちばん高い組み方と、材料が少なくてすむ組み方を出してるよ。</p>`;
@@ -3136,7 +3143,8 @@ function erFlow2(cfg,r){
   return flow('',...parts);
 }
 document.addEventListener('change',e=>{const x=e.target.closest&&e.target.closest('[data-cp]'); if(!x) return; const k=x.dataset.cp;
-  if(k==='sp') CP.sp=x.value; else if(k==='t'){ const [g,t]=x.value.split(':'); CP.g=g||'r'; CP.t=t||''; } else CP[k]=+x.value; cpSave(); renderCopy();});
+  if(k==='sp') CP.sp=x.value; else if(k==='t'){ const [g,t]=x.value.split(':'); CP.g=g||'r'; CP.t=t||''; } else CP[k]=+x.value; cpSave(); renderCopy(true);});
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-cpgo]'); if(!b) return; CPGO=cpKey(); renderCopy(false); const r=$('#copy .er-opt')||$('#copy .nv-empty'); if(r) r.scrollIntoView({behavior:'smooth',block:'start'});});
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-cpcalc]'); if(!b) return; const c=CPCFG[+b.dataset.cpcalc]; if(!c) return; CS={p:clone(c.p),m:clone(c.m),goal:clone(c.goal),view:CP.sp,why:false,preset:'',ui:2}; st.cs=CS; save(); location.hash='calc';});
 
 const VIEWS=['home','lesson','calc','navi','dex','quiz','words'];
