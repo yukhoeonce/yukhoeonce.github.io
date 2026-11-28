@@ -730,7 +730,7 @@ html.ed-open{overflow:hidden}
 /* ===== つくり方ナビ ===== */
 .nv-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px 16px;padding:16px;margin:12px 0}
 .nv-f{display:flex;flex-direction:column;justify-content:flex-end;gap:4px;font-weight:700;font-size:14px}
-.nv-f select{font:inherit;font-weight:700;font-size:15px;padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:var(--field);color:var(--ink);max-width:100%}
+.nv-f select,.er-slot select,.er-have select{font:inherit;font-weight:700;font-size:15px;padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:var(--field);color:var(--ink);max-width:100%}
 .nv-f.sm span{font-size:13px;color:var(--ink-2)}
 .nv-lv{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:14px}
 .nv-lv select{padding:6px 8px}
@@ -772,14 +772,15 @@ html.ed-open{overflow:hidden}
 @media(max-width:600px){#navi{word-break:normal;overflow-wrap:break-word}#navi .mini{font-size:14px;line-height:1.7}.nv-br summary{font-size:15px}}
 .nv-brt{margin:2px 0 6px;font-size:14px}
 .er-slots{display:grid;gap:10px;grid-column:1/-1}
-.er-slot{display:grid;grid-template-columns:7em 1fr auto;gap:6px 8px;align-items:center}
+.er-slot{display:grid;grid-template-columns:7em minmax(0,420px) auto;justify-content:start;gap:6px 8px;align-items:center}
 .er-slot>span{font-weight:700;font-size:14px}
 .er-slot select{min-width:0;width:100%}
 .er-kd{display:flex;gap:4px}
 .er-kd .btn{padding:5px 10px;font-size:13px}
 .er-have{grid-column:1/-1}
 .er-have table{border-collapse:separate;border-spacing:8px 6px;margin:0 -8px}
-.er-have th{text-align:left;font-size:14px}
+.er-have th{text-align:left;font-size:13px;color:var(--ink-2);font-weight:700;vertical-align:middle}
+.er-have select{min-width:110px}
 .er-opt{padding:14px 16px;margin:12px 0}
 .er-opt h3{margin:0 0 6px;font-size:17px}
 .er-opt .nv-li{margin:8px 0}
