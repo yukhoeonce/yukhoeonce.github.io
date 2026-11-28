@@ -1155,6 +1155,8 @@ details.nv-step summary{cursor:pointer;font-size:16px}
 .wz-res .nv-step,.wz-res .nv-sum,.wz-res .er-opt,.wz-res details.card{scroll-margin-top:var(--wzjt,140px)}
 
 .lvtabs:has(>button:only-child){display:none}
+
+@media (min-width:821px){#toc.toc{position:sticky}}
 </style>
 <script>
 (()=>{const K='devi-intro-v1', d=document.getElementById('intro'); if(!d) return;
@@ -1556,18 +1558,12 @@ const MID=[
  ${clash([['m','ムーンレイド（オオカミ）'],['m','パワープレイ（クマ）']],['m','変異の枠（1つだけ）','50%ずつの取り合い'],'ちがう動物を一緒に入れると、同じ変異の枠を取り合う')}
  <p class="mini">動物の特性は、付いたデビが<b>戦闘か、領地・創作物か</b>で効果が変わるよ（戦闘デビは同期中に効く）。一部のデビは見た目も変わる。子どもの動物・ウサギ・キツネは材料にできないよ。</p>  <details class="dex"><summary>動物の特性（${ANIMALS.length}）</summary><div class="dexlist">${rowsHTML(ANIMALS)}</div></details>
  <details class="dex"><summary>家具の特性（${FURNS.length}）</summary><div class="dexlist">${rowsHTML(FURNS)}<div class="kwgroup">ほかの家具（ソファ・本棚・絵など）は、効果のない見た目だけの特性になる。</div></div></details>
- <h3>融合でしか出ない色違い</h3>
- <p>決まったデビを材料に入れると、生まれた子に専用の見た目（色違い）が付く。0.5点ぶんなので、ほかに何もなければ50%。</p>
- <div class="scroll"><table class="xtab cards"><thead><tr><th>生まれるデビ</th><th>材料に入れるもの</th><th>色違い</th><th>効果</th></tr></thead><tbody>
-  <tr><td>黄衣の王（ミニ）</td><td>スペースキューブ</td><td>星喰い異形</td><td>エネルギー回復＋10%</td></tr>
-  <tr><td>ミスターウィッシュ</td><td>グリーン・ドラゴン</td><td>願いのグリーン・ドラゴン</td><td>エネルギー回復＋15%</td></tr>
-  <tr><td>冬の精</td><td>悪臭タマネギ</td><td>春の訪れ</td><td>活躍度上限＋35</td></tr>
-  <tr><td>ミニチュア特異点</td><td>炎の精霊</td><td>バーストメルト</td><td>活躍度上限＋35</td></tr>
-  <tr><td>宇宙飛行魚</td><td>魚（種類ごとに別の見た目）</td><td>○○宇宙飛行魚 - ピチピチ</td><td>2%でエサを持ち帰る</td></tr>
-  <tr><td>宇宙飛行魚</td><td>極寒クラゲ</td><td>極寒クラゲ飛行士</td><td>領地で酷暑耐性＋5</td></tr>
-  <tr><td>宇宙飛行魚</td><td>デンキウナギ</td><td>デンキウナギ宇宙飛行魚</td><td>光の好みが満たされる</td></tr>
- </tbody></table></div>
- <div class="note"><b>ポイント</b>　いちばん人気は願いのグリーン・ドラゴン（エネルギー回復＋15%）。ミニチュア特異点は今は手に入りにくい（闇鍋収容箱か、異次元の収容のショップ）。</div>
+ <h3>こんな色違いもあるよ</h3>
+ <p>決まったデビや魚を材料に入れると、生まれた子に専用の見た目（色違い）が付くことがあるよ。たとえば…</p>
+ <ul>
+  <li><b>ミスターウィッシュ</b>：グリーン・ドラゴンを材料に入れると「願いのグリーン・ドラゴン」（エネルギー回復＋15%）</li>
+  <li><b>宇宙飛行魚</b>：魚を材料に入れると「ピチピチ」（2%でエサを持ち帰る）</li>
+ </ul>
  <div class="btnrow">${pbtn('wolf','けいさん機で試す（オオカミ2匹）')}${pbtn('wish','けいさん機で試す（願いのグリーン・ドラゴン）')}</div>`},
 {t:'特性の選び方',h:()=>`
  <p>どの特性を狙うかは、人やビルド、デビの使い方で変わるよ。正解はひとつじゃないので、<a href="#dex">特性図鑑</a>で効果を見くらべて決めよう。</p>
@@ -1786,18 +1782,12 @@ const BASIC=[
  ${clash([['m','ムーンレイド（オオカミ）'],['m','パワープレイ（クマ）']],['m','変異の枠（1つだけ）','付くのはどちらか1つ'],'ちがう動物を一緒に入れると、同じ変異の枠を取り合う')}
  <p class="mini">動物の特性は、付いたデビが<b>戦闘か、領地・創作物か</b>で効果が変わるよ（戦闘デビは同期中に効く）。一部のデビは見た目も変わる。子どもの動物・ウサギ・キツネは材料にできないよ。</p>  <details class="dex"><summary>動物の特性（${ANIMALS.length}）</summary><div class="dexlist">${rowsHTML(ANIMALS)}</div></details>
  <details class="dex"><summary>家具の特性（${FURNS.length}）</summary><div class="dexlist">${rowsHTML(FURNS)}<div class="kwgroup">ほかの家具（ソファ・本棚・絵など）は、効果のない見た目だけの特性になる。</div></div></details>
- <h3>融合でしか出ない色違い</h3>
- <p>決まったデビを材料に入れると、生まれた子に専用の見た目（色違い）が付く。</p>
- <div class="scroll"><table class="xtab cards"><thead><tr><th>生まれるデビ</th><th>材料に入れるもの</th><th>色違い</th><th>効果</th></tr></thead><tbody>
-  <tr><td>黄衣の王（ミニ）</td><td>スペースキューブ</td><td>星喰い異形</td><td>エネルギー回復＋10%</td></tr>
-  <tr><td>ミスターウィッシュ</td><td>グリーン・ドラゴン</td><td>願いのグリーン・ドラゴン</td><td>エネルギー回復＋15%</td></tr>
-  <tr><td>冬の精</td><td>悪臭タマネギ</td><td>春の訪れ</td><td>活躍度上限＋35</td></tr>
-  <tr><td>ミニチュア特異点</td><td>炎の精霊</td><td>バーストメルト</td><td>活躍度上限＋35</td></tr>
-  <tr><td>宇宙飛行魚</td><td>魚（種類ごとに別の見た目）</td><td>○○宇宙飛行魚 - ピチピチ</td><td>2%でエサを持ち帰る</td></tr>
-  <tr><td>宇宙飛行魚</td><td>極寒クラゲ</td><td>極寒クラゲ飛行士</td><td>領地で酷暑耐性＋5</td></tr>
-  <tr><td>宇宙飛行魚</td><td>デンキウナギ</td><td>デンキウナギ宇宙飛行魚</td><td>光の好みが満たされる</td></tr>
- </tbody></table></div>
- <div class="note"><b>ポイント</b>　ミニチュア特異点は今は手に入りにくい（闇鍋収容箱か、異次元の収容のショップ）。</div>
+ <h3>こんな色違いもあるよ</h3>
+ <p>決まったデビや魚を材料に入れると、生まれた子に専用の見た目（色違い）が付くことがあるよ。たとえば…</p>
+ <ul>
+  <li><b>ミスターウィッシュ</b>：グリーン・ドラゴンを材料に入れると「願いのグリーン・ドラゴン」（エネルギー回復＋15%）</li>
+  <li><b>宇宙飛行魚</b>：魚を材料に入れると「ピチピチ」（2%でエサを持ち帰る）</li>
+ </ul>
 `},
 {t:'異次元の収容だけのこと',h:()=>`
  <p>シナリオ「${T('異次元の収容')}」のサーバーは、融合のルールが少し多いよ。ほかのシナリオで遊ぶなら読み飛ばしてOK。</p>
